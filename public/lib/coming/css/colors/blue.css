@@ -1,0 +1,71 @@
+/* --------------------------------------
+=========================================
+COLOR : BLUE 
+
+MAIN COLOR CODE: #008ed6
+
+DEEP COLOR CODE: #0477b1
+=========================================
+----------------------------------------- */
+
+::-moz-selection {
+    background: #008ed6;
+}
+
+::selection {
+    background: #008ed6;
+}
+
+::-moz-selection {
+    background: #008ed6;
+}
+
+a {
+    color: #008ed6;
+}
+
+a:hover {
+    color: #0477b1;
+}
+
+.strong-color {
+    color: #008ed6!important;
+}
+
+.default-button {
+    background: #008ed6;
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #00a9ff), color-stop(100%, #008ed6));
+    background: -webkit-linear-gradient(top, #00a9ff 0%, #008ed6 100%);
+    background: -webkit-gradient(linear, left top, left bottom, from(#00a9ff), to(#008ed6));
+    background: linear-gradient(to bottom, #00a9ff 0%, #008ed6 100%);
+    -webkit-box-shadow: 0px 3px 0px #005885;
+    box-shadow: 0px 3px 0px #005885;
+}
+
+.default-button:hover {
+    background: #008ed6 !important;
+}
+
+.default-button:active {
+    background: #008ed6 !important;
+}
+
+.about-icon-wrapper .fa {
+    color: #008ed6;
+}
+
+.single-service-icon {
+    color: #008ed6;
+}
+
+.contact-info .fa {
+    color: #008ed6;
+}
+
+.footer {
+    background: #008ed6;
+}
+
+.footer-line {
+    border-top: 1px solid #039BE8;
+}

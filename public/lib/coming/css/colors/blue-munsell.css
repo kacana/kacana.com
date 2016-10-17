@@ -1,0 +1,70 @@
+/* --------------------------------------
+=========================================
+COLOR : BLUE MUNSELL
+
+MAIN COLOR CODE: #0196a7
+
+DEEP COLOR CODE: #018493
+=========================================
+----------------------------------------- */
+::-moz-selection {
+    background: #0196a7;
+}
+
+::selection {
+    background: #0196a7;
+}
+
+::-moz-selection {
+    background: #0196a7;
+}
+
+a {
+    color: #0196a7;
+}
+
+a:hover {
+    color: #018493;
+}
+
+.strong-color {
+    color: #0196a7!important;
+}
+
+.default-button {
+    background: #0196a7;
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #018493), color-stop(100%, #0196a7));
+    background: -webkit-linear-gradient(top, #018493 0%, #0196a7 100%);
+    background: -webkit-gradient(linear, left top, left bottom, from(#018493), to(#0196a7));
+    background: linear-gradient(to bottom, #018493 0%, #0196a7 100%);
+    -webkit-box-shadow: 0px 3px 0px #015936;
+    box-shadow: 0px 3px 0px #015936;
+}
+
+.default-button:hover {
+    background: #0196a7 !important;
+}
+
+.default-button:active {
+    background: #0196a7 !important;
+}
+
+.about-icon-wrapper .fa {
+    color: #0196a7;
+}
+
+.single-service-icon {
+    color: #0196a7;
+}
+
+.contact-info .fa {
+    color: #0196a7;
+}
+
+.footer {
+    background: #0196a7;
+}
+
+.footer-line {
+    border-top: 1px solid #018493;
+}

@@ -1,0 +1,114 @@
+body{
+  color: @color-grey-light;
+  font-weight: 500;
+  font-family: "Roboto";
+}
+h1,h2,h3,h4,h5
+{
+  font-family: "Roboto";
+}
+
+.color-grey{
+  color: @color-grey
+}
+
+.color-grey-light{
+  color: @color-grey-light;
+}
+
+.color-red{
+  color: @color-red;
+}
+
+.bold{
+  font-weight: 500;
+}
+
+.text-red{color:red}
+.f50{width:50%}
+.f20{width:20%}
+.f25{width:25%}
+.f80{width:80%}
+.f38{width:38%}
+.f62{width:62%}
+.lf{float:left}
+.lr{float:right}
+.cf:before, .cf:after, .clearfix:before, .clearfix:after{
+  content:"";
+  display: table;
+}
+.p7{padding:7px!important}
+.cf:after, .clearfix:after{clear:both}
+.large-6{
+  width:50%
+}
+.large-12{
+  width: 100%;
+}
+.column{
+  position: relative;
+  z-index:1;
+  min-height: 2px;
+  margin:0;
+  padding:0;
+  float:left;
+}
+figure, figcaption{
+  display: block
+}
+
+.transition(@duration: .3s){
+  -webkit-transition: all @duration ease-in-out;
+  -moz-transition: all @duration ease-in-out;
+  -o-transition: all @duration ease-in-out;
+  transition: all @duration ease-in-out;
+}
+
+.pull-left{
+  float: left;
+}
+.pull-right{
+  float: right;
+}
+.clear{
+  clear: both;
+}
+.margin-bottom{
+  margin-bottom: 20px;
+}
+.border-bottom{
+  border-bottom: 1px solid @color-border;
+}
+.border-top{
+  border-top: 1px solid @color-border;
+}
+.border{
+  border: 1px solid @color-border;
+}
+.text-tranform-none{
+  text-transform: none;
+}
+.margin-top-5px{
+  margin-top: 5px!important;
+}
+.margin-bottom-5px{
+  margin-bottom: 5px!important;
+}
+.vmargin-1{
+  margin: 10px 0;
+}
+.hmargin-1{
+  margin: 0 10px;
+}
+.padding-1{
+  padding: 10px;
+}
+.vpadding-1{
+ padding: 10px 0;
+}
+.hpadding-1{
+  padding: 0 10px;
+}
+.alert-info{
+
+}

@@ -1,0 +1,82 @@
+.treeview-tags{margin:10px}
+.childleft{margin-left:5px;}
+#product-detail-page{
+  #product-image-detail{
+    .list-product-image{
+      max-height: 1000px;
+      overflow: auto;
+      .product-image-item{
+        display: inline-block;
+        margin: 10px 10px 0 0;
+        position: relative;
+        border: 1px solid #ccc;
+        border-radius: 2px;
+        .product-image{
+          border-radius: 2px;
+          height: 200px;
+        }
+        .product-image-tool{
+          position: absolute;
+          top: 5px;
+          right: 10px;
+          a{
+            margin-left: 10px;
+            font-size: 20px;
+            &.active{
+              i{
+                color: #f60;
+              }
+            }
+          }
+        }
+        .product-image-uploading{
+          height: 100%;
+          left: 0px;
+          position: absolute;
+          top: 0px;
+          width: 100%;;
+          .overlay-iploading{
+            background: rgba(255, 255, 255, 0.7) none repeat scroll 0 0;
+            height: 100%;;
+            i{
+              font-size: 35px;
+              left: ~'calc(50% - 20px)';
+              position: absolute;
+              top: 85px;
+            }
+          }
+          .progress-bar{
+            border-radius: 0 0 2px 2px;
+            height: 15px;
+            top: 0;
+          }
+        }
+      }
+    }
+  }
+}
+#modal-add-image-product-properties{
+  .wraper-image{
+    margin: 10px;
+    float: left;
+    img{
+      border: 3px solid @color-border;
+      height: 100px;
+    }
+    &.active{
+      img{
+        border-color: @color-red;
+      }
+    }
+  }
+  .modal-body{
+    max-height: 400px;
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+}
+
+.ui-autocomplete.search-tag-result-to-add-relation{
+  max-height: 300px!important;
+  overflow: auto!important;
+}

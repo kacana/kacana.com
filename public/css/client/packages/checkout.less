@@ -1,0 +1,113 @@
+#checkout-page{
+  padding-top: 76px;
+  min-height: 300px;
+  section.panel{
+    border-bottom: none;
+    box-shadow: none;
+    border: 1px solid @color-border;
+    border-radius: 0;
+  }
+  input, textarea{
+    border-radius: 0;
+    &::-webkit-input-placeholder {
+      color: @color-grey-supper-light;
+      font-weight: 400;
+    }
+
+    &:-moz-placeholder { /* Firefox 18- */
+      color: @color-grey-supper-light;
+      font-weight: 400;
+    }
+
+    &::-moz-placeholder {  /* Firefox 19+ */
+      color: @color-grey-supper-light;
+      font-weight: 400;
+    }
+
+    &:-ms-input-placeholder {
+      color: @color-grey-supper-light;
+      font-weight: 400;
+    }
+  }
+  #next-step{
+    -webkit-border-radius:0;
+    -moz-border-radius:0;
+    border-radius:0;
+    width: 100%;
+  }
+  .address{
+    height: 70px;
+    resize: none;
+    overflow: hidden;
+    padding-top: 8px;
+    padding-bottom: 4px;
+    border-radius: 0px;
+  }
+  .control-label{
+    font-weight: 600;
+  }
+
+}
+#form_login_step{
+  .has-feedback .form-control-feedback{
+    right: 15px;
+  }
+}
+#checkout-success-page{
+  padding-top: 76px;
+  min-height: 300px;
+  #cart-page{
+    padding-top: 0;
+  }
+  h5{
+    margin-bottom: 5px;
+    text-transform: none;
+  }
+  #header-page{
+    border-bottom: 1px solid @color-border;
+    h1{
+      font-size: 1em;
+      font-weight: 400;
+      line-height: 23px;
+      i{
+        border: 1px solid @color-green;;
+        border-radius: 20px;
+        color: @color-green;
+        margin-right: 10px;
+        padding: 10px;
+      }
+    }
+  }
+  .description-cash-deliver{
+    p{
+      color: @color-grey-light;
+      margin-bottom: 5px;
+    }
+  }
+  .order-user-info, .order-total-info{
+    border-top: 1px solid @color-border;
+    margin-bottom: 10px;
+  }
+  b{
+    font-weight: 500;
+  }
+}
+#checkout-choose-address-step{
+  .checkout-address-item{
+    font-weight:400;
+    cursor: pointer;
+    border-bottom: 1px solid @color-border;
+    margin-bottom: 20px;
+    input{
+      left: 10px;
+      position: absolute;
+      top: 40px;
+    }
+    &:last-child{
+      border: none;
+    }
+    &:hover{
+      background: @color-background;
+    }
+  }
+}

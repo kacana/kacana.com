@@ -1,0 +1,281 @@
+<?php $__env->startSection('title','Edit Order #'.$order->id ); ?>
+
+<?php $__env->startSection('section-content-id', 'content-edit-order'); ?>
+
+<?php $__env->startSection('content'); ?>
+    <section>
+        <div class="custom-box">
+            <div class="box-header">
+                <h3 class="box-title">Đơn Hàng: #<?php echo e($order->id); ?> Của [<?php echo e($order->user->name); ?>] Tổng <?php echo e(formatMoney($order->total)); ?></h3>
+                <div class="box-tools pull-left ">
+                    <button data-toggle="modal" data-target="#modal-shipping-order" class="btn btn-primary btn-sm">
+                        <i class="fa fa-plane"></i> Ship cho khách
+                    </button>
+                    <button data-toggle="modal" data-target="#modal-create-product" class="btn btn-danger btn-sm">
+                        <i class="fa fa-meh-o"></i> Huỷ đơn hàng
+                    </button>
+                </div>
+            </div><!-- /.box-header -->
+        </div>
+    </section>
+
+    <section class="content">
+        <div class="row">
+            <div class="col-xs-4">
+                <div class="box">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Thông tin đơn hàng</h3>
+                        <div class="box-tools pull-right">
+                            <button title="" data-toggle="tooltip" data-widget="collapse" class="btn btn-box-tool" data-original-title="Collapse"><i class="fa fa-minus"></i></button>
+                        </div>
+                    </div>
+                    <div class="box-body">
+                        <div class="col-xs-12">
+                            <p class="lead">Thông tin người mua hàng</p>
+                            <form class="form-horizontal">
+                                <div class="box-body">
+                                    <div class="form-group">
+                                        <label class="col-sm-3 control-label" for="inputEmail3">Order ID:</label>
+                                        <div class="col-sm-9">
+                                            <input value="<?php echo e($order->id); ?>" data-user-id="<?php echo e($order->user_id); ?>" id="order_id" disabled="disabled"  class="form-control disabled">
+                                            <input value="<?php echo e($order->address_id); ?>" id="order_address_id" disabled="disabled"  class="form-control hidden disabled">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-3 control-label" for="inputEmail3">Tên</label>
+                                        <div class="col-sm-9">
+                                            <input value="<?php echo e($order->user->name); ?>" disabled="disabled"  class="form-control disabled">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-3 control-label" for="inputEmail3">Số điện thoại</label>
+                                        <div class="col-sm-9">
+                                            <input value="<?php echo e($order->user->phone); ?>" disabled="disabled"  class="form-control disabled">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-3 control-label" for="inputEmail3">Email</label>
+                                        <div class="col-sm-9">
+                                            <input value="<?php echo e($order->user->email); ?>" disabled="disabled"  class="form-control disabled">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-3 control-label" for="inputEmail3">Ngày đặt</label>
+                                        <div class="col-sm-9">
+                                            <input value="<?php echo e($order->created); ?>" disabled="disabled"  class="form-control disabled">
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="col-xs-12">
+                            <p class="lead">Thông tin nhận hàng</p>
+                            <?php echo Form::open(array('method'=>'put', 'id' =>'form-edit-order', 'class'=>"form-horizontal")); ?>
+
+                            <div class="box-body">
+                                <!-- name -->
+                                <div class="form-group">
+                                    <input type="hidden" name="id" value="<?php echo e($user_address->id); ?>" />
+                                    <?php echo Form::label('name', 'Họ và tên', array('class'=>'col-sm-3 control-label')); ?>
+
+                                    <div class="col-sm-9">
+                                      <?php echo Form::text('name', $user_address->name, array('required', 'class' => 'form-control', 'placeholder' => 'Họ và tên')); ?>
+
+                                    </div>
+                                </div>
+                                <!-- phone number -->
+                                <div class="form-group">
+                                    <?php echo Form::label('phone', 'Điện thoại', array('class'=>'col-sm-3 control-label')); ?>
+
+                                    <div class="col-sm-9">
+                                    <?php echo Form::text('phone', $user_address->phone, array('required', 'class' => 'form-control', 'placeholder' => 'Điện thoại')); ?>
+
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <?php echo Form::label('Email', 'Email', array('class'=>'col-sm-3 control-label')); ?>
+
+                                    <div class="col-sm-9">
+                                        <?php echo Form::text('email', $user_address->email, array('required', 'class' => 'form-control', 'placeholder' => 'Email')); ?>
+
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <?php echo Form::label('street', 'Địa chỉ', array('class'=>'col-sm-3 control-label')); ?>
+
+                                    <div class="col-sm-9">
+                                    <?php echo Form::text('street', $user_address->street, array('class'=>'form-control', 'placeholder'=>'Địa chỉ')); ?>
+
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <?php echo Form::label('city_id', 'Thành phố', array('class'=>'col-sm-3 control-label')); ?>
+
+                                    <div class="col-sm-9">
+                                    <?php echo Form::select('city_id', $cities, $user_address->city_id, array('class'=>'form-control')); ?>
+
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <?php echo Form::label('district_id', 'Quận', array('class'=>'col-sm-3 control-label')); ?>
+
+                                    <div class="col-sm-9">
+                                        <select id="district" class="form-control" name="district_id">
+                                            <?php foreach($districts as $district): ?>
+                                                <option <?php if(($user_address->district_id == $district->id)): ?> selected="selected" <?php endif; ?> class="<?php if(!($user_address->city_id == $district->city_id)): ?> hidden <?php endif; ?>" data-city-id="<?php echo e($district->city_id); ?>" value="<?php echo e($district->id); ?>"><?php echo e($district->name); ?></option>
+                                            <?php endforeach; ?>
+                                        </select>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" id="btn-update"class="btn btn-primary">Cập nhật</button>
+                            </div>
+                            <?php echo Form::close(); ?>
+
+                        </div>
+                        <div class="col-xs-12">
+                            <p class="lead">Thông tin Giá</p>
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <tbody><tr>
+                                        <th style="width:50%">Giá</th>
+                                        <td><?php echo e(formatMoney($order->total)); ?></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Số lượng</th>
+                                        <td><?php echo e($order->quantity); ?> Sản phẩm</td>
+                                    </tr>
+                                    <tr>
+                                        <th>phí vận chuyển</th>
+                                        <td><?php echo e(formatMoney($order->shipping_fee)); ?></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Giảm giá</th>
+                                        <td><?php echo e($order->deal); ?>%</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Tổng</th>
+                                        <td class="color-red"><?php echo e(formatMoney($order->total + $order->shipping_fee - ($order->total*$order->deal/100))); ?></td>
+                                    </tr>
+                                    </tbody></table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xs-8">
+                <div class="box box-primary box-body"> <!-- Search results -->
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Chi tiết đơn hàng</h3>
+                    </div><!-- /.box-header -->
+
+                    <div class="box-body table-responsive no-padding">
+                        <div id="list-order-detail" class="col-xs-12">
+                            <div class="cart-header border-bottom" >
+                                <div class="row" >
+                                    <div class="col-xs-3 col-sm-3" >
+                                        <h4 class="color-grey-light"><?php echo e($order->quantity); ?> Sản phẩm</h4>
+                                    </div>
+                                    <div class="col-xs-4 col-sm-4" >
+                                        <h4 class="color-grey-light">Chi tiết</h4>
+                                    </div>
+                                    <div class="col-xs-3 col-sm-3" >
+                                        <h4 class="color-grey-light">Đặt hàng</h4>
+                                    </div>
+                                    <div class="col-xs-2 col-sm-2" >
+                                        <h4 class="color-grey-light text-center">Shipping</h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <?php foreach($order->orderDetail as $orderDetail): ?>
+                            <div class="order-detail-item border-bottom vpadding-1" >
+                                <div class="row" >
+                                    <div class="col-xs-3 col-sm-3" >
+                                        <img style="width: 60%" class="img-responsive" src="<?php echo e($orderDetail->image); ?>">
+                                    </div>
+                                    <div class="col-xs-4 col-sm-4" >
+                                        <div class="cart-item-title" >
+                                          <a target="_blank" href="<?php echo e($orderDetail->product_url); ?>"> <?php echo e($orderDetail->name); ?></a>
+                                        </div>
+
+                                        <?php if($orderDetail->color_id): ?>
+                                            <div class="cart-item-color">
+                                                Màu sắc: <?php echo e($orderDetail->color->name); ?>
+
+                                            </div>
+                                        <?php endif; ?>
+
+                                        <?php if($orderDetail->size_id): ?>
+                                            <div class="cart-item-size" >
+                                                Kích thước: <?php echo e($orderDetail->size->name); ?>
+
+                                            </div>
+                                        <?php endif; ?>
+
+                                        <div class="cart-item-price" >
+                                            Giá: <?php echo e(formatMoney($orderDetail->price)); ?>
+
+                                        </div>
+                                        <?php if($orderDetail->discount): ?>
+                                            Giảm giá: <?php echo e(formatMoney($orderDetail->discount)); ?>
+
+                                        <?php endif; ?>
+                                        <div class="cart-item-price" >
+                                            Số lượng: <?php echo e($orderDetail->quantity); ?>
+
+                                        </div>
+                                        <div class="cart-item-price color-red" >
+                                            Tổng: <?php echo e(formatMoney($orderDetail->subtotal)); ?>
+
+                                        </div>
+
+                                        <div class="cart-button-remove" >
+                                            <a data-id="<?php echo e($orderDetail->id); ?>" href="#remove-detail-item" >xoá sản phẩm này</a>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-3 col-sm-3 order-detail-service" data-image="<?php echo e($orderDetail->image); ?>" data-name="<?php echo e($orderDetail->name); ?>" data-order-detail-id="<?php echo e($orderDetail->id); ?>">
+                                        <a target="_blank" href="<?php echo e($orderDetail->product->source_url); ?>"> Link đặt hàng</a>
+                                        <?php if($orderDetail->order_service_status == KACANA_ORDER_SERVICE_STATUS_ORDERED): ?>
+                                            <input type="text" value="<?php echo e($orderDetail->order_service_id); ?>" name="order-service-id" placeholder="id nhập hàng" disabled="disabled" class="form-control vmargin-1" required="required">
+                                        <?php elseif($orderDetail->order_service_status == KACANA_ORDER_SERVICE_STATUS_SOLD_OUT): ?>
+                                            <div class="label btn-danger"><i class="icon fa fa-ban vmargin-1"></i>sản phẩm đã hết hàng!</div>
+                                        <?php else: ?>
+                                            <div class="label btn-danger label-sold-out hidden" ><i class="icon fa fa-ban vmargin-1"></i>sản phẩm đã hết hàng!</div>
+                                            <input type="text" value="<?php echo e(KACANA_PREFIX_ORDER_CODE); ?>" name="order-service-id" placeholder="id nhập hàng" class="form-control vmargin-1" required="required">
+                                            <a data-status="<?php echo e(KACANA_ORDER_SERVICE_STATUS_ORDERED); ?>" class="btn btn-primary" href="#update-order-service-id" type="submit">Cập nhật</a>
+                                            <a data-status="<?php echo e(KACANA_ORDER_SERVICE_STATUS_SOLD_OUT); ?>" class="btn btn-danger" href="#update-order-sold-out" type="submit">Hết hàng</a>
+                                        <?php endif; ?>
+                                    </div>
+                                    <div class="col-xs-2 text-center col-sm-2 cart-item-total" >
+                                        <?php if($orderDetail->shipping_service_code): ?>
+                                          <a target="_blank" href="/shipping/detail?id=<?php echo e($orderDetail->shipping->id); ?>" class="label label-success" >đã ship: <?php echo e($orderDetail->shipping_service_code); ?></a>
+                                        <br>
+                                        <br>
+                                          <?php echo \Kacana\ViewGenerateHelper::getStatusDescriptionShip($orderDetail->shipping->status, $orderDetail->shipping->id); ?>
+
+                                        <?php else: ?>
+                                            <label class="label label-danger" >chưa ship</label>
+                                        <?php endif; ?>
+                                    </div>
+                                </div>
+                            </div>
+                            <?php endforeach; ?>
+                        </div>
+                    </div><!-- /.box-body -->
+                </div><!-- /.box -->
+            </div>
+        </div>
+        <input type="hidden" id="order-id" value="<?php echo e($order->id); ?>" />
+    </section>
+<?php $__env->stopSection(); ?>
+
+
+
+<?php $__env->startSection('javascript'); ?>
+    Kacana.order.detail.init();
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('admin.order.modal', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+<?php echo $__env->make('layouts.admin.master', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

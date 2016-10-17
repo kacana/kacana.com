@@ -1,0 +1,70 @@
+/* --------------------------------------
+=========================================
+COLOR : RED 
+
+MAIN COLOR CODE: #f25454
+
+DEEP COLOR CODE: #e64646
+=========================================
+----------------------------------------- */
+::-moz-selection {
+    background: #f25454;
+}
+
+::selection {
+    background: #f25454;
+}
+
+::-moz-selection {
+    background: #f25454;
+}
+
+a {
+    color: #f25454;
+}
+
+a:hover {
+    color: #0477b1;
+}
+
+.strong-color {
+    color: #f25454!important;
+}
+
+.default-button {
+    background: #f25454;
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #e64646), color-stop(100%, #f25454));
+    background: -webkit-linear-gradient(top, #e64646 0%, #f25454 100%);
+    background: -webkit-gradient(linear, left top, left bottom, from(#e64646), to(#f25454));
+    background: linear-gradient(to bottom, #e64646 0%, #f25454 100%);
+    -webkit-box-shadow: 0px 3px 0px #802D2D;
+    box-shadow: 0px 3px 0px #802D2D;
+}
+
+.default-button:hover {
+    background: #f25454 !important;
+}
+
+.default-button:active {
+    background: #f25454 !important;
+}
+
+.about-icon-wrapper .fa {
+    color: #f25454;
+}
+
+.single-service-icon {
+    color: #f25454;
+}
+
+.contact-info .fa {
+    color: #f25454;
+}
+
+.footer {
+    background: #f25454;
+}
+
+.footer-line {
+    border-top: 1px solid #e64646;
+}

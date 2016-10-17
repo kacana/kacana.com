@@ -1,0 +1,1 @@
+ALTER TABLE `kacana_tag` CHANGE `level` `type` TINYINT(4) NOT NULL DEFAULT '0';

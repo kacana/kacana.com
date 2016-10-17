@@ -1,0 +1,70 @@
+/* --------------------------------------
+=========================================
+COLOR : SLATE
+
+MAIN COLOR CODE: #6b798f
+
+DEEP COLOR CODE: #58677e
+=========================================
+----------------------------------------- */
+::-moz-selection {
+    background: #6b798f;
+}
+
+::selection {
+    background: #6b798f;
+}
+
+::-moz-selection {
+    background: #6b798f;
+}
+
+a {
+    color: #6b798f;
+}
+
+a:hover {
+    color: #0477b1;
+}
+
+.strong-color {
+    color: #6b798f!important;
+}
+
+.default-button {
+    background: #6b798f;
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #58677e), color-stop(100%, #6b798f));
+    background: -webkit-linear-gradient(top, #58677e 0%, #6b798f 100%);
+    background: -webkit-gradient(linear, left top, left bottom, from(#58677e), to(#6b798f));
+    background: linear-gradient(to bottom, #58677e 0%, #6b798f 100%);
+    -webkit-box-shadow: 0px 3px 0px #343D4A;
+    box-shadow: 0px 3px 0px #343D4A;
+}
+
+.default-button:hover {
+    background: #6b798f !important;
+}
+
+.default-button:active {
+    background: #6b798f !important;
+}
+
+.about-icon-wrapper .fa {
+    color: #6b798f;
+}
+
+.single-service-icon {
+    color: #6b798f;
+}
+
+.contact-info .fa {
+    color: #6b798f;
+}
+
+.footer {
+    background: #6b798f;
+}
+
+.footer-line {
+    border-top: 1px solid #58677e;
+}

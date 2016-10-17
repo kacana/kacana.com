@@ -1,0 +1,76 @@
+<div class="col-xxs-12 col-xs-6 col-sm-4 col-md-3 product-item" >
+    <div class="product-image" >
+        <div class="product-image-inside royalSlider rsDefault" >
+            <a data-rsbigimg="<?php echo e($item->image); ?>" href="<?php echo e($item->image); ?>" class="rsImg bugaga" title="<?php echo e($item->name); ?>">
+                <?php echo e($item->name); ?>
+
+                <img class="rsTmb" src="<?php echo e($item->image); ?>" alt="<?php echo e($item->name); ?>"/>
+            </a>
+            <?php if($item->properties && count($item->properties)>0): ?>
+                <?php foreach($item->properties as $property): ?>
+                    <?php if($property->product_gallery): ?>
+                        <a id="product-property-gallery-id-<?php echo e($item->id); ?>" class="rsImg" data-rsbigimg="<?php echo e($property->product_gallery->image); ?>" href="<?php echo e($property->product_gallery->image); ?>" >
+                            <?php echo e($item->name); ?>
+
+                            <img class="rsTmb" src="<?php echo e($property->product_gallery->thumb); ?>">
+                        </a>
+                    <?php endif; ?>
+                <?php endforeach; ?>
+            <?php endif; ?>
+        </div>
+    </div>
+    <div class="product-info">
+        <div class="product-title"> <a href="<?php echo e(urlProductDetail($item)); ?>" title="<?php echo e($item->name); ?>"><?php echo e($item->name); ?></a></div>
+    </div>
+    <div class="product-price-wrap">
+        <?php if($item->discount): ?>
+            <div class="product-price discount">
+                <div class="discount-info">
+                    <div class="product-price-original">
+                        <?php echo e(formatMoney($item->sell_price)); ?>
+
+                    </div>
+                    <div class="price-discount" >
+                        Giảm giá: <b><?php echo e(formatMoney($item->discount)); ?></b>
+                    </div>
+                </div>
+                <?php echo e(formatMoney($item->sell_price - $item->discount)); ?></div>
+        <?php else: ?>
+            <div class="product-price"><?php echo e(formatMoney($item->sell_price)); ?></div>
+        <?php endif; ?>
+    </div>
+    <div class="product-short-description-wrap" id="product-short-description-wrap-<?php echo e($item->id); ?>">
+        <div class="product-short-description">
+            <?php echo e($item->short_description); ?>
+
+        </div>
+        <span class=<?php if($item->isLiked): ?>"save-product-wrap active"<?php else: ?>"save-product-wrap"<?php endif; ?> >
+            <a
+                data-product-id="<?php echo e($item->id); ?>"
+                data-product-url="<?php echo e(urlProductDetail($item)); ?>"
+                href=<?php if(\Kacana\Util::isLoggedIn() && !$item->isLiked): ?>"#save-product-like"<?php elseif(\Kacana\Util::isLoggedIn() && $item->isLiked): ?>"#remove-product-like"<?php else: ?>"#login-header-popup"<?php endif; ?>
+                data-offset="-5"
+                data-distance-away="-7"
+                data-position="bottom left"
+                data-title=<?php if(\Kacana\Util::isLoggedIn() && !$item->isLiked): ?>"Lưu sản phẩm này"<?php elseif(\Kacana\Util::isLoggedIn() && $item->isLiked): ?>"Bỏ lưu sản phẩm này"<?php else: ?>"Đăng nhập để lưu sản phẩm"<?php endif; ?>
+                data-popup-kacana="title"
+                class="save-product" >
+
+                <i class="pe-7s-like" ></i>
+                <i class="fa fa-heart" ></i>
+            </a>
+        </span>
+        <span class="pull-right viewless-wrap" >
+            <a href="#show-less-short-desc" class="viewless" >
+                <i class="fa fa-angle-double-up" ></i>
+            </a>
+        </span>
+        <span class="pull-right viewmore-wrap" >
+            <a href="#show-more-short-desc" class="viewmore" >
+                <i class="fa fa-angle-double-down" ></i>
+            </a>
+        </span>
+        <div class="product-item-box-footer"></div>
+    </div>
+
+</div>

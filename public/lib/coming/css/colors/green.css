@@ -1,0 +1,70 @@
+/* --------------------------------------
+=========================================
+COLOR : GREEN 
+
+MAIN COLOR CODE: #00ab66
+
+DEEP COLOR CODE: #01995c
+=========================================
+----------------------------------------- */
+::-moz-selection {
+    background: #00ab66;
+}
+
+::selection {
+    background: #00ab66;
+}
+
+::-moz-selection {
+    background: #00ab66;
+}
+
+a {
+    color: #00ab66;
+}
+
+a:hover {
+    color: #01995c;
+}
+
+.strong-color {
+    color: #00ab66!important;
+}
+
+.default-button {
+    background: #00ab66;
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #01995c), color-stop(100%, #00ab66));
+    background: -webkit-linear-gradient(top, #01995c 0%, #00ab66 100%);
+    background: -webkit-gradient(linear, left top, left bottom, from(#01995c), to(#00ab66));
+    background: linear-gradient(to bottom, #01995c 0%, #00ab66 100%);
+    -webkit-box-shadow: 0px 3px 0px #015936;
+    box-shadow: 0px 3px 0px #015936;
+}
+
+.default-button:hover {
+    background: #00ab66 !important;
+}
+
+.default-button:active {
+    background: #00ab66 !important;
+}
+
+.about-icon-wrapper .fa {
+    color: #00ab66;
+}
+
+.single-service-icon {
+    color: #00ab66;
+}
+
+.contact-info .fa {
+    color: #00ab66;
+}
+
+.footer {
+    background: #00ab66;
+}
+
+.footer-line {
+    border-top: 1px solid #01995c;
+}

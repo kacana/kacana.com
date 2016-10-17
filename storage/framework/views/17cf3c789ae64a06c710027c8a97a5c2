@@ -1,0 +1,74 @@
+<?php $__env->startSection('content'); ?>
+    <section>
+        <div class="custom-box">
+            <div class="box-header">
+                <h3 class="box-title">Thương hiệu sản phẩm</h3>
+            </div><!-- /.box-header -->
+        </div>
+    </section>
+    <section class="content">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="box box-primary">
+                    <div class="box-header box-search">
+                        <div class="box-search-title">
+                            <h4>Tìm kiếm thương hiệu sản phẩm</h4>
+                            <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal">
+                                <i class="fa fa-plus"></i> Thêm mới
+                            </button>
+                        </div>
+                        <div class="clearfix"></div>
+                        <div class="form-search">
+                            <?php echo Form::open(array('id' => 'search-form')); ?>
+
+                            <div class="col-xs-3">
+                                <?php echo Form::text('name', null, array('class' => 'form-control input-sm', 'placeholder' => 'Tìm kiếm', 'id'=>'search-name')); ?>
+
+                            </div>
+                            <?php echo Form::button('Tìm kiếm', array('type' => 'submit', 'class'=>'btn btn-primary btn-sm')); ?>
+
+                            <?php echo Form::button('Reset', array('type' => 'reset', 'class' => 'btn btn-default btn-sm')); ?>
+
+                            <?php echo Form::close(); ?>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="box"> <!-- Search results -->
+                    <div class="box-header">
+                        <h3 class="box-title">Kết quả tìm kiếm</h3>
+                    </div><!-- /.box-header -->
+
+                    <div class="box-body table-responsive no-padding">
+                        <table id="table" class="table row-border table-striped dataTable">
+                            <thead>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Name</th>
+                                    <th>Image</th>
+                                    <th>Status</th>
+                                    <th>Created</th>
+                                    <th>Updated</th>
+                                    <th class="nosort"></th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div><!-- /.box-body -->
+                </div><!-- /.box -->
+            </div>
+        </div>
+    </section>
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('javascript'); ?>
+    Kacana.product.branch.listBranch();
+
+<?php $__env->stopSection(); ?>
+
+
+
+
+<?php echo $__env->make('admin.branch.edit-modal', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+<?php echo $__env->make('admin.branch.form-create', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+<?php echo $__env->make('layouts.admin.master', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

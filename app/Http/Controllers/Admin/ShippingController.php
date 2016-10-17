@@ -1,0 +1,84 @@
+<?php namespace App\Http\Controllers\Admin;
+
+use App\services\addressService;
+use App\services\shipService;
+use Illuminate\Http\Request;
+use App\services\orderService;
+use Kacana\ViewGenerateHelper;
+
+class ShippingController extends BaseController {
+
+    public function index(){
+        return view('admin.shipping.index');
+    }
+
+    public function createShipping(Request $request){
+        $shipService = new shipService();
+
+        $orderId = $request->input('orderId');
+        $orderDetailIds = $request->input('orderDetailId');
+        $pickHubId = $request->input('pickHubId', KACANA_SHIP_STORE_MAIN_ID);
+        $shippingServiceTypeId = $request->input('shippingServiceTypeId', 0);
+
+        $weight = $request->input('Weight', KACANA_SHIP_DEFAULT_WEIGHT);
+        $length = $request->input('Length', KACANA_SHIP_DEFAULT_LENGTH);
+        $width = $request->input('Width', KACANA_SHIP_DEFAULT_WIDTH);
+        $height = $request->input('Height', KACANA_SHIP_DEFAULT_HEIGHT);
+
+        try{
+            $ship = $shipService->createShippingOrder($orderDetailIds, $orderId, $shippingServiceTypeId, $pickHubId, $weight, $length, $width, $height);
+            return redirect('/shipping/detail?id='.$ship->OrderCode);
+        } catch (\Exception $e) {
+            // @codeCoverageIgnoreStart
+            $return['error'] = $e->getMessage();
+            $return['errorMsg'] = $e->getMessage();
+            // @codeCoverageIgnoreEnd
+        }
+    }
+
+    public function generateShippingTable(Request $request){
+        $params = $request->all();
+        $shipService = new shipService();
+
+        try {
+            $return = $shipService->generateShippingTable($params);
+
+        } catch (\Exception $e) {
+            // @codeCoverageIgnoreStart
+            $return['error'] = $e->getMessage();
+            $return['errorMsg'] = $e->getMessage();
+            // @codeCoverageIgnoreEnd
+        }
+
+        return response()->json($return);
+    }
+
+    public function detail(Request $request){
+
+        $orderService = new orderService();
+        $addressService = new addressService();
+        $shipService = new shipService();
+
+        $shippingId =  $request->input('id');
+
+        try {
+
+            $status = $shipService->GetOrderInfoStatus($shippingId);
+            $ship =  $shipService->updateShippingStatus($shippingId, $status);
+            $ship->statusDesc = ViewGenerateHelper::getStatusDescriptionShip($status, $shippingId);
+
+            $user_address = $ship->addressReceive;
+            $cities = $addressService->getListCity()->lists('name', 'id');
+            $districts = $addressService->getListDistrict();
+
+            return view('admin.shipping.detail', compact('ship', 'user_address', 'cities', 'districts'));
+        } catch (\Exception $e) {
+            // @codeCoverageIgnoreStart
+            $return['error'] = $e->getMessage();
+            $return['errorMsg'] = $e->getMessage();
+            // @codeCoverageIgnoreEnd
+        }
+
+    }
+
+}

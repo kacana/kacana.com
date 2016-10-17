@@ -1,0 +1,51 @@
+/*---------------------------------------
+  COLOR FOOTER
+-----------------------------------------*/
+.footer {
+  background: #f7f8fa;
+  padding-bottom: 0;
+  color: #4c4c4c;
+}
+
+.footer h2 {
+  color: #282828;
+}
+
+.footer p {
+  color: #4c4c4c;
+}
+
+.social-footer {
+  margin: 48px 0;
+}
+
+.social-footer .fa {
+  font-size: 55px;
+  color: #282828;
+  margin-bottom: 24px;
+}
+
+.social-footer span {
+  font-size: 14px;
+  line-height: 22px;
+  text-transform: uppercase;
+  font-family: 'Raleway', sans-serif;
+  color: #282828;
+}
+
+.social-footer h4 a {
+  font-size: 18px;
+  text-transform: uppercase;
+  font-family: 'Source Sans Pro', sans-serif;
+  font-weight: 700;
+  color: #282828;
+}
+
+
+.footer-line {
+  border-top: 1px solid #E7E7E7;
+}
+
+.copyright {
+  margin: 48px 0;
+}

@@ -1,0 +1,174 @@
+/* iPad Landscape Mode and Large Tablets */
+@media (max-width: 1024px) {
+
+  .horizontal-subscribe-form .input-box {
+    width: inherit;
+    width: 100%;
+  }
+
+  .horizontal-subscribe-form .default-button {
+    width: 100%;
+  }
+}
+
+@media (max-width: 767px) {
+  .navbar-default .navbar-collapse {
+    border-color: #e7e7e7;
+    background: rgba(0, 0, 0, 0.9);
+    text-align: center;
+  }
+}
+
+/*iPad Portrait Mode, iPad Mini and Small Tablets */
+@media (max-width: 768px) {
+
+  html {
+    font-size: 90%;
+  }
+
+  .affix .navbar-collapse {
+    background: transparent;
+  }
+
+  .navbar-fixed-top .navbar-collapse, .navbar-fixed-bottom .navbar-collapse {
+    max-height: 100%;
+  }
+
+  .about-item,
+    .single-service, 
+    .text-left, 
+    .text-right {
+    text-align: center;
+  }
+
+  .horizontal-subscribe-form .input-box {
+    width: inherit;
+    width: 100%;
+  }
+
+  .horizontal-subscribe-form .default-button {
+    width: 100%;
+  }
+
+  .single-service-content,
+    .about-text {
+    width: auto;
+    margin: auto;
+  }
+
+  .about-icon-wrapper .fa, 
+    .about-text {
+    padding-left: 0;
+  }
+
+  .single-contact-info {
+    margin-bottom: 24px;
+  }
+
+  #countdown .countdown-amount {
+    font-size: 30px;
+  }
+
+  #countdown .countdown-section {
+    border-left: none;
+  }
+}
+
+@media screen and (max-width: 480px) {
+
+  html {
+    font-size: 70%;
+  }
+
+  .navbar-default {
+    padding-left: 0px;
+    padding-right: 0px;
+  }
+
+  .about-item,
+    .single-service, 
+    .text-left, 
+    .text-right {
+    text-align: center;
+  }
+
+  .horizontal-subscribe-form .input-box {
+    width: inherit;
+    width: 100%;
+  }
+
+  .horizontal-subscribe-form .default-button {
+    width: 100%;
+  }
+
+  .single-service-content,
+    .about-text {
+    width: auto;
+    margin: auto;
+  }
+
+  .about-icon-wrapper .fa, 
+    .about-text {
+    padding-left: 0;
+  }
+
+  .single-contact-info {
+    margin-bottom: 24px;
+  }
+}
+
+
+
+/*iPhone Portrait Mode and Very Small Mobile Phones*/
+@media screen and (max-width: 320px) {
+
+  html {
+    font-size: 100%;
+  }
+
+  h1 {
+    font-size: 27px;
+    line-height: 40px;
+  }
+
+  h2 {
+    font-size: 25px;
+    line-height: 40px;
+  }
+
+  h4 {
+    font-size: 15px;
+    line-height: 30px;
+  }
+
+  .about-item,
+    .single-service, 
+    .text-left, 
+    .text-right {
+    text-align: center;
+  }
+
+  .horizontal-subscribe-form .input-box {
+    width: inherit;
+    width: 100%;
+  }
+
+  .horizontal-subscribe-form .default-button {
+    width: 100%;
+  }
+
+  .single-service-content,
+    .about-text {
+    width: auto;
+    margin: auto;
+  }
+
+  .about-icon-wrapper .fa, 
+    .about-text {
+    padding-left: 0;
+  }
+
+  .single-contact-info {
+    margin-bottom: 24px;
+  }
+}

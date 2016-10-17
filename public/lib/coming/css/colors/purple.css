@@ -1,0 +1,70 @@
+/* --------------------------------------
+=========================================
+COLOR : PURPLE
+
+MAIN COLOR CODE: #8600c8
+
+DEEP COLOR CODE: #7701b1
+=========================================
+----------------------------------------- */
+::-moz-selection {
+    background: #8600c8;
+}
+
+::selection {
+    background: #8600c8;
+}
+
+::-moz-selection {
+    background: #8600c8;
+}
+
+a {
+    color: #8600c8;
+}
+
+a:hover {
+    color: #0477b1;
+}
+
+.strong-color {
+    color: #8600c8!important;
+}
+
+.default-button {
+    background: #8600c8;
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #7701b1), color-stop(100%, #8600c8));
+    background: -webkit-linear-gradient(top, #7701b1 0%, #8600c8 100%);
+    background: -webkit-gradient(linear, left top, left bottom, from(#7701b1), to(#8600c8));
+    background: linear-gradient(to bottom, #7701b1 0%, #8600c8 100%);
+    -webkit-box-shadow: 0px 3px 0px #520379;
+    box-shadow: 0px 3px 0px #520379;
+}
+
+.default-button:hover {
+    background: #8600c8 !important;
+}
+
+.default-button:active {
+    background: #8600c8 !important;
+}
+
+.about-icon-wrapper .fa {
+    color: #8600c8;
+}
+
+.single-service-icon {
+    color: #8600c8;
+}
+
+.contact-info .fa {
+    color: #8600c8;
+}
+
+.footer {
+    background: #8600c8;
+}
+
+.footer-line {
+    border-top: 1px solid #7701b1;
+}

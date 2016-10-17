@@ -1,0 +1,54 @@
+
+<div id="btn-sort-product" data-popup-kacana="inline" class="pull-right" >
+    <span class="title">Sắp xếp:</span>
+    <span>
+        <?php if((isset($options['sort']) && $options['sort'] == PRODUCT_LIST_SORT_NEWEST) || (!isset($options['sort']) || !$options['sort'])): ?>
+            Mới nhất
+        <?php endif; ?>
+        <?php if(isset($options['sort']) && $options['sort'] == PRODUCT_LIST_SORT_PRICE_FROM_LOW): ?>
+            Giá: Thấp đến Cao
+        <?php endif; ?>
+        <?php if(isset($options['sort']) && $options['sort'] == PRODUCT_LIST_SORT_PRICE_FROM_HEIGHT): ?>
+            Giá: Cao đến Thấp
+        <?php endif; ?>
+        <?php if(isset($options['sort']) && $options['sort'] == PRODUCT_LIST_SORT_DISCCOUNT): ?>
+            Giảm giá
+        <?php endif; ?>
+        <?php if(isset($options['sort']) && $options['sort'] == PRODUCT_LIST_SORT_COMMENT): ?>
+            Đánh giá
+        <?php endif; ?>
+    </span>
+</div>
+
+<ul class="ui popup hidden" id="list-option-sort-product">
+    <li>
+        <a href="<?php echo e(Request::url()); ?>?page=1&sort=<?php echo e(PRODUCT_LIST_SORT_NEWEST); ?>"
+           class="<?php if((isset($options['sort']) && $options['sort'] == PRODUCT_LIST_SORT_NEWEST) || (!isset($options['sort']))): ?> active  <?php endif; ?>">
+            <i class="pe-7s-rocket"></i> Mới nhất
+        </a>
+    </li>
+    <li>
+        <a href="<?php echo e(Request::url()); ?>?page=1&sort=<?php echo e(PRODUCT_LIST_SORT_PRICE_FROM_LOW); ?>"
+           class="<?php if((isset($options['sort']) && $options['sort'] == PRODUCT_LIST_SORT_PRICE_FROM_LOW)): ?> active <?php endif; ?>">
+            <i class="pe-7s-up-arrow fa-rotate-180"></i> Giá: Thấp đến Cao
+        </a>
+    </li>
+    <li>
+        <a href="<?php echo e(Request::url()); ?>?page=1&sort=<?php echo e(PRODUCT_LIST_SORT_PRICE_FROM_HEIGHT); ?>"
+           class="<?php if((isset($options['sort']) && $options['sort'] == PRODUCT_LIST_SORT_PRICE_FROM_HEIGHT)): ?> active <?php endif; ?>">
+            <i class="pe-7s-up-arrow"></i> Giá: Cao đến Thấp
+        </a>
+    </li>
+    <li>
+        <a href="<?php echo e(Request::url()); ?>?page=1&sort=<?php echo e(PRODUCT_LIST_SORT_DISCCOUNT); ?>"
+           class="<?php if((isset($options['sort']) && $options['sort'] == PRODUCT_LIST_SORT_DISCCOUNT)): ?> active <?php endif; ?>">
+            <i class="pe-7s-smile"></i> Giảm giá
+        </a>
+    </li>
+    <li>
+        <a href="<?php echo e(Request::url()); ?>?page=1&sort=<?php echo e(PRODUCT_LIST_SORT_COMMENT); ?>"
+           class="<?php if((isset($options['sort']) && $options['sort'] == PRODUCT_LIST_SORT_COMMENT)): ?> active <?php endif; ?>">
+            <i class="pe-7s-star"></i> Đánh giá
+        </a>
+    </li>
+</ul>

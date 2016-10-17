@@ -1,0 +1,71 @@
+/* --------------------------------------
+=========================================
+COLOR : ORANGE
+
+MAIN COLOR CODE: #ea8825
+
+DEEP COLOR CODE: #d87919
+=========================================
+----------------------------------------- */
+
+::-moz-selection {
+    background: #ea8825;
+}
+
+::selection {
+    background: #ea8825;
+}
+
+::-moz-selection {
+    background: #ea8825;
+}
+
+a {
+    color: #ea8825;
+}
+
+a:hover {
+    color: #0477b1;
+}
+
+.strong-color {
+    color: #ea8825!important;
+}
+
+.default-button {
+    background: #ea8825;
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #d87919), color-stop(100%, #ea8825));
+    background: -webkit-linear-gradient(top, #d87919 0%, #ea8825 100%);
+    background: -webkit-gradient(linear, left top, left bottom, from(#d87919), to(#ea8825));
+    background: linear-gradient(to bottom, #d87919 0%, #ea8825 100%);
+    -webkit-box-shadow: 0px 3px 0px #A0570D;
+    box-shadow: 0px 3px 0px #A0570D;
+}
+
+.default-button:hover {
+    background: #ea8825 !important;
+}
+
+.default-button:active {
+    background: #ea8825 !important;
+}
+
+.about-icon-wrapper .fa {
+    color: #ea8825;
+}
+
+.single-service-icon {
+    color: #ea8825;
+}
+
+.contact-info .fa {
+    color: #ea8825;
+}
+
+.footer {
+    background: #ea8825;
+}
+
+.footer-line {
+    border-top: 1px solid #d87919;
+}

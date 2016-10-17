@@ -1,0 +1,70 @@
+/* --------------------------------------
+=========================================
+COLOR : YELLOW
+
+MAIN COLOR CODE: #e4d20c
+
+DEEP COLOR CODE: #d2b311
+=========================================
+----------------------------------------- */
+::-moz-selection {
+    background: #e4d20c;
+}
+
+::selection {
+    background: #e4d20c;
+}
+
+::-moz-selection {
+    background: #e4d20c;
+}
+
+a {
+    color: #e4d20c;
+}
+
+a:hover {
+    color: #0477b1;
+}
+
+.strong-color {
+    color: #e4d20c!important;
+}
+
+.default-button {
+    background: #e4d20c;
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #d2b311), color-stop(100%, #e4d20c));
+    background: -webkit-linear-gradient(top, #d2b311 0%, #e4d20c 100%);
+    background: -webkit-gradient(linear, left top, left bottom, from(#d2b311), to(#e4d20c));
+    background: linear-gradient(to bottom, #d2b311 0%, #e4d20c 100%);
+    -webkit-box-shadow: 0px 3px 0px #AB9E0B;
+    box-shadow: 0px 3px 0px #AB9E0B;
+}
+
+.default-button:hover {
+    background: #e4d20c !important;
+}
+
+.default-button:active {
+    background: #e4d20c !important;
+}
+
+.about-icon-wrapper .fa {
+    color: #e4d20c;
+}
+
+.single-service-icon {
+    color: #e4d20c;
+}
+
+.contact-info .fa {
+    color: #e4d20c;
+}
+
+.footer {
+    background: #e4d20c;
+}
+
+.footer-line {
+    border-top: 1px solid #D7C610;
+}
