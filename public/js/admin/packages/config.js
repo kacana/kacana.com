@@ -28,17 +28,21 @@ var configPackage = {
 
             var uploaderTextImage = Kacana.uploader.init(uploadHost,container,dropElement,browseButton,multiSelection,uploadLimit,filters);
             var $areaEditorImageUpload = null;
+            var $containerEditor = null;
 
             $('.kacana-editor-content').summernote({
                 height: 300,
                 callbacks: {
                     onImageUpload: function(files) {
+                        $areaEditorImageUpload = $(this);
+                        $containerEditor = $(this).next();
+                        Kacana.utils.loading($containerEditor);
                         $.each(files, function(i, file) {
                             uploaderTextImage.addFile(file);
                         });
                         uploaderTextImage.start();
 
-                        $areaEditorImageUpload = $(this);
+
                     },
                     onMediaDelete : function($target, editor, $editable) {
                         console.log($target.attr('src'));
@@ -59,20 +63,12 @@ var configPackage = {
 
                     var callBack = function(data){
                         if(data.ok){
-                            data = data.data
-                            var $image = '<div class="product-image-item" data-type="3" data-id="'+data.id+'">';
-                            $image +=       '<img class="product-image" src="'+data.image+'">';
-                            $image +=       '<div class="product-image-tool">';
-                            $image +=           '<a href="#setPrimaryImage"> <i class="fa fa-photo"></i> </a>';
-                            $image +=           '<a href="#setSlideImage"><i class="fa fa-star"></i></a>';
-                            $image +=           '<a href="#deleteImage"><i class="fa fa-trash"></i></a>';
-                            $image +=       '</div>';
-                            $image +=   '</div>';
-
-                            // $('.list-product-image').prepend($image);
-                            // Kacana.product.detail.addImageToProperties(data);
-
-                            $areaEditorImageUpload.summernote('insertImage', data.image);
+                            data = data.data;
+                            var nodeParent = document.createElement('p');
+                            var node = document.createElement('img');
+                            node.src = data.image;
+                            nodeParent.appendChild(node);
+                            $areaEditorImageUpload.summernote('insertNode', nodeParent);
                         }
 
                     };
@@ -84,6 +80,10 @@ var configPackage = {
                     Kacana.ajax.product.addProductImage(sendData, callBack, errorCallBack);
 
                 }
+            });
+
+            uploaderTextImage.bind('UploadComplete', function(up, files) {
+                Kacana.utils.closeLoading();
             });
         }
     }
