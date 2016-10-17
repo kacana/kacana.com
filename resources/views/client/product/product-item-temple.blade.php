@@ -1,16 +1,15 @@
 <div class="col-xxs-12 col-xs-6 col-sm-4 col-md-3 product-item" >
     <div class="product-image" >
-        <div class="product-image-inside royalSlider rsDefault" >
-            <a data-rsbigimg="{{$item->image}}" href="{{$item->image}}" class="rsImg bugaga" title="{{$item->name}}">
+        <div class="product-image-inside royalSlider rsDefault" data-first-image="{{$item->image}}" >
+            <a data-rsbigimg="{{$item->image}}" href="{{AWS_CDN_URL.'/images/client/placeholderimage.jpg'}}" class="rsImg">
                 {{$item->name}}
-                <img class="rsTmb" src="{{$item->image}}" alt="{{$item->name}}"/>
+                <img class="rsTmb" data-original="{{$item->image}}"/>
             </a>
             @if($item->properties && count($item->properties)>0)
                 @foreach($item->properties as $property)
                     @if($property->product_gallery)
                         <a id="product-property-gallery-id-{{$item->id}}" class="rsImg" data-rsbigimg="{{$property->product_gallery->image}}" href="{{$property->product_gallery->image}}" >
-                            {{$item->name}}
-                            <img class="rsTmb" src="{{$property->product_gallery->thumb}}">
+                            <img class="rsTmb" data-original="{{$property->product_gallery->thumb}}" >
                         </a>
                     @endif
                 @endforeach

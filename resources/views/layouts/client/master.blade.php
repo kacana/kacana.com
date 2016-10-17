@@ -164,6 +164,7 @@
 <script src="/lib/form-validation/js/formValidator.min.js" type="text/javascript"></script>
 <script src="/lib/vide/vide.js"></script>
 <script src="/lib/ml-menu/ml-menu.js"></script>
+<script src="/lib/lazyload/jquery.lazyload.min.js"></script>
 
 <!-- Theme Base, Components and Settings -->
 <script src="/lib/theme/js/theme.js"></script>

@@ -20,7 +20,7 @@ var configPackage = {
             var uploadLimit = 100;
             var container = 'image-upload-container';
             var dropElement = 'undefined';
-            var browseButton = 'select-file';
+            var browseButton = 'btn-upload-image-desc';
             var multiSelection = true;
             var filters = [
                 {title : 'Image Files', extensions : 'jpg,jpeg,gif,png,bmp'}
@@ -33,7 +33,6 @@ var configPackage = {
                 height: 300,
                 callbacks: {
                     onImageUpload: function(files) {
-
                         $.each(files, function(i, file) {
                             uploaderTextImage.addFile(file);
                         });

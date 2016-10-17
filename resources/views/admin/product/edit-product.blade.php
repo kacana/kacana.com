@@ -352,7 +352,7 @@
                             {!! Form::label('meta', 'Miêu tả sản phẩm') !!}<br/>
                             {!! Form::textarea('short_description', $product['short_description'], array('class'=>'form-control', 'style'=>'height:80px')) !!}
                         </div>
-
+                        <button id="btn-upload-image-desc" class="hidden" ></button>
                         <!-- description -->
                         <div class="form-group">
                             {!! Form::label('description', 'Mô tả chi tiết sản phẩm') !!}

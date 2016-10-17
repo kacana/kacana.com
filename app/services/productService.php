@@ -159,7 +159,8 @@ class productService {
         $properties = array();
         $propertiesSize = array();
         foreach($productProperties as $property){
-            if($property->status == KACANA_PRODUCT_STATUS_ACTIVE)
+
+            if(isset($property->status) && $property->status == KACANA_PRODUCT_STATUS_ACTIVE)
             {
                 $pivot = $property->pivot;
                 if(!isset($properties[$pivot->tag_color_id]))
