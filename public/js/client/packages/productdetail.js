@@ -20,7 +20,7 @@ var productdetailPackage = {
                 loop: true,
                 imageScaleMode: 'fit-if-smaller',
                 navigateByClick: true,
-                numImagesToPreload: 2,
+                numImagesToPreload: 0,
                 arrowsNav: true,
                 arrowsNavAutoHide: false,
                 arrowsNavHideOnTouch: true,
@@ -75,6 +75,8 @@ var productdetailPackage = {
                 ]
             });
 
+            $('.product-information-detail img').lazyload();
+
             if(window.location.hash) {
                 var colorIndex = window.location.hash.substring(1); //Puts hash in variable, and removes the # character
                 $('.list-color-product').slick('slickGoTo', colorIndex, true);
@@ -94,15 +96,20 @@ var productdetailPackage = {
                 $(this).addClass('active');
                 var sizeId = $(this).data('size');
 
+                for(var i=0; i<sizeId.length;i++)
+                    sizeId[i] = parseInt(sizeId[i]);
+
                 // get size by color
                 Kacana.productdetail.page.find('a[href="#choose-product-size"]').each(function(){
-                    if(jQuery.inArray($(this).data('id'), sizeId)>=0)
+                    if(jQuery.inArray(parseInt($(this).data('id')), sizeId)>=0)
                     {
                         $(this).removeClass('disable');
                     }
                     else
                         $(this).addClass('disable');
                 });
+
+                Kacana.productdetail.checkSizeAvailable();
 
                 // get image by color
                 var imageIndex = $(this).data('index');
@@ -125,7 +132,19 @@ var productdetailPackage = {
                 Kacana.productdetail.page.find('.list-size-product').popup('destroy');
             });
 
-            Kacana.productdetail.page.on('click', '#add-cart-btn', Kacana.productdetail.checkout)
+            Kacana.productdetail.page.on('click', '#add-cart-btn', Kacana.productdetail.checkout);
+            Kacana.productdetail.checkColorAvailable();
+        },
+        checkColorAvailable: function () {
+            if(Kacana.productdetail.page.find('a[href="#choose-product-color"]').length == 1){
+                Kacana.productdetail.page.find('a[href="#choose-product-color"]').click();
+            }
+            Kacana.productdetail.checkSizeAvailable();
+        },
+        checkSizeAvailable: function () {
+            if(Kacana.productdetail.page.find('a[href="#choose-product-size"]:not(.disable)').length == 1){
+                Kacana.productdetail.page.find('a[href="#choose-product-size"]:not(.disable)').click();
+            }
         },
         checkout: function(){
             var $listColor = Kacana.productdetail.page.find('.list-color-product');

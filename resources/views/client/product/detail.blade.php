@@ -172,7 +172,7 @@
                         </label>
                         <div class="description-detail-title-footer"></div>
                         <div class="toggle-content">
-                            {!! fixHtml($item->description)  !!}
+                            {!! $item->descriptionLazyLoad  !!}
                         </div>
                     </section>
                 </div>

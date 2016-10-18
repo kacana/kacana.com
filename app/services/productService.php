@@ -136,9 +136,12 @@ class productService {
         $htmlFixer = new HtmlFixer();
         $product = $productModel->getProductById($id);
 
-
         if($product->description)
+        {
             $product->description = $htmlFixer->getFixedHtml($product->description);
+            $product->descriptionLazyLoad = $htmlFixer->getFixedHtml($product->descriptionLazyLoad);
+        }
+
         if($userId)
             $product->isLiked = ($userProductLike->getItem($userId, $product->id))?true:false;
 

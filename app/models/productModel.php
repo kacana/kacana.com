@@ -21,6 +21,12 @@ class productModel extends Model  {
      */
     public $timestamps = false;
 
+    //Add extra attribute
+    protected $attributes = ['descriptionLazyLoad'];
+
+    //Make it available in the json response
+    protected $appends = ['descriptionLazyLoad'];
+
     /**
      * Get the tags associated with product
      */
@@ -600,6 +606,10 @@ class productModel extends Model  {
 
     public function getDescriptionAttribute($value){
         return str_replace('"/images/product','"'.AWS_CDN_URL.'/images/product', $value);
+    }
+
+    public function getDescriptionLazyLoadAttribute($value){
+        return str_replace('src="'.AWS_CDN_URL.'/images/product','data-original="'.AWS_CDN_URL.'/images/product', $this->attributes['description'] );
     }
 
     public function getImageAttribute($value)

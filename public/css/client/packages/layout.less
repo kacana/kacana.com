@@ -820,8 +820,15 @@ body{
     }
     .rsThumb{
       width: 72px;
+      border: 2px solid #fff;
       @media (max-width: 768px) {
         width: 44px;
+      }
+      &.rsNavSelected{
+        border-color: @color-border;
+        img{
+          opacity: 1;
+        }
       }
     }
     .rsArrowIcn{

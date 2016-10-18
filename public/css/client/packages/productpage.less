@@ -116,7 +116,7 @@
       float: left;
       margin: 0px 10px 10px 0;
       a{
-        border: 1px solid #ccc;
+        border: 1px solid @color-grey-supper-light;
         border-radius: 2px;
         display: block;
         padding: 4px 12px 2px;
@@ -128,7 +128,8 @@
           color: #fff;
         }
         &.disable{
-          opacity: 0.5;
+          border: 1px dashed @color-border;
+          opacity: 0.4;
           cursor: default;
           &:hover,&.active{
             background-color: #fff;

@@ -54,7 +54,7 @@
             <div class="container background-white vpadding-10 margin-top-10px">
                 <div class="row">
                     <div class="col-md-12 text-center">
-                        {!! $tag->description !!}
+                        {!! fixHtml($tag->description) !!}
                     </div>
                 </div>
             </div>
