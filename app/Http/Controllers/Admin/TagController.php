@@ -341,6 +341,29 @@ class TagController extends BaseController {
         return response()->json($return);
     }
 
+    public function addTagToParent(Request $request){
+        $return['ok'] = 0;
+
+        $tagId = $request->input('tagId');
+        $parentId = $request->input('parentId', 0);
+        $typeId = $request->input('typeId');
+
+        try {
+            $tagService = new tagService();
+            $return['data'] = $tagService->addTagRelation($tagId, $parentId, $typeId);
+            $return['ok'] = 1;
+        } catch (\Exception $e) {
+            if($request->ajax())
+            {
+                $result['error'] = $e->getMessage();
+                return $result;
+            }
+            else
+                return view('errors.404', ['error_message' => $e->getMessage()]);
+        }
+        return response()->json($return);
+    }
+
     public function searchTagProduct(Request $request){
         $tagService = new tagService();
 

@@ -266,9 +266,12 @@ var tagPackage = {
               $('#modal-add-image-tag').on('click', 'button#banner-remove-btn', Kacana.tag.relationTags.removeImageTagWithType);
 
           },
-          createTagWithType: function () {
+          createTagWithType: function (tagName, parentId, id, callBackPopup) {
+
+              var typeId = $('#content-tag-relation').find('#create-tag-btn').data('type-id');
+
               var callback = function(data){
-                  resolve(data);
+                  callBackPopup(data);
                   var $tagsElement = $('#tree-tags');
                   var newNode = data.data;
                   if(id)
@@ -330,9 +333,9 @@ var tagPackage = {
               Kacana.ajax.tag.createTagWithType(tagName, typeId, id, callback, errorCallback);
           },
           popupCreateTagWithType: function(){
-              var typeId = $('#content-tag-relation').find('#create-tag-btn').data('type-id');
               var parentId = $(this).data('parent-id');
               var id = $(this).data('id');
+
               swal({
                   title: 'Create Tag',
                   html: '<input id="fTagName" autofocus placeholder="tag name" class="swal2-input" autofocus="">',
@@ -347,7 +350,10 @@ var tagPackage = {
                               reject('please input tag name!');
                           else
                           {
-                              Kacana.tag.detailTag.createTa
+                              var callBack = function (data) {
+                                  resolve(data);
+                              };
+                              Kacana.tag.relationTags.createTagWithType(tagName, parentId, id,  callBack);
                           }
                       });
                   },
@@ -355,7 +361,27 @@ var tagPackage = {
                       setTimeout(function () {
                           $('#fTagName').focus();
                       }, 300);
-                      Kacana.tag.listTag.searchTag();
+
+                      callBackPopup = function (data) {
+                          if(data.ok){
+                              swal({
+                                  type: 'success',
+                                  title: 'added',
+                                  html:'<b> ' + data.data.name +'</b>'
+                              });
+                          }
+                          else
+                          {
+                              swal({
+                                  title: 'Error!',
+                                  text: 'Opp!something wrong on processing.',
+                                  type: 'error',
+                                  confirmButtonText: 'Cool'
+                              });
+                          }
+                      };
+
+                      Kacana.tag.relationTags.searchTag(parentId, id, callBackPopup);
                   }
               }).then(function(data) {
                   if(data.ok){
@@ -786,6 +812,94 @@ var tagPackage = {
 
                   }
               });
+          },
+          searchTag: function (parentId, currentTagId, callBackPopup) {
+              var typeId = $('#content-tag-relation').find('#create-tag-btn').data('type-id');
+              var noResultMessage = "don't have results!";
+
+              $('#fTagName').autocomplete({
+                  source: function( request, response ) {
+                      var callback = function(data){
+                          if(data.ok)
+                          {
+                              var data = data.data;
+                              if(!data.total){
+
+                                  var result = [noResultMessage];
+
+                                  response(result);
+
+                              } else{
+                                  var searchData = [];
+                                  var results = data.results;
+
+                                  for(var i = 0;i < results.length;i++)
+                                  {
+                                      searchData.push({
+                                          id : results[i].id,
+                                          name: results[i].name,
+                                          label : results[i].name
+                                      });
+                                  };
+
+                                  response( searchData );
+                              }
+                          }
+                          else
+                              swal({
+                                  title: 'Error!',
+                                  text: 'Opp!something wrong on processing.',
+                                  type: 'error',
+                                  confirmButtonText: 'Cool'
+                              });
+                      };
+
+                      var errorCallback = function(){
+                          // do something here if error
+                      };
+                      Kacana.ajax.tag.searchTagRelation(request.term, typeId, callback, errorCallback);
+                  },
+                  minLength: 2,
+                  select: function( event, ui ) {
+                      var name = ui.item.name;
+                      var id = ui.item.id;
+
+                      if(noResultMessage == ui.item.value){
+
+                          return false;
+
+                      }else{
+                          var callback = function(data){
+                              var $tagsElement = $('#tree-tags');
+
+                                var nodeId  = currentTagId+'_'+parentId+'_'+typeId;
+                                var node = $tagsElement.tree('getNodeById', nodeId);
+
+                                $tagsElement.tree(
+                                    'appendNode',
+                                    {
+                                        name: name,
+                                        id: id+'_0_'+typeId,
+                                        'tag_type_id': typeId,
+                                        'short_desc':'',
+                                        'image': '',
+                                        'child_count': 0,
+                                        'child_id': id,
+                                        'parent_id': 0,
+                                        'product_count': '?'
+                                    },
+                                    node
+                                );
+                              callBackPopup(data);
+                          };
+
+                          var errorCallback = function(){
+                              // do something here if error
+                          };
+                          Kacana.ajax.tag.addTagToParent(id, currentTagId, typeId, callback, errorCallback);
+                      }
+                  }
+              }).autocomplete( "widget" ).addClass("search-tag");
           },
           collectionTag: function(){
               var searchBox = $('#tag-search-box');

@@ -74,6 +74,7 @@ Route::group(['domain'=>KACANA_AUTH_ADMIN_NAME.'.{nameDomain}','middleware' => '
     Route::any('/tag/getTreeTag',                           array('as'=>'getTreeTag',               'uses'=>'Admin\TagController@getTreeTag'));
     Route::post('/tag/createTag',                           array('as'=>'createTag',                'uses'=>'Admin\TagController@createTag'));
     Route::post('/tag/addTagToRoot',                        array('as'=>'addTagToRoot',             'uses'=>'Admin\TagController@addTagToRoot'));
+    Route::post('/tag/addTagToParent',                      array('as'=>'addTagToParent',           'uses'=>'Admin\TagController@addTagToParent'));
     Route::post('/tag/editTag',                             array('as'=>'editTag',                  'uses'=>'Admin\TagController@editTag'));
     Route::post('/tag/removeTagRelation',                   array('as'=>'removeTagRelation',        'uses'=>'Admin\TagController@removeTagRelation'));
     Route::post('/tag/searchTagRelation',                   array('as'=>'searchTagRelation',        'uses'=>'Admin\TagController@searchTagRelation'));

@@ -11,15 +11,39 @@ var homepagePackage = {
         },
         bindEvent: function () {
             Kacana.homepage.homePageId.on('click','a[href="#load-more-product-with-type"]', Kacana.homepage.loadMoreProductWithType);
-            Kacana.homepage.homePageId.on('click','img.rsMainSlideImage', Kacana.homepage.goToDetailPage);
+            Kacana.homepage.homePageId.on('mousedown','img.rsMainSlideImage, .product-title a', function (e) {
+                switch(e.which)
+                {
+                    case 1:
+                        Kacana.homepage.goToDetailPage($(this), 'left');
+                        break;
+                    case 2:
+                        Kacana.homepage.goToDetailPage($(this), 'middle');
+                        break;
+                    case 3:
+                        //right Click
+                        break;
+                }
+                return true;
+
+            });
         },
-        goToDetailPage: function () {
-            var productItem = $(this).parents('.product-item');
-            var slider = $(this).parents('.product-image-inside').data('royalSlider');
+        goToDetailPage: function (obj, typeClick) {
+            var productItem = obj.parents('.product-item');
 
             var href = productItem.find('.product-info .product-title a').attr('href');
+            var colorIndex = productItem.data('color-index');
+            if(colorIndex !== undefined)
+            {
+                var url = href+'#'+colorIndex;
+            }
+            else
+                var url = href;
 
-            window.location.href = href+'#'+slider.currSlideId;
+            if(typeClick == 'left')
+                window.location.href = url;
+            else if(typeClick == 'middle')
+                window.open(url);
 
         },
         loadMoreProductWithType: function () {
@@ -65,6 +89,12 @@ var homepagePackage = {
                                 productItem.find('.rsImg.rsMainSlideImage').lazyload();
                                 productItem.find('img.rsTmb').lazyload();
                             }
+                        });
+
+                        self.ev.on('rsAfterSlideChange', function(e) {
+                            var id = e.target.currSlideId;
+                            var productItem = e.target.slider.parents('.product-item');
+                            productItem.data('color-index', id);
                         });
                     }
                 }

@@ -159,7 +159,8 @@ class tagModel extends Model  {
 
         $tagRelations->leftJoin('tag_types', 'tag_relations.tag_type_id', '=', 'tag_types.id')
             ->leftJoin('tags', 'tags.id', '=', 'tag_relations.child_id')
-            ->where('tag_relations.parent_id','=', $tagId);
+            ->where('tag_relations.parent_id','=', $tagId)
+            ->groupBy('tags.id');
 
         if($relationType == TAG_RELATION_TYPE_GROUP && $tagId != 0)
             $tagRelations->orderBy('tags.name', 'ASC');
@@ -326,6 +327,42 @@ class tagModel extends Model  {
 
         return $results ? $results : false;
     }
+
+    public function getTagByIds($ids, $relationType = false){
+        $tags = DB::table('tags');
+
+        $tags->leftJoin('tag_relations', 'tags.id', '=', 'tag_relations.child_id')
+            ->leftJoin('tag_types', 'tag_relations.tag_type_id', '=', 'tag_types.id')
+            ->whereIn('tags.id', $ids)->groupBy('tags.id');
+        if($relationType)
+            $tags->where('tag_relations.tag_type_id','=', $relationType);
+
+        $tags->select('tags.*', 'tag_relations.*', 'tag_types.name AS tag_type_name'  );
+
+        $results = $tags->get();
+
+        return $results ? $results : false;
+    }
+
+    public function getTagByIdsHaveProduct($ids, $relationType = false){
+        $tags = DB::table('tags');
+
+        $tags->leftJoin('tag_relations', 'tags.id', '=', 'tag_relations.child_id')
+            ->leftJoin('tag_types', 'tag_relations.tag_type_id', '=', 'tag_types.id')
+            ->join('product_tag', 'tags.id', '=', 'product_tag.tag_id')
+            ->whereIn('tags.id', $ids)->groupBy('tags.id');
+
+        if($relationType)
+            $tags->where('tag_relations.tag_type_id','=', $relationType);
+
+        $tags->select('tags.*', 'tag_relations.*', 'tag_types.name AS tag_type_name'  );
+
+        $results = $tags->get();
+
+        return $results ? $results : false;
+    }
+
+
 
     /**
      * @param $productId

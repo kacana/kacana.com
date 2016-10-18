@@ -55,7 +55,10 @@ class ProductController extends BaseController {
 
             $limit = KACANA_PRODUCT_ITEM_PER_TAG;
             $data['items'] = $productService->getProductByTagId($tagId, $limit, $userId, $page, $options);
-            $data['tag'] = $tagService->getTagById($tagId, false);
+            $tags = $tagService->getTagById($tagId, false);
+            $tags->allChilds = $tagService->getAllChildTagHaveProduct($tagId);
+
+            $data['tag'] = $tags;
             $data['options'] = $options;
         } catch (\Exception $e) {
             if($request->ajax())

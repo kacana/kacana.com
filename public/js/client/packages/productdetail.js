@@ -74,6 +74,13 @@ var productdetailPackage = {
                     // instead of a settings object
                 ]
             });
+
+            if(window.location.hash) {
+                var colorIndex = window.location.hash.substring(1); //Puts hash in variable, and removes the # character
+                $('.list-color-product').slick('slickGoTo', colorIndex, true);
+                $('.list-color-product').find('.slick-track .slick-slide').eq(colorIndex).find('a').click();
+
+            }
         },
         bindEvent: function(){
             var slideImageProduct = $('#slide-product-image-mobile, #slide-product-image');

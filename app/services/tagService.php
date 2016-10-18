@@ -391,8 +391,14 @@ class tagService {
         $tag = $tagModel->getTagById($tagId, $relationType);
         if($tagModel->getSubTags($tagId, $relationType))
             $tag->childs = $tagModel->getSubTags($tagId, $relationType);
-
         return $tag;
+    }
+
+    public function getAllChildTagHaveProduct($tagId){
+        $tagModel = new tagModel();
+        $listTagRelationId = array();
+        $tagRelationId = $this->getAllChildTag($tagId, $listTagRelationId);
+        return  $tagModel->getTagByIdsHaveProduct($tagRelationId);
     }
 
     /**

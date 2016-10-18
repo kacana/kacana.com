@@ -265,6 +265,18 @@ var ajaxPackage = {
                 var options = [];
                 Kacana.ajax.init(url, dataType, type, dataPost, callBack, errorCallBack, options);
             },
+            addTagToParent: function(tagId, parentId, typeId, callBack, errorCallBack){
+                var url = '/tag/addTagToParent';
+                var dataType = 'json';
+                var type = 'post';
+                var dataPost = {
+                    tagId: tagId,
+                    parentId: parentId,
+                    typeId: typeId
+                };
+                var options = [];
+                Kacana.ajax.init(url, dataType, type, dataPost, callBack, errorCallBack, options);
+            },
             getTag: function(tagId, callBack, errorCallBack){
                 var url = '/tag/getTag';
                 var dataType = 'json';

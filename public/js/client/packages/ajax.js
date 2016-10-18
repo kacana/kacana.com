@@ -99,7 +99,7 @@ var ajaxPackage = {
             loadMoreProductWithType: function (typeLoadProduct, page, callBack, errorCallBack) {
                 var url = '/san-pham/loadMoreProductWithType';
                 var dataType = 'json';
-                var type = 'get';
+                var type = 'post';
                 var dataPost = {
                     'type': typeLoadProduct,
                     'page': page

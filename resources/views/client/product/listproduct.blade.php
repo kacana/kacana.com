@@ -42,14 +42,36 @@
                 </div>
             </div>
         </div>
-        <div class="container background-white">
+
+        <div style="margin-top: -7px" class="container background-white">
             <div class="row">
                 <div class="col-md-12 text-center">
                     {!! $items->appends(['sort' => (isset($options['sort']))?$options['sort']:''])->render() !!}
                 </div>
             </div>
         </div>
-        <div class="loader-response"><i class="fa fa-circle-o-notch fa-spin fa-3x"></i></div>
+        @if($tag->description)
+            <div class="container background-white vpadding-10 margin-top-10px">
+                <div class="row">
+                    <div class="col-md-12 text-center">
+                        {!! $tag->description !!}
+                    </div>
+                </div>
+            </div>
+        @endif
+        @if(isset($tag->allChilds))
+            <div class="container background-white vpadding-10 margin-top-10px">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h3 class="color-grey">Sản phẩm nổi bật</h3>
+                        @foreach($tag->allChilds as $subTag)
+                           <a class="color-grey-light" href="{{urlTag($subTag)}}" >{{$subTag->name}}</a> ,
+                        @endforeach
+                    </div>
+                </div>
+            </div>
+        @endif
+
     </div>
     <input type="hidden" name="" value="{{$tag->id}}" id="tag-id"/>
     <input type="hidden" name="" value="" id="color-id"/>
