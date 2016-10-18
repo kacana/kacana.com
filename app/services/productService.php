@@ -172,6 +172,7 @@ class productService {
                     $properties[$pivot->tag_color_id]->product_gallery_id = $pivot->product_gallery_id;
                     $properties[$pivot->tag_color_id]->product_gallery = $productGalleryModel->getById($pivot->product_gallery_id);
                     $properties[$pivot->tag_color_id]->product_gallery_array = ($productGalleryModel->getById($pivot->product_gallery_id))?$productGalleryModel->getById($pivot->product_gallery_id)->toArray():0;
+
                 }
 
                 if(!isset($properties[$pivot->tag_color_id]->size))
@@ -443,7 +444,6 @@ class productService {
                     $product->isLiked = ($userProductLike->getItem($userId, $product->id))?true:false;
                 $this->formatProductProperties($product);
             }
-
         return $products;
     }
 
@@ -540,7 +540,6 @@ class productService {
             $results = $this->getDiscountProduct($userId, $offset, $limit);
         }
 
-
         if(count($results->toArray()))
         {
             return $this->formatProductDataForAjax($results);
@@ -556,18 +555,38 @@ class productService {
      * @return mixed
      */
     public function formatProductDataForAjax($results){
+
         foreach ($results as &$item)
         {
-            $item = $this->formatProductProperties($item);
-
-
             $item->urlProductDetail = urlProductDetail($item);
             $item->sell_price_show = formatMoney($item->sell_price);
             $item->discount_show = formatMoney($item->discount);
             $item->price_after_discount_show = formatMoney($item->sell_price - $item->discount);
             $item->style = $item->style->toArray();
             $item->is_loggin = \Auth::check()?1:0;
-            $item->properties_js = $item->properties;
+            if((count($item->properties)))
+            {
+                $properties_js = array();
+                $i = 0;
+                foreach ($item->properties as $property){
+                    if($property->product_gallery)
+                    {
+                        $property->product_gallery->bigimage = $property->product_gallery->image;
+                        if($i == 0)
+                        {
+
+                            $item->image = $property->product_gallery->getOriginal('image');
+                            $property->product_gallery->image = PRODUCT_IMAGE_PLACE_HOLDER;
+                        }
+                        $i++;
+                        array_push($properties_js, $property);
+                    }
+                }
+
+                $item->properties_js = $properties_js;
+            }
+            else
+                $item->properties_js = 0;
         }
         return $results->toArray();
     }

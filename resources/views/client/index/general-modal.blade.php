@@ -126,4 +126,4 @@
         </div>
     </div>
 </div>
- @include('/client/product/product-item-js-template');
+ @include('/client/product/product-item-js-template')

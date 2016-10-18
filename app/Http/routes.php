@@ -154,7 +154,7 @@ Route::group(['domain'=>'{nameDomain}', 'middleware' => 'client'], function () {
     Route::group(['prefix'=>'san-pham'], function(){
         Route::get('{slug}--{id}--{tagId}',                 array('as'=>'productDetail',                    'uses'=>'Client\ProductController@productDetail'));
         Route::any('suggestSearchProduct',                  array('as'=>'product-suggest-search-product',   'uses'=>'Client\ProductController@suggestSearchProduct'));
-        Route::any('loadMoreProductWithType',               array('as'=>'product-load-more-product-with-type','uses'=>'Client\ProductController@loadMoreProductWithType'));
+        Route::post('loadMoreProductWithType',               array('as'=>'product-load-more-product-with-type','uses'=>'Client\ProductController@loadMoreProductWithType'));
     });
     Route::get('{slug}--{id}',                              array('as'=>'listProductByCate',                'uses'=>'Client\ProductController@listProductByCate'));
     Route::post('loadListProducts',                         array('as'=>'loadListProducts',                 'uses'=>'Client\ProductController@loadListProducts'));

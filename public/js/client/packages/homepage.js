@@ -8,8 +8,6 @@ var homepagePackage = {
             Kacana.homepage.showPopupRequest();
             Kacana.homepage.closeAdvisePopup();
             Kacana.homepage.bindEvent();
-
-            $('img.rsTmb').lazyload();
         },
         bindEvent: function () {
             Kacana.homepage.homePageId.on('click','a[href="#load-more-product-with-type"]', Kacana.homepage.loadMoreProductWithType);
@@ -61,10 +59,11 @@ var homepagePackage = {
 
                         self.ev.on('rsAfterContentSet', function(e, currSlideObject) {
                             if(currSlideObject.id == 0){
-                                var productItem = $('.product-item').eq(e.target.uid);
+                                var productItem = e.target.slider.parents('.product-item');
                                 var firstImage = productItem.find('.product-image-inside').data('firstImage');
                                 productItem.find('.rsImg.rsMainSlideImage').attr('data-original', firstImage);
                                 productItem.find('.rsImg.rsMainSlideImage').lazyload();
+                                productItem.find('img.rsTmb').lazyload();
                             }
                         });
                     }
@@ -104,23 +103,6 @@ var homepagePackage = {
                 },
                 imgHeight: 200
             });
-
-            // Kacana.homepage.homePageId.find('.product-item').each(function(){
-            //     var imageProduct = $(this).find('.product-image img');
-            //         var height = imageProduct.prop('naturalHeight');
-            //         var width = imageProduct.prop('naturalWidth');
-            //         var widthParent = imageProduct.parents('.product-image').width();
-            //         var heightParent = imageProduct.parents('.product-image').height();
-            //
-            //         var tempHeight = height * ( widthParent/width );
-            //
-            //         if(tempHeight > heightParent)
-            //         {
-            //             imageProduct.css('height', '100%');
-            //         }
-            //         else
-            //             imageProduct.css('width', '100%');
-            //     });
         },
         getPopoverPlacement: function(pop, dom_el){
                 var width = window.innerWidth;
