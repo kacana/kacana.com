@@ -186,6 +186,9 @@ Route::group(['domain'=>'{nameDomain}', 'middleware' => 'client'], function () {
 
     //Customer Controller
     Route::any('/khach-hang/kiem-tra-don-hang',             array('as'=>'CustomerTrackingOrder',            'uses'=>'Client\CustomerController@trackingOrder'));
+    Route::any('/khach-hang/quen-mat-khau',                 array('as'=>'CustomerForgotPassword',           'uses'=>'Client\CustomerController@forgotPassword'));
+    Route::any('/khach-hang/quen-mat-khau-gui-email',       array('as'=>'CustomerForgotPasswordEmailSent',  'uses'=>'Client\CustomerController@forgotPasswordEmailSent'));
+    Route::any('/khach-hang/mat-khau-moi',                  array('as'=>'CustomerNewPassword',              'uses'=>'Client\CustomerController@newPassword'));
 
     Route::group(['prefix'=>'khach-hang', 'middleware' => 'auth'], function(){
         Route::any('tai-khoan',                             array('as'=>'CustomerAccount',                  'uses'=>'Client\CustomerController@account'));

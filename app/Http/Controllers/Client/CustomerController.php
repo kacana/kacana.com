@@ -332,4 +332,89 @@ class CustomerController extends BaseController {
             $return['error'] = $e->getMessage();
         }
     }
+
+    public function forgotPassword(Request $request){
+        if(\Auth::check())
+            return redirect('/');
+        $userService = new userService();
+        $data = array();
+        try{
+            if($request->isMethod('post')){
+
+                $email = $request->input('email', 0);
+                if($userService->forgotPassword($email))
+                {
+
+                    return redirect('/khach-hang/quen-mat-khau-gui-email?email='.$email);
+                }
+            }
+
+            return view('client.customer.forgot-password', $data);
+
+        } catch (\Exception $e) {
+            if($request->ajax())
+            {
+                $result['error'] = $e->getMessage();
+                return $result;
+            }
+            else
+                return view('errors.404', ['error_message' => $e->getMessage()]);
+        }
+    }
+
+    public function forgotPasswordEmailSent(Request $request){
+        if(\Auth::check())
+            return redirect('/');
+
+        try{
+            $email = $request->input('email');
+            return view('client.customer.forgot-password-email-sent', ['email' => $email]);
+
+        } catch (\Exception $e) {
+            if($request->ajax())
+            {
+                $result['error'] = $e->getMessage();
+                return $result;
+            }
+            else
+                return view('errors.404', ['error_message' => $e->getMessage()]);
+        }
+    }
+
+    public function newPassword(Request $request){
+        if(\Auth::check())
+            return redirect('/');
+        $userService = new userService();
+
+        $at = $request->input('at');
+        $param = explode('--', base64_decode($at));
+
+        $email = $param[0];
+        $password = $param[1];
+        $data = array();
+        try{
+            $check = $userService->checkResetPassword($email, $password);
+
+            if($check && $request->isMethod('post'))
+            {
+                $password = $request->input('password');
+                $confirmPassword = $request->input('confirmPassword');
+                $result = $userService->accountResetPassword($userService->getUserByEmail($email), $password, $confirmPassword);
+                if($result['ok'])
+                    $data['updated'] = $result['ok'];
+            }
+
+            $data['check'] = $check;
+        } catch (\Exception $e) {
+            if($request->ajax())
+            {
+                $result['error'] = $e->getMessage();
+                return $result;
+            }
+            else
+                return view('errors.404', ['error_message' => $e->getMessage()]);
+        }
+
+        return view('client.customer.new-password', $data);
+    }
 }

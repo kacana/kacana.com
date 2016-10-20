@@ -8,6 +8,7 @@ use Kacana\DataTables;
 use Kacana\ViewGenerateHelper;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
+use App\services\mailService;
 use Auth;
 
 /**
@@ -216,9 +217,11 @@ class userService {
             return $result;
         }
 
-        if(!isset($profiles['email']) || $profiles['email'])
+        if(!isset($profiles['email']) || !$profiles['email'])
         {
-            $profiles['email'] = $profiles['id'].'@kacana.com';
+            $result['error_code'] = KACANA_AUTH_SIGNUP_BAD_FACEBOOK_EMAIL;
+            $result['error_message'] = 'Chúng tôi không thể lấy email từ facebook của bạn!';
+            return $result;
         }
 
         if(!isset($profiles['first_name']))
@@ -354,6 +357,68 @@ class userService {
         }
 
         return $result;
+    }
 
+    public function forgotPassword($email){
+        $userModel = new User();
+        $emailService = new mailService();
+        if(!Validator::make(['email' => $email], ['email' => 'required|email'])){
+            throw new \Exception('Email is not format');
+        }
+
+        $user = $this->getUserByEmail($email);
+        $data = array();
+        $data['temp_password'] = md5($user->password.time());
+        $data['temp_password_expire'] = date('Y-m-d H:i:s',(strtotime('+1 day'))); // expire 1 day
+
+        $user = $userModel->updateItem($user->id, $data);
+        if($user)
+        {
+            $emailService->sendEmailForgotPassword($email);
+            return $user;
+        }
+
+        return false;
+
+    }
+
+    public function checkResetPassword($email, $password){
+
+        if(!Validator::make(['email' => $email], ['email' => 'required|email'])){
+            throw new \Exception('Email is not format');
+        }
+
+        $user = $this->getUserByEmail($email);
+
+        if($user->temp_password != $password)
+            return false;
+
+        if($user->temp_password_expire < date('Y-m-d H:i:s'))
+            return false;
+
+        return true;
+    }
+
+    /**
+     * @param $user
+     * @param $password
+     * @param $confirmPassword
+     * @return mixed
+     */
+    public function accountResetPassword($user, $password, $confirmPassword){
+
+        $result['ok'] = 0;
+
+        if($password != $confirmPassword){
+            $result['error_code'] = KACANA_AUTH_SIGNUP_ERROR_PASSWORD_NOT_MATCH;
+            $result['error_message'] = 'password và confirm password không giống nhau !';
+        }
+        else{
+            $result['ok'] = 1;
+            $result['user']= $this->updateItem($user->id, ['password'=>Hash::make(md5($password)), 'temp_password' => '', 'temp_password_expire' => '']);
+            Auth::loginUsingId($user->id, true);
+        }
+
+        return $result;
     }
 }

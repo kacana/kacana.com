@@ -205,6 +205,100 @@ var customerPackage = {
                 });
             }
         },
+        forgot:{
+            init: function () {
+                Kacana.customer.forgot.validateForgot();
+            },
+            validateForgot: function(){
+                var form = $('#form-forgot-password');
+
+                form.formValidation({
+                    framework: 'bootstrap',
+                    icon: {
+                        valid: 'glyphicon glyphicon-ok',
+                        invalid: 'glyphicon glyphicon-remove',
+                        validating: 'glyphicon glyphicon-refresh'
+                    },
+                    fields: {
+                        email: {
+                            validators: {
+                                notEmpty: {
+                                    message: 'Vui lòng nhập địa chỉ email của bạn'
+                                },
+                                remote: {
+                                    type: 'GET',
+                                    url: 'https://api.mailgun.net/v2/address/validate?callback=?',
+                                    crossDomain: true,
+                                    name: 'address',
+                                    data: {
+                                        api_key: 'pubkey-83a6-sl6j2m3daneyobi87b3-ksx3q29'
+                                    },
+                                    dataType: 'jsonp',
+                                    validKey: 'is_valid',
+                                    message: 'Email không đúng định dạng'
+                                }
+                            }
+                        }
+                    }
+                })
+                .on('err.field.fv', function(e, data) {
+                    data.fv.disableSubmitButtons(false);
+                })
+                .on('success.field.fv', function(e, data) {
+                    data.fv.disableSubmitButtons(false);
+                });
+            }
+        },
+        newPassword: {
+            init: function () {
+                Kacana.customer.newPassword.validateNewPassword();
+                $('input[name="password"]').val();
+            },
+            validateNewPassword: function(){
+
+                var form = $('#form-new-password');
+
+                form.formValidation({
+                    framework: 'bootstrap',
+                    icon: {
+                        valid: 'glyphicon glyphicon-ok',
+                        invalid: 'glyphicon glyphicon-remove',
+                        validating: 'glyphicon glyphicon-refresh'
+                    },
+                    fields: {
+                        password: {
+                            validators: {
+                                notEmpty: {
+                                    message: 'Vui lòng nhập mật khẩu của bạn'
+                                },
+                                stringLength: {
+                                    min: 6,
+                                    max: 80,
+                                    message: 'Mật khẩu có ít nhất 6 kí tự'
+                                }
+                            }
+                        },
+                        confirmPassword: {
+                            validators: {
+                                notEmpty: {
+                                    message: 'Vui lòng nhập mật khẩu của bạn'
+                                },
+                                identical: {
+                                    field: 'password',
+                                    message: 'Mật khẩu không trùng khớp'
+                                }
+                            }
+                        }
+                    }
+                })
+                .on('err.field.fv', function(e, data) {
+                    data.fv.disableSubmitButtons(false);
+                })
+                .on('success.field.fv', function(e, data) {
+                    data.fv.disableSubmitButtons(false);
+                });
+            }
+        },
         address:{
             init: function(){
                 setTimeout(function(){

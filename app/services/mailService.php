@@ -3,6 +3,7 @@
 use \Kacana\Util;
 use Illuminate\Support\Facades\Mail;
 use App\services\orderService;
+use App\services\userService;
 
 /**
  * Class mailService
@@ -35,5 +36,15 @@ class mailService {
         });
 
         return $mail;
+    }
+
+    public function sendEmailForgotPassword($email)
+    {
+        $userService = new userService();
+        $subject = "Kacana.com - Xác nhận phục hồi mật khẩu";
+        $viewBlade = 'client.emails.send-email-forgot-password';
+        $bcc = KACANA_EMAIL_ADMIN;
+        $dataView = ['user'=>$userService->getUserByEmail($email)];
+        return $this->send($email, $subject, $viewBlade, $dataView, $bcc);
     }
 }

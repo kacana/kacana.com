@@ -47,7 +47,7 @@
                         <div class="col-md-6 col-md-offset-3">
                             <button class="btn btn-primary btn-login-form" id="submit-login-form-popup" type="submit">Đăng Nhập</button>
                             <div class="margin-top-5px">
-                                <a href="/forgot-password">Quên mật khẩu?</a>
+                                <a href="/khach-hang/quen-mat-khau">Quên mật khẩu?</a>
                             </div>
                             <div class="margin-top-5px vpadding-20">
                                 Bạn chưa là thành viên? <a href="/auth/signup">Đăng kí ngay!</a>

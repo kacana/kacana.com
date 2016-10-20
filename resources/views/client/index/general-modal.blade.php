@@ -91,7 +91,7 @@
                             <div class="col-md-6 col-md-offset-3">
                                 <button class="btn btn-primary btn-login-form" id="submit-login-form-popup" type="submit">Đăng Nhập</button>
                                 <div class="margin-top-5px">
-                                    <a href="/forgot-password">Quên mật khẩu?</a>
+                                    <a href="/khach-hang/quen-mat-khau">Quên mật khẩu?</a>
                                 </div>
                             </div>
                         </div>
@@ -120,7 +120,7 @@
             </div>
             <div class="modal-footer">
                 <p class="text-center">
-                    Tôi đã đọc và đồng ý với <a href="/privacy-policy/" target="_blank">điều khoản sử dụng</a> của Kacana.
+                    Tôi đã đọc và đồng ý với <a href="/contact/chinh-sach-bao-mat" target="_blank">điều khoản sử dụng</a> của Kacana.
                 </p>
             </div>
         </div>

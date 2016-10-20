@@ -32,7 +32,7 @@
                 </div>
                 <div class="form-group">
                     <div class="col-sm-12">
-                        <a style="font-weight: 400;" href="/forgot-password" class="control-label" for="inputDefault">Quên mật khẩu?</a>
+                        <a style="font-weight: 400;" href="/khach-hang/quen-mat-khau" class="control-label" for="inputDefault">Quên mật khẩu?</a>
                     </div>
                 </div>
             </form>

@@ -144,10 +144,12 @@ var authPackage = {
             var callBack = function(data) {
 
                 if(data.ok){
+                    $('#login-signup-header-popup').modal('toggle');
                     window.location.reload();
                 }
                 else
                 {
+                    $('#login-signup-header-popup').modal('toggle');
                     Kacana.utils.showError(data.error_message);
                 }
 

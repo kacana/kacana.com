@@ -82,6 +82,7 @@ class SignupController extends Controller
                 $facebook->setDefaultAccessToken($longLivedAccessToken);
 
                 $profile = $facebook->getProfile();
+
                 $result = $userService->createUserFromFacebookProfile($profile, $longLivedAccessToken);
             }
             elseif($type == KACANA_SOCIAL_TYPE_GOOGLE){
