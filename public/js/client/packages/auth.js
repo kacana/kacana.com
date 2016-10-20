@@ -150,16 +150,20 @@ var authPackage = {
                 }
                 else
                 {
+                    $('#login-signup-header-popup').modal('hide');
                     if(data.error_code == 11)
                     {
-                        $('#login-signup-header-popup').modal('hide');
                         Kacana.utils.showError(data.error_message);
                     }
-                    else if(data.error_code == 12)
+                    else if(data.error_code == 12 || data.error_code == 9)
                     {
-                        $('#login-signup-header-popup').modal('toggle');
+                        if(data.error_code == 12)
+                            var errorString = 'Chúng tôi không thể lấy email từ facebook của bạn, vui lòng nhập email để hoàn thành quá trình đăng kí!';
+                        else if(data.error_code == 9)
+                            var errorString = 'Email đã tồn tại trong hệ thống, nhập một email khác!<br> Hoặc có thể bạn đã <a href="/khach-hang/quen-mat-khau">quên mật khẩu?</a>';
+
                         swal({
-                            text: 'Chúng tôi không thể lấy email từ facebook của bạn, vui lòng nhập email để hoàn thành quá trình đăng kí!',
+                            html: errorString,
                             input: 'email',
                             showCancelButton: true,
                             cancelButtonText: 'Huỷ',

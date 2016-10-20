@@ -86,7 +86,15 @@ class SignupController extends Controller
 
                 $profile = $facebook->getProfile();
                 if(!isset($profile['email']) && $email)
+                {
                     $profile['email'] = $email;
+                    $user = $userService->getUserByEmail($profile['email']);
+                    if($user)
+                    {
+                        $result['error_code'] = KACANA_AUTH_SIGNUP_ERROR_EMAIL_EXISTS;
+                        return response()->json($result);
+                    }
+                }
 
                 $result = $userService->createUserFromFacebookProfile($profile, $longLivedAccessToken);
             }
