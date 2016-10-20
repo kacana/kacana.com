@@ -20,6 +20,14 @@ class userSocialModel extends Model
     public $timestamps = true;
 
     /**
+     * Get the user that owns the user address.
+     */
+    public function user()
+    {
+        return $this->belongsTo('App\models\User', 'user_id', 'id');
+    }
+
+    /**
      * @param $userId
      * @param $type
      * @param $token
@@ -67,6 +75,17 @@ class userSocialModel extends Model
      */
     public function getItem($userId, $type){
         return $this->where('user_id', $userId)
+            ->where('type', $type)
+            ->first();
+    }
+
+    /**
+     * @param $socialId
+     * @param $type
+     * @return mixed
+     */
+    public function getItemBySocialId($socialId, $type){
+        return $this->where('social_id', $socialId)
             ->where('type', $type)
             ->first();
     }

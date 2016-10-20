@@ -64,13 +64,16 @@ class SignupController extends Controller
         $util = new Util();
         $userService = new userService();
 
-        $accessToken = $request->input('accessToken');
-        $type = $request->input('type');
+        $accessToken = $request->input('accessToken', '');
+        $type = $request->input('type', '');
         $result['ok'] = 0;
+        $result['accessToken'] = $accessToken;
+        $result['type'] = $type;
         try {
 
             if($type == KACANA_SOCIAL_TYPE_FACEBOOK)
             {
+                $email = $request->input('email', false);
                 $facebook = $util->initFacebook();
 
                 // OAuth 2.0 client handler
@@ -82,6 +85,8 @@ class SignupController extends Controller
                 $facebook->setDefaultAccessToken($longLivedAccessToken);
 
                 $profile = $facebook->getProfile();
+                if(!isset($profile['email']) && $email)
+                    $profile['email'] = $email;
 
                 $result = $userService->createUserFromFacebookProfile($profile, $longLivedAccessToken);
             }

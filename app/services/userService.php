@@ -208,14 +208,20 @@ class userService {
     public function createUserFromFacebookProfile($profiles, $accessToken){
 
         $userService = new userService();
+        $userSocialModel = new userSocialModel();
         $result['ok'] = 0;
 
         if(!$profiles)
         {
             $result['error_code'] = KACANA_AUTH_SIGNUP_BAD_FACEBOOK_PROFILE;
-            $result['error_message'] = 'facebook profile is empty';
+            $result['error_message'] = 'Chúng tôi không thể lấy thông tin từ facebook của bạn!';
             return $result;
         }
+
+        $userSocial = $userSocialModel->getItemBySocialId($profiles['id'], KACANA_SOCIAL_TYPE_FACEBOOK);
+
+        if($userSocial)
+            $profiles['email'] = $userSocial->user->email;
 
         if(!isset($profiles['email']) || !$profiles['email'])
         {
@@ -224,11 +230,10 @@ class userService {
             return $result;
         }
 
-        if(!isset($profiles['first_name']))
+        if(!isset($profiles['name']))
         {
-            $result['error_code'] = KACANA_AUTH_SIGNUP_BAD_FACEBOOK_NAME;
-            $result['error_message'] = 'facebook first name is empty';
-            return $result;
+            $tempName = explode('@', $profiles['email']);
+            $profiles['name'] = $tempName[0];
         }
 
         if(!isset($profiles['phone']))

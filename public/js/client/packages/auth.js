@@ -144,13 +144,46 @@ var authPackage = {
             var callBack = function(data) {
 
                 if(data.ok){
-                    $('#login-signup-header-popup').modal('toggle');
+                    $('#login-signup-header-popup').modal('hide');
+                    Kacana.utils.loading.loading();
                     window.location.reload();
                 }
                 else
                 {
-                    $('#login-signup-header-popup').modal('toggle');
-                    Kacana.utils.showError(data.error_message);
+                    if(data.error_code == 11)
+                    {
+                        $('#login-signup-header-popup').modal('hide');
+                        Kacana.utils.showError(data.error_message);
+                    }
+                    else if(data.error_code == 12)
+                    {
+                        $('#login-signup-header-popup').modal('toggle');
+                        swal({
+                            text: 'Chúng tôi không thể lấy email từ facebook của bạn, vui lòng nhập email để hoàn thành quá trình đăng kí!',
+                            input: 'email',
+                            showCancelButton: true,
+                            cancelButtonText: 'Huỷ',
+                            confirmButtonText: 'Gửi',
+                            showLoaderOnConfirm: true,
+                            preConfirm: function(email) {
+                                return new Promise(function(resolve, reject) {
+                                    resolve();
+                                })
+                            },
+                            allowOutsideClick: false
+                        }).then(function(email) {
+                            swal.closeModal();
+                            var data = {
+                                type: type,
+                                accessToken: accessToken,
+                                userId: userId,
+                                email: email
+                            };
+                            Kacana.ajax.auth.socialLoginCallback(data, callBack, errorCallBack);
+                            Kacana.utils.loading.loading();
+                        });
+                    }
+
                 }
 
                 Kacana.utils.loading.closeLoading();

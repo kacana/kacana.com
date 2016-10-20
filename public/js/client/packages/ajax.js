@@ -183,7 +183,7 @@ var ajaxPackage = {
             socialLoginCallback: function(data, callBack, errorCallBack){
                 var url = '/auth/signup/socialLoginCallback';
                 var dataType = 'json';
-                var type = 'get';
+                var type = 'post';
                 var dataPost = data;
                 var options = [];
                 Kacana.ajax.init(url, dataType, type, dataPost, callBack, errorCallBack, options);

@@ -60,6 +60,14 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         return $this->hasMany('App\models\addressReceiveModel');
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function userSocial()
+    {
+        return $this->hasMany('App\models\userSocialModel', 'user_id', 'id');
+    }
+
     /*
      * Get the order associated with user
      */
