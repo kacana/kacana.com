@@ -29,7 +29,7 @@
                     <div class="row">
                         <div class="col-xs-12">
                             <p>
-                                Chúng tôi đã gửi một email đến <span class="color-green">chicuongnguyenit@gmail.com</span> với một liên kết để đặt lại mật khẩu của bạn.
+                                Chúng tôi đã gửi một email đến <span class="color-green">{{$email}}</span> với một liên kết để đặt lại mật khẩu của bạn.
                             </p>
                             <p>
                                 Nếu bạn có thắc mắc nào về kacana.vn, xin vui lòng liên hệ bộ phận <a href="/contact/thong-tin-lien-he" >Chăm sóc khách hàng</a> của Kacana.

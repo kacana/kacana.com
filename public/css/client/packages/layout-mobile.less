@@ -120,6 +120,9 @@ ul#mobileMenu{
         #ac-gn-searchresults{
           margin-top: -1px!important;
           padding: 0!important;
+          max-height: 400px;
+          overflow-y: scroll;
+          overflow-x: hidden;
           h3{
             background: #f1f1f1 none repeat scroll 0 0;
             margin: 0!important;
@@ -271,20 +274,22 @@ ul#mobileMenu{
     }
   }
 
-  .cbp-spmenu-push {
+  body.cbp-spmenu-push {
     overflow-x: hidden;
     position: relative;
     left: 0;
+    &.cbp-spmenu-push-toright {
+      left: 240px!important;
+    }
+    &.cbp-spmenu-push-toleft {
+      left: -240px!important;
+    }
+    &.cbp-spmenu-push-open{
+      #header{
+        position: absolute;
+      }
+    }
   }
-
-  .cbp-spmenu-push-toright {
-    left: 240px!important;
-  }
-
-  .cbp-spmenu-push-toleft {
-    left: -240px!important;
-  }
-
 
   /* Transitions */
 
