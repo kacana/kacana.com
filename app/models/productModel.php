@@ -21,9 +21,6 @@ class productModel extends Model  {
      */
     public $timestamps = false;
 
-    //Add extra attribute
-    protected $attributes = ['descriptionLazyLoad'];
-
     //Make it available in the json response
     protected $appends = ['descriptionLazyLoad'];
 

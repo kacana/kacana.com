@@ -118,6 +118,9 @@ var layoutPackage = {
 
                     )))
                 {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    $(this).off('click');
                     Kacana.layout.closeMobileMenu();
                 }
 
@@ -229,6 +232,8 @@ var layoutPackage = {
             setTimeout(function () {
                 $('body').removeClass('cbp-spmenu-push-open');
             }, 300);
+
+
         },
         initLayoutMobile: function(){
             var topNavMobile = $('#header');

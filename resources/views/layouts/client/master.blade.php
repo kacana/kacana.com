@@ -17,7 +17,6 @@
     <meta property="og:description" content="bag, fashion, loop" />
     <meta property="og:image" content="/images/client/homepage/logo.png" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <meta name="viewport" content="width=device-width, minimal-ui">
 
     <!-- Mobile Metas -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
