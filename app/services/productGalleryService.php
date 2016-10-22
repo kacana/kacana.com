@@ -117,11 +117,16 @@ class productGalleryService {
      * @param $path
      * @return bool
      */
-    public function uploadToS3($path){
+    public function uploadToS3($path, $newPath = false){
         if(Storage::disk('local')->exists($path))
         {
             $fileContent = Storage::disk('local')->get($path);
             Storage::put($path, $fileContent);
+
+            if($newPath)
+                Storage::move($path, $newPath);
+
+            echo $newPath;die;
             Storage::disk('local')->delete($path);
             return true;
         }

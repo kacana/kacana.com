@@ -1,5 +1,7 @@
 @extends('layouts.client.master')
 
+@section('meta-title', 'Giỏ hàng')
+
 @section('content')
     <div role="main" id="cart-page">
         <section class="header-page-title">

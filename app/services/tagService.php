@@ -24,11 +24,15 @@ class tagService {
         $tagModel = new tagModel();
 
         $tag = $tagModel->getTagRelation($id, $typeId);
-        if($tag->getOriginal('image'))
-            $productGalleryService->deleteFromS3($tag->getOriginal('image'));
+        if($tag->image)
+            $productGalleryService->deleteFromS3($tag->image);
 
         if($imageName)
-            $productGalleryService->uploadToS3($imageName);
+        {
+            $newPath = '/images/tag/kacana_tag_'.$tag->parent_id.'_'.$tag->child_id.'_'.$tag->tag_type_id.'.jpg';
+            $productGalleryService->uploadToS3($imageName, $newPath);
+        }
+
 
         $tag = $tagModel->updateImage($id, $parentId, $typeId, $imageName);
 

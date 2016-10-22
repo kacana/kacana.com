@@ -9,7 +9,7 @@
     <meta charset="utf-8">
 
     <!-- GOOGLE META AND SEO -->
-    <title>@yield('title', 'Chuyên bán túi xách, kính mắt, đồng hồ và dây lưng') - Kacana.vn</title>
+    <title>@yield('meta-title', 'Chuyên bán túi xách, kính mắt, đồng hồ và dây lưng') - Kacana.vn</title>
     <meta name="description" content="@yield('meta-description', 'Hàng loạt các mẫu túi ví, túi xách, túi đeo, ví da, ví cầm tay,ba lo nam nữ thời trang chính hãng  liên tục được cập nhật - Mua bán trực tuyến') - Kacana.vn" />
     <meta name="keywords" content="@yield('meta-keyword', 'túi ví, tui vi, túi xách, ví da, túi đeo, ví cầm tay, balo, túi da, túi vải, túi ví chính hãng, túi ví cao cấp')" />
 
@@ -25,11 +25,10 @@
 
     <meta property="fb:app_id" content="{{KACANA_SOCIAL_FACEBOOK_KEY}}" />
     <meta prefix="og: http://ogp.me/ns#" property="og:url" content="{{url()}}">
-    <meta prefix="og: http://ogp.me/ns#" property="og:title" content="@yield('title', 'Chuyên bán túi xách, kính mắt, đồng hồ và dây lưng') - Kacana.vn">
+    <meta prefix="og: http://ogp.me/ns#" property="og:title" content="@yield('meta-title', 'Chuyên bán túi xách, kính mắt, đồng hồ và dây lưng') - Kacana.vn">
     <meta prefix="og: http://ogp.me/ns#" property="og:description" content="@yield('meta-description', 'Hàng loạt các mẫu túi ví, túi xách, túi đeo, ví da, ví cầm tay,ba lo nam nữ thời trang chính hãng  liên tục được cập nhật - Mua bán trực tuyến') - Kacana.vn">
-    <meta prefix="og: http://ogp.me/ns#" property="og:image">
-    <meta prefix="og: http://ogp.me/ns#" property="og:site_name" content="@yield('title', 'Chuyên bán túi xách, kính mắt, đồng hồ và dây lưng') - Kacana.vn">
-    <meta property="og:image" content="@yield('image', 'http:'.AWS_CDN_URL.'/images/client/short_logo.png')" />
+    <meta prefix="og: http://ogp.me/ns#" property="og:site_name" content="@yield('meta-title', 'Chuyên bán túi xách, kính mắt, đồng hồ và dây lưng') - Kacana.vn">
+    <meta property="og:image" content="@yield('meta-image', 'http:'.AWS_CDN_URL.'/images/client/short_logo.png')" />
     <meta property="og:locale" content="vi_VN" />
 
     <meta name="author" content="Kacana.vn">
