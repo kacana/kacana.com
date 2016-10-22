@@ -126,7 +126,6 @@ class productGalleryService {
             if($newPath)
                 Storage::move($path, $newPath);
 
-            echo $newPath;die;
             Storage::disk('local')->delete($path);
             return true;
         }

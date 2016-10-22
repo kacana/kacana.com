@@ -29,8 +29,9 @@ class tagService {
 
         if($imageName)
         {
-            $newPath = '/images/tag/kacana_tag_'.$tag->parent_id.'_'.$tag->child_id.'_'.$tag->tag_type_id.'.jpg';
+            $newPath = '/images/tag/kacana_tag_'.$tag->parent_id.'_'.$tag->child_id.'_'.$tag->tag_type_id.'_'.time().'.jpg';
             $productGalleryService->uploadToS3($imageName, $newPath);
+            $imageName = $newPath;
         }
 
 
