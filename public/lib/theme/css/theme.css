@@ -1031,7 +1031,6 @@ body #header nav.mega-menu .mega-menu-signin ul.dropdown-menu li a, body #header
 		clear: both;
 		float: none;
 		display: block;
-		border-bottom: 1px solid #2A2A2A;
 	}
 
 	#header .nav-main ul li:last-child {

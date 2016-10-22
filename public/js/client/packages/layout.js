@@ -118,9 +118,12 @@ var layoutPackage = {
 
                     )))
                 {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    $(this).off('click');
+                    if( !$(e.target).closest('a.menu__link__redirect').length && !$(e.target).is('a.menu__link__redirect'))
+                    {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        $(this).off('click');
+                    }
                     Kacana.layout.closeMobileMenu();
                 }
 
@@ -218,11 +221,11 @@ var layoutPackage = {
         closeSearch: function () {
             var header = $('#header');
             header.find('.nav-main.mega-menu').addClass('search-hide');
-            $('#ac-gn-searchform-input').val('')
+            $('#ac-gn-searchform-input').val('');
             var timeOutHideSearch = window.setTimeout(function () {
                 header.find('.nav-main.mega-menu').removeClass('search-open').removeClass('search-hide');
                 $('body .main').removeClass('white-cover');
-            },600)
+            },600);
         },
         closeMobileMenu: function () {
             $('body').removeClass('cbp-spmenu-push-toright').removeClass('cbp-spmenu-push-toleft');
@@ -232,8 +235,6 @@ var layoutPackage = {
             setTimeout(function () {
                 $('body').removeClass('cbp-spmenu-push-open');
             }, 300);
-
-
         },
         initLayoutMobile: function(){
             var topNavMobile = $('#header');

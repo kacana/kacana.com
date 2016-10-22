@@ -1,5 +1,7 @@
 @extends('layouts.client.master')
 
+@section('title', 'Chuyên bán túi xách, kính mắt, đồng hồ và dây lưng')
+
 @section('top-infomation')
     @include('layouts.client.slide')
 @stop
