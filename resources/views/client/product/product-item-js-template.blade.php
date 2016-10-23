@@ -2,28 +2,47 @@
     @{{each products}}
     <div class="col-xxs-12 col-xs-6 col-sm-4 col-md-3 product-item" >
         <div class="product-image" >
-            @{{if this.properties_js}}
-                <div class="product-image-inside royalSlider rsDefault" data-first-image="${this.image}"  >
+            <div class="product-image-inside royalSlider rsDefault" data-first-image="${this.image}"  >
+                <a data-rsbigimg="${this.image}" href="{{AWS_CDN_URL.PRODUCT_IMAGE_PLACE_HOLDER}}" class="rsImg" title="${this.name}">
+                    ${this.name}
+                    <img class="rsTmb" data-original="${this.image}" />
+                </a>
+                @{{if this.properties_js}}
                     @{{each this.properties_js}}
                         @{{if this.product_gallery}}
                             <a id="product-property-gallery-id-${this.id}" class="rsImg" data-rsbigimg="${this.product_gallery.image}" href="${this.product_gallery.image}" >
                                 ${this.color_name}
-                                <img class="rsTmb" data-original="${this.product_gallery.bigimage}"/>
+                                <img class="rsTmb" data-original="${this.product_gallery.image}"/>
                             </a>
                         @{{/if}}
                     @{{/each}}
-                </div>
-            @{{/if}}
+                @{{/if}}
+            </div>
+        </div>
 
-            @{{if !this.properties_js}}
-                <div class="product-image-inside royalSlider rsDefault" data-first-image="${this.image}" >
-                    <a data-rsbigimg="${this.image}" href="{{AWS_CDN_URL.PRODUCT_IMAGE_PLACE_HOLDER}}" class="rsImg" title="${this.name}">
-                        ${this.name}
-                        <img class="rsTmb" data-original="${this.image}" />
+        @{{if this.properties_js}}
+            <div class="list-color-product multiple-items nav" >
+                @{{each this.properties_js}}
+                    @{{if this.product_gallery}}
+                        <div>
+                            <a href="#choose-product-color">
+                                <img  data-original="${this.product_gallery.image}">
+                            </a>
+                        </div>
+                    @{{/if}}
+                @{{/each}}
+            </div>
+        @{{/if}}
+
+        @{{if !this.properties_js}}
+            <div class="list-color-product multiple-items nav" >
+                <div>
+                    <a >
+                        <img  data-original="${this.image}">
                     </a>
                 </div>
-            @{{/if}}
-        </div>
+            </div>
+        @{{/if}}
 
         <div class="product-info">
             <div class="product-title"> <a href="${this.urlProductDetail}" title="${this.name}">${this.name}</a></div>

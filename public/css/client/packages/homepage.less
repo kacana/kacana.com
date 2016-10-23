@@ -44,20 +44,10 @@
 
           }
           .product-image{
+            padding: 0 30px;
             .product-image-inside.rsDefault{
               .rsThumbsHor{
                 height: 40px!important;
-                .rsNavItem{
-                  width: 40px!important;
-                  height: 40px!important;
-                  &.rsNavSelected{
-                    background: none;
-                    border: 1px solid @color-border;
-                    .rsTmb{
-                      opacity: 1;
-                    }
-                  }
-                }
               }
               .rsThumbsArrow{
                 width: 30px;
@@ -239,6 +229,32 @@
                 margin: -5px -10px 0;
                 border-bottom: 1px solid @color-border;
                 border-left: 1px solid @color-border;
+              }
+            }
+          }
+          .list-color-product{
+            clear: both;
+            width: 100%;
+            list-style-type: none;
+            margin-bottom: 20px;
+            opacity: 0;
+            a{
+              align-items: center;
+              cursor: pointer;
+              display: flex;
+              justify-content: center;
+              padding: 1px;
+              img{
+                width: 40px;
+                height: 40px;
+                display: block;
+                border: 1px solid @color-border;
+                padding: 2px;
+              }
+              &:hover,&.active{
+                img{
+                  border-color: @color-green-light;
+                }
               }
             }
           }

@@ -567,27 +567,8 @@ class productService {
             $item->price_after_discount_show = formatMoney($item->sell_price - $item->discount);
             $item->style = $item->style->toArray();
             $item->is_loggin = \Auth::check()?1:0;
-            if((count($item->properties)))
-            {
-                $properties_js = array();
-                $i = 0;
-                foreach ($item->properties as $property){
-                    if($property->product_gallery)
-                    {
-                        $property->product_gallery->bigimage = $property->product_gallery->image;
-                        if($i == 0)
-                        {
-
-                            $item->image = $property->product_gallery->getOriginal('image');
-                            $property->product_gallery->image = PRODUCT_IMAGE_PLACE_HOLDER;
-                        }
-                        $i++;
-                        array_push($properties_js, $property);
-                    }
-                }
-
-                $item->properties_js = $properties_js;
-            }
+            if(count($item->properties))
+                $item->properties_js = $item->properties;
             else
                 $item->properties_js = 0;
         }
