@@ -1,4 +1,4 @@
-<?
+<?php
 namespace Kacana\Client;
 /**
  * Description of Binumi_Facebook
