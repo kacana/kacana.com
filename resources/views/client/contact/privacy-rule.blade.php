@@ -1,5 +1,5 @@
 <h3 class="text-center color-grey">CHÍNH SÁCH BẢO MẬT</h3>
-
+@section('meta-title', 'Chính sách bảo mật')
 <div class="row">
     <div class="col-md-12 text-center">
         <img class="img-responsive" style="display: unset;" src="/images/client/homepage/logo.png">

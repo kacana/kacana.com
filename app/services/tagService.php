@@ -406,6 +406,15 @@ class tagService {
         return  $tagModel->getTagByIdsHaveProduct($tagRelationId);
     }
 
+    public function formatMetaKeyword($tags){
+        $tagNameArray = [];
+        if(count($tags))
+            foreach ($tags as $tag)
+                array_push($tagNameArray, $tag->name);
+
+        return $tagNameArray;
+    }
+
     /**
      * @return array|bool|static[]
      */

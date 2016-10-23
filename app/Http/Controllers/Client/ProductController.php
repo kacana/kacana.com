@@ -20,7 +20,7 @@ class ProductController extends BaseController {
         $userId = (\Kacana\Util::isLoggedIn())?$this->_user->id:0;
         try{
             $product = $productService->getProductById($id, $userId);
-
+            $product->metaKeyword = $tagService->formatMetaKeyword($product->tag);
             $data['item'] = $product;
             $data['tag'] = $tagService->getTagById($tagId, false);
             $data['productSlide'] = $productGallery->getImagesProductByProductId($id, PRODUCT_IMAGE_TYPE_SLIDE);
@@ -57,6 +57,7 @@ class ProductController extends BaseController {
             $data['items'] = $productService->getProductByTagId($tagId, $limit, $userId, $page, $options);
             $tags = $tagService->getTagById($tagId, false);
             $tags->allChilds = $tagService->getAllChildTagHaveProduct($tagId);
+            $tags->tagKeyword = $tagService->formatMetaKeyword($tags->allChilds);
 
             $data['tag'] = $tags;
             $data['options'] = $options;

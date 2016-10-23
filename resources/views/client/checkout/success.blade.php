@@ -7,6 +7,7 @@
     $ward = $address->ward;
     $district = $address->district;
 ?>
+@section('meta-title', 'Đã đặt hàng')
 @section('content')
     <div role="main" id="checkout-success-page">
         <div id="header-page"  >
@@ -18,6 +19,12 @@
         </div>
         <div role="main" id="cart-page">
             <div class="container background-white vpadding-20">
+                <div class="row">
+                    <div class="col-sm-12 text-center" >
+                            <img class="vpadding-10" src="{{AWS_CDN_URL}}/images/client/thanks.gif  " />
+                        <h2>Cảm ơn quý khách đã đặt hàng tại kacana</h2>
+                    </div>
+                </div>
                 <div class="payment_desc">
                     <p class="color-red" ><b>Chi tiết đơn hàng #{{$order->id}}, {{$order->quantity}} sản phẩm được đặt</b></p>
                 </div>
@@ -96,7 +103,7 @@
                             <div class="color-green vpadding-10"><b>{{$user->name}}</b></div>
                             <div>{{$address->street}}, {{$district->name}}, {{$city->name}}</div>
                             <div>Số điện thoại: {{$address->phone}}</div>
-                            <div class="vpadding-10"><b>Thư xác nhận đã được gởi</b> tới địa chỉ email {{$address->email}}</div>
+                            <div class="vpadding-10"><b>Thư xác nhận đã được gởi</b> tới địa chỉ email {{$user->email}}</div>
                         </div>
                     </div>
                 </div>

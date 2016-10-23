@@ -1,4 +1,7 @@
 @extends('layouts.client.master')
+@section('meta-title', 'Sản phẩm: '.$tag->name)
+@section('meta-description', $tag->short_desc)
+@section('meta-keyword', implode(", ",$tag->tagKeyword))
 
 @section('top-infomation')
     <section class="parallax" id="product-list-top-menu" data-stellar-background-ratio="0.5" style="background-image: url('@if($tag->image){{ AWS_CDN_URL.$tag->image}}@else /images/client/homepage/account-cover.jpg @endif');">

@@ -1,5 +1,5 @@
 <h3 class="text-center color-grey">Bán hàng cùng KACANA</h3>
-
+@section('meta-title', 'bán hàng cùng KACANA')
 <div class="row">
     <div class="col-md-12 text-center">
         <img class="img-responsive" style="display: unset;" src="/images/client/homepage/logo.png">
