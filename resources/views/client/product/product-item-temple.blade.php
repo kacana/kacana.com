@@ -50,7 +50,7 @@
     <div class="product-short-description-like-wrap">
         <div class="product-short-description-wrap" id="product-short-description-wrap-{{$item->id}}">
             <div class="product-short-description">
-                {{$item->short_description}}
+                {{fixHtml($item->short_description)}}
             </div>
 
             <span class=@if($item->isLiked)"save-product-wrap active"@else"save-product-wrap"@endif >
