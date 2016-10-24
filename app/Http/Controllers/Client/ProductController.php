@@ -2,6 +2,7 @@
 
 use App\services\productService;
 use App\services\tagService;
+use App\services\trackingService;
 use Illuminate\Http\Request;
 use App\models\productGalleryModel;
 
@@ -21,6 +22,7 @@ class ProductController extends BaseController {
         try{
             $product = $productService->getProductById($id, $userId);
             $product->metaKeyword = $tagService->formatMetaKeyword($product->tag);
+            $productService->trackUserProductView($id, $userId, $request->ip());
             $data['item'] = $product;
             $data['tag'] = $tagService->getTagById($tagId, false);
             $data['productSlide'] = $productGallery->getImagesProductByProductId($id, PRODUCT_IMAGE_TYPE_SLIDE);
@@ -76,11 +78,14 @@ class ProductController extends BaseController {
 
     public function suggestSearchProduct(Request $request){
         $productService = new productService();
-        $tagService = new tagService();
+        $trackingService = new trackingService();
+
         $result['ok'] = 0;
+        $userId = (\Kacana\Util::isLoggedIn())?$this->_user->id:0;
         try{
             $searchString = $request->input('search', false);
             $data = $productService->suggestSearchProduct($searchString);
+            $trackingService->createTrackingSearch($searchString, $userId, $request->ip());
             if($data)
             {
                 $result['data'] = $data;

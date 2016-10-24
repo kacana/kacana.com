@@ -59,6 +59,14 @@ class productModel extends Model  {
     /**
      * Get the galleries associated with product
      */
+    public function productView()
+    {
+        return $this->hasMany('App\models\productViewModel', 'product_id', 'id');
+    }
+
+    /**
+     * Get the galleries associated with product
+     */
     public function properties()
     {
         return $this->belongsToMany('App\models\tagModel', 'product_properties', 'product_id', 'tag_color_id')->withPivot('product_gallery_id', 'tag_size_id', 'color_code');

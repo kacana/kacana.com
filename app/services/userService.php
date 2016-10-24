@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 use App\services\mailService;
 use Auth;
-
+use Carbon\Carbon;
 /**
  * Class userService
  * @package App\services
@@ -425,5 +425,45 @@ class userService {
         }
 
         return $result;
+    }
+
+    public function getCountLike($duration = false){
+        return $this->_userProductLike->countLike($duration);
+    }
+
+    public function getCountUser($duration = false){
+        return $this->_userModel->countUser($duration);
+    }
+
+    public function getUserReport($dateRange, $type){
+        if(!$dateRange)
+        {
+            $startTime = Carbon::now()->subDays(KACANA_REPORT_DURATION_DEFAULT);
+            $endTime = Carbon::now();
+
+        }else{
+            $dateRange = explode(' - ', $dateRange);
+            $startTime = $dateRange[0];
+            $endTime = Carbon::createFromFormat('Y-m-d', $dateRange[1])->addDay();
+        }
+
+
+        return $this->_userModel->reportUser($startTime, $endTime, $type);
+    }
+
+    public function getUserProductLikeReport($dateRange, $type){
+        if(!$dateRange)
+        {
+            $startTime = Carbon::now()->subDays(KACANA_REPORT_DURATION_DEFAULT);
+            $endTime = Carbon::now();
+
+        }else{
+            $dateRange = explode(' - ', $dateRange);
+            $startTime = $dateRange[0];
+            $endTime = Carbon::createFromFormat('Y-m-d', $dateRange[1])->addDay();
+        }
+
+
+        return $this->_userProductLike->reportUserProductLike($startTime, $endTime, $type);
     }
 }

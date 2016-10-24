@@ -57,7 +57,7 @@ var ajaxPackage = {
             );
         },
         admin:{
-          changeStatus: function(id, value, field, $tableName, callback, errorCallback){
+            changeStatus: function(id, value, field, $tableName, callback, errorCallback){
               var url = '/base/changeStatus';
               var dataType = 'json';
               var type = 'post';
@@ -69,7 +69,15 @@ var ajaxPackage = {
               };
               var options = [];
               Kacana.ajax.init(url, dataType, type, dataPost, callback, errorCallback, options);
-          }
+            },
+            getReportChart: function (url, data, callback, errorCallback) {
+                var url = url;
+                var dataType = 'json';
+                var type = 'post';
+                var dataPost = data
+                var options = [];
+                Kacana.ajax.init(url, dataType, type, dataPost, callback, errorCallback, options);
+            }
         },
         /*****************************************************************************
          *

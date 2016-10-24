@@ -40,6 +40,11 @@ Route::group(['prefix' => 'auth/'], function(){
 Route::group(['domain'=>KACANA_AUTH_ADMIN_NAME.'.{nameDomain}','middleware' => 'auth'], function () {
 
     Route::any('/', 'Admin\IndexController@index');
+    Route::post('/index/reportChartUser',                   array('as'=>'index-report-chart-user',              'uses'=>'Admin\IndexController@reportChartUser'));
+    Route::post('/index/reportChartOrder',                  array('as'=>'index-report-chart-order',             'uses'=>'Admin\IndexController@reportChartOrder'));
+    Route::post('/index/reportChartProductLike',            array('as'=>'index-report-chart-product-like',      'uses'=>'Admin\IndexController@reportChartProductLike'));
+    Route::post('/index/reportChartProductView',            array('as'=>'index-report-chart-product-view',      'uses'=>'Admin\IndexController@reportChartProductView'));
+    Route::post('/index/reportChartTrackingSearch',         array('as'=>'index-report-chart-tracking-search',   'uses'=>'Admin\IndexController@reportChartTrackingSearch'));
 
     //product
     Route::any('/product',                                  array('as'=>'listProducts',             'uses'=>'Admin\ProductController@index'));

@@ -3,6 +3,7 @@
 use App\models\productModel;
 use App\models\productPropertiesModel;
 use App\models\productTagModel;
+use App\models\productViewModel;
 use App\models\tagModel;
 use App\models\userProductLikeModel;
 use Kacana\DataTables;
@@ -11,6 +12,7 @@ use Kacana\HtmlFixer;
 use Cache;
 use App\models\productGalleryModel;
 use \Storage;
+use Carbon\Carbon;
 /**
  * Class productService
  * @package App\services
@@ -575,55 +577,82 @@ class productService {
         return $results->toArray();
     }
 
-    public function fixProductPrice(){
-        $productModel = new productModel();
-        $productGalleryModel = new productGalleryModel();
-        $productGalleryService = new productGalleryService();
-
-        $products = productModel::all()->sortByDesc("id");
-
-        foreach ($products as $product){
-
-            if($product->id <= 418)
-            {
-                $priceUpdate = 0;
-                if($product->sell_price > 2000000)
-                    $priceUpdate = $product->sell_price + 100000 - 200000;
-                elseif($product->sell_price > 1500000)
-                    $priceUpdate = $product->sell_price + 100000 - 150000;
-                elseif($product->sell_price > 1000000)
-                    $priceUpdate = $product->sell_price + 100000 - 100000;
-                elseif($product->sell_price > 500000)
-                    $priceUpdate = $product->sell_price + 100000 - 50000;
-                elseif($product->sell_price > 300000)
-                    $priceUpdate = $product->sell_price + 100000 - 30000;
-                else
-                    $priceUpdate = $product->sell_price + 100000 - 20000;
-
-                $productModel->updatePrice($product->id, $priceUpdate);
-            }
-
-            if($product->id <= 418) {
-                foreach ($product->galleries as $gallery) {
-                    if (Storage::disk('local')->exists($gallery->getOriginal('image')) && filesize(PATH_PUBLIC . $gallery->getOriginal('image'))) {
-                        if ($gallery->type == PRODUCT_IMAGE_TYPE_SLIDE) {
-                            $thumbPath = str_replace(PATH_PUBLIC, '', $productGalleryService->createThumbnail(PATH_PUBLIC . $gallery->getOriginal('image'), 80, 80, [255, 255, 255]));
-                            $productGalleryModel->updateThumb($gallery->id, $thumbPath);
-                            $fileContent = Storage::disk('local')->get($thumbPath);
-                            Storage::put($thumbPath, $fileContent);
-                        }
-
-                        $fileContent = Storage::disk('local')->get($gallery->getOriginal('image'));
-                        Storage::put($gallery->getOriginal('image'), $fileContent);
-                    }
-                }
-                if (Storage::disk('local')->exists($product->getOriginal('image')) && PATH_PUBLIC . $product->getOriginal('image')) {
-                    $fileContent = Storage::disk('local')->get($product->getOriginal('image'));
-                    Storage::put($product->getOriginal('image'), $fileContent);
-                }
-            }
-        }
+    public function trackUserProductView($productId, $userId, $ip){
+        $productViewModel = new productViewModel();
+        $productViewModel->createItem(['product_id' => $productId, 'user_id' => $userId, 'ip' => $ip]);
     }
+
+    public function getCountProductView($duration = false){
+        $productViewModel = new productViewModel();
+        return $productViewModel->countProductView($duration);
+    }
+
+    public function getProductViewReport($dateRange, $type){
+        $productViewModel = new productViewModel();
+        if(!$dateRange)
+        {
+            $startTime = Carbon::now()->subDays(KACANA_REPORT_DURATION_DEFAULT);
+            $endTime = Carbon::now();
+
+        }else{
+            $dateRange = explode(' - ', $dateRange);
+            $startTime = $dateRange[0];
+            $endTime = Carbon::createFromFormat('Y-m-d', $dateRange[1])->addDay();
+        }
+
+
+        return $productViewModel->reportProductView($startTime, $endTime, $type);
+    }
+
+//    public function fixProductPrice(){
+//        $productModel = new productModel();
+//        $productGalleryModel = new productGalleryModel();
+//        $productGalleryService = new productGalleryService();
+//
+//        $products = productModel::all()->sortByDesc("id");
+//
+//        foreach ($products as $product){
+//
+//            if($product->id <= 418)
+//            {
+//                $priceUpdate = 0;
+//                if($product->sell_price > 2000000)
+//                    $priceUpdate = $product->sell_price + 100000 - 200000;
+//                elseif($product->sell_price > 1500000)
+//                    $priceUpdate = $product->sell_price + 100000 - 150000;
+//                elseif($product->sell_price > 1000000)
+//                    $priceUpdate = $product->sell_price + 100000 - 100000;
+//                elseif($product->sell_price > 500000)
+//                    $priceUpdate = $product->sell_price + 100000 - 50000;
+//                elseif($product->sell_price > 300000)
+//                    $priceUpdate = $product->sell_price + 100000 - 30000;
+//                else
+//                    $priceUpdate = $product->sell_price + 100000 - 20000;
+//
+//                $productModel->updatePrice($product->id, $priceUpdate);
+//            }
+//
+//            if($product->id <= 418) {
+//                foreach ($product->galleries as $gallery) {
+//                    if (Storage::disk('local')->exists($gallery->getOriginal('image')) && filesize(PATH_PUBLIC . $gallery->getOriginal('image'))) {
+//                        if ($gallery->type == PRODUCT_IMAGE_TYPE_SLIDE) {
+//                            $thumbPath = str_replace(PATH_PUBLIC, '', $productGalleryService->createThumbnail(PATH_PUBLIC . $gallery->getOriginal('image'), 80, 80, [255, 255, 255]));
+//                            $productGalleryModel->updateThumb($gallery->id, $thumbPath);
+//                            $fileContent = Storage::disk('local')->get($thumbPath);
+//                            Storage::put($thumbPath, $fileContent);
+//                        }
+//
+//                        $fileContent = Storage::disk('local')->get($gallery->getOriginal('image'));
+//                        Storage::put($gallery->getOriginal('image'), $fileContent);
+//                    }
+//                }
+//                if (Storage::disk('local')->exists($product->getOriginal('image')) && PATH_PUBLIC . $product->getOriginal('image')) {
+//                    $fileContent = Storage::disk('local')->get($product->getOriginal('image'));
+//                    Storage::put($product->getOriginal('image'), $fileContent);
+//                }
+//            }
+//        }
+//    }
 }
 
 
