@@ -102,7 +102,7 @@
 									  </span>
 								</div><!-- /.info-box-content -->
 							</div>
-							<div data-url="/index/reportChartTrackingSearch" data-color="00c0ef" data-xkey="created" data-ykey="count" class="info-box item-report bg-maroon">
+							<div data-url="/index/reportChartTrackingSearch" data-color="d81b60" data-xkey="created" data-ykey="count" class="info-box item-report bg-maroon">
 								<span class="info-box-icon"><i class="ion ion-ios-search"></i></span>
 								<div class="info-box-content">
 									<span class="info-box-text">Tìm kiếm</span>
