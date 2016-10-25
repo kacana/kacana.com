@@ -106,6 +106,27 @@ var layoutPackage = {
                 {
                     Kacana.layout.closeSearch();
                 }
+                if($('body').find('.cbp-spmenu-open').length !== 0 && (($(e.target).closest('.nav-mobile').length === 0 &&
+                    $(e.target).closest('a[href="#btn-mobile-product-left-nav"]').length === 0 &&
+                    $(e.target).closest('a[href="#btn-mobile-account-right-nav"]').length === 0
+                ) || ($(e.target).closest('.nav-mobile').length &&
+                        ($(e.target).closest('#back-to-page-from-side-bar-left').length ||
+                         $(e.target).closest('#back-to-page-from-side-bar-right').length ||
+                            $(e.target).closest('a.menu__link__redirect').length ||
+                            $(e.target).is('a.menu__link__redirect')
+                        )
+
+                    )))
+                {
+                    if( !$(e.target).closest('a.menu__link__redirect').length && !$(e.target).is('a.menu__link__redirect'))
+                    {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        $(this).off('click');
+                    }
+                    Kacana.layout.closeMobileMenu();
+                }
+
             });
 
             $('body').on('keyup', '#header #ac-gn-searchform-input', Kacana.layout.suggestSearchProduct);
@@ -200,11 +221,20 @@ var layoutPackage = {
         closeSearch: function () {
             var header = $('#header');
             header.find('.nav-main.mega-menu').addClass('search-hide');
-            $('#ac-gn-searchform-input').val('')
+            $('#ac-gn-searchform-input').val('');
             var timeOutHideSearch = window.setTimeout(function () {
                 header.find('.nav-main.mega-menu').removeClass('search-open').removeClass('search-hide');
                 $('body .main').removeClass('white-cover');
-            },600)
+            },600);
+        },
+        closeMobileMenu: function () {
+            $('body').removeClass('cbp-spmenu-push-toright').removeClass('cbp-spmenu-push-toleft');
+            $('#mobile-product-left-nav').removeClass('cbp-spmenu-open');
+            $('#mobile-account-right-nav').removeClass('cbp-spmenu-open');
+            $('body .main').removeClass('white-cover');
+            setTimeout(function () {
+                $('body').removeClass('cbp-spmenu-push-open');
+            }, 300);
         },
         initLayoutMobile: function(){
             var topNavMobile = $('#header');
@@ -212,37 +242,38 @@ var layoutPackage = {
                 menuMobileRight = document.getElementById('mobile-account-right-nav');
             var body = document.body;
 
-            topNavMobile.on('click', 'a[href="#btn-mobile-product-left-nav"], #back-to-page-from-side-bar-left',function() {
+            topNavMobile.on('click', 'a[href="#btn-mobile-product-left-nav"]',function() {
                 classie.toggle( this, 'active' );
                 classie.toggle( body, 'cbp-spmenu-push-toright' );
+                classie.toggle( body, 'cbp-spmenu-push-open' );
                 classie.toggle( menuMobileLeft, 'cbp-spmenu-open' );
+                $('body .main').addClass('white-cover');
             });
 
-            topNavMobile.on('click', 'a[href="#btn-mobile-account-right-nav"], #back-to-page-from-side-bar-right',function() {
+            topNavMobile.on('click', 'a[href="#btn-mobile-account-right-nav"]',function() {
                 classie.toggle( this, 'active' );
                 classie.toggle( body, 'cbp-spmenu-push-toleft' );
+                classie.toggle( body, 'cbp-spmenu-push-open' );
                 classie.toggle( menuMobileRight, 'cbp-spmenu-open' );
+                $('body .main').addClass('white-cover')
             });
 
             var menuElLeft = document.getElementById('menu-mobile-product-left-nav'),
             mlmenuLeft = new MLMenu(menuElLeft, {
-                    // breadcrumbsCtrl : true, // sbreadcrumbs
                     initialBreadcrumb : 'sản phẩm', // initial breadcrumb text
                     backCtrl : false, // show back button
-                    // itemsDelayInterval : 60, // delay between each menu item sliding animation
                     onItemClick: loadDummyData // callback: item that doesn´t have a submenu gets clicked - onItemClick([event], [inner HTML of the clicked item])
                 });
 
             var menuElRight = document.getElementById('menu-mobile-account-right-nav'),
                 mlmenuRight = new MLMenu(menuElRight, {
-                    // breadcrumbsCtrl : true, // show breadcrumbs
                     initialBreadcrumb : 'Tài khoản', // initial breadcrumb text
                     backCtrl : false, // show back button
-                    // itemsDelayInterval : 60, // delay between each menu item sliding animation
                     onItemClick: loadDummyData // callback: item that doesn´t have a submenu gets clicked - onItemClick([event], [inner HTML of the clicked item])
                 });
 
             function loadDummyData(ev, itemName) {
+                console.log(itemName);
                 ev.preventDefault();
             }
 
@@ -290,7 +321,7 @@ var layoutPackage = {
 
                 Kacana.utils.loading.closeLoading();
             };
-            var loading
+
             Kacana.utils.loading.loading($(this).parents('.save-product-wrap'), true);
             var errorCallBack = function(){
 

@@ -7,19 +7,35 @@
 
     <!-- Basic -->
     <meta charset="utf-8">
-    <title>Kacana - Túi xách cho mọi nhà</title>
-    <meta name="keywords" content="tui-xach-dep" />
-    <meta name="description" content="Kacana - Hệ thống túi xách chuyên nghiệp">
-    <meta name="author" content="okler.net">
-    <meta property="fb:app_id" content="1064427043612189" />
-    <meta property="og:url" content="http://dev.kacana.com" />
-    <meta property="og:title" content="kacana fashion" />
-    <meta property="og:description" content="bag, fashion, loop" />
-    <meta property="og:image" content="/images/client/homepage/logo.png" />
+
+    <!-- GOOGLE META AND SEO -->
+    <title>@yield('meta-title', 'Chuyên bán túi xách, kính mắt, đồng hồ và dây lưng') - Kacana.vn</title>
+    <meta name="description" content="@yield('meta-description', 'Hàng loạt các mẫu túi ví, túi xách, túi đeo, ví da, ví cầm tay,ba lo nam nữ thời trang chính hãng  liên tục được cập nhật - Mua bán trực tuyến') - Kacana.vn" />
+    <meta name="keywords" content="@yield('meta-keyword', 'túi ví, tui vi, túi xách, ví da, túi đeo, ví cầm tay, balo, túi da, túi vải, túi ví chính hãng, túi ví cao cấp')" />
+
+    <!-- =========================
+          FAV AND TOUCH ICONS
+    ============================== -->
+    <link rel="icon" href="/images/client/favicons/favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/client/favicons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" href="/images/client/favicons/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="/images/client/favicons/favicon-16x16.png" sizes="16x16">
+    <link rel="manifest" href="/images/client/favicons/manifest.json">
+    <link rel="mask-icon" href="/images/client/favicons/safari-pinned-tab.svg" color="#5bbad5">
+
+    <meta property="fb:app_id" content="{{KACANA_SOCIAL_FACEBOOK_KEY}}" />
+    <meta prefix="og: http://ogp.me/ns#" property="og:url" content="{{Request::url()}}">
+    <meta prefix="og: http://ogp.me/ns#" property="og:title" content="@yield('meta-title', 'Chuyên bán túi xách, kính mắt, đồng hồ và dây lưng') - Kacana.vn">
+    <meta prefix="og: http://ogp.me/ns#" property="og:description" content="@yield('meta-description', 'Hàng loạt các mẫu túi ví, túi xách, túi đeo, ví da, ví cầm tay,ba lo nam nữ thời trang chính hãng  liên tục được cập nhật - Mua bán trực tuyến') - Kacana.vn">
+    <meta prefix="og: http://ogp.me/ns#" property="og:site_name" content="@yield('meta-title', 'Chuyên bán túi xách, kính mắt, đồng hồ và dây lưng') - Kacana.vn">
+    <meta property="og:image" content="@yield('meta-image', 'http:'.AWS_CDN_URL.'/images/client/short_logo.png')" />
+    <meta property="og:locale" content="vi_VN" />
+
+    <meta name="author" content="Kacana.vn">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <!-- Mobile Metas -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width,height=device-height, user-scalable=no, initial-scale=1.0">
 
     <!-- Vendor CSS -->
     <!-- Bootstrap 3.3.4 -->
@@ -119,6 +135,17 @@
         js.src = "//connect.facebook.net/en_US/sdk.js";
         fjs.parentNode.insertBefore(js, fjs);
     }(document, 'script', 'facebook-jssdk'));
+
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-82621615-1', 'auto');
+    ga('require', 'displayfeatures');
+    ga('require', 'linkid', 'linkid.js');
+    ga('send', 'pageview');
+
 </script>
 <div class="body">
 

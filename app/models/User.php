@@ -5,6 +5,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
+use Carbon\Carbon;
 use Image;
 use DB;
 use Kacana\DataTables;
@@ -196,5 +197,29 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
             "recordsFiltered" => intval( $recordsFiltered->count() ),
             "data"            => $selectData->get()
         );
+    }
+
+    public function countUser($duration = false){
+        $date = Carbon::now()->subDays($duration);
+        if($duration === false)
+            return $this->count();
+        else
+            return $this->where('created', '>=', $date)->count();
+    }
+
+    public function reportUser($startTime, $endTime, $type = 'date')
+    {
+        $userReport =  $this->where('created', '>=', $startTime)
+                            ->where('created', '<=', $endTime);
+        if($type == 'day')
+            $userReport->select('*', DB::raw('DATE_FORMAT(created, "%Y-%m-%d") as date'), (DB::raw('count(id) as item')))
+            ->groupBy('date');
+        elseif($type == 'month')
+            $userReport->select('*', DB::raw('DATE_FORMAT(created, "%Y-%m") as date'), (DB::raw('count(id) as item')))
+                ->groupBy('date');
+        elseif($type == 'year')
+            $userReport->select('*',DB::raw('DATE_FORMAT(created, "%Y") as date'), (DB::raw('count(id) as item')))
+                ->groupBy('date');
+        return $userReport->get();
     }
 }

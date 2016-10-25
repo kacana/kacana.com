@@ -1,33 +1,44 @@
 <div class="col-xxs-12 col-xs-6 col-sm-4 col-md-3 product-item" >
+
     <div class="product-image" >
-        {{-- */$i=0;/* --}}
-        @if($item->properties && count($item->properties)>0)
+        <div class="product-image-inside royalSlider rsDefault" data-first-image="{{$item->image}}" >
+            <a data-rsbigimg="{{$item->image}}" href="{{AWS_CDN_URL.PRODUCT_IMAGE_PLACE_HOLDER}}" class="rsImg">
+                {{$item->name}}
+                <img class="rsTmb" data-original="{{$item->image}}"/>
+            </a>
+            @if($item->properties && count($item->properties)>0)
+                @foreach($item->properties as $property)
+                    @if($property->product_gallery)
+                        <a id="product-property-gallery-id-{{$item->id}}" class="rsImg" data-rsbigimg="{{$property->product_gallery->image}}" href="{{$property->product_gallery->image}}" >
+                            <img class="rsTmb" data-original="{{$property->product_gallery->thumb}}" >
+                        </a>
+                    @endif
+                @endforeach
+            @endif
+        </div>
+    </div>
+
+    @if($item->properties && count($item->properties)>0)
+        <div class="list-color-product multiple-items nav" >
             @foreach($item->properties as $property)
                 @if($property->product_gallery)
-                    @if($i == 0)
-                        <div class="product-image-inside royalSlider rsDefault" data-first-image="{{$property->product_gallery->image}}" >
-                            <a id="product-property-gallery-id-{{$item->id}}" class="rsImg" data-rsbigimg="{{$property->product_gallery->image}}" href="{{AWS_CDN_URL.PRODUCT_IMAGE_PLACE_HOLDER}}" >
-                                {{$item->name}}
-                                <img class="rsTmb" data-original="{{$property->product_gallery->thumb}}" >
-                            </a>
-                    @else
-                            <a id="product-property-gallery-id-{{$item->id}}" class="rsImg" data-rsbigimg="{{$property->product_gallery->image}}" href="{{$property->product_gallery->image}}" >
-                                <img class="rsTmb" data-original="{{$property->product_gallery->thumb}}" >
-                            </a>
-                    @endif
-                        {{-- */$i++;/* --}}
+                    <div>
+                        <a href="#choose-product-color">
+                            <img  data-original="{{$property->product_gallery->thumb}}">
+                        </a>
+                    </div>
                 @endif
             @endforeach
-                        </div>
-        @else
-            <div class="product-image-inside royalSlider rsDefault" data-first-image="{{$item->image}}" >
-                <a data-rsbigimg="{{$item->image}}" href="{{AWS_CDN_URL.PRODUCT_IMAGE_PLACE_HOLDER}}" class="rsImg">
-                    {{$item->name}}
-                    <img class="rsTmb" data-original="{{$item->image}}"/>
+        </div>
+    @else
+        <div class="list-color-product multiple-items nav" >
+            <div>
+                <a >
+                    <img  data-original="{{$item->image}}">
                 </a>
             </div>
-        @endif
-    </div>
+        </div>
+    @endif
     <div class="product-info">
         <div class="product-title"> <a href="{{urlProductDetail($item)}}" title="{{$item->name}}">{{$item->name}}</a></div>
     </div>
@@ -50,7 +61,7 @@
     <div class="product-short-description-like-wrap">
         <div class="product-short-description-wrap" id="product-short-description-wrap-{{$item->id}}">
             <div class="product-short-description">
-                {{$item->short_description}}
+                {{fixHtml($item->short_description)}}
             </div>
 
             <span class=@if($item->isLiked)"save-product-wrap active"@else"save-product-wrap"@endif >

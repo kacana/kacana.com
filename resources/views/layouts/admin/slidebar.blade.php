@@ -4,13 +4,14 @@ $action = getActionName(class_basename(Route::currentRouteAction()));
 ?>
 <section class="sidebar">
     <ul class="sidebar-menu">
-        <li class="header">Quản lý kho</li>
+        <li class="header">Thống kê</li>
         <li class="treeview">
-            <a href="#">
-                <i class="fa fa-dashboard"></i> <span>Dashboard</span> <i class="fa fa-angle-left pull-right"></i>
+            <a href="/">
+                <i class="fa fa-dashboard"></i> <span>Kacana Dashboard</span></i>
             </a>
         </li>
 
+        <li class="header">Quản lý kho</li>
         <li class="{{in_array($controller, array('BranchController', 'ProductController')) ? 'active' : ''}} treeview">
             <a href="#">
                 <i class="fa fa-pie-chart"></i>
@@ -18,7 +19,6 @@ $action = getActionName(class_basename(Route::currentRouteAction()));
                 <i class="fa fa-angle-left pull-right"></i>
             </a>
             <ul class="treeview-menu">
-                <li class="{{($controller == 'BranchController') ? 'active':''}}"><a href="{{URL::to('/product/branch')}}"><i class="fa fa-circle-o"></i>Thương Hiệu</a></li>
                 <li class="{{($controller == 'ProductController') ? 'active':''}}"><a href="{{URL::to('/product')}}"><i class="fa fa-circle-o"></i> Sản Phẩm</a></li>
             </ul>
         </li>
@@ -44,8 +44,6 @@ $action = getActionName(class_basename(Route::currentRouteAction()));
         </li>
 
         <li class="header">Quản Lý Đơn Hàng</li>
-        <li class="treeview {{($controller == 'AdvisoryController')?'active':''}}"><a href="{{URL::to('/advisory')}}"><i class="fa fa-info-circle"></i><span>Tư vấn</span></a>
-        </li>
         <li class="treeview {{($controller == 'OrderController')?'active':''}}">
             <a href="{{URL::to('/order')}}">
                 <i class="fa fa-shopping-cart fa-6"></i>

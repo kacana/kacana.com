@@ -21,9 +21,6 @@ class productModel extends Model  {
      */
     public $timestamps = false;
 
-    //Add extra attribute
-    protected $attributes = ['descriptionLazyLoad'];
-
     //Make it available in the json response
     protected $appends = ['descriptionLazyLoad'];
 
@@ -57,6 +54,14 @@ class productModel extends Model  {
     public function galleries()
     {
         return $this->hasMany('App\models\productGalleryModel', 'product_id', 'id');
+    }
+
+    /**
+     * Get the galleries associated with product
+     */
+    public function productView()
+    {
+        return $this->hasMany('App\models\productViewModel', 'product_id', 'id');
     }
 
     /**

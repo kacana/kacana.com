@@ -260,35 +260,6 @@ class CartController extends BaseController {
      *
      */
     /**
-     * @param $domain
-     * @param $orderId
-     * @return \BladeView|bool|\Illuminate\View\View
-     */
-    public function orderDetail($domain, $orderId){
-        $orderDetailModel = new orderDetailModel();
-        $data['items'] = $orderDetailModel->getItemsByOrderId($orderId);
-        $data['order'] = Order::find($orderId);
-        return view('client.cart.order', $data);
-    }
-
-    /*
-    * - function mame: showListWards
-    */
-    /**
-     *
-     */
-    public function showListWards()
-    {
-        $id = Request::get('id');
-        $ward = new addressWardModel;
-        $lists = $ward->getItemsByCityId($id)->lists('name', 'id');
-        echo Form::select('ward_id', $lists,null, array('class'=>'form-control', 'id'=>'ward')) . '<span id="error-ward" class="text-red error"></span>';
-    }
-
-    /*
-     *
-     */
-    /**
      * @param $email
      * @param $username
      * @param $data

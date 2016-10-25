@@ -172,9 +172,13 @@ class ProductController extends BaseController {
             $productService->createBaseProduct($productName, $productPriceIm, $productPriceEx);
             return redirect('product');
         } catch (\Exception $e) {
-            // @codeCoverageIgnoreStart
-            $return['errorMsg'] = $e->getMessage();
-            // @codeCoverageIgnoreEnd
+            if($request->ajax())
+            {
+                $result['error'] = $e->getMessage();
+                return $result;
+            }
+            else
+                return view('errors.404', ['error_message' => $e->getMessage()]);
         }
     }
 

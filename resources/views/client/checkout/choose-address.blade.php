@@ -1,3 +1,4 @@
+@section('meta-title', 'Cảm ơn bạn đã đặt hàng')
 <section class="panel">
     <header class="panel-heading">
         <div class="panel-body">

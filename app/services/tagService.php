@@ -24,11 +24,16 @@ class tagService {
         $tagModel = new tagModel();
 
         $tag = $tagModel->getTagRelation($id, $typeId);
-        if($tag->getOriginal('image'))
-            $productGalleryService->deleteFromS3($tag->getOriginal('image'));
+        if($tag->image)
+            $productGalleryService->deleteFromS3($tag->image);
 
         if($imageName)
-            $productGalleryService->uploadToS3($imageName);
+        {
+            $newPath = '/images/tag/kacana_tag_'.$tag->parent_id.'_'.$tag->child_id.'_'.$tag->tag_type_id.'_'.time().'.jpg';
+            $productGalleryService->uploadToS3($imageName, $newPath);
+            $imageName = $newPath;
+        }
+
 
         $tag = $tagModel->updateImage($id, $parentId, $typeId, $imageName);
 
@@ -399,6 +404,15 @@ class tagService {
         $listTagRelationId = array();
         $tagRelationId = $this->getAllChildTag($tagId, $listTagRelationId);
         return  $tagModel->getTagByIdsHaveProduct($tagRelationId);
+    }
+
+    public function formatMetaKeyword($tags){
+        $tagNameArray = [];
+        if(count($tags))
+            foreach ($tags as $tag)
+                array_push($tagNameArray, $tag->name);
+
+        return $tagNameArray;
     }
 
     /**

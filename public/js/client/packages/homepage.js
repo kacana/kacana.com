@@ -87,7 +87,6 @@ var homepagePackage = {
                                 var firstImage = productItem.find('.product-image-inside').data('firstImage');
                                 productItem.find('.rsImg.rsMainSlideImage').attr('data-original', firstImage);
                                 productItem.find('.rsImg.rsMainSlideImage').lazyload();
-                                productItem.find('img.rsTmb').lazyload();
                             }
                         });
 
@@ -101,12 +100,12 @@ var homepagePackage = {
             });
             $.rsModules.globalCaption = $.rsProto._initGlobalCaption;
 
-            var slider = $('.product-image-inside').royalSlider({
+            $('.product-image-inside').royalSlider({
                 fullscreen: {
                     enabled: true,
                     nativeFS: false
                 },
-                controlNavigation: 'thumbnails',
+                controlNavigation: 'none',
                 autoScaleSlider: true,
                 autoScaleSliderWidth: 2000,
                 autoScaleSliderHeight: 2000,
@@ -132,6 +131,24 @@ var homepagePackage = {
                     autoCenter: false
                 },
                 imgHeight: 200
+            });
+
+            $('.list-color-product:not(.slick-initialized)').on('init', function(event, slick){
+                    $(this).css('opacity', 1);
+                    $(this).find('img').lazyload();
+
+                }).slick({
+                dots: false,
+                infinite: false,
+                speed: 300,
+                slidesToShow: 5,
+                slidesToScroll: 3,
+                arrows: true,
+                lazyLoad: 'ondemand'
+            }).on('click', 'a[href="#choose-product-color"]', function () {
+                var idSlide = $(this).parents().index() + 1;
+                console.log(idSlide);
+                $(this).parents('.product-item').find('.product-image-inside').royalSlider('goTo', idSlide);
             });
         },
         getPopoverPlacement: function(pop, dom_el){

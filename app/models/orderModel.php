@@ -3,6 +3,7 @@
 use Illuminate\Database\Eloquent\Model;
 use DB;
 use Kacana\DataTables;
+use Carbon\Carbon;
 
 /**
  * Class orderModel
@@ -119,5 +120,30 @@ class orderModel extends Model  {
             "recordsFiltered" => intval( $recordsFiltered->count() ),
             "data"            => $selectData->get()
         );
+    }
+
+    public function getCountOrder($duration = false){
+        $date = Carbon::now()->subDays($duration);
+        if($duration === false)
+            return $this->count();
+        else
+            return $this->where('created', '>=', $date)->count();
+    }
+
+    public function reportOrder($startTime, $endTime, $type = 'date')
+    {
+        $orderReport =  $this->where('created', '>=', $startTime)
+            ->where('created', '<=', $endTime);
+        if($type == 'day')
+            $orderReport->select('*', DB::raw('DATE_FORMAT(created, "%Y-%m-%d") as date'), (DB::raw('count(id) as item')))
+                ->groupBy('date');
+        elseif($type == 'month')
+            $orderReport->select('*', DB::raw('DATE_FORMAT(created, "%Y-%m") as date'), (DB::raw('count(id) as item')))
+                ->groupBy('date');
+        elseif($type == 'year')
+            $orderReport->select('*',DB::raw('DATE_FORMAT(created, "%Y") as date'), (DB::raw('count(id) as item')))
+                ->groupBy('date');
+
+        return $orderReport->get();
     }
 }

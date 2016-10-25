@@ -1,3 +1,4 @@
+@section('meta-title', 'Email đặt hàng')
 <section class="panel vpadding-10">
     <div class="row" >
         <div class="col-sm-6 col-xs-12" >

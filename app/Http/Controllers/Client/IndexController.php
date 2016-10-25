@@ -2,6 +2,7 @@
 
 use App\services\productService;
 use App\services\tagService;
+use App\services\trackingService;
 use App\services\userService;
 use Illuminate\Http\Request;
 
@@ -44,8 +45,10 @@ class IndexController extends BaseController {
 
 	public function searchProduct($domain, $searchString, Request $request){
 	    $productService = new productService();
+        $trackingService = new trackingService();
         $result['ok'] = 0;
         try {
+            $userId = (\Kacana\Util::isLoggedIn())?$this->_user->id:0;
             $page = $request->input('page', 1);
             $limit = $request->input('limit', KACANA_PRODUCT_ITEM_PER_TAG);
 
@@ -53,7 +56,7 @@ class IndexController extends BaseController {
             $options = ['sort'=>$sort];
 
             $products = $productService->searchProduct($searchString, $limit, $page, $options);
-
+            $trackingService->createTrackingSearch($searchString, $userId, $request->ip(), 'sub');
             $result['ok'] = 1;
             $result['products'] = $products;
             $result['search'] = $searchString;

@@ -1,5 +1,5 @@
 <h3 class="text-center color-grey">Thông tin liên hệ</h3>
-
+@section('meta-title', 'Thông tin liên hệ')
 <div class="row">
     <div class="col-md-12 text-center">
         <img class="img-responsive" style="display: unset;" src="/images/client/homepage/logo.png">

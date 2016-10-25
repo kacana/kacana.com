@@ -6,7 +6,7 @@ use App\services\addressService;
 use \Kacana\Util;
 use Kacana\DataTables;
 use Kacana\ViewGenerateHelper;
-
+use Carbon\Carbon;
 /**
  * Class shipService
  * @package App\services
@@ -250,6 +250,28 @@ class orderService {
         return $result;
 
     }
+
+    public function getCountOrder($duration = false){
+        return $this->_orderModel->getCountOrder($duration);
+    }
+
+    public function getOrderReport($dateRange, $type){
+        if(!$dateRange)
+        {
+            $startTime = Carbon::now()->subDays(KACANA_REPORT_DURATION_DEFAULT);
+            $endTime = Carbon::now();
+
+        }else{
+            $dateRange = explode(' - ', $dateRange);
+            $startTime = $dateRange[0];
+            $endTime = Carbon::createFromFormat('Y-m-d', $dateRange[1])->addDay();
+        }
+
+
+        return $this->_orderModel->reportOrder($startTime, $endTime, $type);
+    }
+
+
 }
 
 
