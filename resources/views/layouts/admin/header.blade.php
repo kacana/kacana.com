@@ -50,7 +50,7 @@
                             {{--<a href="#" class="btn btn-default btn-flat">Profile</a>--}}
                         {{--</div>--}}
                         <div class="pull-right">
-                            <a href="/admin/logout" class="btn btn-default btn-flat">Sign out</a>
+                            <a href="/auth/sign-out" class="btn btn-default btn-flat">Sign out</a>
                         </div>
                     </li>
                 </ul>

@@ -153,9 +153,6 @@ class authService {
             $userData['status'] = KACANA_USER_STATUS_ACTIVE;
             $user = $userService->updateItem($user->id, $userData);
 
-            $attempt = ['email' => $email, 'password' => $password, 'role' => $role, 'status' => KACANA_USER_STATUS_ACTIVE];
-            Auth::attempt($attempt);
-
             $result['ok'] = 1;
             $result['data'] = $user;
 
@@ -167,7 +164,7 @@ class authService {
             $userData['name'] = $name;
             $userData['email'] = $email;
             $userData['phone'] = $phone;
-            $userData['password'] = Hash::make($password);
+            $userData['password'] = Hash::make(md5($password));
             $userData['role'] = $role;
             $userData['status'] = KACANA_USER_STATUS_ACTIVE;
 
@@ -176,9 +173,6 @@ class authService {
             {
                 $result['ok'] = 1;
                 $result['data'] = $user;
-
-                $attempt = ['email' => $email, 'password' => $password, 'role' => $role, 'status' => KACANA_USER_STATUS_ACTIVE];
-                Auth::attempt($attempt);
 
                 return $result;
             }
