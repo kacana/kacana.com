@@ -32,10 +32,18 @@ class SignupController extends Controller
         $confirmPassword = $request->input('confirmPassword', '');
         $postAjax = $request->ajax();
 
+        $host = explode('.', $request->getHttpHost());
+        $roleLink = $host[0];
+
         try{
             if($request->isMethod('post'))
             {
                 $results = $authService->signup($name, $email, $phone, $password, $confirmPassword);
+                $user = $results['data'];
+
+                if($roleLink != KACANA_AUTH_ADMIN_NAME)
+                    \Auth::loginUsingId($user->id, true);
+
                 $emailService->sendEmailNewUser($email);
                 if($postAjax)
                     return response()->json($results);
