@@ -37,7 +37,6 @@
                 <a style="border-radius:3px;color:#ffffff;display:inline-block;font-size:18px;font-weight:bold;padding:12px 16px;text-decoration:none;text-align:center;width:400px;background-color:#7dbde5" href="http://kacana.com" target="_blank">
                     Bắt đầu mua sắm
                 </a>
-
             </td>
         </tr>
         <tr>

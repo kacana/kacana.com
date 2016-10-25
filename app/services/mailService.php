@@ -50,6 +50,7 @@ class mailService {
 
     public function sendEmailNewUser($email)
     {
+        
         $userService = new userService();
         $subject = "Kacana.com - Chào mừng bạn đến với Kacana";
         $viewBlade = 'client.emails.send-email-new-user';
