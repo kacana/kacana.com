@@ -17,7 +17,7 @@ Route::pattern('status', '[0-1]+');
 Route::pattern('keyword', '[a-z0-9-]+');
 Route::pattern('slug', '[a-zA-Z0-9-]+');
 
-Route::pattern('nameDomain', '(kacana.com|dev.kacana.com|staging.kacana.com|kacana.vn|dev.kacana.vn|staging.kacana.vn)');
+Route::pattern('nameDomain', '(www.kacana.com|kacana.com|dev.kacana.com|staging.kacana.com|www.kacana.vn|kacana.vn|dev.kacana.vn|staging.kacana.vn)');
 
 
 Route::group(['prefix' => 'auth/'], function(){
