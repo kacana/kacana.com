@@ -2,6 +2,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\services\authService;
+use App\services\mailService;
 use App\services\userService;
 use Illuminate\Routing\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
@@ -23,7 +24,7 @@ class SignupController extends Controller
     public function signup(Request $request)
     {
         $authService = new authService();
-
+        $emailService = new mailService();
         $name = $request->input('name', '');
         $email = $request->input('email', '');
         $phone = $request->input('phone', '');
@@ -35,11 +36,13 @@ class SignupController extends Controller
             if($request->isMethod('post'))
             {
                 $results = $authService->signup($name, $email, $phone, $password, $confirmPassword);
+                $emailService->sendEmailNewUser($email);
                 if($postAjax)
                     return response()->json($results);
                 else{
-                    if($results['ok'])
+                    if($results['ok']) {
                         return redirect()->intended('/');
+                    }
                     else
                         return view('auth.signup', $results);
                 }
@@ -49,7 +52,6 @@ class SignupController extends Controller
             $return['error'] = $e->getMessage();
             // @codeCoverageIgnoreEnd
         }
-
         return view('auth.signup');
 
     }
@@ -63,7 +65,7 @@ class SignupController extends Controller
     public function socialLoginCallback(Request $request){
         $util = new Util();
         $userService = new userService();
-
+        $emailService = new mailService();
         $accessToken = $request->input('accessToken', '');
         $type = $request->input('type', '');
         $result['ok'] = 0;
@@ -89,6 +91,7 @@ class SignupController extends Controller
                 {
                     $profile['email'] = $email;
                     $user = $userService->getUserByEmail($profile['email']);
+                    $emailService->sendEmailNewUser($email);
                     if($user)
                     {
                         $result['error_code'] = KACANA_AUTH_SIGNUP_ERROR_EMAIL_EXISTS;

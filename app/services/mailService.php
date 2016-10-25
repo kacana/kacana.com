@@ -47,4 +47,14 @@ class mailService {
         $dataView = ['user'=>$userService->getUserByEmail($email)];
         return $this->send($email, $subject, $viewBlade, $dataView, $bcc);
     }
+
+    public function sendEmailNewUser($email)
+    {
+        $userService = new userService();
+        $subject = "Kacana.com - Chào mừng bạn đến với Kacana";
+        $viewBlade = 'client.emails.send-email-new-user';
+        $bcc = KACANA_EMAIL_ADMIN;
+        $dataView = ['user'=>$userService->getUserByEmail($email)];
+        return $this->send($email, $subject, $viewBlade, $dataView, $bcc);
+    }
 }
