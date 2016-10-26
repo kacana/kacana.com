@@ -2,7 +2,7 @@
 
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
-use App\services\shipService;
+
 class Kernel extends ConsoleKernel {
 
 	/**
@@ -12,6 +12,7 @@ class Kernel extends ConsoleKernel {
 	 */
 	protected $commands = [
 		'App\Console\Commands\Inspire',
+        'App\Console\Commands\CreateCSVRemarketing'
 	];
 
 	/**
@@ -22,11 +23,6 @@ class Kernel extends ConsoleKernel {
 	 */
 	protected function schedule(Schedule $schedule)
 	{
-        $shipService = new shipService();
-		$schedule->command('inspire')
-				 ->hourly();
-
-
+        $schedule->command('csv:everyDay')->everyFiveMinutes()->withoutOverlapping();;
 	}
-
 }

@@ -115,6 +115,15 @@
     <link rel="stylesheet" href="/lib/codrops/text-input/css/set2.css">
 
     <script src="http://maps.google.com/maps/api/js?key={{GOOGLE_API_KEY}}"></script>
+
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+        })(window,document,'script','dataLayer','GTM-MRJLJP');</script>
+    <!-- End Google Tag Manager -->
+
 </head>
 <body class="cbp-spmenu-push">
 <div id="fb-root"></div>
@@ -250,6 +259,11 @@ Không thể liên kết thẻ tiếp thị lại với thông tin nhận dạng
         <img height="1" width="1" style="border-style:none;" alt="" src="//googleads.g.doubleclick.net/pagead/viewthroughconversion/938027284/?guid=ON&amp;script=0"/>
     </div>
 </noscript>
+
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MRJLJP"
+                  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
 
 <script type="text/javascript">
 

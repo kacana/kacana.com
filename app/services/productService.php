@@ -604,6 +604,21 @@ class productService {
         return $productViewModel->reportProductView($startTime, $endTime, $type);
     }
 
+    public function createCsvBD(){
+        $productModel = new productModel();
+        $products = $productModel->getProductToCreateCsv(1000);
+
+        $fp = fopen(PATH_PUBLIC.'/doc/file.csv', 'w');
+        fputcsv($fp, ['ID', 'ID2', 'Item title', 'Final URL', 'Image URL', 'Item subtitle', 'Item description', 'Item category', 'Price']);
+        foreach ($products as $product)
+        {
+            $link = 'http://kacana.vn/san-pham/' . str_slug($product->name) . '--' . $product->id . '--' . $product->tag_id;
+            fputcsv($fp, [$product->id, $product->tag_id, $product->name, $link, 'http:'.$product->image, $product->name, $product->short_description, '', formatMoney($product->sell_price, ' VND')]);
+        }
+
+        fclose($fp);
+    }
+
 //    public function fixProductPrice(){
 //        $productModel = new productModel();
 //        $productGalleryModel = new productGalleryModel();

@@ -227,7 +227,7 @@ function formatMoney($number, $symbol='đ')
     if($number)
     {
         while (true) {
-            $replaced = preg_replace('/(-?\d+)(\d\d\d)/', '$1.$2', $number);
+            $replaced = preg_replace('/(-?\d+)(\d\d\d)/', '$1,$2', $number);
             if ($replaced != $number) {
                 $number = $replaced;
             } else {

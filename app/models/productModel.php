@@ -464,7 +464,6 @@ class productModel extends Model  {
      * @param $productId
      * @param $tagColorId
      * @param $tagSizeId
-     * @param $colorCode
      * @param $productGalleryId
      * @return bool
      */
@@ -620,5 +619,10 @@ class productModel extends Model  {
     public function getImageAttribute($value)
     {
         return AWS_CDN_URL.$value;
+    }
+
+    public function getProductToCreateCsv($limit = 300){
+        return $this->leftJoin('product_tag', 'products.id', '=', 'product_tag.product_id')
+            ->where('product_tag.type','=', KACANA_PRODUCT_TAG_TYPE_MENU)->groupBy('products.id')->take($limit)->get();
     }
 }
