@@ -322,7 +322,15 @@ var ajaxPackage = {
                 };
                 var options = [];
                 Kacana.ajax.init(url, dataType, type, dataPost, callBack, errorCallBack, options);
-            }
+            },
+            changeTagStatusRelation: function (sendData, callBack, errorCallBack) {
+                var url = '/tag/changeTagStatusRelation';
+                var dataType = 'json';
+                var type = 'post';
+                var dataPost =sendData;
+                var options = [];
+                Kacana.ajax.init(url, dataType, type, dataPost, callBack, errorCallBack, options);
+            },
         },
         /*****************************************************************************
          *

@@ -341,7 +341,7 @@ class tagService {
         $parentId = 0;
         $typeId = TAG_RELATION_TYPE_MENU;
 
-        $menuClients = $tagModel->getSubTags($parentId, $typeId);
+        $menuClients = $tagModel->getSubTags($parentId, $typeId, KACANA_TAG_STATUS_ACTIVE);
 
         foreach($menuClients as &$menuClient){
             $menuClient->childs = $tagModel->getSubTags($menuClient->child_id, $typeId);
@@ -361,7 +361,7 @@ class tagService {
         $tagModel = new tagModel();
         $parentId = 0;
 
-        return $tagModel->getSubTags($parentId, $typeId);
+        return $tagModel->getSubTags($parentId, $typeId, KACANA_TAG_STATUS_ACTIVE);
     }
 
     /**
@@ -486,6 +486,38 @@ class tagService {
             $tag['value'] = $tag['name'];
         }
         return $tags;
+    }
+
+    public function toggleStatusRelation($tagId, $typeId, $parentId){
+        $tagModel = new tagModel();
+        $tagRelation = $tagModel->getTagRelation($tagId, $typeId);
+
+        if($tagRelation->status == TAG_RELATION_STATUS_INACTIVE)
+        {
+            if($parentId)
+            {
+                $parentTagRelation = $tagModel->getTagRelation($parentId, $typeId);
+                if($parentTagRelation->status == TAG_RELATION_STATUS_INACTIVE)
+                    return false;
+            }
+            $tagModel->updateTagRelationOrder($tagId, $typeId, ['status'  => TAG_RELATION_STATUS_ACTIVE]);
+
+        }
+
+        if($tagRelation->status == TAG_RELATION_STATUS_ACTIVE)
+        {
+            $tagModel->updateTagRelationOrder($tagId, $typeId, ['status'  => TAG_RELATION_STATUS_INACTIVE]);
+            $tagArr = [];
+
+            $subTags = $this->getAllChildTag($tagId, $tagArr, $typeId);
+
+            foreach ($subTags as $subTag){
+                $tagModel->updateTagRelationOrder($subTag, $typeId, ['status'  => TAG_RELATION_STATUS_INACTIVE]);
+            }
+
+        }
+
+        return true;
     }
 
 }

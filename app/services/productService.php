@@ -366,15 +366,19 @@ class productService {
             if($tagOfProduct->pivot->type == KACANA_PRODUCT_TAG_TYPE_MENU)
                 array_push($tagProductArray, $tagOfProduct->id);
         }
-
-        foreach($tags as &$tag){
-            if(in_array($tag->child_id, $tagProductArray))
+        $tagActive = array();
+        foreach($tags as $tag){
+            if($tag->relation_status)
             {
-                $tag->checked = true;
+                if(in_array($tag->child_id, $tagProductArray))
+                {
+                    $tag->checked = true;
+                }
+                array_push($tagActive, $tag);
             }
         }
 
-        return $tags;
+        return $tagActive;
     }
 
     /**

@@ -116,46 +116,39 @@
 
     <script src="http://maps.google.com/maps/api/js?key={{GOOGLE_API_KEY}}"></script>
 
-    <!-- Google Tag Manager -->
-    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-                new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-                j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-                'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-        })(window,document,'script','dataLayer','GTM-MRJLJP');</script>
-    <!-- End Google Tag Manager -->
+    <script>
+        window.fbAsyncInit = function() {
+            FB.init({
+                appId      : '1064427043612189',
+                xfbml      : true,
+                version    : 'v2.7'
+            });
+        };
 
+        (function(d, s, id){
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) {return;}
+            js = d.createElement(s); js.id = id;
+            js.src = "//connect.facebook.net/en_US/sdk.js";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-82621615-1', 'auto');
+        ga('require', 'displayfeatures');
+        ga('require', 'linkid', 'linkid.js');
+        ga('send', 'pageview');
+
+    </script>
 </head>
 <body class="cbp-spmenu-push">
 <div id="fb-root"></div>
 <div id="fb-root"></div>
-<script>
-    window.fbAsyncInit = function() {
-        FB.init({
-            appId      : '1064427043612189',
-            xfbml      : true,
-            version    : 'v2.7'
-        });
-    };
 
-    (function(d, s, id){
-        var js, fjs = d.getElementsByTagName(s)[0];
-        if (d.getElementById(id)) {return;}
-        js = d.createElement(s); js.id = id;
-        js.src = "//connect.facebook.net/en_US/sdk.js";
-        fjs.parentNode.insertBefore(js, fjs);
-    }(document, 'script', 'facebook-jssdk'));
-
-    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-    ga('create', 'UA-82621615-1', 'auto');
-    ga('require', 'displayfeatures');
-    ga('require', 'linkid', 'linkid.js');
-    ga('send', 'pageview');
-
-</script>
 <div class="body">
 
     @include('layouts.client.header')
@@ -253,11 +246,20 @@ Không thể liên kết thẻ tiếp thị lại với thông tin nhận dạng
 <!--------------------------------------------------
 Không thể liên kết thẻ tiếp thị lại với thông tin nhận dạng cá nhân hay đặt thẻ tiếp thị lại trên các trang có liên quan đến danh mục nhạy cảm. Xem thêm thông tin và hướng dẫn về cách thiết lập thẻ trên: http://google.com/ads/remarketingsetup
 --------------------------------------------------->
+
+<script type="text/javascript">
+
+    $(function() {
+        @yield('javascript')
+
+        Kacana.layout.init();
+    });
+</script>
 <script type="text/javascript">
     var google_tag_params = {
         ecomm_prodid: [@yield('google-param-prodid', 0)],
         ecomm_pagetype: "@yield('google-param-pagetype', 'home')",
-        ecomm_totalvalue:  "@yield('google-param-totalvalue', 0)",
+        ecomm_totalvalue: @yield('google-param-totalvalue', 0)
     };
 </script>
 <script type="text/javascript">
@@ -274,21 +276,5 @@ Không thể liên kết thẻ tiếp thị lại với thông tin nhận dạng
         <img height="1" width="1" style="border-style:none;" alt="" src="//googleads.g.doubleclick.net/pagead/viewthroughconversion/938027284/?guid=ON&amp;script=0"/>
     </div>
 </noscript>
-
-
-<!-- Google Tag Manager (noscript) -->
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MRJLJP"
-                  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-<!-- End Google Tag Manager (noscript) -->
-
-<script type="text/javascript">
-
-    $(function() {
-        @yield('javascript')
-
-        Kacana.layout.init();
-    });
-</script>
-
 </body>
 </html>

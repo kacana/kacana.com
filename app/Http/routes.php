@@ -92,6 +92,7 @@ Route::group(['domain'=>KACANA_AUTH_ADMIN_NAME.'.{nameDomain}','middleware' => '
     Route::get('/tag/getTag',                               array('as'=>'tag-get-tag',              'uses'=>'Admin\TagController@getTag'));
     Route::any('/tag/fullEditTag/{id}',                     array('as'=>'tag-full-edit-tag',        'uses'=>'Admin\TagController@fullEditTag'));
     Route::any('/tag/getGroupTag',                          array('as'=>'tag-get-group-tag',        'uses'=>'Admin\TagController@getGroupTag'));
+    Route::post('/tag/changeTagStatusRelation',             array('as'=>'tag-change-status-relation-tag',        'uses'=>'Admin\TagController@changeTagStatusRelation'));
 
     //user
     Route::any('/user',                                     array('as'=>'listUsers',                 'uses'=>'Admin\UserController@index'));

@@ -173,6 +173,7 @@ class tagModel extends Model  {
         if($status)
             $tagRelations->where('tags.status','=', $status);
 
+        $tagRelations->select(['tag_relations.*', 'tags.*', 'tag_relations.status AS relation_status']);
         $results = $tagRelations->get();
 
         return $results ? $results : false;

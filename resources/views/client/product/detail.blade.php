@@ -209,4 +209,4 @@
 
 @section('google-param-prodid', $item->id)
 @section('google-param-pagetype', 'product')
-@section('google-param-totalvalue', formatMoney($item->sell_price))
+@section('google-param-totalvalue', $item->sell_price)

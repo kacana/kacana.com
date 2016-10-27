@@ -260,6 +260,7 @@ var tagPackage = {
 
               wrapContent.on('click', '.create-tag-btn', Kacana.tag.relationTags.popupCreateTagWithType);
               wrapContent.on('click', 'a[href="#edit-tag-btn"]', Kacana.tag.relationTags.editTagWithType);
+              wrapContent.on('click', 'a[href="#change-status-tag-relation"]', Kacana.tag.relationTags.changeTagStatusRelation);
               wrapContent.on('click', 'a[href="#delete-tag-btn"]', Kacana.tag.relationTags.deleteTagWithType);
               wrapContent.on('click', 'a[href="#add-image-tag"]', Kacana.tag.relationTags.addImageTagWithType);
               wrapContent.on('click', 'a[href="#show-product-tag-btn"]', Kacana.tag.relationTags.showProductTag);
@@ -425,13 +426,20 @@ var tagPackage = {
                       var countProduct = node.product_count;
                       var nodeid = node.child_id;
                       var parentId = node.parent_id;
-
+                      console.log(node);
                       var str = '<span class="badge bg-gray childleft"><a href="javascript:void(0)"> '+countChild+' childs </a></span>';
                       str += '<span class="badge bg-gray childleft"><a data-id="'+nodeid+'" href="#show-product-tag-btn"> <b>'+countProduct+'</b> sản phẩm </a></span>';
-                      str += ' <span><a class="btn bg-light-blue-active btn-xs create-tag-btn" data-parent-id="'+parentId+'" data-id="'+nodeid+'"   title="add tag" href="#"><i class="fa fa-plus"></i></a></span>';
+                      str += ' <span><a class="btn bg-maroon btn-xs create-tag-btn" data-parent-id="'+parentId+'" data-id="'+nodeid+'"   title="add tag" href="#"><i class="fa fa-plus"></i></a></span>';
                       str += ' <span><a  class="btn bg-light-blue-active btn-xs" data-parent-id="'+parentId+'" data-name="'+node.name+'" data-id="'+nodeid+'" href="#add-image-tag" title="image tag" id="_tag_'+nodeid+'_'+parentId+'" data-url="//d1f7p3vikjjz1z.cloudfront.net'+node.image+'"><i class="fa fa-photo"></i></a></span>';
-                      str += ' <span><a href="#edit-tag-btn" data-name="'+node.name+'" data-id="'+nodeid+'" data-parent-id="'+parentId+'" class="btn bg-light-blue-active btn-xs" title="edit tag"><i class="fa fa-pencil"></i></a></span>';
-                      str += ' <span><a href="/tag/fullEditTag/'+nodeid+'" target="_blank" class="btn bg-light-blue-active btn-xs" title="full edit tag"><i class="fa fa-pencil-square-o"></i></a></span>';
+                      str += ' <span><a href="#edit-tag-btn" data-name="'+node.name+'" data-id="'+nodeid+'" data-parent-id="'+parentId+'" class="btn bg-green btn-xs" title="edit tag"><i class="fa fa-pencil"></i></a></span>';
+                      str += ' <span><a href="/tag/fullEditTag/'+nodeid+'" target="_blank" class="btn bg-yellow btn-xs" title="full edit tag"><i class="fa fa-pencil-square-o"></i></a></span>';
+                      if(node.relation_status)
+                      {
+                          str += ' <span><a href="#change-status-tag-relation" data-id="'+nodeid+'" data-parent-id="'+parentId+'" class="btn bg-aqua btn-xs" title="full edit tag"><i class="fa fa-check"></i></a></span>';
+                      }
+                      else
+                          str += ' <span><a href="#change-status-tag-relation" data-id="'+nodeid+'" data-parent-id="'+parentId+'" class="btn bg-black btn-xs" title="full edit tag"><i class="fa fa-exclamation"></i></a></span>';
+
                       str += ' <span><a href="#delete-tag-btn" data-parent-id="'+parentId+'" data-id="'+nodeid+'" class="btn bg-red btn-xs" title="remove tag" ><i class="fa fa-remove"></i></a></span>';
                       $li.find('.jqtree-title').after(str);
                   },
@@ -583,6 +591,39 @@ var tagPackage = {
               };
               Kacana.utils.loading(tagsElement);
               Kacana.ajax.product.countSearchProductByTagId(tagId, callback, errorCallback);
+          },
+          changeTagStatusRelation: function () {
+              var typeId = $('#content-tag-relation').find('#create-tag-btn').data('type-id');
+              var id = $(this).data('id');
+              var parentId = $(this).data('parent-id');
+
+              var sendData = {
+                  tagId: id,
+                  parentId: parentId,
+                  typeId: typeId
+              };
+
+              var callBack = function(data){
+
+                  if(data.ok){
+                      $("#tree-tags").tree('reload');
+                  }
+                  else{
+                      swal({
+                          title: 'Error!',
+                          text: 'Please active parent tag first.',
+                          type: 'error',
+                          confirmButtonText: 'Cool'
+                      });
+                  }
+              };
+
+              var errorCallBack = function(){
+
+              };
+
+              Kacana.ajax.tag.changeTagStatusRelation(sendData, callBack, errorCallBack);
+
           },
           deleteTagWithType: function () {
               var typeId = $('#content-tag-relation').find('#create-tag-btn').data('type-id');
