@@ -133,6 +133,7 @@ class cartService {
         $cartInformation->totalShow = formatMoney(Cart::total());
         $cartInformation->items = array();
         $quantity = 0;
+        $productIds = array();
         if(Cart::content()->count())
         {
             foreach(Cart::content() as $row){
@@ -150,11 +151,11 @@ class cartService {
                 }
                 $item->options->subtotalShow = formatMoney($item->subTotal);
                 $quantity += $row->get('qty');
-
+                array_push($productIds, $item->options->productId);
                 array_push($cartInformation->items, $item);
             }
             $cartInformation->quantity = $quantity;
-
+            $cartInformation->productIds = $productIds;
             return $cartInformation;
         }
 

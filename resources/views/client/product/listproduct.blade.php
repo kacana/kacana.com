@@ -89,3 +89,6 @@
 @section('section-modal')
     @include('client.product.modal')
 @stop
+
+@section('google-param-prodid', implode(", ",getProductIds($items)))
+@section('google-param-pagetype', 'category')

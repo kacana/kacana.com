@@ -606,7 +606,7 @@ class productService {
 
     public function createCsvBD(){
         $productModel = new productModel();
-        $products = $productModel->getProductToCreateCsv(false);
+        $products = $productModel->getProductToCreateCsv(1000);
 
         $path = '/doc/file.csv';
         if(Storage::disk('local')->exists($path))

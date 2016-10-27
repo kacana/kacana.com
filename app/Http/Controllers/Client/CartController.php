@@ -161,7 +161,6 @@ class CartController extends BaseController {
     {
         $cartService = new cartService();
         $cart = $cartService->cartInformation();
-
         $total = Cart::total();
         $cities = addressCityModel::lists('name','id');
         $ward = new addressWardModel();

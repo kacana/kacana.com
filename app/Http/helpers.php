@@ -222,7 +222,7 @@ function createResponseExc($e){
 /*
  * format money
  */
-function formatMoney($number, $symbol='đ')
+function formatMoney($number, $symbol=' đ')
 {
     if($number)
     {
@@ -241,6 +241,16 @@ function formatMoney($number, $symbol='đ')
         return '';
 
 
+}
+
+function getProductIds($products){
+    $productIds = array();
+
+    foreach ($products as $product){
+        array_push($productIds, $product->id);
+    }
+
+    return $productIds;
 }
 
 /*
