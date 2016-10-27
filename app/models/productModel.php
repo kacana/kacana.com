@@ -488,14 +488,17 @@ class productModel extends Model  {
      */
     public function getNewestProduct($offset, $limit){
 
-        $products = $this->leftJoin('product_tag', 'products.id', '=', 'product_tag.product_id');
+        $products = $this->leftJoin('product_tag', 'products.id', '=', 'product_tag.product_id')
+                        ->leftJoin('tag_relations', 'product_tag.tag_id', '=', 'tag_relations.child_id');
         $products->skip($offset)
                 ->take($limit);
 
         $products->orderBy('products.created', 'DESC');
         $products->where('product_tag.type', '=', TAG_RELATION_TYPE_MENU);
+        $products->where('tag_relations.tag_type_id', '=', TAG_RELATION_TYPE_MENU);
+        $products->where('tag_relations.status', '=', TAG_RELATION_STATUS_ACTIVE);
         $products->groupBy('products.id');
-
+        $products->select(['products.*', 'product_tag.*']);
         $results = $products->get();
 
         return $results ? $results : false;
@@ -508,14 +511,19 @@ class productModel extends Model  {
      */
     public function getDiscountProduct($offset, $limit){
 
-        $products = $this->leftJoin('product_tag', 'products.id', '=', 'product_tag.product_id');
+        $products = $this->leftJoin('product_tag', 'products.id', '=', 'product_tag.product_id')
+            ->leftJoin('tag_relations', 'product_tag.tag_id', '=', 'tag_relations.child_id');
+
         $products->skip($offset)
             ->take($limit);
 
         $products->orderBy('products.updated', 'DESC');
         $products->where('products.discount', '>', 0);
         $products->where('product_tag.type', '=', TAG_RELATION_TYPE_MENU);
+        $products->where('tag_relations.tag_type_id', '=', TAG_RELATION_TYPE_MENU);
+        $products->where('tag_relations.status', '=', TAG_RELATION_STATUS_ACTIVE);
         $products->groupBy('products.id');
+        $products->select(['products.*', 'product_tag.*']);
 
         $results = $products->get();
 
@@ -523,9 +531,13 @@ class productModel extends Model  {
     }
 
     public function suggestSearchProduct($searchString){
+
+        $query1 =
+
         $query = $this->where('products.name', 'LIKE', "%".$searchString."%")
             ->join('product_tag', 'products.id', '=', 'product_tag.product_id')
             ->groupBy('products.id')
+            ->where(DB::raw(''))
             ->take(10);
 
         $results = $query->get();

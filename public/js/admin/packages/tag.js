@@ -426,7 +426,6 @@ var tagPackage = {
                       var countProduct = node.product_count;
                       var nodeid = node.child_id;
                       var parentId = node.parent_id;
-                      console.log(node);
                       var str = '<span class="badge bg-gray childleft"><a href="javascript:void(0)"> '+countChild+' childs </a></span>';
                       str += '<span class="badge bg-gray childleft"><a data-id="'+nodeid+'" href="#show-product-tag-btn"> <b>'+countProduct+'</b> sản phẩm </a></span>';
                       str += ' <span><a class="btn bg-maroon btn-xs create-tag-btn" data-parent-id="'+parentId+'" data-id="'+nodeid+'"   title="add tag" href="#"><i class="fa fa-plus"></i></a></span>';

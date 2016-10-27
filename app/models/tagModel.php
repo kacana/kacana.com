@@ -171,7 +171,7 @@ class tagModel extends Model  {
             $tagRelations->where('tag_relations.tag_type_id','=', $relationType);
 
         if($status)
-            $tagRelations->where('tags.status','=', $status);
+            $tagRelations->where('tag_relations.status','=', $status);
 
         $tagRelations->select(['tag_relations.*', 'tags.*', 'tag_relations.status AS relation_status']);
         $results = $tagRelations->get();
@@ -397,6 +397,8 @@ class tagModel extends Model  {
     public function suggestSearchProduct($searchString){
         $query = $this->where('tags.name', 'LIKE', "%".$searchString."%")
             ->join('product_tag', 'tags.id', '=', 'product_tag.tag_id')
+            ->leftJoin('tag_relations', 'product_tag.tag_id', '=', 'tag_relations.child_id')
+            ->where('tag_relations.status', '=', TAG_RELATION_STATUS_ACTIVE)
             ->groupBy('tags.id')
             ->take(10);
 
