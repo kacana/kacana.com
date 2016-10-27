@@ -2,7 +2,7 @@
 
 @section('title', 'Danh sách sản phẩm')
 
-@section('section-content-id', 'content-tag-system')
+@section('section-content-id', 'content-list-product')
 
 @section('content')
     <section>
@@ -36,6 +36,7 @@
                             </select>
                             <button type="submit" class="btn btn-primary">Find</button>
                             <button type="reset" class="btn btn-default">Reset</button>
+                            <button type="button" id="create-csv-for-remarketing" class="btn btn-success">Create CSV file</button>
                         </form>
                     </div>
                 </div>

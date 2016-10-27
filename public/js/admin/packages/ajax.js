@@ -165,6 +165,14 @@ var ajaxPackage = {
                 };
                 var options = [];
                 Kacana.ajax.init(url, dataType, type, dataPost, callBack, errorCallBack, options);
+            },
+            createCSVForRemarketing: function (callBack, errorCallBack) {
+                var url = '/product/createCSVForRemarketing';
+                var dataType = 'json';
+                var type = 'post';
+                var dataPost ={};
+                var options = [];
+                Kacana.ajax.init(url, dataType, type, dataPost, callBack, errorCallBack, options);
             }
         },
         /*****************************************************************************

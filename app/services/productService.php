@@ -606,9 +606,13 @@ class productService {
 
     public function createCsvBD(){
         $productModel = new productModel();
-        $products = $productModel->getProductToCreateCsv(1000);
+        $products = $productModel->getProductToCreateCsv(false);
 
-        $fp = fopen(PATH_PUBLIC.'/doc/file.csv', 'w');
+        $path = '/doc/file.csv';
+        if(Storage::disk('local')->exists($path))
+            Storage::disk('local')->delete($path);
+
+        $fp = fopen(PATH_PUBLIC.$path, 'w');
         fputcsv($fp, ['ID', 'ID2', 'Item title', 'Final URL', 'Image URL', 'Item subtitle', 'Item description', 'Item category', 'Price']);
         foreach ($products as $product)
         {
@@ -617,6 +621,8 @@ class productService {
         }
 
         fclose($fp);
+
+        return true;
     }
 
 //    public function fixProductPrice(){

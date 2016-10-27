@@ -231,4 +231,20 @@ class ProductController extends BaseController {
         }
         return response()->json($return);
     }
+
+    public function createCSVForRemarketing(){
+        $productService = new productService();
+        $return['ok'] = 0;
+
+        try {
+            $return['data'] = $productService->createCsvBD();
+            $return['ok'] = 1;
+        } catch (\Exception $e) {
+            // @codeCoverageIgnoreStart
+            $return['error'] = $e->getMessage();
+            $return['errorMsg'] = $e->getMessage();
+            // @codeCoverageIgnoreEnd
+        }
+        return response()->json($return);
+    }
 }
