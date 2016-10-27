@@ -433,7 +433,7 @@ var tagPackage = {
                       str += ' <span><a  class="btn bg-light-blue-active btn-xs" data-parent-id="'+parentId+'" data-name="'+node.name+'" data-id="'+nodeid+'" href="#add-image-tag" title="image tag" id="_tag_'+nodeid+'_'+parentId+'" data-url="//d1f7p3vikjjz1z.cloudfront.net'+node.image+'"><i class="fa fa-photo"></i></a></span>';
                       str += ' <span><a href="#edit-tag-btn" data-name="'+node.name+'" data-id="'+nodeid+'" data-parent-id="'+parentId+'" class="btn bg-green btn-xs" title="edit tag"><i class="fa fa-pencil"></i></a></span>';
                       str += ' <span><a href="/tag/fullEditTag/'+nodeid+'" target="_blank" class="btn bg-yellow btn-xs" title="full edit tag"><i class="fa fa-pencil-square-o"></i></a></span>';
-                      if(node.relation_status)
+                      if(parseInt(node.relation_status))
                       {
                           str += ' <span><a href="#change-status-tag-relation" data-id="'+nodeid+'" data-parent-id="'+parentId+'" class="btn bg-aqua btn-xs" title="full edit tag"><i class="fa fa-check"></i></a></span>';
                       }
