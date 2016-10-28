@@ -406,9 +406,23 @@ class productModel extends Model  {
         }
 
         if(isset($options['product_tag_type_id'])){
-            $select->where('product_tag.type', '=', $options['product_tag_type_id']);
+            $select->where('product_tag.type', '=', $options['product_tag_type_id'])
+                ->leftJoin('tag_relations', 'product_tag.tag_id', '=', 'tag_relations.child_id')
+                ->where('tag_relations.tag_type_id', '=', $options['product_tag_type_id'])
+                ->where('tag_relations.status', '=', TAG_RELATION_STATUS_ACTIVE);
         }
-
+        else{
+            $select->leftJoin('tag_relations', 'product_tag.tag_id', '=', 'tag_relations.child_id')
+                ->whereExists(function ($query) {
+                $query->select(DB::raw(1))
+                    ->from('product_tag as product_tag_check')
+                    ->whereRaw('kacana_product_tag_check.product_id = kacana_products.id')
+                    ->join('tag_relations as tag_relation_check', 'product_tag_check.tag_id', '=', 'tag_relation_check.child_id')
+                    ->where('tag_relation_check.status', '=', TAG_RELATION_STATUS_ACTIVE)
+                    ->where('tag_relation_check.tag_type_id', '=', TAG_RELATION_TYPE_MENU);
+            });
+        }
+        $select->select(['products.*', 'product_tag.*']);
         $select->groupBy('products.id');
 
         if($page)
@@ -532,12 +546,15 @@ class productModel extends Model  {
 
     public function suggestSearchProduct($searchString){
 
-        $query1 =
 
         $query = $this->where('products.name', 'LIKE', "%".$searchString."%")
             ->join('product_tag', 'products.id', '=', 'product_tag.product_id')
+            ->leftJoin('tag_relations', 'product_tag.tag_id', '=', 'tag_relations.child_id')
+            ->where('tag_relations.status', '=', TAG_RELATION_STATUS_ACTIVE)
+            ->where('tag_relations.tag_type_id', '=', TAG_RELATION_TYPE_MENU)
+            ->select(['products.*', 'product_tag.*'])
             ->groupBy('products.id')
-            ->where(DB::raw(''))
+
             ->take(10);
 
         $results = $query->get();
@@ -549,14 +566,20 @@ class productModel extends Model  {
 
         $path = '/tim-kiem/'.$searchString;
 
-        $query = $this->orwhere('products.name', 'LIKE', "%".$searchString."%")
+        $query = $this->where('products.name', 'LIKE', "%".$searchString."%")
             ->join('product_tag', 'products.id', '=', 'product_tag.product_id')
             ->join('tags', 'tags.id', '=', 'product_tag.tag_id')
+            ->join('tag_relations', 'product_tag.tag_id', '=', 'tag_relations.child_id')
+            ->where('tag_relations.status', '=', TAG_RELATION_STATUS_ACTIVE)
+            ->where('tag_relations.tag_type_id', '=', TAG_RELATION_TYPE_MENU)
             ->select('products.*', 'tags.name as tag_name', 'tags.id as tag_id')->groupBy('products.id');
 
         $query_1 = DB::table('products')->where('products.name', 'NOT LIKE', "%".$searchString."%")
             ->join('product_tag', 'products.id', '=', 'product_tag.product_id')
             ->join('tags', 'tags.id', '=', 'product_tag.tag_id')
+            ->join('tag_relations', 'product_tag.tag_id', '=', 'tag_relations.child_id')
+            ->where('tag_relations.status', '=', TAG_RELATION_STATUS_ACTIVE)
+            ->where('tag_relations.tag_type_id', '=', TAG_RELATION_TYPE_MENU)
             ->select('products.*', 'tags.name as tag_name', 'tags.id as tag_id')->groupBy('products.id');
 
         $query_2 = DB::table('products')->where('tags.name', 'LIKE', "%".$searchString."%")
@@ -565,17 +588,31 @@ class productModel extends Model  {
             ->join('tags', 'tags.id', '=', 'product_tag.tag_id')
             ->select('products.*', 'tags.name as tag_name', 'tags.id as tag_id')->groupBy('products.id');
 
+        $query_2->leftJoin('tag_relations', 'product_tag.tag_id', '=', 'tag_relations.child_id')
+            ->whereExists(function ($query) {
+                $query->select(DB::raw(1))
+                    ->from('product_tag as product_tag_check')
+                    ->whereRaw('kacana_product_tag_check.product_id = kacana_products.id')
+                    ->join('tag_relations as tag_relation_check', 'product_tag_check.tag_id', '=', 'tag_relation_check.child_id')
+                    ->where('tag_relation_check.status', '=', TAG_RELATION_STATUS_ACTIVE)
+                    ->where('tag_relation_check.tag_type_id', '=', TAG_RELATION_TYPE_MENU);
+            });
+
         $searchString = explode(' ', $searchString);
+
         if(count($searchString))
         {
-            for($i = 0; $i < count($searchString); $i++){
-                if($i == 0)
-                    $query_1->where('products.name', 'LIKE', "%".$searchString[$i]."%");
-                else
-                    $query_1->orwhere('products.name', 'LIKE', "%".$searchString[$i]."%");
+            $query_1_where = '';
+            for($i = 0; $i < count($searchString)-1; $i++){
+                $query_1_where .= 'kacana_products.name LIKE "%'.$searchString[$i].'%" OR ';
 
                 $query_2->where('products.name', 'NOT LIKE', "%".$searchString[$i]."%");
             }
+
+            $query_1_where .= 'kacana_products.name LIKE "%'.$searchString[count($searchString)-1].'%"';
+
+            $query_1->whereRaw('('.$query_1_where.')');
+
         }
 
 
@@ -611,6 +648,7 @@ class productModel extends Model  {
         }
 
         $query = $query->union($query_1)->union($query_2);
+        $query = $query->union($query_1);
 
         $results = $query->get();
         $results_1 = $query->take($limit)->skip($limit * ($page - 1))->get();

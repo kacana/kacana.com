@@ -240,7 +240,7 @@ class productService {
             throw new \Exception('Tag id is not available');
 
         $tagIdList = array();
-        $tagIds = $tagService->getAllChildTag($tagId, $tagIdList, $options['product_tag_type_id'], TAG_RELATION_STATUS_ACTIVE);
+        $tagIds = $tagService->getAllChildTag($tagId, $tagIdList, $options['product_tag_type_id']);
 
         //caculate offset from page number
         if($page)

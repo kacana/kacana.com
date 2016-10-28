@@ -47,7 +47,6 @@ class IndexController extends BaseController {
 	    $productService = new productService();
         $trackingService = new trackingService();
         $result['ok'] = 0;
-        try {
             $userId = (\Kacana\Util::isLoggedIn())?$this->_user->id:0;
             $page = $request->input('page', 1);
             $limit = $request->input('limit', KACANA_PRODUCT_ITEM_PER_TAG);
@@ -60,16 +59,6 @@ class IndexController extends BaseController {
             $result['ok'] = 1;
             $result['products'] = $products;
             $result['search'] = $searchString;
-         }
-        catch (\Exception $e) {
-            if($request->ajax())
-            {
-                $result['error'] = $e->getMessage();
-                return $result;
-            }
-            else
-                return view('errors.404', ['error_message' => $e->getMessage()]);
-        }
         return view('client.index.search', $result);
 
     }
