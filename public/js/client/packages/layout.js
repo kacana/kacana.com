@@ -188,7 +188,7 @@ var layoutPackage = {
             var errorCallback = function () {
 
             };
-            if(keyCode == 13 && search.length >= 3)
+            if(keyCode == 13 && search.length >= 2)
             {
                 window.location.href = "/tim-kiem/"+search;
             }

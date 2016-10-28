@@ -69,7 +69,7 @@ class productModel extends Model  {
      */
     public function properties()
     {
-        return $this->belongsToMany('App\models\tagModel', 'product_properties', 'product_id', 'tag_color_id')->withPivot('product_gallery_id', 'tag_size_id', 'color_code');
+        return $this->belongsToMany('App\models\tagModel', 'product_properties', 'product_id', 'tag_color_id')->withPivot('product_gallery_id', 'tag_size_id');
     }
 
     /**
@@ -86,6 +86,11 @@ class productModel extends Model  {
     public function detailOrder()
     {
         return $this->hasMany('App\models\orderDetailModel', 'product_id');
+    }
+
+    public function productProperties()
+    {
+        return $this->hasMany('App\models\productPropertiesModel', 'product_id');
     }
 
     /**
@@ -554,7 +559,7 @@ class productModel extends Model  {
             ->where('tag_relations.tag_type_id', '=', TAG_RELATION_TYPE_MENU)
             ->select(['products.*', 'product_tag.*'])
             ->groupBy('products.id')
-
+            ->orderBy('products.updated', 'DESC')
             ->take(10);
 
         $results = $query->get();
@@ -566,7 +571,7 @@ class productModel extends Model  {
 
         $path = '/tim-kiem/'.$searchString;
 
-        $query = $this->where('products.name', 'LIKE', "%".$searchString."%")
+        $query = DB::table('products')->where('products.name', 'LIKE', "%".$searchString."%")
             ->join('product_tag', 'products.id', '=', 'product_tag.product_id')
             ->join('tags', 'tags.id', '=', 'product_tag.tag_id')
             ->join('tag_relations', 'product_tag.tag_id', '=', 'tag_relations.child_id')
@@ -612,6 +617,7 @@ class productModel extends Model  {
             $query_1_where .= 'kacana_products.name LIKE "%'.$searchString[count($searchString)-1].'%"';
 
             $query_1->whereRaw('('.$query_1_where.')');
+            $query_2->where('products.name', 'NOT LIKE', "%".$searchString[count($searchString)-1]."%");
 
         }
 
@@ -647,8 +653,10 @@ class productModel extends Model  {
             $query->orderBy('products.updated', 'DESC');
         }
 
-        $query = $query->union($query_1)->union($query_2);
-        $query = $query->union($query_1);
+        $query = $query->unionAll($query_1)->unionAll($query_2);
+        $querySql = $query->toSql();
+
+        $query = DB::table(DB::raw("(".$querySql." order by updated desc) as a"))->mergeBindings($query);
 
         $results = $query->get();
         $results_1 = $query->take($limit)->skip($limit * ($page - 1))->get();

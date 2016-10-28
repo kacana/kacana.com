@@ -160,6 +160,7 @@ class productService {
     public function formatProductProperties(&$product){
         $tagService = new tagService();
         $productGalleryModel = new productGalleryModel();
+        $productPropertiesModel = new productPropertiesModel();
         $productProperties = $product->properties;
         $properties = array();
         $propertiesSize = array();
@@ -211,6 +212,69 @@ class productService {
 
                     array_push($properties[$pivot->tag_color_id]->size, $size);
                     array_push($properties[$pivot->tag_color_id]->sizeIds, $size->id);
+                }
+            }
+        }
+        if(count($propertiesSize))
+            $product->propertiesSize = $propertiesSize;
+        $product->properties = $properties;
+
+        return $product;
+    }
+
+    public function formatProductPropertiesWhenSearch(&$product){
+        $tagService = new tagService();
+        $product->image = AWS_CDN_URL.$product->image;
+        $productGalleryModel = new productGalleryModel();
+        $productPropertiesModel = new productPropertiesModel();
+        $productProperties = $productPropertiesModel->getPropertiesByProductId($product->id);
+        $properties = array();
+        $propertiesSize = array();
+        foreach($productProperties as $property){
+            if(isset($property->product->status) && $property->product->status == KACANA_PRODUCT_STATUS_ACTIVE)
+            {
+                if(!isset($properties[$property->tag_color_id]))
+                {
+                    $properties[$property->tag_color_id] = new \stdClass();
+                    $properties[$property->tag_color_id]->color_name = $property->color->name;
+                    $properties[$property->tag_color_id]->color_id = $property->tag_color_id;
+                    $properties[$property->tag_color_id]->product_gallery_id = $property->product_gallery_id;
+                    $properties[$property->tag_color_id]->product_gallery = $productGalleryModel->getById($property->product_gallery_id);
+                    $properties[$property->tag_color_id]->product_gallery_array = ($productGalleryModel->getById($property->product_gallery_id))?$productGalleryModel->getById($property->product_gallery_id)->toArray():0;
+
+                }
+
+                if(!isset($properties[$property->tag_color_id]->size))
+                {
+                    $properties[$property->tag_color_id]->size = [];
+                    $properties[$property->tag_color_id]->sizeIds = [];
+                }
+
+                if($property->tag_size_id){
+                    $tagSize = $tagService->getTagById($property->tag_size_id, TAG_RELATION_TYPE_SIZE);
+                    $size = new \stdClass();
+
+                    $size->name = $tagSize->name;
+                    $size->id = $tagSize->id;
+                    if(!isset($propertiesSize[$property->tag_size_id]))
+                    {
+                        $propertiesSize[$property->tag_size_id] = new \stdClass();
+                        $propertiesSize[$property->tag_size_id]->color = [];
+                        $propertiesSize[$property->tag_size_id]->colorIds = [];
+                    }
+
+                    $propertiesSize[$property->tag_size_id]->name = $tagSize->name;
+                    $propertiesSize[$property->tag_size_id]->id =$property->tag_size_id;
+
+                    $colorSize = new \stdClass();
+                    $colorSize->name = $property->name;
+                    $colorSize->id = $property->tag_color_id;
+
+                    array_push($propertiesSize[$property->tag_size_id]->color, $colorSize);
+                    array_push($propertiesSize[$property->tag_size_id]->colorIds, $property->tag_color_id);
+
+                    array_push($properties[$property->tag_color_id]->size, $size);
+                    array_push($properties[$property->tag_color_id]->sizeIds, $size->id);
                 }
             }
         }
@@ -517,12 +581,14 @@ class productService {
      * @param bool $options
      * @return bool|\Illuminate\Pagination\LengthAwarePaginator
      */
-    public function searchProduct($searchString, $limit = KACANA_PRODUCT_ITEM_PER_TAG, $page = 1, $options = false){
+    public function searchProduct($searchString, $limit = KACANA_PRODUCT_ITEM_PER_TAG, $page = 1, $options = false, $userId){
         $productModel = new productModel();
+        $userProductLike = new userProductLikeModel();
         $products = $productModel->searchProduct($searchString, $limit, $page, $options);
-        foreach ($products as $product)
+        foreach ($products as &$product)
         {
-            $this->formatProductProperties($product);
+            $this->formatProductPropertiesWhenSearch($product);
+            $product->isLiked = ($userProductLike->getItem($userId, $product->id))?true:false;
         }
 
         return $products;

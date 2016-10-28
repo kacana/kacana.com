@@ -21,7 +21,23 @@ class productPropertiesModel extends Model  {
      */
     public function product()
     {
-        return $this->belongsTo('App\models\Product');
+        return $this->belongsTo('App\models\productModel','product_id');
+    }
+
+    public function color(){
+        return $this->belongsTo('App\models\tagModel', 'tag_color_id');
+    }
+
+    public function size(){
+        return $this->belongsTo('App\models\tagModel', 'tag_size_id');
+    }
+
+    public function gallery(){
+        return $this->belongsTo('App\models\productGalleryModel', 'product_gallery_id');
+    }
+
+    public function getPropertiesByProductId($productId){
+        return $this->where('product_id', $productId)->get();
     }
 
 }

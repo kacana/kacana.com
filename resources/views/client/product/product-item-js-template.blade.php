@@ -49,7 +49,7 @@
         </div>
 
         <div class="product-price-wrap">
-            @{{if this.discount}}
+            @{{if parseInt(this.discount)}}
             <div class="product-price discount">
                 <div class="discount-info">
                     <div class="product-price-original">

@@ -58,6 +58,16 @@ class tagModel extends Model  {
         return $this->hasMany('App\models\productModel','tag_style_id', 'id');
     }
 
+    public function colorProductProperty()
+    {
+        return $this->hasMany('App\models\productPropertiesModel', 'tag_color_id', 'id');
+    }
+
+    public function sizeProductProperty()
+    {
+        return $this->hasMany('App\models\productPropertiesModel', 'tag_size_id', 'id');
+    }
+
     /**
      * Create tag modal by data array
      *

@@ -24,6 +24,11 @@ class productGalleryModel extends Model  {
         return $this->belongsTo('App\models\Product');
     }
 
+    public function productProperties()
+    {
+        return $this->hasMany('App\models\productPropertiesModel', 'product_gallery_id');
+    }
+
     public static function showImageColor($id)
     {
         return DB::table('product_gallery')->where('id', $id)->pluck('image');

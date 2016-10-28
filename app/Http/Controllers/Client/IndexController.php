@@ -54,7 +54,7 @@ class IndexController extends BaseController {
             $sort = $request->input('sort');
             $options = ['sort'=>$sort];
 
-            $products = $productService->searchProduct($searchString, $limit, $page, $options);
+            $products = $productService->searchProduct($searchString, $limit, $page, $options, $userId);
             $trackingService->createTrackingSearch($searchString, $userId, $request->ip(), 'sub');
             $result['ok'] = 1;
             $result['products'] = $products;
