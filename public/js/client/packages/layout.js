@@ -193,14 +193,14 @@ var layoutPackage = {
                 window.location.href = "/tim-kiem/"+search;
             }
             Kacana.layout.suggestSearchProductTimeout = setTimeout(function () {
-                if(search.length >= 3 && !Kacana.layout.suggestSearchProductProcessing)
+                if(search.length >= 2 && !Kacana.layout.suggestSearchProductProcessing)
                 {
                     Kacana.layout.suggestSearchProductProcessing = true;
                     $('#ac-gn-searchresults').attr('disabled', 'disabled');
                     Kacana.utils.loading.loading($('#ac-gn-searchresults'));
                     Kacana.ajax.homepage.suggestSearchProduct(search, callBack, errorCallback);
                 }
-            }, 800);
+            }, 500);
 
         },
         showSearch: function () {

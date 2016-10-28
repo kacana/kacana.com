@@ -17,7 +17,7 @@
                      data-y="70"
                      data-speed="300"
                      data-start="500"
-                     data-easing="easeOutExpo">8/3</div>
+                     data-easing="easeOutExpo">Khai trường website</div>
 
                 <div class="tp-caption sft stb visible-lg"
                      data-x="500"
