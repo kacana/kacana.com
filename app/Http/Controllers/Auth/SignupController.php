@@ -44,7 +44,9 @@ class SignupController extends Controller
                 if($roleLink != KACANA_AUTH_ADMIN_NAME)
                     \Auth::loginUsingId($user->id, true);
 
-                $emailService->sendEmailNewUser($email);
+                if($results['ok'])
+                    $emailService->sendEmailNewUser($email);
+
                 if($postAjax)
                     return response()->json($results);
                 else{
