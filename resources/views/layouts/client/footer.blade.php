@@ -42,7 +42,7 @@
                     <ul class="contact">
                         @foreach($menu_items as $item)
                                 <li>
-                                    <a href="">{{ $item->name }}</a>
+                                    <a href="{{urlTag($item)}}">{{ $item->name }}</a>
                                 </li>
                         @endforeach
                     </ul>

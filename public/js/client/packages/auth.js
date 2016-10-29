@@ -136,7 +136,6 @@ var authPackage = {
                 data.fv.disableSubmitButtons(false);
             })
             .on('success.field.fv', function(e, data) {
-
                 data.fv.disableSubmitButtons(false);
             });
         },
