@@ -106,27 +106,10 @@ var layoutPackage = {
                 {
                     Kacana.layout.closeSearch();
                 }
-                if($('body').find('.cbp-spmenu-open').length !== 0 && (($(e.target).closest('.nav-mobile').length === 0 &&
-                    $(e.target).closest('a[href="#btn-mobile-product-left-nav"]').length === 0 &&
-                    $(e.target).closest('a[href="#btn-mobile-account-right-nav"]').length === 0
-                ) || ($(e.target).closest('.nav-mobile').length &&
-                        ($(e.target).closest('#back-to-page-from-side-bar-left').length ||
-                         $(e.target).closest('#back-to-page-from-side-bar-right').length ||
-                            $(e.target).closest('a.menu__link__redirect').length ||
-                            $(e.target).is('a.menu__link__redirect')
-                        )
+            });
 
-                    )))
-                {
-                    if( !$(e.target).closest('a.menu__link__redirect').length && !$(e.target).is('a.menu__link__redirect'))
-                    {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        $(this).off('click');
-                    }
-                    Kacana.layout.closeMobileMenu();
-                }
-
+            $('body').on('click', '.main.white-cover, #back-to-page-from-side-bar-left, #back-to-page-from-side-bar-right, a.menu__link__redirect', function () {
+                Kacana.layout.closeMobileMenu();
             });
 
             $('body').on('keyup', '#header #ac-gn-searchform-input', Kacana.layout.suggestSearchProduct);
@@ -200,7 +183,7 @@ var layoutPackage = {
                     Kacana.utils.loading.loading($('#ac-gn-searchresults'));
                     Kacana.ajax.homepage.suggestSearchProduct(search, callBack, errorCallback);
                 }
-            }, 500);
+            }, 00);
 
         },
         showSearch: function () {
