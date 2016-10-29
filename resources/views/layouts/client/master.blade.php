@@ -25,7 +25,7 @@
 
     <meta property="fb:app_id" content="{{KACANA_SOCIAL_FACEBOOK_KEY}}" />
     <meta prefix="og: http://ogp.me/ns#" property="og:url" content="{{Request::url()}}">
-    <meta prefix="og: http://ogp.me/ns#" property="og:title" content="@yield('meta-title', 'Chuyên bán túi xách, kính mắt, đồng hồ và dây lưng') - Kacana.vn">
+    <meta prefix="og: http://ogp.me/ns#" property="og:title" content="@yield('meta-title', 'Chuyên bán túi xách, ví, balo thời trang') - Kacana.vn">
     <meta prefix="og: http://ogp.me/ns#" property="og:description" content="@yield('meta-description', 'Hàng loạt các mẫu túi ví, túi xách, túi đeo, ví da, ví cầm tay,ba lo nam nữ thời trang chính hãng  liên tục được cập nhật - Mua bán trực tuyến') - Kacana.vn">
     <meta prefix="og: http://ogp.me/ns#" property="og:site_name" content="@yield('meta-title', 'Chuyên bán túi xách, ví, balo thời trang') - Kacana.vn">
     <meta property="og:image" content="@yield('meta-image', 'http:'.AWS_CDN_URL.'/images/client/short_logo.png')" />
