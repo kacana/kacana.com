@@ -9,7 +9,7 @@
     <meta charset="utf-8">
 
     <!-- GOOGLE META AND SEO -->
-    <title>@yield('meta-title', 'Chuyên bán túi xách, kính mắt, đồng hồ và dây lưng') - Kacana.vn</title>
+    <title>@yield('meta-title', 'Chuyên bán túi xách, ví, balo thời trang') - Kacana.vn</title>
     <meta name="description" content="@yield('meta-description', 'Hàng loạt các mẫu túi ví, túi xách, túi đeo, ví da, ví cầm tay,ba lo nam nữ thời trang chính hãng  liên tục được cập nhật - Mua bán trực tuyến') - Kacana.vn" />
     <meta name="keywords" content="@yield('meta-keyword', 'túi ví, tui vi, túi xách, ví da, túi đeo, ví cầm tay, balo, túi da, túi vải, túi ví chính hãng, túi ví cao cấp')" />
 

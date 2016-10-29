@@ -101,7 +101,7 @@ var layoutPackage = {
             $('body').on('click', 'a[href="#show-search-in-header"]',  Kacana.layout.showSearch);
             $('body').on('click', 'a[href="#close-search-in-header"]',  Kacana.layout.closeSearch);
 
-            $('body').bind('click touchstart', function (e) {
+            $('body').bind('click', function (e) {
                 if($(e.target).closest('.nav-main.mega-menu.search-open').length === 0 && $('body').find('.nav-main.mega-menu.search-open').length !== 0)
                 {
                     Kacana.layout.closeSearch();
