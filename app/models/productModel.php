@@ -104,6 +104,7 @@ class productModel extends Model  {
         $product->name = $item['name'];
         $product->price = $item['price'];
         $product->sell_price = $item['sell_price'];
+        $product->status = KACANA_PRODUCT_STATUS_INACTIVE;
         $product->created = date('Y-m-d H:i:s');
         $product->updated = date('Y-m-d H:i:s');
         return $product->save();
@@ -365,7 +366,7 @@ class productModel extends Model  {
      * @return \Illuminate\Support\Collection|null|static
      */
     public function getProductById($id){
-        return $this->find($id);
+        return $this->where('status', KACANA_PRODUCT_STATUS_ACTIVE)->find($id);
     }
 
     /**
@@ -516,6 +517,7 @@ class productModel extends Model  {
         $products->where('product_tag.type', '=', TAG_RELATION_TYPE_MENU);
         $products->where('tag_relations.tag_type_id', '=', TAG_RELATION_TYPE_MENU);
         $products->where('tag_relations.status', '=', TAG_RELATION_STATUS_ACTIVE);
+        $products->where('products.status', '=', KACANA_PRODUCT_STATUS_ACTIVE);
         $products->groupBy('products.id');
         $products->select(['products.*', 'product_tag.*']);
         $results = $products->get();
@@ -541,6 +543,7 @@ class productModel extends Model  {
         $products->where('product_tag.type', '=', TAG_RELATION_TYPE_MENU);
         $products->where('tag_relations.tag_type_id', '=', TAG_RELATION_TYPE_MENU);
         $products->where('tag_relations.status', '=', TAG_RELATION_STATUS_ACTIVE);
+        $products->where('products.status', '=', KACANA_PRODUCT_STATUS_ACTIVE);
         $products->groupBy('products.id');
         $products->select(['products.*', 'product_tag.*']);
 
@@ -557,6 +560,7 @@ class productModel extends Model  {
             ->leftJoin('tag_relations', 'product_tag.tag_id', '=', 'tag_relations.child_id')
             ->where('tag_relations.status', '=', TAG_RELATION_STATUS_ACTIVE)
             ->where('tag_relations.tag_type_id', '=', TAG_RELATION_TYPE_MENU)
+            ->where('products.status', '=', KACANA_PRODUCT_STATUS_ACTIVE)
             ->select(['products.*', 'product_tag.*'])
             ->groupBy('products.id')
             ->orderBy('products.updated', 'DESC')
@@ -577,6 +581,7 @@ class productModel extends Model  {
             ->join('tag_relations', 'product_tag.tag_id', '=', 'tag_relations.child_id')
             ->where('tag_relations.status', '=', TAG_RELATION_STATUS_ACTIVE)
             ->where('tag_relations.tag_type_id', '=', TAG_RELATION_TYPE_MENU)
+            ->where('products.status', '=', KACANA_PRODUCT_STATUS_ACTIVE)
             ->select('products.*', 'tags.name as tag_name', 'tags.id as tag_id')->groupBy('products.id');
 
         $query_1 = DB::table('products')->where('products.name', 'NOT LIKE', "%".$searchString."%")
@@ -585,10 +590,12 @@ class productModel extends Model  {
             ->join('tag_relations', 'product_tag.tag_id', '=', 'tag_relations.child_id')
             ->where('tag_relations.status', '=', TAG_RELATION_STATUS_ACTIVE)
             ->where('tag_relations.tag_type_id', '=', TAG_RELATION_TYPE_MENU)
+            ->where('products.status', '=', KACANA_PRODUCT_STATUS_ACTIVE)
             ->select('products.*', 'tags.name as tag_name', 'tags.id as tag_id')->groupBy('products.id');
 
         $query_2 = DB::table('products')->where('tags.name', 'LIKE', "%".$searchString."%")
             ->where('products.name', 'NOT LIKE', "%".$searchString."%")
+            ->where('products.status', '=', KACANA_PRODUCT_STATUS_ACTIVE)
             ->join('product_tag', 'products.id', '=', 'product_tag.product_id')
             ->join('tags', 'tags.id', '=', 'product_tag.tag_id')
             ->select('products.*', 'tags.name as tag_name', 'tags.id as tag_id')->groupBy('products.id');
