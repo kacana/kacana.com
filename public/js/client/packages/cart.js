@@ -7,7 +7,7 @@ var cartPackage = {
             Kacana.cart.loadCart();
             Kacana.cart.initQuantity();
             Kacana.cart.page.on('click', 'a[href="#remove-cart-item"]', Kacana.cart.removeCart);
-            $('#header .nav-main.mega-menu').remove();
+            // $('#header .nav-main.mega-menu').remove();
         },
         initQuantity: function(){
             Kacana.cart.page.on('click', '.btn-number', function(e){
