@@ -820,16 +820,20 @@ body{
         content: "\e684";
       }
     }
-    .rsThumb{
-      width: 72px;
-      border: 2px solid #fff;
+    .rsNav.rsThumbs{
       @media (max-width: 768px) {
-        width: 44px;
+        display: none;
       }
-      &.rsNavSelected{
-        border-color: @color-border;
-        img{
-          opacity: 1;
+      .rsThumbsContainer{
+        .rsThumb{
+          width: 72px;
+          border: 2px solid #fff;
+          &.rsNavSelected{
+            border-color: @color-border;
+            img{
+              opacity: 1;
+            }
+          }
         }
       }
     }

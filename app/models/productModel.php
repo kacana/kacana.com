@@ -671,7 +671,7 @@ class productModel extends Model  {
     }
 
     public function getDescriptionLazyLoadAttribute($value){
-        return str_replace('src="'.AWS_CDN_URL.'/images/product','data-original="'.AWS_CDN_URL.'/images/product', $this->attributes['description'] );
+        return str_replace('src="'.AWS_CDN_URL.'/images/product','src="'.AWS_CDN_URL.PRODUCT_IMAGE_PLACE_HOLDER.'" data-original="'.AWS_CDN_URL.'/images/product', $this->attributes['description'] );
     }
 
     public function getmainDiscountAttribute($value){

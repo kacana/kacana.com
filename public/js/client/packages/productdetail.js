@@ -23,7 +23,7 @@ var productdetailPackage = {
                 numImagesToPreload: 0,
                 arrowsNav: true,
                 arrowsNavAutoHide: false,
-                arrowsNavHideOnTouch: true,
+                arrowsNavHideOnTouch: false,
                 keyboardNavEnabled: true,
                 fadeinLoadedSlide: true,
                 globalCaption: false,
@@ -51,8 +51,8 @@ var productdetailPackage = {
                     {
                         breakpoint: 992,
                         settings: {
-                            slidesToShow: 3,
-                            slidesToScroll: 1,
+                            slidesToShow: 4,
+                            slidesToScroll: 3,
                         }
                     },
                     {
@@ -65,8 +65,8 @@ var productdetailPackage = {
                     {
                         breakpoint: 480,
                         settings: {
-                            slidesToShow: 3,
-                            slidesToScroll: 1
+                            slidesToShow: 5,
+                            slidesToScroll: 3
                         }
                     }
                     // You can unslick at a given breakpoint now by adding:

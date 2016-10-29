@@ -61,7 +61,7 @@
                 </div>
                 ${this.price_after_discount_show}</div>
             @{{/if}}
-            @{{if !parseInt(this.discount)}}
+            @{{if !(parseInt(this.discount))}}
                 <div class="product-price">${this.sell_price_show}</div>
             @{{/if}}
         </div>
