@@ -26,7 +26,7 @@
                     </div>
                 </div>
                 <div class="payment_desc">
-                    <p class="color-red" ><b>Chi tiết đơn hàng #{{$order->id}}, {{$order->quantity}} sản phẩm được đặt</b></p>
+                    <p class="color-red" ><b>Chi tiết đơn hàng #{{$order->order_code}}, {{$order->quantity}} sản phẩm được đặt</b></p>
                 </div>
                 <div class="row">
                     <div class="col-sm-8" >

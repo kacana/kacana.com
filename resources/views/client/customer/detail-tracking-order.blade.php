@@ -30,7 +30,7 @@
                     <div class="col-xs-12 col-sm-9 vpadding-10">
                         <div class="row margin-bottom">
                             <div class="col-xs-12 col-sm-4 col-md-3">
-                                MÃ ĐƠN HÀNG  #<b>{{$order->id}}</b>
+                                MÃ ĐƠN HÀNG  #<b>{{$order->order_code}}</b>
                             </div>
                             <div class="col-xs-12 col-sm-4 col-md-3">
                                 Đặt ngày {{date('H:i d/m/Y', strtotime($order->created))}}

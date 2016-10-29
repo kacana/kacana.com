@@ -65,6 +65,21 @@ class orderModel extends Model  {
     }
 
     /**
+     * @param $id
+     * @param $item
+     */
+    public function updateItem($id, $item){
+        $object = $this->find($id);
+
+        foreach($item as $k=>$v){
+            $object->{$k} = $v;
+        }
+
+        $object->updated = date('Y-m-d H:i:s');
+        $this->where('id', $id)->update($item);
+    }
+
+    /**
      * @param bool $userId
      * @return mixed
      */
@@ -85,6 +100,20 @@ class orderModel extends Model  {
         return $this->find($id);
     }
 
+
+    /**
+     * @param $orderCode
+     * @return mixed
+     */
+    public function getByOrderCode($orderCode){
+        return $this->where('order_code', $orderCode)->first();
+    }
+
+    /**
+     * @param $request
+     * @param $columns
+     * @return array
+     */
     public function generateOrderTable($request, $columns){
 
         $datatables = new DataTables();
@@ -122,6 +151,10 @@ class orderModel extends Model  {
         );
     }
 
+    /**
+     * @param bool $duration
+     * @return mixed
+     */
     public function getCountOrder($duration = false){
         $date = Carbon::now()->subDays($duration);
         if($duration === false)
@@ -130,6 +163,12 @@ class orderModel extends Model  {
             return $this->where('created', '>=', $date)->count();
     }
 
+    /**
+     * @param $startTime
+     * @param $endTime
+     * @param string $type
+     * @return mixed
+     */
     public function reportOrder($startTime, $endTime, $type = 'date')
     {
         $orderReport =  $this->where('created', '>=', $startTime)

@@ -62,8 +62,9 @@ class orderService {
         $orderData->quantity = $quantity;
         $orderData->status = $status;
         $orderData->address = $addressStr.', '.$address->district->name.', '.$address->city->name;
-
-        return $this->_orderModel->createItem($orderData);
+        $order = $this->_orderModel->createItem($orderData);
+        $this->_orderModel->updateItem($order->id, ['order_code' => crc32($order->id)]);
+        return $order;
     }
 
     /**
@@ -236,7 +237,7 @@ class orderService {
 
         $result['email'] = $email;
         $result['orderCode'] = $orderCode;
-        $order = $orderModel->getById($orderCode);
+        $order = $orderModel->getByOrderCode($orderCode);
 
         if(!$order || $order->user->email != $email)
         {

@@ -1,4 +1,4 @@
-<?
+<?php
     $user = $order->user;
     $orderDetail = $order->orderDetail;
     $address = $order->addressReceive;
@@ -16,7 +16,7 @@
     <body style="font-family: arial; font-size:13px">
         <div marginwidth="0" marginheight="0" style="margin:0;padding:15px 10px;color:#292929;font-family:Helvetica,Arial,sans-serif">
             <img src="http://kacana.com/images/client/homepage/logo-main-color.png" border="0" width="1" height="1" class="CToWUd">
-            <span style="display:none!important">Kính chào quý khách {{$user->name}}, Kacana vừa nhận được đơn hàng # {{$order->id}} của quý khách đặt ngày {{date("d-m-Y", strtotime($order->created))}} với hình thức thanh toán là Cash on Delivery.</span>
+            <span style="display:none!important">Kính chào quý khách {{$user->name}}, Kacana vừa nhận được đơn hàng # {{$order->order_code}} của quý khách đặt ngày {{date("d-m-Y", strtotime($order->created))}} với hình thức thanh toán là Cash on Delivery.</span>
             <table border="0" cellpadding="0" cellspacing="0" width="100%" height="100%" style="border-spacing:0;border-collapse:collapse;font-size:14px">
                 <tbody><tr>
                     <td align="center" valign="top" style="border-collapse:collapse">
@@ -50,7 +50,7 @@
                                                 <h1 style="font-size:14px;color:#4c4848"><em style="background:#ff6">(Scroll down for English version)</em></h1>
                                                 <div style="margin-top:20px"><strong style="font-size:16px">Kính chào quý khách {{$user->name}},</strong></div>
                                                 <div style="margin-top:10px;margin-bottom:20px">
-                                                    Kacana vừa nhận được <strong style="color:#4CAF50">đơn hàng # {{$order->id}}</strong>  của quý khách đặt ngày <strong>{{date("l F d, Y", strtotime($order->created))}}</strong> với hình thức thanh toán là <strong>Cash on Delivery</strong>.
+                                                    Kacana vừa nhận được <strong style="color:#4CAF50">đơn hàng # {{$order->order_code}}</strong>  của quý khách đặt ngày <strong>{{date("l F d, Y", strtotime($order->created))}}</strong> với hình thức thanh toán là <strong>Cash on Delivery</strong>.
                                                     Chúng tôi sẽ gửi thông báo đến quý khách qua một email khác ngay khi sản phẩm được giao cho đơn vị vận chuyển.
                                                 </div>
                                             </td>
@@ -72,7 +72,7 @@
                                                                 <table width="100%" cellpadding="10" style="width:100%!important">
                                                                     <tbody><tr>
                                                                         <td valign="middle" align="center" style="background-color:#4CAF50;text-align:center;width:100%!important">
-                                                                            <a href="{{url()}}/khach-hang/kiem-tra-don-hang/?orderCode={{$order->id}}&email={{$user->email}}" style="display:inline-block;text-decoration:none;color:#fff;width:100%!important" target="_blank" >
+                                                                            <a href="{{url()}}/khach-hang/kiem-tra-don-hang/?orderCode={{$order->order_code}}&email={{$user->email}}" style="display:inline-block;text-decoration:none;color:#fff;width:100%!important" target="_blank" >
                                                                                 TÌNH TRẠNG ĐƠN HÀNG
                                                                             </a>
                                                                         </td>
@@ -130,7 +130,7 @@
                                                             <tr>
                                                                 <td valign="top" align="center" height="120" style="border-collapse:collapse;padding-top:10px;padding-bottom:10px">
                                                                     <a href="{{$item->product_url}}" target="_blank" data-saferedirecturl="">
-                                                                        <img src="{{url().$item->image}}" style="width:120px" class="CToWUd">
+                                                                        <img src="{{'http:'.$item->image}}" style="width:120px" class="CToWUd">
                                                                     </a>
                                                                 </td>
                                                                 <td valign="top" style="border-collapse:collapse;padding-top:10px;padding-right:10px;padding-bottom:10px;padding-left:10px">
@@ -250,7 +250,7 @@
                                             <td valign="top" style="border-collapse:collapse">
                                                 <div style="margin-top:5px"><strong style="font-size:16px">Dear {{$user->name}},</strong></div>
                                                 <div style="margin-top:10px;margin-bottom:20px">
-                                                    Your <strong style="color:#4CAF50">Order # {{$order->id}}</strong> has been placed on <strong>{{date("l F d, Y", strtotime($order->created))}}</strong> via <strong>Cash on Delivery</strong>.
+                                                    Your <strong style="color:#4CAF50">Order # {{$order->order_code}}</strong> has been placed on <strong>{{date("l F d, Y", strtotime($order->created))}}</strong> via <strong>Cash on Delivery</strong>.
 
                                                 </div>
                                             </td>
@@ -272,7 +272,7 @@
                                                                 <table width="100%" cellpadding="10" style="width:100%!important">
                                                                     <tbody><tr>
                                                                         <td valign="middle" align="center" style="background-color:#4CAF50;text-align:center;width:100%!important">
-                                                                            <a href="{{url()}}/khach-hang/kiem-tra-don-hang/?orderCode={{$order->id}}&email={{$user->email}}" style="display:inline-block;text-decoration:none;color:#fff;width:100%!important" target="_blank" >ORDER STATUS</a>
+                                                                            <a href="{{url()}}/khach-hang/kiem-tra-don-hang/?orderCode={{$order->order_code}}&email={{$user->email}}" style="display:inline-block;text-decoration:none;color:#fff;width:100%!important" target="_blank" >ORDER STATUS</a>
                                                                         </td>
                                                                     </tr>
                                                                     </tbody></table>
@@ -328,7 +328,7 @@
                                                             <tr>
                                                                 <td valign="top" align="center" height="120" style="border-collapse:collapse;padding-top:10px;padding-bottom:10px">
                                                                     <a href="{{$item->product_url}}" target="_blank" data-saferedirecturl="">
-                                                                        <img src="{{url().$item->image}}" style="width:120px" class="CToWUd">
+                                                                        <img src="{{'http:'.$item->image}}" style="width:120px" class="CToWUd">
                                                                     </a>
                                                                 </td>
                                                                 <td valign="top" style="border-collapse:collapse;padding-top:10px;padding-right:10px;padding-bottom:10px;padding-left:10px">

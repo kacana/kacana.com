@@ -257,6 +257,7 @@ class userService {
         }
         else{
             $user = $this->createUser($data);
+            $emailService->sendEmailNewUser($profiles['email']);
         }
 
         $userSocial = $this->_userSocial->getItem($user->id, KACANA_SOCIAL_TYPE_FACEBOOK);
@@ -275,7 +276,6 @@ class userService {
             $result['ok'] = 1;
             $result['user'] = $user;
             $result['userSocial'] = $userSocial;
-            $emailService->sendEmailNewUser($profiles['email']);
         }
         else
         {
@@ -339,6 +339,7 @@ class userService {
         }
         else{
             $user = $this->createUser($data);
+            $emailService->sendEmailNewUser($profiles->email);
         }
 
         $userSocial = $this->_userSocial->getItem($user->id, KACANA_SOCIAL_TYPE_GOOGLE);
@@ -357,7 +358,6 @@ class userService {
             $result['ok'] = 1;
             $result['user'] = $user;
             $result['userSocial'] = $userSocial;
-            $emailService->sendEmailNewUser($profiles->email);
         }
         else
         {

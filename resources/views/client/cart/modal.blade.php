@@ -39,8 +39,13 @@
                     @{{/if}}
 
                     <div class="cart-item-price" >
-                        Giá: ${this.options.priceShow}
+                        Giá: ${this.options.origin_price_show}
                     </div>
+                    @{{if parseInt(this.options.discount)}}
+                        <div class="cart-item-price" >
+                            Giảm giá: <span class="color-red" >${this.options.discountShow}</span>
+                        </div>
+                    @{{/if}}
                     <div class="hidden-lg" >
                         <span class="pull-left cart-item-price" >số lượng:</span>
                         <div class="input-group cart-quantity">
@@ -103,9 +108,19 @@
                     Tạm tính
                 </span>
                 <span class="pull-right">
-                    ${cart.totalShow}
+                    ${cart.originTotalShow}
                 </span>
             </div>
+            @{{if parseInt(cart.discount)}}
+                <div class="col-xs-12 margin-bottom">
+                    <span class="pull-left" >
+                        Giảm giá
+                    </span>
+                    <span class="pull-right color-red">
+                        ${cart.discountShow}
+                    </span>
+                </div>
+            @{{/if}}
             <div class="col-xs-12 margin-bottom">
                 <span class="pull-left" >
                     Phí vận chuyển

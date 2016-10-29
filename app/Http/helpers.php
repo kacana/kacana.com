@@ -238,7 +238,7 @@ function formatMoney($number, $symbol=' đ')
         return $number;
     }
     else
-        return '';
+        return 0;
 
 
 }

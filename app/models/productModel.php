@@ -22,7 +22,7 @@ class productModel extends Model  {
     public $timestamps = false;
 
     //Make it available in the json response
-    protected $appends = ['descriptionLazyLoad'];
+    protected $appends = ['descriptionLazyLoad','mainDiscount'];
 
     /**
      * Get the tags associated with product
@@ -672,6 +672,10 @@ class productModel extends Model  {
 
     public function getDescriptionLazyLoadAttribute($value){
         return str_replace('src="'.AWS_CDN_URL.'/images/product','data-original="'.AWS_CDN_URL.'/images/product', $this->attributes['description'] );
+    }
+
+    public function getmainDiscountAttribute($value){
+        return ($this->attributes['sell_price']*20/100);
     }
 
     public function getImageAttribute($value)
