@@ -1492,6 +1492,12 @@ aside ul.nav-list > li > a {
 	font-weight: 300;
 }
 
+.slider-container .small-label {
+	color: #FFF;
+	font-size: 15px;
+	font-weight: 300;
+}
+
 .slider-container .bottom-label-bold {
 	color: #FFF;
 	font-size: 40px;
