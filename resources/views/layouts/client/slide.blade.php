@@ -3,54 +3,60 @@
         <ul>
             <li data-transition="fade" data-slotamount="13" data-masterspeed="300" >
 
-                <img src="/images/client/homepage/backgrounds_1.jpg" data-bgfit="cover" data-bgposition="left top" data-bgrepeat="no-repeat">
+                <img src="{{AWS_CDN_URL}}/images/client/backgrounds_1.jpg" data-bgfit="cover" data-bgposition="left top" data-bgrepeat="no-repeat">
 
-                <div class="tp-caption sft stb visible-lg"
-                     data-x="157"
-                     data-y="130"
-                     data-speed="300"
-                     data-start="1000"
-                     data-easing="easeOutExpo">-</div>
-
-                <div class="tp-caption large-label lfl stl"
-                     data-x="800"
-                     data-y="70"
+                <div class="tp-caption main-label sft stb"
+                     data-x="660"
+                     data-y="170"
                      data-speed="300"
                      data-start="500"
-                     data-easing="easeOutExpo">8/3</div>
+                     data-easing="easeOutExpo">-</div>
 
-                <div class="tp-caption sft stb visible-lg"
-                     data-x="500"
-                     data-y="130"
+                <div class="tp-caption main-label sft stb"
+                     data-x="700"
+                     data-y="170"
                      data-speed="300"
-                     data-start="1000"
+                     data-start="500"
+                     data-easing="easeOutExpo">Khuyến mãi lớn</div>
+
+                <div class="tp-caption main-label sft stb"
+                     data-x="1060"
+                     data-y="170"
+                     data-speed="300"
+                     data-start="500"
                      data-easing="easeOutExpo">-</div>
 
                 <div class="tp-caption bottom-label sft stb"
                      data-x="780"
-                     data-y="170"
+                     data-y="270"
                      data-speed="300"
                      data-start="1500"
-                     data-easing="easeOutExpo">HAPPY WOMEN’S DAY</div>
+                     data-easing="easeOutExpo">duy nhất trong năm</div>
 
                 <div style="color: rgb(237, 28, 36)" class="tp-caption large-label sft stb"
                      data-x="760"
-                     data-y="200"
+                     data-y="300"
                      data-speed="500"
                      data-start="2000"
                      data-easing="easeOutExpo">20%</div>
                 <div style="color: rgb(237, 28, 36)" class="tp-caption top-label sft stb"
                      data-x="955"
-                     data-y="265"
+                     data-y="365"
                      data-speed="500"
                      data-start="2300"
                      data-easing="easeOutExpo">SALE OFF</div>
                 <div class="tp-caption bottom-label sft stb"
                      data-x="780"
-                     data-y="330"
+                     data-y="430"
                      data-speed="500"
                      data-start="2800"
-                     data-easing="easeOutExpo">( 01/03/2016 - 08/03/2016 )</div>
+                     data-easing="easeOutExpo">( 29/10/2016 - 02/11/2016 )</div>
+                <div class="tp-caption small-label sft stb"
+                     data-x="780"
+                     data-y="460"
+                     data-speed="300"
+                     data-start="3200"
+                     data-easing="easeOutExpo">Áp dụng tất cả sản phẩm tại kacana web</div>
             </li>
             {{--<li data-transition="fade" data-slotamount="13" data-masterspeed="300" >--}}
 

@@ -453,4 +453,23 @@ class TagController extends BaseController {
         }
         return response()->json($return);
     }
+
+    public function changeTagStatusRelation(Request $request){
+        $tagService = new tagService();
+
+        $tagId = $request->input('tagId');
+        $typeId = $request->input('typeId');
+        $parentId = $request->input('parentId');
+        $return['ok'] = 0;
+        try {
+            if($tagService->toggleStatusRelation($tagId, $typeId, $parentId))
+                $return['ok'] = 1;
+        } catch (\Exception $e) {
+            // @codeCoverageIgnoreStart
+            $return['error'] = $e->getMessage();
+            $return['errorMsg'] = $e->getMessage();
+            // @codeCoverageIgnoreEnd
+        }
+        return response()->json($return);
+    }
 }

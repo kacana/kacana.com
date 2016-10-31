@@ -243,6 +243,7 @@ class userService {
     public function createUserFromFacebookProfile($profiles, $accessToken){
 
         $userService = new userService();
+        $emailService = new mailService();
         $userSocialModel = new userSocialModel();
         $result['ok'] = 0;
 
@@ -291,6 +292,7 @@ class userService {
         }
         else{
             $user = $this->createUser($data);
+            $emailService->sendEmailNewUser($profiles['email']);
         }
 
         $userSocial = $this->_userSocial->getItem($user->id, KACANA_SOCIAL_TYPE_FACEBOOK);
@@ -328,6 +330,7 @@ class userService {
     public function createUserFromGoogleProfile($profiles, $accessToken){
 
         $userService = new userService();
+        $emailService = new mailService();
         $result['ok'] = 0;
 
         if(!$profiles)
@@ -371,6 +374,7 @@ class userService {
         }
         else{
             $user = $this->createUser($data);
+            $emailService->sendEmailNewUser($profiles->email);
         }
 
         $userSocial = $this->_userSocial->getItem($user->id, KACANA_SOCIAL_TYPE_GOOGLE);

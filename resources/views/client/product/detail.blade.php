@@ -25,7 +25,13 @@
 
                     <p class="price">
                         <span class="amount">
-                            @if($item->discount){{formatMoney($item->sell_price - $item->discount)}}@else{{formatMoney($item->sell_price)}}@endif
+                            @if($item->discount)
+                                {{formatMoney($item->sell_price - $item->discount)}}
+                            @elseif($item->main_discount)
+                                {{formatMoney($item->sell_price - $item->main_discount)}}
+                            @else
+                                {{formatMoney($item->sell_price)}}
+                            @endif
                         </span>
                     </p>
 
@@ -46,6 +52,26 @@
                                 <p class="row">
                                     <span class="col-lg-4 col-md-4 col-sm-6 col-xs-6">ĐẾN:</span>
                                     <span class="col-lg-8 col-md-8 col-sm-6 col-xs-6"> Hết hàng </span>
+                                </p>
+                            </div>
+                        </div>
+                    @elseif($item->main_discount)
+                        <div class="block-promotions table">
+                            <div class="block-promotions-title cell">ĐANG KHUYẾN MÃI</div>
+                            <div class="block-promotions-infos cell">
+                                <p>
+                                    ĐANG GIẢM GIÁ TỪ {{formatMoney($item->sell_price)}} XUỐNG CÒN
+                                    <span class="text-danger">
+                                        <b>{{formatMoney($item->sell_price - $item->main_discount)}}</b>
+                                    </span>
+                                </p>
+                                <p class="row">
+                                    <span class="col-lg-4 col-md-4 col-sm-6 col-xs-6">ÁP DỤNG TỪ:</span>
+                                    <span class="col-lg-8 col-md-8 col-sm-6 col-xs-6"> 29/10/2016 </span>
+                                </p>
+                                <p class="row">
+                                    <span class="col-lg-4 col-md-4 col-sm-6 col-xs-6">ĐẾN:</span>
+                                    <span class="col-lg-8 col-md-8 col-sm-6 col-xs-6"> 02/11/2016 </span>
                                 </p>
                             </div>
                         </div>
@@ -206,3 +232,7 @@
     Kacana.productdetail.init();
 @stop
 
+
+@section('google-param-prodid', $item->id)
+@section('google-param-pagetype', 'product')
+@section('google-param-totalvalue', $item->sell_price)

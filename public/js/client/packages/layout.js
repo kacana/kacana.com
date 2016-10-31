@@ -101,32 +101,15 @@ var layoutPackage = {
             $('body').on('click', 'a[href="#show-search-in-header"]',  Kacana.layout.showSearch);
             $('body').on('click', 'a[href="#close-search-in-header"]',  Kacana.layout.closeSearch);
 
-            $('body').bind('click touchstart', function (e) {
+            $('body').bind('click', function (e) {
                 if($(e.target).closest('.nav-main.mega-menu.search-open').length === 0 && $('body').find('.nav-main.mega-menu.search-open').length !== 0)
                 {
                     Kacana.layout.closeSearch();
                 }
-                if($('body').find('.cbp-spmenu-open').length !== 0 && (($(e.target).closest('.nav-mobile').length === 0 &&
-                    $(e.target).closest('a[href="#btn-mobile-product-left-nav"]').length === 0 &&
-                    $(e.target).closest('a[href="#btn-mobile-account-right-nav"]').length === 0
-                ) || ($(e.target).closest('.nav-mobile').length &&
-                        ($(e.target).closest('#back-to-page-from-side-bar-left').length ||
-                         $(e.target).closest('#back-to-page-from-side-bar-right').length ||
-                            $(e.target).closest('a.menu__link__redirect').length ||
-                            $(e.target).is('a.menu__link__redirect')
-                        )
+            });
 
-                    )))
-                {
-                    if( !$(e.target).closest('a.menu__link__redirect').length && !$(e.target).is('a.menu__link__redirect'))
-                    {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        $(this).off('click');
-                    }
-                    Kacana.layout.closeMobileMenu();
-                }
-
+            $('body').on('click', '.main.white-cover, #back-to-page-from-side-bar-left, #back-to-page-from-side-bar-right, a.menu__link__redirect', function () {
+                Kacana.layout.closeMobileMenu();
             });
 
             $('body').on('keyup', '#header #ac-gn-searchform-input', Kacana.layout.suggestSearchProduct);
@@ -188,19 +171,19 @@ var layoutPackage = {
             var errorCallback = function () {
 
             };
-            if(keyCode == 13 && search.length >= 3)
+            if(keyCode == 13 && search.length >= 2)
             {
                 window.location.href = "/tim-kiem/"+search;
             }
             Kacana.layout.suggestSearchProductTimeout = setTimeout(function () {
-                if(search.length >= 3 && !Kacana.layout.suggestSearchProductProcessing)
+                if(search.length >= 2 && !Kacana.layout.suggestSearchProductProcessing)
                 {
                     Kacana.layout.suggestSearchProductProcessing = true;
                     $('#ac-gn-searchresults').attr('disabled', 'disabled');
                     Kacana.utils.loading.loading($('#ac-gn-searchresults'));
                     Kacana.ajax.homepage.suggestSearchProduct(search, callBack, errorCallback);
                 }
-            }, 800);
+            }, 00);
 
         },
         showSearch: function () {

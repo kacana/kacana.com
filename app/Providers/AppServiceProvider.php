@@ -32,7 +32,6 @@ class AppServiceProvider extends ServiceProvider {
             $tagService = new tagService();
             $view->with('menu_items', $tagService->getTagForClientMenu());
         });
-
     }
 
     /**

@@ -43,8 +43,20 @@ class Authenticate {
 				return redirect()->guest('auth/login');
 			}
 		}
-
-		return $next($request);
+		else
+        {
+            $host = explode('.', $request->getHttpHost());
+            $role = $host[0];
+            $user = $this->auth->user();
+            if ($role == KACANA_USER_ROLE_ADMIN && $user->role != KACANA_USER_ROLE_ADMIN)
+            {
+                return redirect()->guest('auth/login');
+            }
+            else
+            {
+                return $next($request);
+            }
+        }
 	}
 
 }

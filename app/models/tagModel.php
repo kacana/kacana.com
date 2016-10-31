@@ -58,6 +58,16 @@ class tagModel extends Model  {
         return $this->hasMany('App\models\productModel','tag_style_id', 'id');
     }
 
+    public function colorProductProperty()
+    {
+        return $this->hasMany('App\models\productPropertiesModel', 'tag_color_id', 'id');
+    }
+
+    public function sizeProductProperty()
+    {
+        return $this->hasMany('App\models\productPropertiesModel', 'tag_size_id', 'id');
+    }
+
     /**
      * Create tag modal by data array
      *
@@ -171,8 +181,9 @@ class tagModel extends Model  {
             $tagRelations->where('tag_relations.tag_type_id','=', $relationType);
 
         if($status)
-            $tagRelations->where('tags.status','=', $status);
+            $tagRelations->where('tag_relations.status','=', $status);
 
+        $tagRelations->select(['tag_relations.*', 'tags.*', 'tag_relations.status AS relation_status']);
         $results = $tagRelations->get();
 
         return $results ? $results : false;
@@ -396,6 +407,16 @@ class tagModel extends Model  {
     public function suggestSearchProduct($searchString){
         $query = $this->where('tags.name', 'LIKE', "%".$searchString."%")
             ->join('product_tag', 'tags.id', '=', 'product_tag.tag_id')
+            ->leftJoin('tag_relations', 'product_tag.tag_id', '=', 'tag_relations.child_id')
+            ->where('tag_relations.status', '=', TAG_RELATION_STATUS_ACTIVE)
+            ->whereExists(function ($query) {
+                $query->select(DB::raw(1))
+                    ->from('product_tag as product_tag_check')
+                    ->whereRaw('kacana_product_tag_check.product_id = kacana_product_tag.product_id')
+                    ->join('tag_relations as tag_relation_check', 'product_tag_check.tag_id', '=', 'tag_relation_check.child_id')
+                    ->where('tag_relation_check.status', '=', TAG_RELATION_STATUS_ACTIVE)
+                    ->where('tag_relation_check.tag_type_id', '=', TAG_RELATION_TYPE_MENU);
+            })
             ->groupBy('tags.id')
             ->take(10);
 

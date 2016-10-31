@@ -17,7 +17,7 @@ Route::pattern('status', '[0-1]+');
 Route::pattern('keyword', '[a-z0-9-]+');
 Route::pattern('slug', '[a-zA-Z0-9-]+');
 
-Route::pattern('nameDomain', '(kacana.com|dev.kacana.com|staging.kacana.com)');
+Route::pattern('nameDomain', '(www.kacana.com|kacana.com|dev.kacana.com|staging.kacana.com|www.kacana.vn|kacana.vn|dev.kacana.vn|staging.kacana.vn)');
 
 
 Route::group(['prefix' => 'auth/'], function(){
@@ -68,6 +68,7 @@ Route::group(['domain'=>KACANA_AUTH_ADMIN_NAME.'.{nameDomain}','middleware' => '
     Route::post('/product/updateImage',                     array('as'=>'updateImage',              'uses'=>'Admin\ProductController@updateImage'));
     Route::post('/product/createBaseProduct',               array('as'=>'CreateBaseProduct',        'uses'=>'Admin\ProductController@createBaseProduct'));
     Route::post('/product/countSearchProductByTagId',       array('as'=>'countSearchProductByTagId','uses'=>'Admin\ProductController@countSearchProductByTagId'));
+    Route::post('/product/createCSVForRemarketing',         array('as'=>'createCSVForRemarketing','uses'=>'Admin\ProductController@createCSVForRemarketing'));
 
     //branch
     Route::any('/product/branch',                           array('as'=>'listBranches',             'uses'=>'Admin\BranchController@index'));
@@ -96,6 +97,7 @@ Route::group(['domain'=>KACANA_AUTH_ADMIN_NAME.'.{nameDomain}','middleware' => '
     Route::get('/tag/getTag',                               array('as'=>'tag-get-tag',              'uses'=>'Admin\TagController@getTag'));
     Route::any('/tag/fullEditTag/{id}',                     array('as'=>'tag-full-edit-tag',        'uses'=>'Admin\TagController@fullEditTag'));
     Route::any('/tag/getGroupTag',                          array('as'=>'tag-get-group-tag',        'uses'=>'Admin\TagController@getGroupTag'));
+    Route::post('/tag/changeTagStatusRelation',             array('as'=>'tag-change-status-relation-tag',        'uses'=>'Admin\TagController@changeTagStatusRelation'));
 
     //user
     Route::any('/user',                                     array('as'=>'listUsers',                 'uses'=>'Admin\UserController@index'));

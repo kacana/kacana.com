@@ -86,7 +86,7 @@ class ProductController extends BaseController {
                 return redirect('/product/editProduct/'.$id)->with('success', 'Cập nhật sản phẩm thành công!');
             }
 
-            $results['product'] = $productService->getProductById($id);
+            $results['product'] = $productService->getProductById($id, 0, false);
             $results['tagColor'] = $tagService->getColorTag();
             $results['groupTag'] = $tagService->getTagGroup();
             $results['tagSize'] = $tagService->getSizeTag();
@@ -222,6 +222,22 @@ class ProductController extends BaseController {
         try {
             $productService = new productService();
             $return['data'] = $productService->countSearchProductByTagId($tagId);
+            $return['ok'] = 1;
+        } catch (\Exception $e) {
+            // @codeCoverageIgnoreStart
+            $return['error'] = $e->getMessage();
+            $return['errorMsg'] = $e->getMessage();
+            // @codeCoverageIgnoreEnd
+        }
+        return response()->json($return);
+    }
+
+    public function createCSVForRemarketing(){
+        $productService = new productService();
+        $return['ok'] = 0;
+
+        try {
+            $return['data'] = $productService->createCsvBD();
             $return['ok'] = 1;
         } catch (\Exception $e) {
             // @codeCoverageIgnoreStart

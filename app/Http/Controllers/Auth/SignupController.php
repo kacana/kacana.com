@@ -39,12 +39,16 @@ class SignupController extends Controller
             if($request->isMethod('post'))
             {
                 $results = $authService->signup($name, $email, $phone, $password, $confirmPassword);
-                $user = $results['data'];
 
-                if($roleLink != KACANA_AUTH_ADMIN_NAME)
-                    \Auth::loginUsingId($user->id, true);
+                if($results['ok'])
+                {
+                    $user = $results['data'];
+                    if($roleLink != KACANA_AUTH_ADMIN_NAME)
+                        \Auth::loginUsingId($user->id, true);
+                    $emailService->sendEmailNewUser($email);
+                }
 
-                $emailService->sendEmailNewUser($email);
+
                 if($postAjax)
                     return response()->json($results);
                 else{
@@ -73,7 +77,6 @@ class SignupController extends Controller
     public function socialLoginCallback(Request $request){
         $util = new Util();
         $userService = new userService();
-        $emailService = new mailService();
         $accessToken = $request->input('accessToken', '');
         $type = $request->input('type', '');
         $result['ok'] = 0;
@@ -99,7 +102,6 @@ class SignupController extends Controller
                 {
                     $profile['email'] = $email;
                     $user = $userService->getUserByEmail($profile['email']);
-                    $emailService->sendEmailNewUser($email);
                     if($user)
                     {
                         $result['error_code'] = KACANA_AUTH_SIGNUP_ERROR_EMAIL_EXISTS;
@@ -116,9 +118,7 @@ class SignupController extends Controller
                 $token_data = json_decode($client->getAccessToken());
                 $google_oauth = $google->getGoogleServiceOauth2();
                 $profile = $google_oauth->userinfo->get();
-
                 $result = $userService->createUserFromGoogleProfile($profile, $token_data->access_token);
-
             }
 
 

@@ -186,13 +186,14 @@ class productService {
     /**
      * @param $id
      * @param $userId
+     * @param $status
      * @return \Illuminate\Support\Collection|null|static
      */
-    public function getProductById($id, $userId = 0){
+    public function getProductById($id, $userId = 0, $status = KACANA_PRODUCT_STATUS_ACTIVE){
         $productModel = new productModel();
         $userProductLike = new userProductLikeModel();
         $htmlFixer = new HtmlFixer();
-        $product = $productModel->getProductById($id);
+        $product = $productModel->getProductById($id, $status);
 
         if($product->description)
         {
@@ -216,6 +217,7 @@ class productService {
     public function formatProductProperties(&$product){
         $tagService = new tagService();
         $productGalleryModel = new productGalleryModel();
+        $productPropertiesModel = new productPropertiesModel();
         $productProperties = $product->properties;
         $properties = array();
         $propertiesSize = array();
@@ -267,6 +269,69 @@ class productService {
 
                     array_push($properties[$pivot->tag_color_id]->size, $size);
                     array_push($properties[$pivot->tag_color_id]->sizeIds, $size->id);
+                }
+            }
+        }
+        if(count($propertiesSize))
+            $product->propertiesSize = $propertiesSize;
+        $product->properties = $properties;
+
+        return $product;
+    }
+
+    public function formatProductPropertiesWhenSearch(&$product){
+        $tagService = new tagService();
+        $product->image = AWS_CDN_URL.$product->image;
+        $productGalleryModel = new productGalleryModel();
+        $productPropertiesModel = new productPropertiesModel();
+        $productProperties = $productPropertiesModel->getPropertiesByProductId($product->id);
+        $properties = array();
+        $propertiesSize = array();
+        foreach($productProperties as $property){
+            if(isset($property->product->status) && $property->product->status == KACANA_PRODUCT_STATUS_ACTIVE)
+            {
+                if(!isset($properties[$property->tag_color_id]))
+                {
+                    $properties[$property->tag_color_id] = new \stdClass();
+                    $properties[$property->tag_color_id]->color_name = $property->color->name;
+                    $properties[$property->tag_color_id]->color_id = $property->tag_color_id;
+                    $properties[$property->tag_color_id]->product_gallery_id = $property->product_gallery_id;
+                    $properties[$property->tag_color_id]->product_gallery = $productGalleryModel->getById($property->product_gallery_id);
+                    $properties[$property->tag_color_id]->product_gallery_array = ($productGalleryModel->getById($property->product_gallery_id))?$productGalleryModel->getById($property->product_gallery_id)->toArray():0;
+
+                }
+
+                if(!isset($properties[$property->tag_color_id]->size))
+                {
+                    $properties[$property->tag_color_id]->size = [];
+                    $properties[$property->tag_color_id]->sizeIds = [];
+                }
+
+                if($property->tag_size_id){
+                    $tagSize = $tagService->getTagById($property->tag_size_id, TAG_RELATION_TYPE_SIZE);
+                    $size = new \stdClass();
+
+                    $size->name = $tagSize->name;
+                    $size->id = $tagSize->id;
+                    if(!isset($propertiesSize[$property->tag_size_id]))
+                    {
+                        $propertiesSize[$property->tag_size_id] = new \stdClass();
+                        $propertiesSize[$property->tag_size_id]->color = [];
+                        $propertiesSize[$property->tag_size_id]->colorIds = [];
+                    }
+
+                    $propertiesSize[$property->tag_size_id]->name = $tagSize->name;
+                    $propertiesSize[$property->tag_size_id]->id =$property->tag_size_id;
+
+                    $colorSize = new \stdClass();
+                    $colorSize->name = $property->name;
+                    $colorSize->id = $property->tag_color_id;
+
+                    array_push($propertiesSize[$property->tag_size_id]->color, $colorSize);
+                    array_push($propertiesSize[$property->tag_size_id]->colorIds, $property->tag_color_id);
+
+                    array_push($properties[$property->tag_color_id]->size, $size);
+                    array_push($properties[$property->tag_color_id]->sizeIds, $size->id);
                 }
             }
         }
@@ -422,15 +487,19 @@ class productService {
             if($tagOfProduct->pivot->type == KACANA_PRODUCT_TAG_TYPE_MENU)
                 array_push($tagProductArray, $tagOfProduct->id);
         }
-
-        foreach($tags as &$tag){
-            if(in_array($tag->child_id, $tagProductArray))
+        $tagActive = array();
+        foreach($tags as $tag){
+            if($tag->relation_status)
             {
-                $tag->checked = true;
+                if(in_array($tag->child_id, $tagProductArray))
+                {
+                    $tag->checked = true;
+                }
+                array_push($tagActive, $tag);
             }
         }
 
-        return $tags;
+        return $tagActive;
     }
 
     /**
@@ -569,12 +638,14 @@ class productService {
      * @param bool $options
      * @return bool|\Illuminate\Pagination\LengthAwarePaginator
      */
-    public function searchProduct($searchString, $limit = KACANA_PRODUCT_ITEM_PER_TAG, $page = 1, $options = false){
+    public function searchProduct($searchString, $limit = KACANA_PRODUCT_ITEM_PER_TAG, $page = 1, $options = false, $userId){
         $productModel = new productModel();
+        $userProductLike = new userProductLikeModel();
         $products = $productModel->searchProduct($searchString, $limit, $page, $options);
-        foreach ($products as $product)
+        foreach ($products as &$product)
         {
-            $this->formatProductProperties($product);
+            $this->formatProductPropertiesWhenSearch($product);
+            $product->isLiked = ($userProductLike->getItem($userId, $product->id))?true:false;
         }
 
         return $products;
@@ -658,6 +729,27 @@ class productService {
 
 
         return $productViewModel->reportProductView($startTime, $endTime, $type);
+    }
+
+    public function createCsvBD(){
+        $productModel = new productModel();
+        $products = $productModel->getProductToCreateCsv(1000);
+
+        $path = '/doc/file.csv';
+        if(Storage::disk('local')->exists($path))
+            Storage::disk('local')->delete($path);
+
+        $fp = fopen(PATH_PUBLIC.$path, 'w');
+        fputcsv($fp, ['ID', 'ID2', 'Item title', 'Final URL', 'Image URL', 'Item subtitle', 'Item description', 'Item category', 'Price']);
+        foreach ($products as $product)
+        {
+            $link = 'http://kacana.vn/san-pham/' . str_slug($product->name) . '--' . $product->id . '--' . $product->tag_id;
+            fputcsv($fp, [$product->id, $product->tag_id, $product->name, $link, 'http:'.$product->image, $product->name, $product->short_description, '', formatMoney($product->sell_price, ' VND')]);
+        }
+
+        fclose($fp);
+
+        return true;
     }
 
 //    public function fixProductPrice(){

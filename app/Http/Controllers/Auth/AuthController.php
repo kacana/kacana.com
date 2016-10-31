@@ -24,10 +24,17 @@ class AuthController extends Controller
      */
     public function getLogin(Request $request)
     {
-        if(Auth::check())
+        $host = explode('.', $request->getHttpHost());
+        $role = $host[0];
+        $user = Auth::user();
+
+        if(Auth::check() && (($role == KACANA_USER_ROLE_ADMIN && $user->role == KACANA_USER_ROLE_ADMIN) || $role != KACANA_USER_ROLE_ADMIN))
             return redirect()->intended('/');
         else
+        {
+            Auth::logout();
             return view('auth.login');
+        }
     }
 
     /**

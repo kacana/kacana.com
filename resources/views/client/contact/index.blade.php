@@ -1,7 +1,7 @@
 @extends('layouts.client.master')
 
 @section('top-infomation')
-    <section class="parallax" id="product-list-top-menu" data-stellar-background-ratio="0.5" style="background-image: url('/images/client/homepage/contact-cover.png');">
+    <section class="parallax" id="product-list-top-menu" data-stellar-background-ratio="0.5" style="background-image: url('{{AWS_CDN_URL}}/images/client/account-cover.jpg');">
         <div class="container">
             <div class="row center">
                 <div class="col-md-12">

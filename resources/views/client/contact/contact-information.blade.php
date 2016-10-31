@@ -11,7 +11,7 @@
 <div class="row">
     <div class="col-md-12">
         <div>
-            <div >KACANA là cửa hàng đồ túi xách, ba lô, ví cầm tay, giày dép, mắt kính, đồng hồ lớn nhất, giá tốt nhất, chất lượng nhất!</div>
+            <div >KACANA là cửa hàng túi xách, ba lô, ví nam & nữ lớn nhất, giá tốt nhất, chất lượng nhất!</div>
 
             <div id="googlemaps" class="google-map"></div>
 

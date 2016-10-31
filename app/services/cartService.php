@@ -31,7 +31,20 @@ class cartService {
             throw new \Exception('sản phẩm không tồn tại!');
 
         $productName = $product->name;
-        $productPrice = $product->sell_price - $product->discount;
+        $productDiscount = 0;
+        if(intval($product->discount))
+        {
+            $productDiscount = $product->discount;
+            $productPrice = $product->sell_price - $product->discount;
+        }
+        if(intval($product->mainDiscount))
+        {
+            $productDiscount = $product->mainDiscount;
+            $productPrice = $product->sell_price - $product->mainDiscount;
+        }
+        else
+            $productPrice = $product->sell_price;
+
         $cartId = $this->generateCartId($productId, $colorId, $sizeId);
         $productImage = $product->image;
         $properties = $product->properties;
@@ -40,6 +53,7 @@ class cartService {
         $options['url'] = urlProductDetail($product).$tagId;
         $options['priceShow'] = formatMoney($productPrice);
         $options['productId'] = $productId;
+
 
         // check properties of product
         if(count($properties))
@@ -93,8 +107,12 @@ class cartService {
         }
 
         $options['image'] = $productImage;
-        $options['discount'] = ($product->discount)?$product->discount:0;
+        $options['discount'] = $productDiscount;
+        $options['discountShow'] = formatMoney($productDiscount);
         $options['origin_price'] = $product->sell_price;
+        $options['origin_price_show'] = formatMoney($product->sell_price);
+
+
 
         $order = Cart::add(
             array(
@@ -133,6 +151,9 @@ class cartService {
         $cartInformation->totalShow = formatMoney(Cart::total());
         $cartInformation->items = array();
         $quantity = 0;
+        $productIds = array();
+        $discount = 0;
+        $originTotal = 0;
         if(Cart::content()->count())
         {
             foreach(Cart::content() as $row){
@@ -148,13 +169,20 @@ class cartService {
                 {
                     $item->options->{$key} = $value;
                 }
+                $discount += intval($item->options->discount) * intval($row->get('qty'));
+                $originTotal += intval($item->options->origin_price) * intval($row->get('qty'));
                 $item->options->subtotalShow = formatMoney($item->subTotal);
                 $quantity += $row->get('qty');
-
+                array_push($productIds, $item->options->productId);
                 array_push($cartInformation->items, $item);
             }
-            $cartInformation->quantity = $quantity;
 
+            $cartInformation->originTotal = $originTotal;
+            $cartInformation->originTotalShow = formatMoney($originTotal);
+            $cartInformation->quantity = $quantity;
+            $cartInformation->productIds = $productIds;
+            $cartInformation->discount = $discount;
+            $cartInformation->discountShow = formatMoney($discount);
             return $cartInformation;
         }
 

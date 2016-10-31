@@ -149,7 +149,7 @@ class tagService {
     public function getSubTagsWithAdminData($tagId, $relationType){
         $tagModel = new tagModel();
 
-        $subTags = $tagModel->getSubTags($tagId, $relationType );
+        $subTags = $tagModel->getSubTags($tagId, $relationType);
         return $this->addAdminData($subTags, $relationType);
     }
 
@@ -265,15 +265,20 @@ class tagService {
 
                 if($subTargetTag->child_id == $targetTagId)
                 {
-                    $tagModel->updateTagRelationOrder($movedTagId, $typeId, ['tag_order'=>$subTagIndex, 'parent_id'=>$subTargetTag->parent_id]);
+                    if($targetTag->status == TAG_RELATION_STATUS_INACTIVE)
+                        $tagModel->updateTagRelationOrder($movedTagId, $typeId, ['tag_order'=>$subTagIndex, 'parent_id'=>$subTargetTag->parent_id, 'status'=>TAG_RELATION_STATUS_INACTIVE]);
+                    else
+                        $tagModel->updateTagRelationOrder($movedTagId, $typeId, ['tag_order'=>$subTagIndex, 'parent_id'=>$subTargetTag->parent_id]);
                     $subTagIndex++;
                 }
             }
         }
         elseif($position=='inside'){
             $subTargetTags = $tagModel->getSubTags($targetTagId, $typeId);
-
-            $tagModel->updateTagRelationOrder($movedTagId, $typeId,['tag_order'=>$subTagIndex, 'parent_id'=>$targetTagId]);
+            if($targetTag->status == TAG_RELATION_STATUS_INACTIVE)
+                $tagModel->updateTagRelationOrder($movedTagId, $typeId,['tag_order'=>$subTagIndex, 'parent_id'=>$targetTagId, 'status'=>TAG_RELATION_STATUS_INACTIVE]);
+            else
+                $tagModel->updateTagRelationOrder($movedTagId, $typeId,['tag_order'=>$subTagIndex, 'parent_id'=>$targetTagId]);
             $subTagIndex++;
 
             if($subTargetTags)
@@ -341,10 +346,10 @@ class tagService {
         $parentId = 0;
         $typeId = TAG_RELATION_TYPE_MENU;
 
-        $menuClients = $tagModel->getSubTags($parentId, $typeId);
+        $menuClients = $tagModel->getSubTags($parentId, $typeId, TAG_RELATION_STATUS_ACTIVE);
 
         foreach($menuClients as &$menuClient){
-            $menuClient->childs = $tagModel->getSubTags($menuClient->child_id, $typeId);
+            $menuClient->childs = $tagModel->getSubTags($menuClient->child_id, $typeId, TAG_RELATION_STATUS_ACTIVE);
         }
 
         return $menuClients;
@@ -361,7 +366,7 @@ class tagService {
         $tagModel = new tagModel();
         $parentId = 0;
 
-        return $tagModel->getSubTags($parentId, $typeId);
+        return $tagModel->getSubTags($parentId, $typeId, TAG_RELATION_STATUS_ACTIVE);
     }
 
     /**
@@ -370,17 +375,17 @@ class tagService {
      * @param array $tagIds
      * @return array
      */
-    public function getAllChildTag($tagId, &$tagIds = [], $typeRelation = false)
+    public function getAllChildTag($tagId, &$tagIds = [], $typeRelation = false, $status = false)
     {
 
         $tagModel = new tagModel();
         array_push($tagIds, $tagId);
-        $tagChilds = $tagModel->getSubTags($tagId, $typeRelation);
+        $tagChilds = $tagModel->getSubTags($tagId, $typeRelation, $status);
         if($tagChilds){
             foreach($tagChilds as $tagChild)
             {
                 if(!in_array($tagChild->child_id, $tagIds))
-                    $this->getAllChildTag($tagChild->child_id, $tagIds, $typeRelation);
+                    $this->getAllChildTag($tagChild->child_id, $tagIds, $typeRelation, $status);
             }
         }
         return $tagIds;
@@ -402,7 +407,7 @@ class tagService {
     public function getAllChildTagHaveProduct($tagId){
         $tagModel = new tagModel();
         $listTagRelationId = array();
-        $tagRelationId = $this->getAllChildTag($tagId, $listTagRelationId);
+        $tagRelationId = $this->getAllChildTag($tagId, $listTagRelationId, TAG_RELATION_STATUS_ACTIVE);
         return  $tagModel->getTagByIdsHaveProduct($tagRelationId);
     }
 
@@ -423,7 +428,7 @@ class tagService {
         $tagId = 0;
         $typeId = TAG_RELATION_TYPE_COLOR;
 
-        return $tagModel->getSubTags($tagId, $typeId, KACANA_TAG_STATUS_ACTIVE);
+        return $tagModel->getSubTags($tagId, $typeId, TAG_RELATION_STATUS_ACTIVE);
     }
 
     /**
@@ -434,7 +439,7 @@ class tagService {
         $tagId = 0;
         $typeId = TAG_RELATION_TYPE_GROUP;
 
-        return $tagModel->getSubTags($tagId, $typeId, KACANA_TAG_STATUS_ACTIVE);
+        return $tagModel->getSubTags($tagId, $typeId, TAG_RELATION_STATUS_ACTIVE);
     }
 
     /**
@@ -445,11 +450,11 @@ class tagService {
         $tagId = 0;
         $typeId = TAG_RELATION_TYPE_SIZE;
 
-        $tagChilds = $tagModel->getSubTags($tagId, $typeId, KACANA_TAG_STATUS_ACTIVE);
+        $tagChilds = $tagModel->getSubTags($tagId, $typeId, TAG_RELATION_STATUS_ACTIVE);
 
         if($tagChilds){
             foreach($tagChilds as &$tagChild){
-                $tagChild->childs = $tagModel->getSubTags($tagChild->child_id, $typeId, KACANA_TAG_STATUS_ACTIVE);
+                $tagChild->childs = $tagModel->getSubTags($tagChild->child_id, $typeId, TAG_RELATION_STATUS_ACTIVE);
             }
         }
         return $tagChilds;
@@ -463,7 +468,7 @@ class tagService {
         $tagId = 0;
         $typeId = TAG_RELATION_TYPE_STYLE;
 
-        return $tagModel->getSubTags($tagId, $typeId, KACANA_TAG_STATUS_ACTIVE);
+        return $tagModel->getSubTags($tagId, $typeId, TAG_RELATION_STATUS_ACTIVE);
     }
 
     public function searchTagProduct($name, $productId){
@@ -486,6 +491,38 @@ class tagService {
             $tag['value'] = $tag['name'];
         }
         return $tags;
+    }
+
+    public function toggleStatusRelation($tagId, $typeId, $parentId){
+        $tagModel = new tagModel();
+        $tagRelation = $tagModel->getTagRelation($tagId, $typeId);
+
+        if($tagRelation->status == TAG_RELATION_STATUS_INACTIVE)
+        {
+            if($parentId)
+            {
+                $parentTagRelation = $tagModel->getTagRelation($parentId, $typeId);
+                if($parentTagRelation->status == TAG_RELATION_STATUS_INACTIVE)
+                    return false;
+            }
+            $tagModel->updateTagRelationOrder($tagId, $typeId, ['status'  => TAG_RELATION_STATUS_ACTIVE]);
+
+        }
+
+        if($tagRelation->status == TAG_RELATION_STATUS_ACTIVE)
+        {
+            $tagModel->updateTagRelationOrder($tagId, $typeId, ['status'  => TAG_RELATION_STATUS_INACTIVE]);
+            $tagArr = [];
+
+            $subTags = $this->getAllChildTag($tagId, $tagArr, $typeId, TAG_RELATION_STATUS_ACTIVE);
+
+            foreach ($subTags as $subTag){
+                $tagModel->updateTagRelationOrder($subTag, $typeId, ['status'  => TAG_RELATION_STATUS_INACTIVE]);
+            }
+
+        }
+
+        return true;
     }
 
 }

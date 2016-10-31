@@ -4,7 +4,7 @@
 @section('meta-keyword', implode(", ",$tag->tagKeyword))
 
 @section('top-infomation')
-    <section class="parallax" id="product-list-top-menu" data-stellar-background-ratio="0.5" style="background-image: url('@if($tag->image){{ AWS_CDN_URL.$tag->image}}@else /images/client/homepage/account-cover.jpg @endif');">
+    <section class="parallax" id="product-list-top-menu" data-stellar-background-ratio="0.5" style="background-image: url('@if($tag->image){{ AWS_CDN_URL.$tag->image}}@else {{AWS_CDN_URL}}/images/client/account-cover.jpg @endif');">
         <div class="container">
             <div class="row center">
                 <div class="col-md-12">
@@ -89,3 +89,6 @@
 @section('section-modal')
     @include('client.product.modal')
 @stop
+
+@section('google-param-prodid', implode(", ",getProductIds($items)))
+@section('google-param-pagetype', 'category')

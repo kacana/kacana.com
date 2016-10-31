@@ -66,7 +66,7 @@ var utilsPackage = {
                 }());
             },
             login : function(callback){
-                FB.login(callback,{scope:'email,public_profile,user_friends,user_mobile_phone,user_address'});
+                FB.login(callback,{scope:'email,public_profile,user_friends'});
             },
             me : function(callback){
 

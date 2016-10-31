@@ -9,7 +9,7 @@
     <meta charset="utf-8">
 
     <!-- GOOGLE META AND SEO -->
-    <title>@yield('meta-title', 'Chuyên bán túi xách, kính mắt, đồng hồ và dây lưng') - Kacana.vn</title>
+    <title>@yield('meta-title', 'Chuyên bán túi xách, ví, balo thời trang') - Kacana.vn</title>
     <meta name="description" content="@yield('meta-description', 'Hàng loạt các mẫu túi ví, túi xách, túi đeo, ví da, ví cầm tay,ba lo nam nữ thời trang chính hãng  liên tục được cập nhật - Mua bán trực tuyến') - Kacana.vn" />
     <meta name="keywords" content="@yield('meta-keyword', 'túi ví, tui vi, túi xách, ví da, túi đeo, ví cầm tay, balo, túi da, túi vải, túi ví chính hãng, túi ví cao cấp')" />
 
@@ -25,9 +25,9 @@
 
     <meta property="fb:app_id" content="{{KACANA_SOCIAL_FACEBOOK_KEY}}" />
     <meta prefix="og: http://ogp.me/ns#" property="og:url" content="{{Request::url()}}">
-    <meta prefix="og: http://ogp.me/ns#" property="og:title" content="@yield('meta-title', 'Chuyên bán túi xách, kính mắt, đồng hồ và dây lưng') - Kacana.vn">
+    <meta prefix="og: http://ogp.me/ns#" property="og:title" content="@yield('meta-title', 'Chuyên bán túi xách, ví, balo thời trang') - Kacana.vn">
     <meta prefix="og: http://ogp.me/ns#" property="og:description" content="@yield('meta-description', 'Hàng loạt các mẫu túi ví, túi xách, túi đeo, ví da, ví cầm tay,ba lo nam nữ thời trang chính hãng  liên tục được cập nhật - Mua bán trực tuyến') - Kacana.vn">
-    <meta prefix="og: http://ogp.me/ns#" property="og:site_name" content="@yield('meta-title', 'Chuyên bán túi xách, kính mắt, đồng hồ và dây lưng') - Kacana.vn">
+    <meta prefix="og: http://ogp.me/ns#" property="og:site_name" content="@yield('meta-title', 'Chuyên bán túi xách, ví, balo thời trang') - Kacana.vn">
     <meta property="og:image" content="@yield('meta-image', 'http:'.AWS_CDN_URL.'/images/client/short_logo.png')" />
     <meta property="og:locale" content="vi_VN" />
 
@@ -115,38 +115,40 @@
     <link rel="stylesheet" href="/lib/codrops/text-input/css/set2.css">
 
     <script src="http://maps.google.com/maps/api/js?key={{GOOGLE_API_KEY}}"></script>
+
+    <script>
+        window.fbAsyncInit = function() {
+            FB.init({
+                appId      : '1064427043612189',
+                xfbml      : true,
+                version    : 'v2.7'
+            });
+        };
+
+        (function(d, s, id){
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) {return;}
+            js = d.createElement(s); js.id = id;
+            js.src = "//connect.facebook.net/en_US/sdk.js";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-82621615-1', 'auto');
+        ga('require', 'displayfeatures');
+        ga('require', 'linkid', 'linkid.js');
+        ga('send', 'pageview');
+
+    </script>
 </head>
 <body class="cbp-spmenu-push">
 <div id="fb-root"></div>
 <div id="fb-root"></div>
-<script>
-    window.fbAsyncInit = function() {
-        FB.init({
-            appId      : '1064427043612189',
-            xfbml      : true,
-            version    : 'v2.7'
-        });
-    };
 
-    (function(d, s, id){
-        var js, fjs = d.getElementsByTagName(s)[0];
-        if (d.getElementById(id)) {return;}
-        js = d.createElement(s); js.id = id;
-        js.src = "//connect.facebook.net/en_US/sdk.js";
-        fjs.parentNode.insertBefore(js, fjs);
-    }(document, 'script', 'facebook-jssdk'));
-
-    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-    ga('create', 'UA-82621615-1', 'auto');
-    ga('require', 'displayfeatures');
-    ga('require', 'linkid', 'linkid.js');
-    ga('send', 'pageview');
-
-</script>
 <div class="body">
 
     @include('layouts.client.header')
@@ -232,6 +234,19 @@
 
 </script>
  -->
+<!-- Google Code dành cho Thẻ tiếp thị lại -->
+<!--------------------------------------------------
+Không thể liên kết thẻ tiếp thị lại với thông tin nhận dạng cá nhân hay đặt thẻ tiếp thị lại trên các trang có liên quan đến danh mục nhạy cảm. Xem thêm thông tin và hướng dẫn về cách thiết lập thẻ trên: http://google.com/ads/remarketingsetup
+--------------------------------------------------->
+<!-- Google Code dành cho Thẻ tiếp thị lại -->
+<!--------------------------------------------------
+Không thể liên kết thẻ tiếp thị lại với thông tin nhận dạng cá nhân hay đặt thẻ tiếp thị lại trên các trang có liên quan đến danh mục nhạy cảm. Xem thêm thông tin và hướng dẫn về cách thiết lập thẻ trên: http://google.com/ads/remarketingsetup
+--------------------------------------------------->
+<!-- Google Code dành cho Thẻ tiếp thị lại -->
+<!--------------------------------------------------
+Không thể liên kết thẻ tiếp thị lại với thông tin nhận dạng cá nhân hay đặt thẻ tiếp thị lại trên các trang có liên quan đến danh mục nhạy cảm. Xem thêm thông tin và hướng dẫn về cách thiết lập thẻ trên: http://google.com/ads/remarketingsetup
+--------------------------------------------------->
+
 <script type="text/javascript">
 
     $(function() {
@@ -240,6 +255,27 @@
         Kacana.layout.init();
     });
 </script>
-
+<script type="text/javascript">
+    var google_tag_params = {
+        dynx_itemid: [@yield('google-param-prodid', 0)],
+        dynx_itemid2: "1",
+        dynx_totalvalue: @yield('google-param-totalvalue', 0),
+        dynx_pagetype: "@yield('google-param-pagetype', 'home')",
+    };
+</script>
+<script type="text/javascript">
+    /* <![CDATA[ */
+    var google_conversion_id = 938027284;
+    var google_custom_params = window.google_tag_params;
+    var google_remarketing_only = true;
+    /* ]]> */
+</script>
+<script type="text/javascript" src="//www.googleadservices.com/pagead/conversion.js">
+</script>
+<noscript>
+    <div style="display:inline;">
+        <img height="1" width="1" style="border-style:none;" alt="" src="//googleads.g.doubleclick.net/pagead/viewthroughconversion/938027284/?guid=ON&amp;script=0"/>
+    </div>
+</noscript>
 </body>
 </html>

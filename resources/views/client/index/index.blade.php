@@ -128,3 +128,5 @@
 @section('section-modal')
     @include('client.partials.popup-modal')
 @stop
+
+@section('google-param-prodid', implode(", ",getProductIds($newest)))

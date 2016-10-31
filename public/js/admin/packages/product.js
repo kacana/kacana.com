@@ -4,8 +4,28 @@ var productPackage = {
           Kacana.product.listProducts.init();
       },
       listProducts: {
+          page: null,
           init: function(){
-            Kacana.product.listProducts.setupDatatableForProduct();
+              Kacana.product.listProducts.setupDatatableForProduct();
+              Kacana.product.listProducts.page = $('#content-list-product')
+              Kacana.product.listProducts.page.on('click', '#create-csv-for-remarketing', Kacana.product.listProducts.createCSVForRemarketing);
+          },
+          createCSVForRemarketing: function () {
+              var callBack = function(data){
+                  if(data.ok)
+                  {
+                      swal({
+                          title: 'Xong Rồi!',
+                          text: 'File is integrated to google re-marketing by System  ',
+                          type: 'success',
+                          confirmButtonText: 'Cool'
+                      });
+                  }
+                  Kacana.utils.closeLoading();
+              };
+              var errorCallBack = function(){};
+              Kacana.utils.loading();
+              Kacana.ajax.product.createCSVForRemarketing(callBack, errorCallBack);
           },
           setupDatatableForProduct: function(){
               var $formInline = $('.form-inline');
