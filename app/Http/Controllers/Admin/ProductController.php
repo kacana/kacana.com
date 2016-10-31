@@ -86,7 +86,7 @@ class ProductController extends BaseController {
                 return redirect('/product/editProduct/'.$id)->with('success', 'Cập nhật sản phẩm thành công!');
             }
 
-            $results['product'] = $productService->getProductById($id);
+            $results['product'] = $productService->getProductById($id, 0, false);
             $results['tagColor'] = $tagService->getColorTag();
             $results['groupTag'] = $tagService->getTagGroup();
             $results['tagSize'] = $tagService->getSizeTag();

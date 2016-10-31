@@ -363,10 +363,14 @@ class productModel extends Model  {
 
     /**
      * @param $id
+     * @param $status
      * @return \Illuminate\Support\Collection|null|static
      */
-    public function getProductById($id){
-        return $this->where('status', KACANA_PRODUCT_STATUS_ACTIVE)->find($id);
+    public function getProductById($id, $status = KACANA_PRODUCT_STATUS_ACTIVE){
+        if($status)
+            return $this->where('status', $status)->find($id);
+        else
+            return $this->find($id);
     }
 
     /**

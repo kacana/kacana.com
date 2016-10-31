@@ -130,13 +130,14 @@ class productService {
     /**
      * @param $id
      * @param $userId
+     * @param $status
      * @return \Illuminate\Support\Collection|null|static
      */
-    public function getProductById($id, $userId = 0){
+    public function getProductById($id, $userId = 0, $status = KACANA_PRODUCT_STATUS_ACTIVE){
         $productModel = new productModel();
         $userProductLike = new userProductLikeModel();
         $htmlFixer = new HtmlFixer();
-        $product = $productModel->getProductById($id);
+        $product = $productModel->getProductById($id, $status);
 
         if($product->description)
         {
