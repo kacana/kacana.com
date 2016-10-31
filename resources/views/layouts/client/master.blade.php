@@ -257,9 +257,9 @@ Không thể liên kết thẻ tiếp thị lại với thông tin nhận dạng
 </script>
 <script type="text/javascript">
     var google_tag_params = {
-        ecomm_prodid: [@yield('google-param-prodid', 0)],
-        ecomm_pagetype: "@yield('google-param-pagetype', 'home')",
-        ecomm_totalvalue: @yield('google-param-totalvalue', 0)
+        dynx_itemid: [@yield('google-param-prodid', 0)],
+        dynx_itemid2: "@yield('google-param-pagetype', 'home')",
+        dynx_pagetype: @yield('google-param-totalvalue', 0)
     };
 </script>
 <script type="text/javascript">
