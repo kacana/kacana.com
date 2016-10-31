@@ -392,7 +392,7 @@ class productModel extends Model  {
             ->take($limit);
         }
 
-        if(isset($options['sort'])){
+        if(isset($options['sort']) && $options['sort']){
             switch ($options['sort']){
                 case PRODUCT_LIST_SORT_PRICE_FROM_LOW:
                     $select->orderBy('products.sell_price', 'ASC');
@@ -412,7 +412,7 @@ class productModel extends Model  {
         }
         else
         {
-            $select->orderBy('products.created', 'DESC');
+            $select->orderBy('products.updated', 'DESC');
         }
 
         if(isset($options['product_tag_type_id'])){
