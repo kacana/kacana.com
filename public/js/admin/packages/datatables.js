@@ -64,7 +64,9 @@ var datatablePackage = {
                 'initComplete': function (oSettings, oData) {
 
                     $(element).show();
-                }
+                },
+                'retrieve': true,
+                'destroy': true
             });
 
             return dataTable;
@@ -159,6 +161,30 @@ var datatablePackage = {
 
             return Kacana.datatable.init(element, url, columns, defaultSearchColumns, addParamsCallBack, cacheParamsCallBack, rowCallBack, drawCallBack, cacheLoadedCallBack, options);
         },
+        detailTable: function(element, columns,typeReport, addParamsCallBack, cacheLoadedCallBack){
+            // var controller = typeReport.toLowerCase();
+            var url = '/index/reportDetailTable'+typeReport;
+            var options = {
+                'order': [0, "desc"],
+                displayLength: 50
+            };
+            console.log(typeReport);
+            var defaultSearchColumns = [];
+
+            var cacheParamsCallBack = function(oData){
+                //do something
+            };
+
+            var drawCallBack = function(e){
+
+            };
+
+            var rowCallBack = function(){
+                //do something
+            };
+
+            return Kacana.datatable.init(element, url, columns, defaultSearchColumns, addParamsCallBack, cacheParamsCallBack, rowCallBack, drawCallBack, cacheLoadedCallBack, options);
+        },
         order: function(element, columns, addParamsCallBack, cacheLoadedCallBack){
             var url = '/order/generateOrderTable';
             var options = {
@@ -202,7 +228,8 @@ var datatablePackage = {
             };
 
             return Kacana.datatable.init(element, url, columns, defaultSearchColumns, addParamsCallBack, cacheParamsCallBack, rowCallBack, drawCallBack, cacheLoadedCallBack, options);
-        },
+        }
+
     }
 };
 $.extend(true, Kacana, datatablePackage);

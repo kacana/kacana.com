@@ -110,6 +110,41 @@ class userService {
 
         return $return;
     }
+    
+    public function reportDetailTableUser($request){
+        $userModel = new User();
+        $datatables = new DataTables();
+        $viewHelper = new ViewGenerateHelper();
+
+        $columns = array(
+            array( 'db' => 'users.id', 'dt' => 0 ),
+            array( 'db' => 'users.name', 'dt' => 1 ),
+            array( 'db' => 'users.email', 'dt' => 2 ),
+            array( 'db' => 'users.phone', 'dt' => 3 ),
+            array( 'db' => 'users.role', 'dt' => 4 ),
+            array( 'db' => 'users.status', 'dt' => 5 ),
+            array( 'db' => 'users.created', 'dt' => 6 ),
+            array( 'db' => 'users.updated_at', 'dt' => 7 )
+        );
+
+        $return = $userModel->reportDetailTableUser($request, $columns);
+
+        if(count($return['data'])) {
+            $optionStatus = [KACANA_TAG_STATUS_ACTIVE ,KACANA_USER_STATUS_INACTIVE, KACANA_USER_STATUS_BLOCK, KACANA_USER_STATUS_CREATE_BY_SYSTEM];
+            $optionRole = [KACANA_USER_ROLE_ADMIN, KACANA_USER_ROLE_BUYER];
+
+            foreach ($return['data'] as &$res) {
+                $res->status = $viewHelper->dropdownView('users', $res->id, $res->status, 'status', $optionStatus);
+                $res->role = $viewHelper->dropdownView('users', $res->id, $res->role, 'role', $optionRole);
+            }
+        }
+
+
+
+        $return['data'] = $datatables::data_output( $columns, $return['data'] );
+
+        return $return;
+    }
 
     /**
      * @param $id
@@ -450,6 +485,16 @@ class userService {
 
         return $this->_userModel->reportUser($startTime, $endTime, $type);
     }
+
+    public function getUserReportDetail($dateSelected, $type){
+
+
+//            $dateSelected = Carbon::createFromFormat('Y-m-d', $dateSelected)->addDay();
+
+
+        return $this->_userModel->reportUserDetail($dateSelected, $type);
+    }
+
 
     public function getUserProductLikeReport($dateRange, $type){
         if(!$dateRange)

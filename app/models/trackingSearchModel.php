@@ -7,6 +7,7 @@ use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 use DB;
 use Carbon\Carbon;
+use Kacana\DataTables;
 
 class trackingSearchModel extends Model  {
     /**
@@ -57,6 +58,55 @@ class trackingSearchModel extends Model  {
             $trackingSearchReport->select('*',DB::raw('DATE_FORMAT(created_at, "%Y") as date'), (DB::raw('count(*) as item')))
                 ->groupBy('date');
         return $trackingSearchReport->get();
+    }
+
+    public function reportDetailTableTrackingSearch($request, $columns){
+
+        $datatables = new DataTables();
+        $type = $request['type'];
+        $limit = $datatables::limit( $request, $columns );
+        $order = $datatables::order( $request, $columns );
+        $where = $datatables::filter( $request, $columns );
+        $dateSelected = $request['dateSelected'];
+
+        if($type == 'day')
+            $typeWhere = DB::raw('DATE_FORMAT(kacana_tracking_search.created_at, "%Y-%m-%d")');
+        elseif($type == 'month') {
+            $dateSelected = substr($dateSelected,0,7);
+            $typeWhere =DB::raw('DATE_FORMAT(kacana_tracking_search.created_at, "%Y-%m")');
+        }
+        elseif($type == 'year') {
+            $dateSelected = substr($dateSelected,0,4);
+            $typeWhere = DB::raw('DATE_FORMAT(kacana_tracking_search.created_at, "%Y")');
+        }
+        // Main query to actually get the data
+        $selectData = DB::table('tracking_search')
+            ->select($datatables::pluck($columns, 'db'))
+            ->leftjoin('users', 'tracking_search.user_id', '=', 'users.id')
+            ->orderBy($order['field'], $order['dir'])
+            ->skip($limit['offset'])
+            ->take($limit['limit'])
+            ->where($typeWhere,'=',$dateSelected);
+
+        // Data set length
+        $recordsFiltered = $selectLength = DB::table('tracking_search')
+            ->select($datatables::pluck($columns, 'db'))
+            ->join('users', 'tracking_search.user_id', '=', 'users.id');
+
+        if($where){
+            $selectData->whereRaw($where);
+            $recordsFiltered->whereRaw($where);
+        }
+
+        /*
+         * Output
+         */
+        return array(
+            "draw"            => intval( $request['draw'] ),
+            "recordsTotal"    => intval( $selectLength->count() ),
+            "recordsFiltered" => intval( $recordsFiltered->count() ),
+            "data"            => $selectData->get()
+        );
     }
 
 }

@@ -78,6 +78,62 @@ class productService {
 
         return $return;
     }
+    
+    public function reportDetailTableProductLike($request){
+        $userProductLikeModel = new userProductLikeModel();
+        $datatables = new DataTables();
+//        $viewHelper = new ViewGenerateHelper();
+
+        $columns = array(
+            array( 'db' => 'users.id', 'dt' => 0 ),
+            array( 'db' => 'users.name', 'dt' => 1 ),
+            array( 'db' => 'user_product_like.product_id', 'dt' => 2 ),
+            array( 'db' => 'user_product_like.product_url', 'dt' => 3 ),
+//            array( 'db' => 'user_product_like.image', 'dt' => 4 ),
+            array( 'db' => 'user_product_like.created_at', 'dt' => 4 ),
+            array( 'db' => 'user_product_like.updated_at', 'dt' => 5 )
+        );
+
+        $return = $userProductLikeModel->reportDetailTableProductLike($request, $columns);
+//        $statusOptions = [KACANA_PRODUCT_STATUS_ACTIVE, KACANA_PRODUCT_STATUS_INACTIVE];
+//        if(count($return['data'])) {
+//            foreach ($return['data'] as &$res) {
+//                $res->status = $viewHelper->dropdownView('products', $res->id, $res->status, 'status', $statusOptions);
+//            }
+//        }
+
+        $return['data'] = $datatables::data_output( $columns, $return['data'] );
+
+        return $return;
+    }
+
+    public function reportDetailTableProductView($request){
+        $productViewModel = new productViewModel();
+        $datatables = new DataTables();
+//        $viewHelper = new ViewGenerateHelper();
+
+        $columns = array(
+            array( 'db' => 'users.id', 'dt' => 0 ),
+            array( 'db' => 'users.name', 'dt' => 1 ),
+            array( 'db' => 'product_view.product_id', 'dt' => 2 ),
+            array( 'db' => 'product_view.ip', 'dt' => 3 ),
+//            array( 'db' => 'user_product_like.image', 'dt' => 4 ),
+            array( 'db' => 'product_view.created_at', 'dt' => 4 ),
+            array( 'db' => 'product_view.updated_at', 'dt' => 5 )
+        );
+
+        $return = $productViewModel->reportDetailTableProductView($request, $columns);
+//        $statusOptions = [KACANA_PRODUCT_STATUS_ACTIVE, KACANA_PRODUCT_STATUS_INACTIVE];
+//        if(count($return['data'])) {
+//            foreach ($return['data'] as &$res) {
+//                $res->status = $viewHelper->dropdownView('products', $res->id, $res->status, 'status', $statusOptions);
+//            }
+//        }
+
+        $return['data'] = $datatables::data_output( $columns, $return['data'] );
+
+        return $return;
+    }
 
     /**
      * @param $request

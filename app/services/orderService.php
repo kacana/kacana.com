@@ -171,6 +171,39 @@ class orderService {
 
         return $return;
     }
+    public function reportDetailTableOrder($request){
+        $orderModel = new orderModel();
+        $datatables = new DataTables();
+        $viewHelper = new ViewGenerateHelper();
+
+        $columns = array(
+            array( 'db' => 'orders.id', 'dt' => 0 ),
+            array( 'db' => 'users.name', 'dt' => 1 ),
+            array( 'db' => 'users.phone', 'dt' => 2 ),
+            array( 'db' => 'orders.total', 'dt' => 3 ),
+            array( 'db' => 'orders.quantity', 'dt' => 4 ),
+            array( 'db' => 'orders.status', 'dt' => 5 ),
+            array( 'db' => 'orders.created', 'dt' => 6 ),
+            array( 'db' => 'orders.updated', 'dt' => 7 )
+        );
+
+        $return = $orderModel->reportDetailTableOrder($request, $columns);
+
+        if(count($return['data'])) {
+            $optionStatus = [KACANA_ORDER_STATUS_NEW, KACANA_ORDER_STATUS_PROCESSING, KACANA_ORDER_STATUS_CANCEL, KACANA_ORDER_STATUS_COMPLETE];
+
+            foreach ($return['data'] as &$res) {
+                $res->status = $viewHelper->dropdownView('orders', $res->id, $res->status, 'status', $optionStatus);
+                $res->total = formatMoney($res->total);
+            }
+        }
+
+
+
+        $return['data'] = $datatables::data_output( $columns, $return['data'] );
+
+        return $return;
+    }
 
     /**
      * @param $id

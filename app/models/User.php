@@ -198,6 +198,55 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
             "data"            => $selectData->get()
         );
     }
+    
+    public function reportDetailTableUser($request, $columns){
+
+        $datatables = new DataTables();
+        $type = $request['type'];
+        $limit = $datatables::limit( $request, $columns );
+        $order = $datatables::order( $request, $columns );
+        $where = $datatables::filter( $request, $columns );
+        $dateSelected = $request['dateSelected'];
+
+        if($type == 'day')
+            $typeWhere = DB::raw('DATE_FORMAT(created, "%Y-%m-%d")');
+        elseif($type == 'month') {
+            $dateSelected = substr($dateSelected,0,7);
+            $typeWhere =DB::raw('DATE_FORMAT(created, "%Y-%m")');
+        }
+        elseif($type == 'year') {
+            $dateSelected = substr($dateSelected,0,4);
+            $typeWhere = DB::raw('DATE_FORMAT(created, "%Y")');
+        }
+        
+        // Main query to actually get the data
+        $selectData = DB::table('users')
+            ->select($datatables::pluck($columns, 'db'))
+            ->orderBy($order['field'], $order['dir'])
+            ->skip($limit['offset'])
+            ->take($limit['limit'])
+            ->where($typeWhere,'=',$dateSelected);
+
+
+        // Data set length
+        $recordsFiltered = $selectLength = DB::table('users')
+            ->select($datatables::pluck($columns, 'db'));
+
+        if($where){
+            $selectData->whereRaw($where);
+            $recordsFiltered->whereRaw($where);
+        }
+
+        /*
+         * Output
+         */
+        return array(
+            "draw"            => intval( $request['draw'] ),
+            "recordsTotal"    => intval( $selectLength->count() ),
+            "recordsFiltered" => intval( $recordsFiltered->count() ),
+            "data"            => $selectData->get()
+        );
+    }
 
     public function countUser($duration = false){
         $date = Carbon::now()->subDays($duration);
@@ -213,7 +262,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
                             ->where('created', '<=', $endTime);
         if($type == 'day')
             $userReport->select('*', DB::raw('DATE_FORMAT(created, "%Y-%m-%d") as date'), (DB::raw('count(id) as item')))
-            ->groupBy('date');
+                ->groupBy('date');
         elseif($type == 'month')
             $userReport->select('*', DB::raw('DATE_FORMAT(created, "%Y-%m") as date'), (DB::raw('count(id) as item')))
                 ->groupBy('date');
@@ -222,4 +271,5 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
                 ->groupBy('date');
         return $userReport->get();
     }
+
 }

@@ -45,6 +45,11 @@ Route::group(['domain'=>KACANA_AUTH_ADMIN_NAME.'.{nameDomain}','middleware' => '
     Route::post('/index/reportChartProductLike',            array('as'=>'index-report-chart-product-like',      'uses'=>'Admin\IndexController@reportChartProductLike'));
     Route::post('/index/reportChartProductView',            array('as'=>'index-report-chart-product-view',      'uses'=>'Admin\IndexController@reportChartProductView'));
     Route::post('/index/reportChartTrackingSearch',         array('as'=>'index-report-chart-tracking-search',   'uses'=>'Admin\IndexController@reportChartTrackingSearch'));
+    Route::any('/index/reportDetailTableUser',              array('as'=>'reportDetailTableUser',                'uses'=>'Admin\IndexController@reportDetailTableUser'));
+    Route::any('/index/reportDetailTableOrder',             array('as'=>'reportDetailTableOrder',               'uses'=>'Admin\IndexController@reportDetailTableOrder'));
+    Route::any('/index/reportDetailTableProductLike',       array('as'=>'reportDetailTableProductLike',         'uses'=>'Admin\IndexController@reportDetailTableProductLike'));
+    Route::any('/index/reportDetailTableProductView',       array('as'=>'reportDetailTableProductView',         'uses'=>'Admin\IndexController@reportDetailTableProductView'));
+    Route::any('/index/reportDetailTableTrackingSearch',    array('as'=>'reportDetailTableTrackingSearch',      'uses'=>'Admin\IndexController@reportDetailTableTrackingSearch'));
 
     //product
     Route::any('/product',                                  array('as'=>'listProducts',             'uses'=>'Admin\ProductController@index'));
@@ -95,6 +100,7 @@ Route::group(['domain'=>KACANA_AUTH_ADMIN_NAME.'.{nameDomain}','middleware' => '
     //user
     Route::any('/user',                                     array('as'=>'listUsers',                 'uses'=>'Admin\UserController@index'));
     Route::any('/user/generateUserTable',                   array('as'=>'generateUserTable',         'uses'=>'Admin\UserController@generateUserTable'));
+//    Route::any('/user/generateDetailTable',                   array('as'=>'generateDetailTable',         'uses'=>'Admin\UserController@generateDetailTable'));
     Route::post('/user/create',                             array('as'=>'createUser',                'uses'=>'Admin\UserController@create'));
     Route::any('/user/edit/{pid}',                          array('as'=>'editUser',                  'uses'=>'Admin\UserController@edit'));
     Route::get('/user/setStatus/{id}/{status}',             array('as'=>'setStatusUser',             'uses'=>'Admin\UserController@setStatus'));

@@ -7,6 +7,7 @@ use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 use DB;
 use Carbon\Carbon;
+use Kacana\DataTables;
 
 class productViewModel extends Model  {
     /**
@@ -67,4 +68,52 @@ class productViewModel extends Model  {
         return $productViewReport->get();
     }
 
+    public function reportDetailTableProductView($request, $columns){
+
+        $datatables = new DataTables();
+        $type = $request['type'];
+        $limit = $datatables::limit( $request, $columns );
+        $order = $datatables::order( $request, $columns );
+        $where = $datatables::filter( $request, $columns );
+        $dateSelected = $request['dateSelected'];
+
+        if($type == 'day')
+            $typeWhere = DB::raw('DATE_FORMAT(kacana_product_view.created_at, "%Y-%m-%d")');
+        elseif($type == 'month') {
+            $dateSelected = substr($dateSelected,0,7);
+            $typeWhere =DB::raw('DATE_FORMAT(kacana_product_view.created_at, "%Y-%m")');
+        }
+        elseif($type == 'year') {
+            $dateSelected = substr($dateSelected,0,4);
+            $typeWhere = DB::raw('DATE_FORMAT(kacana_product_view.created_at, "%Y")');
+        }
+        // Main query to actually get the data
+        $selectData = DB::table('product_view')
+            ->select($datatables::pluck($columns, 'db'))
+            ->leftjoin('users', 'product_view.user_id', '=', 'users.id')
+            ->orderBy($order['field'], $order['dir'])
+            ->skip($limit['offset'])
+            ->take($limit['limit'])
+            ->where($typeWhere,'=',$dateSelected);
+
+        // Data set length
+        $recordsFiltered = $selectLength = DB::table('product_view')
+            ->select($datatables::pluck($columns, 'db'))
+            ->join('users', 'product_view.user_id', '=', 'users.id');
+
+        if($where){
+            $selectData->whereRaw($where);
+            $recordsFiltered->whereRaw($where);
+        }
+
+        /*
+         * Output
+         */
+        return array(
+            "draw"            => intval( $request['draw'] ),
+            "recordsTotal"    => intval( $selectLength->count() ),
+            "recordsFiltered" => intval( $recordsFiltered->count() ),
+            "data"            => $selectData->get()
+        );
+    }
 }

@@ -58,7 +58,6 @@ class IndexController extends BaseController {
 	public function reportChartUser(Request $request){
         $dateRange = $request->input('dateRange', false);
         $type = $request->input('type', 'day');
-
         $userService = new userService();
         $return = array();
         $return['ok'] = 0;
@@ -161,6 +160,95 @@ class IndexController extends BaseController {
             }
             else
                 return view('errors.404', ['error_message' => $e->getMessage()]);
+        }
+
+        return response()->json($return);
+    }
+
+    public function reportDetailTableUser(Request $request)
+    {
+        $params = $request->all();
+        $userService = new userService();
+        try {
+            $return = $userService->reportDetailTableUser($params);
+
+        } catch (\Exception $e) {
+            // @codeCoverageIgnoreStart
+            $return['error'] = $e->getMessage();
+            $return['errorMsg'] = $e->getMessage();
+            // @codeCoverageIgnoreEnd
+        }
+
+        return response()->json($return);
+    }
+
+    public function reportDetailTableOrder(Request $request)
+    {
+        $params = $request->all();
+        $orderService = new orderService();
+
+        try {
+            $return = $orderService->reportDetailTableOrder($params);
+
+        } catch (\Exception $e) {
+            // @codeCoverageIgnoreStart
+            $return['error'] = $e->getMessage();
+            $return['errorMsg'] = $e->getMessage();
+            // @codeCoverageIgnoreEnd
+        }
+
+        return response()->json($return);
+    }
+
+    public function reportDetailTableProductLike(Request $request)
+    {
+        $params = $request->all();
+        $productService = new productService();
+
+        try {
+            $return = $productService->reportDetailTableProductLike($params);
+
+        } catch (\Exception $e) {
+            // @codeCoverageIgnoreStart
+            $return['error'] = $e->getMessage();
+            $return['errorMsg'] = $e->getMessage();
+            // @codeCoverageIgnoreEnd
+        }
+
+        return response()->json($return);
+    }
+
+    public function reportDetailTableProductView(Request $request)
+    {
+        $params = $request->all();
+        $productService = new productService();
+
+        try {
+            $return = $productService->reportDetailTableProductView($params);
+
+        } catch (\Exception $e) {
+            // @codeCoverageIgnoreStart
+            $return['error'] = $e->getMessage();
+            $return['errorMsg'] = $e->getMessage();
+            // @codeCoverageIgnoreEnd
+        }
+
+        return response()->json($return);
+    }
+
+    public function reportDetailTableTrackingSearch(Request $request)
+    {
+        $params = $request->all();
+        $trackingService = new trackingService();
+
+        try {
+            $return = $trackingService->reportDetailTableTrackingSearch($params);
+
+        } catch (\Exception $e) {
+            // @codeCoverageIgnoreStart
+            $return['error'] = $e->getMessage();
+            $return['errorMsg'] = $e->getMessage();
+            // @codeCoverageIgnoreEnd
         }
 
         return response()->json($return);
