@@ -70,15 +70,12 @@ class trackingService {
         );
 
         $return = $trackingSearchModel->reportDetailTableTrackingSearch($request, $columns);
-//        $statusOptions = [KACANA_PRODUCT_STATUS_ACTIVE, KACANA_PRODUCT_STATUS_INACTIVE];
-//        if(count($return['data'])) {
-//            foreach ($return['data'] as &$res) {
-//                $res->status = $viewHelper->dropdownView('products', $res->id, $res->status, 'status', $statusOptions);
-//            }
-//        }
 
         $return['data'] = $datatables::data_output( $columns, $return['data'] );
-
+        foreach ($return['data'] as &$item){
+            $location =  json_decode(file_get_contents('http://freegeoip.net/json/'.$item[3]));
+            $item[3] = $item[3].'<br><b>'.$location->region_name.', '.$location->city;
+        }
         return $return;
     }
 

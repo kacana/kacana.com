@@ -222,7 +222,6 @@ class IndexController extends BaseController {
     {
         $params = $request->all();
         $productService = new productService();
-
         try {
             $return = $productService->reportDetailTableProductView($params);
 

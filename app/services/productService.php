@@ -115,6 +115,10 @@ class productService {
 
         $return['data'] = $datatables::data_output( $columns, $return['data'] );
 
+        foreach ($return['data'] as &$item){
+            $location =  json_decode(file_get_contents('http://freegeoip.net/json/'.$item[4]));
+            $item[4] = $item[4].'<br><b>'.$location->region_name.', '.$location->city;
+        }
         return $return;
     }
 
