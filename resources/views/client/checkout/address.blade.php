@@ -29,11 +29,8 @@
                 <div class="form-group">
                     <label class="col-md-4 control-label" for="">Quận/huyện</label>
                     <div class="col-md-8">
-                        <select disabled="true" name="districtId" class="form-control">
+                        <select data-district="{{$listDistrict}}" disabled="true" name="districtId" class="form-control">
                             <option value="">Chọn quận/huyện</option>
-                            @foreach($listDistrict as $item)
-                                <option data-city-id="{{$item->city_id}}" value="{{$item->id}}">{{$item->name}}</option>
-                            @endforeach
                         </select>
                     </div>
                 </div>

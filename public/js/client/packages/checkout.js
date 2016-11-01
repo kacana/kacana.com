@@ -173,9 +173,16 @@ var checkoutPackage = {
 
             if(parseInt(cityId))
             {
-                districtSelect.find('option').hide();
-                districtSelect.find('option[data-city-id="'+cityId+'"]').show();
-                districtSelect.removeAttr('disabled').find('option[value=""]').show();
+                var listDistrict = districtSelect.data('district');
+                var listOptionDistrict = '<option value="" style="display: block;">Chọn quận/huyện</option>';
+
+                for(var i =0 ; i <  listDistrict.length ; i++){
+                    if(listDistrict[i].city_id == parseInt(cityId))
+                        listOptionDistrict +='<option data-city-id="'+listDistrict[i].city_id+'" value="'+listDistrict[i].id+'">'+listDistrict[i].name+'</option>';
+                }
+
+                districtSelect.html(listOptionDistrict);
+                districtSelect.removeAttr('disabled')
             }
             else
             {
