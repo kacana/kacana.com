@@ -235,6 +235,9 @@ var indexPackage = {
                     $('.table-title-report').html('Detail Table Product View');
                     var columns = [
                         {
+                            'title': 'id'
+                        },
+                        {
                             'title': 'User Name',
                             "render": function ( data, type, full, meta ) {
                                 return (data)?data:'<span class="color-green">Vistor</span>'
@@ -243,7 +246,7 @@ var indexPackage = {
                         {
                             'title': 'Product name',
                             "render": function ( data, type, full, meta ) {
-                                return '<a target="_blank" href="http://kacana.vn/san-pham/kacana--' + full[2] + '--387">'+data+'</a>';
+                                return '<a target="_blank" href="http://kacana.vn/san-pham/kacana--' + full[3] + '--387">'+data+'</a>';
                             }
                         },
                         {
@@ -255,9 +258,6 @@ var indexPackage = {
                             "render": function ( data, type, full, meta ) {
                                 return '<image style="max-height: 40px" src="//d1f7p3vikjjz1z.cloudfront.net' + data + '"></image>';
                             }
-                        },
-                        {
-                            'title': "User's IP"
                         },
                         {
                             'title': 'created',

@@ -103,11 +103,11 @@ class productService {
         $datatables = new DataTables();
 
         $columns = array(
-            array( 'db' => 'users.name AS user_name', 'dt' => 0 ),
-            array( 'db' => 'products.name', 'dt' => 1 ),
-            array( 'db' => 'products.id', 'dt' => 2 ),
-            array( 'db' => 'products.image', 'dt' => 3 ),
-            array( 'db' => 'product_view.ip', 'dt' => 4 ),
+            array( 'db' => 'product_view.id AS product_view_id', 'dt' => 0 ),
+            array( 'db' => 'users.name AS user_name', 'dt' => 1 ),
+            array( 'db' => 'products.name', 'dt' => 2 ),
+            array( 'db' => 'products.id', 'dt' => 3 ),
+            array( 'db' => 'products.image', 'dt' => 4 ),
             array( 'db' => 'product_view.created_at', 'dt' => 5 )
         );
 
@@ -115,10 +115,6 @@ class productService {
 
         $return['data'] = $datatables::data_output( $columns, $return['data'] );
 
-        foreach ($return['data'] as &$item){
-            $location =  json_decode(file_get_contents('http://freegeoip.net/json/'.$item[4]));
-            $item[4] = $item[4].'<br><b>'.$location->region_name.', '.$location->city;
-        }
         return $return;
     }
 
