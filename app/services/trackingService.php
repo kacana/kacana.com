@@ -61,14 +61,12 @@ class trackingService {
 //        $viewHelper = new ViewGenerateHelper();
 
         $columns = array(
-            array( 'db' => 'tracking_search.id', 'dt' => 0 ),
+            array( 'db' => 'tracking_search.id AS tracking_search_id', 'dt' => 0 ),
             array( 'db' => 'tracking_search.keyword', 'dt' => 1 ),
-            array( 'db' => 'users.id', 'dt' => 2 ),
-            array( 'db' => 'users.name', 'dt' => 3 ),
-            array( 'db' => 'tracking_search.ip', 'dt' => 4 ),
-            array( 'db' => 'tracking_search.type', 'dt' => 5 ),
-            array( 'db' => 'tracking_search.created_at', 'dt' => 6 ),
-            array( 'db' => 'tracking_search.updated_at', 'dt' => 7 )
+            array( 'db' => 'users.name', 'dt' => 2 ),
+            array( 'db' => 'tracking_search.ip', 'dt' => 3 ),
+            array( 'db' => 'tracking_search.type', 'dt' => 4 ),
+            array( 'db' => 'tracking_search.created_at', 'dt' => 5 )
         );
 
         $return = $trackingSearchModel->reportDetailTableTrackingSearch($request, $columns);

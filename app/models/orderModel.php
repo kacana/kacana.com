@@ -187,7 +187,6 @@ class orderModel extends Model  {
             $selectData->whereRaw($where);
             $recordsFiltered->whereRaw($where);
         }
-
         /*
          * Output
          */

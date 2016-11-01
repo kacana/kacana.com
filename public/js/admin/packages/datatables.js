@@ -9,13 +9,13 @@ var datatablePackage = {
 
     datatable: {
         init:function(element, url, columns, defaultSearchColumns, addParamsCallBack, cacheParamsCallBack, rowCallBack, drawCallBack, cacheLoadedCallBack, options){
-
+         console.log(options.order);
             var dataTable = $(element).dataTable( {
                 'dom': (options.dom) ? options.dom : '<"top">rt<"bottom"<"col-xs-6"i><"col-xs-6"p>><"clear">',
                 'serverSide': true,
                 'ajax': url,
                 'stateSave': (options.noCache)?false:true,
-                'order': (options.order)?options.order:[],
+                'order': (options.order)?[options.order]:[],
                 'lengthChange': false,
                 'displayLength': (options.length)?options.length:50,
                 'autoWidth': false,
@@ -161,13 +161,14 @@ var datatablePackage = {
 
             return Kacana.datatable.init(element, url, columns, defaultSearchColumns, addParamsCallBack, cacheParamsCallBack, rowCallBack, drawCallBack, cacheLoadedCallBack, options);
         },
-        detailTable: function(element, columns,typeReport, addParamsCallBack, cacheLoadedCallBack){
+        detailTable: function(element, columns,typeReport, orderBy, addParamsCallBack, cacheLoadedCallBack){
             // var controller = typeReport.toLowerCase();
             var url = '/index/reportDetailTable'+typeReport;
             var options = {
-                'order': [0, "desc"],
+                'order': [orderBy, "desc"],
                 displayLength: 50
             };
+            console.log(orderBy);
             console.log(typeReport);
             var defaultSearchColumns = [];
 

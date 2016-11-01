@@ -67,7 +67,7 @@ var productPackage = {
                       'class':'center',
                       'sortable':false,
                       'render': function ( data, type, full, meta ) {
-                          return '<a href="/product/editProduct/'+full[0]+'" class="btn btn-default btn-xs"><i class="fa fa-pencil"></i></a>';
+                          return '<a href="/product/editProduct/'+full[0]+'" class="btn btn-default btn-xs"><i class="fa fa-pencil"></i></a> <a href="#posts-to-facebook" data-product-id="'+full[0]+'" class="btn btn-default btn-xs"><i class="fa fa-facebook"></i></a>';
                       }
                   }
               ];

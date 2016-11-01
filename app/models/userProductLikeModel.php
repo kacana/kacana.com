@@ -101,7 +101,8 @@ class userProductLikeModel extends Model
         // Main query to actually get the data
         $selectData = DB::table('user_product_like')
             ->select($datatables::pluck($columns, 'db'))
-            ->leftjoin('users', 'user_product_like.user_id', '=', 'users.id')
+            ->join('users', 'user_product_like.user_id', '=', 'users.id')
+            ->join('products', 'user_product_like.product_id', '=', 'products.id')
             ->orderBy($order['field'], $order['dir'])
             ->skip($limit['offset'])
             ->take($limit['limit'])

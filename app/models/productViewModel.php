@@ -91,6 +91,7 @@ class productViewModel extends Model  {
         $selectData = DB::table('product_view')
             ->select($datatables::pluck($columns, 'db'))
             ->leftjoin('users', 'product_view.user_id', '=', 'users.id')
+            ->join('products', 'product_view.product_id', '=', 'products.id')
             ->orderBy($order['field'], $order['dir'])
             ->skip($limit['offset'])
             ->take($limit['limit'])

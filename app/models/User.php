@@ -218,7 +218,6 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
             $dateSelected = substr($dateSelected,0,4);
             $typeWhere = DB::raw('DATE_FORMAT(created, "%Y")');
         }
-        
         // Main query to actually get the data
         $selectData = DB::table('users')
             ->select($datatables::pluck($columns, 'db'))

@@ -87,12 +87,12 @@ var indexPackage = {
                 }
                 else check=true;
 
-
+                var orderBy = 0;
                 if (typeReport == 'User') {
                     $('.table-title-report').html('Detail Table User');
                     var columns = [
                         {
-                            'title': 'User ID',
+                            'title': 'ID',
                             'width':'5%'
                         },
                         {
@@ -114,24 +114,24 @@ var indexPackage = {
                             'title': 'created',
                             'width':'12%',
                             'render': function ( data, type, full, meta ) {
-                                return data ? data.slice(0, -8) : '';
+                                return data ? data.slice(0, -8) +'<br><b>' + data.slice(11, 19)+'</b>' : '';
                             }
                         },
                         {
                             'title': 'Updated',
                             'width':'12%',
                             'render': function ( data, type, full, meta ) {
-                                return data ? data.slice(0, -8) : '';
+                                return data ? data.slice(0, -8) +'<br><b>' + data.slice(11, 19)+'</b>' : '';
+                            }
+                        },
+                        {
+                            'width':'4%',
+                            'class':'center',
+                            'sortable':false,
+                            'render': function ( data, type, full, meta ) {
+                                return '<a href="#" class="btn btn-default btn-xs"><i class="fa fa-pencil"></i></a>';
                             }
                         }
-                        // {
-                        //     'width':'4%',
-                        //     'class':'center',
-                        //     'sortable':false,
-                        //     'render': function ( data, type, full, meta ) {
-                        //         return '<a href="/product/editProduct/'+full[0]+'" class="btn btn-default btn-xs"><i class="fa fa-pencil"></i></a>';
-                        //     }
-                        // }
                     ];
 
                     var cacheLoadedCallBack = function(oData){
@@ -141,6 +141,8 @@ var indexPackage = {
                         // $formInline.find('select[name="searchRole"]').val(oData.columns[4].search.search);
                         // $formInline.find('select[name="searchStatus"]').val(oData.columns[5].search.search);
                     };
+
+                    orderBy = 7;
                 }
                 else if (typeReport == 'Order') {
                     $('.table-title-report').html('Detail Table Order');
@@ -168,24 +170,24 @@ var indexPackage = {
                             'title': 'created',
                             'width':'12%',
                             'render': function ( data, type, full, meta ) {
-                                return data ? data.slice(0, -8) : '';
+                                return data ? data.slice(0, -8) +'<br><b>' + data.slice(11, 19)+'</b>' : '';
                             }
                         },
                         {
                             'title': 'Updated',
                             'width':'12%',
                             'render': function ( data, type, full, meta ) {
-                                return data ? data.slice(0, -8) : '';
+                                return data ? data.slice(0, -8) +'<br><b>' + data.slice(11, 19)+'</b>' : '';
+                            }
+                        },
+                        {
+                            'width':'4%',
+                            'class':'center',
+                            'sortable':false,
+                            'render': function ( data, type, full, meta ) {
+                                return '<a target="_blank" href="/order/edit/'+full[0]+'" class="btn btn-default btn-xs"><i class="fa fa-pencil"></i></a>';
                             }
                         }
-                        // {
-                        //     'width':'4%',
-                        //     'class':'center',
-                        //     'sortable':false,
-                        //     'render': function ( data, type, full, meta ) {
-                        //         return '<a href="/order/edit/'+full[0]+'" class="btn btn-default btn-xs"><i class="fa fa-pencil"></i></a>';
-                        //     }
-                        // }
                     ];
 
                     var cacheLoadedCallBack = function(oData){
@@ -198,47 +200,31 @@ var indexPackage = {
                     $('.table-title-report').html('Detail Table Product Like');
                     var columns = [
                         {
-                            'title': 'User ID',
-                            'width':'5%'
+                            'title': 'User Name',
                         },
                         {
-                            'title': 'User Name'
-                        },
-                        {
-                            'title': 'Product ID',
-                            'width':'5%'
+                            'title': 'Product Name',
+                            "render": function ( data, type, full, meta ) {
+                                return '<a target="_blank" href="' + full[2] + '">'+data+'</a>';
+                            }
                         },
                         {
                             'title': 'Product URL',
+                            "visible": false,
+                        },
+                        {
+                            'title': 'Product Image',
                             "render": function ( data, type, full, meta ) {
-                                return '<a href="' + data + '">'+data+'</a>';
+                                return '<image style="max-height: 40px" src="//d1f7p3vikjjz1z.cloudfront.net' + data + '"></image>';
                             }
                         },
-                        // {
-                        //     'title': 'Product Image'
-                        // },
                         {
                             'title': 'created',
                             'width':'12%',
                             'render': function ( data, type, full, meta ) {
-                                return data ? data.slice(0, -8) : '';
-                            }
-                        },
-                        {
-                            'title': 'Updated',
-                            'width':'12%',
-                            'render': function ( data, type, full, meta ) {
-                                return data ? data.slice(0, -8) : '';
+                                return data ? data.slice(0, -8) +'<br><b>' + data.slice(11, 19)+'</b>' : '';
                             }
                         }
-                        // {
-                        //     'width':'4%',
-                        //     'class':'center',
-                        //     'sortable':false,
-                        //     'render': function ( data, type, full, meta ) {
-                        //         return '<a href="/product/editProduct/'+full[0]+'" class="btn btn-default btn-xs"><i class="fa fa-pencil"></i></a>';
-                        //     }
-                        // }
                     ];
 
                     var cacheLoadedCallBack = function(oData){
@@ -249,14 +235,26 @@ var indexPackage = {
                     $('.table-title-report').html('Detail Table Product View');
                     var columns = [
                         {
-                            'title': 'User ID',
-                            'width':'5%'
+                            'title': 'User Name',
+                            "render": function ( data, type, full, meta ) {
+                                return (data)?data:'<span class="color-green">Vistor</span>'
+                            }
                         },
                         {
-                            'title': 'User name'
+                            'title': 'Product name',
+                            "render": function ( data, type, full, meta ) {
+                                return '<a target="_blank" href="http://kacana.vn/san-pham/kacana--' + full[2] + '--387">'+data+'</a>';
+                            }
                         },
                         {
-                            'title': 'Product ID'
+                            'title': 'Product ID',
+                            "visible": false,
+                        },
+                        {
+                            'title': 'Product Image',
+                            "render": function ( data, type, full, meta ) {
+                                return '<image style="max-height: 40px" src="//d1f7p3vikjjz1z.cloudfront.net' + data + '"></image>';
+                            }
                         },
                         {
                             'title': "User's IP"
@@ -265,32 +263,13 @@ var indexPackage = {
                             'title': 'created',
                             'width':'12%',
                             'render': function ( data, type, full, meta ) {
-                                return data ? data.slice(0, -8) : '';
-                            }
-                        },
-                        {
-                            'title': 'Updated',
-                            'width':'12%',
-                            'render': function ( data, type, full, meta ) {
-                                return data ? data.slice(0, -8) : '';
+                                return data ? data.slice(0, -8) +'<br><b>' + data.slice(11, 19)+'</b>' : '';
                             }
                         }
-                        // {
-                        //     'width':'4%',
-                        //     'class':'center',
-                        //     'sortable':false,
-                        //     'render': function ( data, type, full, meta ) {
-                        //         return '<a href="/product/editProduct/'+full[0]+'" class="btn btn-default btn-xs"><i class="fa fa-pencil"></i></a>';
-                        //     }
-                        // }
                     ];
 
                     var cacheLoadedCallBack = function(oData){
-                        // $formInline.find('input[name="name"]').val(oData.columns[1].search.search);
-                        // $formInline.find('input[name="email"]').val(oData.columns[2].search.search);
-                        // $formInline.find('input[name="phone"]').val(oData.columns[3].search.search);
-                        // $formInline.find('select[name="searchRole"]').val(oData.columns[4].search.search);
-                        // $formInline.find('select[name="searchStatus"]').val(oData.columns[5].search.search);
+
                     };
                 }
                 else if (typeReport == 'TrackingSearch') {
@@ -305,10 +284,10 @@ var indexPackage = {
                             'title': 'Keyword'
                         },
                         {
-                            'title': 'User ID'
-                        },
-                        {
-                            'title': 'User Name'
+                            'title': 'User Name',
+                            "render": function ( data, type, full, meta ) {
+                                return (data)?data:'<span class="color-green">Vistor</span>'
+                            }
                         },
                         {
                             'title': "User's IP"
@@ -320,32 +299,13 @@ var indexPackage = {
                             'title': 'created',
                             'width':'12%',
                             'render': function ( data, type, full, meta ) {
-                                return data ? data.slice(0, -8) : '';
-                            }
-                        },
-                        {
-                            'title': 'Updated',
-                            'width':'12%',
-                            'render': function ( data, type, full, meta ) {
-                                return data ? data.slice(0, -8) : '';
+                                return data ? data.slice(0, -8) +'<br><b>' + data.slice(11, 19)+'</b>' : '';
                             }
                         }
-                        // {
-                        //     'width':'4%',
-                        //     'class':'center',
-                        //     'sortable':false,
-                        //     'render': function ( data, type, full, meta ) {
-                        //         return '<a href="/product/editProduct/'+full[0]+'" class="btn btn-default btn-xs"><i class="fa fa-pencil"></i></a>';
-                        //     }
-                        // }
                     ];
 
                     var cacheLoadedCallBack = function(oData){
-                        // $formInline.find('input[name="name"]').val(oData.columns[1].search.search);
-                        // $formInline.find('input[name="email"]').val(oData.columns[2].search.search);
-                        // $formInline.find('input[name="phone"]').val(oData.columns[3].search.search);
-                        // $formInline.find('select[name="searchRole"]').val(oData.columns[4].search.search);
-                        // $formInline.find('select[name="searchStatus"]').val(oData.columns[5].search.search);
+
                     };
                 }
 
@@ -354,18 +314,12 @@ var indexPackage = {
                     oData.type = type;
                 };
 
-                var datatable = Kacana.datatable.detailTable(element, columns, typeReport, addParamsCallBack, cacheLoadedCallBack);
+                var datatable = Kacana.datatable.detailTable(element, columns, typeReport, orderBy,addParamsCallBack, cacheLoadedCallBack);
 
                 $formInline.off('submit').on('submit', function (e) {
                     e.preventDefault();
 
                     var api = datatable.api(true);
-
-                    var name = $formInline.find('input[name="name"]').val();
-                    var email = $formInline.find('input[name="email"]').val();
-                    var phone = $formInline.find('input[name="phone"]').val();
-                    var role = $formInline.find('select[name="searchRole"]').val();
-                    var status = $formInline.find('select[name="searchStatus"]').val();
 
                     api.column(1).search(name)
                         .column(2).search(email)
