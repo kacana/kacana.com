@@ -463,7 +463,7 @@ class productService {
 
         $tags = $tagService->getSubTagsWithAdminData($tagId, $typeId);
 
-        $tagOfProducts = $productModel->getProductById($productId)->tag;
+        $tagOfProducts = $productModel->getProductById($productId, false)->tag;
         $tagProductArray = [];
         foreach($tagOfProducts as $tagOfProduct)
         {
@@ -494,7 +494,7 @@ class productService {
         $productModel = new productModel();
         $productGalleryService = new productGalleryService();
 
-        $product = $productModel->getProductById($productId);
+        $product = $productModel->getProductById($productId, false);
 
         if($product->getOriginal('image'))
             $productGalleryService->deleteFromS3($product->getOriginal('image'));

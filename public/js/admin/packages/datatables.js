@@ -17,7 +17,7 @@ var datatablePackage = {
                 'stateSave': (options.noCache)?false:true,
                 'order': (options.order)?[options.order]:[],
                 'lengthChange': false,
-                'displayLength': (options.length)?options.length:50,
+                'displayLength': (options.displayLength)?options.displayLength:50,
                 'autoWidth': false,
                 'language': {
                     'info': '_START_ - _END_ of _TOTAL_',
@@ -166,7 +166,7 @@ var datatablePackage = {
             var url = '/index/reportDetailTable'+typeReport;
             var options = {
                 'order': [orderBy, "desc"],
-                displayLength: 50
+                displayLength: 10
             };
             console.log(orderBy);
             console.log(typeReport);

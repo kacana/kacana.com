@@ -111,7 +111,8 @@ class userProductLikeModel extends Model
         // Data set length
         $recordsFiltered = $selectLength = DB::table('user_product_like')
             ->select($datatables::pluck($columns, 'db'))
-            ->join('users', 'user_product_like.user_id', '=', 'users.id');
+            ->join('users', 'user_product_like.user_id', '=', 'users.id')
+            ->where($typeWhere,'=',$dateSelected);
 
         if($where){
             $selectData->whereRaw($where);

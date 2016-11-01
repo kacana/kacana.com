@@ -181,7 +181,8 @@ class orderModel extends Model  {
         // Data set length
         $recordsFiltered = $selectLength = DB::table('orders')
             ->select($datatables::pluck($columns, 'db'))
-            ->join('users', 'orders.user_id', '=', 'users.id');
+            ->join('users', 'orders.user_id', '=', 'users.id')
+            ->where($typeWhere,'=',$dateSelected);
 
         if($where){
             $selectData->whereRaw($where);

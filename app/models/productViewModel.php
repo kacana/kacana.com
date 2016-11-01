@@ -100,7 +100,9 @@ class productViewModel extends Model  {
         // Data set length
         $recordsFiltered = $selectLength = DB::table('product_view')
             ->select($datatables::pluck($columns, 'db'))
-            ->join('users', 'product_view.user_id', '=', 'users.id');
+            ->leftjoin('users', 'product_view.user_id', '=', 'users.id')
+            ->join('products', 'product_view.product_id', '=', 'products.id')
+            ->where($typeWhere,'=',$dateSelected);
 
         if($where){
             $selectData->whereRaw($where);
@@ -112,8 +114,8 @@ class productViewModel extends Model  {
          */
         return array(
             "draw"            => intval( $request['draw'] ),
-            "recordsTotal"    => intval( $selectLength->count() ),
-            "recordsFiltered" => intval( $recordsFiltered->count() ),
+            "recordsTotal"    => intval( $selectLength->distinct()->count('product_view.id') ),
+            "recordsFiltered" => intval( $recordsFiltered->distinct()->count('product_view.id') ),
             "data"            => $selectData->get()
         );
     }

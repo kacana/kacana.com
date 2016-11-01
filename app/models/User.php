@@ -229,7 +229,8 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 
         // Data set length
         $recordsFiltered = $selectLength = DB::table('users')
-            ->select($datatables::pluck($columns, 'db'));
+            ->select($datatables::pluck($columns, 'db'))
+            ->where($typeWhere,'=',$dateSelected);
 
         if($where){
             $selectData->whereRaw($where);

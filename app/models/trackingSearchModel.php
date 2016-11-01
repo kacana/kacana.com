@@ -91,7 +91,8 @@ class trackingSearchModel extends Model  {
         // Data set length
         $recordsFiltered = $selectLength = DB::table('tracking_search')
             ->select($datatables::pluck($columns, 'db'))
-            ->join('users', 'tracking_search.user_id', '=', 'users.id');
+            ->leftjoin('users', 'tracking_search.user_id', '=', 'users.id')
+            ->where($typeWhere,'=',$dateSelected);
 
         if($where){
             $selectData->whereRaw($where);
@@ -103,8 +104,8 @@ class trackingSearchModel extends Model  {
          */
         return array(
             "draw"            => intval( $request['draw'] ),
-            "recordsTotal"    => intval( $selectLength->count() ),
-            "recordsFiltered" => intval( $recordsFiltered->count() ),
+            "recordsTotal"    => intval( $selectLength->distinct()->count('*')),
+            "recordsFiltered" => intval( $recordsFiltered->distinct()->count('*')),
             "data"            => $selectData->get()
         );
     }
