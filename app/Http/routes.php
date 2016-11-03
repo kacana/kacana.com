@@ -114,18 +114,20 @@ Route::group(['domain'=>KACANA_AUTH_ADMIN_NAME.'.{nameDomain}','middleware' => '
     Route::get('/user/showListWards/{id}',                  array('as'=>'showListWards',             'uses'=>'Admin\UserController@showListWards'));
 
     //Info request
-    Route::any('/advisory',                                  array('as'=>'index',                 'uses'=>'Admin\AdvisoryController@index'));
-    Route::any('/advisory/getAdvisory',                      array('as'=>'getAdvisory',                  'uses'=>'Admin\AdvisoryController@getAdvisory'));
+    Route::any('/advisory',                                  array('as'=>'index',                           'uses'=>'Admin\AdvisoryController@index'));
+    Route::any('/advisory/getAdvisory',                      array('as'=>'getAdvisory',                     'uses'=>'Admin\AdvisoryController@getAdvisory'));
 
     //Order Request
-    Route::any('/order',                                     array('as'=>'listOrder',                 'uses'=>'Admin\OrderController@index'));
-    Route::any('/order/generateOrderTable',                  array('as'=>'generateOrderTable',        'uses'=>'Admin\OrderController@generateOrderTable'));
-    Route::any('/order/edit/{id}',                           array('as'=>'edit',                      'uses'=>'Admin\OrderController@edit'));
-    Route::any('/order/orderDetails/{id}',                   array('as'=>'orderDetails',              'uses'=>'Admin\OrderController@getListOrderDetail'));
-    Route::get('/order/deleteOrderDetail/{id}',              array('as'=>'orderDetails',              'uses'=>'Admin\OrderController@deleteOrderDetail'));
-    Route::post('/order/updateOrderService',                 array('as'=>'updateOrderService',        'uses'=>'Admin\OrderController@updateOrderService'));
-    Route::any('/order/getOrderDetailisOrdered',             array('as'=>'getOrderDetailisOrdered',   'uses'=>'Admin\OrderController@getOrderDetailisOrdered'));
-    Route::any('/order/checkFeeShipping',                    array('as'=>'checkFeeShipping',          'uses'=>'Admin\OrderController@checkFeeShipping'));
+    Route::any('/order',                                     array('as'=>'listOrder',                       'uses'=>'Admin\OrderController@index'));
+    Route::any('/order/generateOrderTable',                  array('as'=>'generateOrderTable',              'uses'=>'Admin\OrderController@generateOrderTable'));
+    Route::any('/order/edit/{id}',                           array('as'=>'edit',                            'uses'=>'Admin\OrderController@edit'));
+    Route::any('/order/orderDetails/{id}',                   array('as'=>'orderDetails',                    'uses'=>'Admin\OrderController@getListOrderDetail'));
+    Route::get('/order/deleteOrderDetail/{id}',              array('as'=>'orderDetails',                    'uses'=>'Admin\OrderController@deleteOrderDetail'));
+    Route::post('/order/updateOrderService',                 array('as'=>'updateOrderService',              'uses'=>'Admin\OrderController@updateOrderService'));
+    Route::any('/order/getOrderDetailisOrdered',             array('as'=>'getOrderDetailisOrdered',         'uses'=>'Admin\OrderController@getOrderDetailisOrdered'));
+    Route::any('/order/checkFeeShipping',                    array('as'=>'checkFeeShipping',                'uses'=>'Admin\OrderController@checkFeeShipping'));
+    Route::any('/order/searchAddressDelivery',               array('as'=>'searchAddressDelivery',           'uses'=>'Admin\OrderController@searchAddressDelivery'));
+    Route::any('/order/createOrder',                         array('as'=>'OrderCreateOrder',                'uses'=>'Admin\OrderController@createOrder'));
 
     //Shipping Controller
     Route::any('/shipping',                                  array('as'=>'listShipping',                 'uses'=>'Admin\ShippingController@index'));

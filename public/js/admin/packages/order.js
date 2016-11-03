@@ -1,8 +1,151 @@
 var orderPackage = {
     order:{
+        page: $("#content-list-order"),
         pageDetail: $("#content-edit-order"),
         init: function(){
+            Kacana.order.pageDetail = $("#content-edit-order");
+            Kacana.order.page = $("#content-list-order");
             Kacana.order.setupDatatableForOrder();
+            Kacana.order.createBaseOrder();
+            $('#modal-create-order').on('change', 'select[name="cityId"]', Kacana.order.changeCity);
+
+            $('#modal-create-order').on('click', '#create-new-address-delivery', function () {
+                var modal = $('#modal-create-order');
+                modal.find('#deliveryName').removeAttr('disabled');
+                modal.find('#deliveryPhone').removeAttr('disabled');
+                modal.find('select[name="cityId"]').removeAttr('disabled');
+                modal.find('select[name="districtId"]').removeAttr('disabled');
+                modal.find('#deliveryId').val(0);
+                modal.find('#deliveryStreet').removeAttr('disabled');
+                modal.find('#deliveryEmail').removeAttr('disabled');
+                modal.find('#create-new-address-delivery').hide();
+            });
+            Kacana.order.page.on('click', 'button[data-target="#modal-create-order"]', function () {
+                var modal = $('#modal-create-order');
+                modal.find('#deliveryName').val('').removeAttr('disabled');
+                modal.find('#deliveryPhone').val('').removeAttr('disabled');
+                modal.find('select[name="cityId"]').val('').trigger('change').removeAttr('disabled');
+                modal.find('#deliveryStreet').val('').removeAttr('disabled');
+                modal.find('#deliveryId').val(0);
+                modal.find('#deliveryEmail').val('').removeAttr('disabled');
+                modal.find('#create-new-address-delivery').hide();
+            });
+        },
+        createBaseOrder: function () {
+            $('#modal-create-order').find('#deliveryName').autocomplete({
+                source: function( request, response ) {
+
+                    var callback = function(data){
+                        console.log(data);
+                        if(data.ok)
+                            response( data.items );
+                        else
+                            swal({
+                                title: 'Error!',
+                                text: 'Opp!something wrong on processing.',
+                                type: 'error',
+                                confirmButtonText: 'Cool'
+                            });
+                    };
+
+                    var errorCallback = function(){
+                        // do something here if error
+                    };
+
+                    var data = {search: request.term, type: 'name'};
+                    Kacana.ajax.order.searchAddressDelivery(data, callback, errorCallback);
+                },
+                minLength: 2,
+                select: function( event, ui ) {
+                    Kacana.order.chooseAddressDelivery(ui.item);
+                    return false;
+                }
+            }).autocomplete( "widget" ).addClass("search-address-delivery");
+
+            $('#modal-create-order').find('#deliveryName').autocomplete( "instance" )._renderItem = function( ul, item ) {
+            return $( "<li>" )
+                .append( "<div>" + item.name + " - " + item.phone + " - " + item.city.name + "</div>" )
+                .appendTo( ul );
+            };
+
+            $('#modal-create-order').find('#deliveryPhone').autocomplete({
+                source: function( request, response ) {
+
+                    var callback = function(data){
+                        console.log(data);
+                        if(data.ok)
+                            response( data.items );
+                        else
+                            swal({
+                                title: 'Error!',
+                                text: 'Opp!something wrong on processing.',
+                                type: 'error',
+                                confirmButtonText: 'Cool'
+                            });
+                    };
+
+                    var errorCallback = function(){
+                        // do something here if error
+                    };
+
+                    var data = {search: request.term, type: 'phone'};
+                    Kacana.ajax.order.searchAddressDelivery(data, callback, errorCallback);
+                },
+                minLength: 2,
+                select: function( event, ui ) {
+                    Kacana.order.chooseAddressDelivery(ui.item);
+                    return false;
+                }
+            }).autocomplete( "widget" ).addClass("search-address-delivery");
+
+            $('#modal-create-order').find('#deliveryPhone').autocomplete( "instance" )._renderItem = function( ul, item ) {
+                return $( "<li>" )
+                    .append( "<div>" + item.name + " - " + item.phone + " - " + item.city.name + "</div>" )
+                    .appendTo( ul );
+            };
+        },
+        changeCity: function () {
+            var form = $('#modal-create-order');
+            var districtSelect = $('select[name="districtId"]');
+            // var wardSelect = $('select[name="wardId"]');
+
+            var cityId = $(this).val();
+
+            // form.formValidation('enableFieldValidators', 'wardId', false).formValidation('resetField', 'wardId');
+            // wardSelect.val('').attr('disabled', true).find('option[value=""]').show();
+
+            // form.formValidation('enableFieldValidators', 'districtId', true).formValidation('resetField', 'districtId');
+            districtSelect.val('');
+
+            if(parseInt(cityId))
+            {
+                var listDistrict = districtSelect.data('district');
+                var listOptionDistrict = '<option value="" style="display: block;">Chọn quận/huyện</option>';
+
+                for(var i =0 ; i <  listDistrict.length ; i++){
+                    if(listDistrict[i].city_id == parseInt(cityId))
+                        listOptionDistrict +='<option data-city-id="'+listDistrict[i].city_id+'" value="'+listDistrict[i].id+'">'+listDistrict[i].name+'</option>';
+                }
+
+                districtSelect.html(listOptionDistrict);
+                districtSelect.removeAttr('disabled')
+            }
+            else
+            {
+                // form.formValidation('enableFieldValidators', 'districtId', false).formValidation('resetField', 'districtId');
+                districtSelect.val('').attr('disabled', true).find('option[value=""]').show();
+            }
+        },
+        chooseAddressDelivery: function ($item) {
+            var modal = $('#modal-create-order');
+            modal.find('#deliveryName').val($item.name).attr('disabled', true);
+            modal.find('#deliveryPhone').val($item.phone).attr('disabled', true);
+            modal.find('select[name="cityId"]').val($item.city_id).trigger('change').attr('disabled', true);
+            modal.find('select[name="districtId"]').val($item.district_id).attr('disabled', true);
+            modal.find('#deliveryStreet').val($item.street).attr('disabled', true);
+            modal.find('#deliveryId').val($item.id);
+            modal.find('#deliveryEmail').val($item.email).attr('disabled', true);
+            modal.find('#create-new-address-delivery').show();
         },
         setupDatatableForOrder: function () {
             var $formInline = $('.form-inline');
@@ -14,10 +157,13 @@ var orderPackage = {
                     'width':'5%'
                 },
                 {
-                    'title': 'guess'
+                    'title': 'order by'
                 },
                 {
-                    'title': 'phone'
+                    'title': 'delivery name'
+                },
+                {
+                    'title': 'delivery phone'
                 },
                 {
                     'title': 'total'

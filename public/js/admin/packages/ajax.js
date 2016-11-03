@@ -383,6 +383,14 @@ var ajaxPackage = {
                 var dataPost = data;
                 var options = [];
                 Kacana.ajax.init(url, dataType, type, dataPost, callBack, errorCallBack, options);
+            },
+            searchAddressDelivery: function (data, callBack, errorCallBack) {
+                var url = '/order/searchAddressDelivery';
+                var dataType = 'json';
+                var type = 'post';
+                var dataPost = data;
+                var options = [];
+                Kacana.ajax.init(url, dataType, type, dataPost, callBack, errorCallBack, options);
             }
         }
      }

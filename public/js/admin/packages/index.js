@@ -247,12 +247,10 @@ var indexPackage = {
                             'title': 'Product name',
                             "render": function ( data, type, full, meta ) {
                                 return '<a target="_blank" href="http://kacana.vn/san-pham/kacana--' + full[3] + '--387">'+data+'</a>';
-                            },
-                            'visible': true
+                            }
                         },
                         {
-                            'title': 'Product ID',
-                            'visible': false,
+                            'title': 'Product ID'
                         },
                         {
                             'title': 'Product Image',

@@ -8,8 +8,13 @@ use App\services\orderService;
 class OrderController extends BaseController {
 
     public function index($domain){
+        $addressService = new addressService();
+        $data = array();
 
-        return view('admin.order.index');
+        $data['listCity'] = $addressService->getListCity();
+        $data['listDistrict'] = $addressService->getListDistrict();
+
+        return view('admin.order.index', $data);
     }
 
     public function generateOrderTable(Request $request){
@@ -168,4 +173,61 @@ class OrderController extends BaseController {
         return response()->json($return);
     }
 
+    public function searchAddressDelivery(Request $request){
+        $addressService = new addressService();
+
+        $search = $request->input('search');
+        $type = $request->input('type');
+        $return['ok'] = 0;
+        try{
+            $return['items'] = $addressService->searchAddressDelivery($search, $type);
+            $return['ok'] = 1;
+        } catch (\Exception $e) {
+            // @codeCoverageIgnoreStart
+            $return['error'] = $e->getMessage();
+            $return['errorMsg'] = $e->getMessage();
+            // @codeCoverageIgnoreEnd
+        }
+        return response()->json($return);
+
+    }
+
+    public function createOrder(Request $request){
+        $addressService = new addressService();
+        $orderService = new orderService();
+
+        $deliveryId = $request->input('deliveryId',0);
+        $deliveryName = $request->input('deliveryName','');
+        $deliveryPhone = $request->input('deliveryPhone','');
+        $cityId = $request->input('cityId','');
+        $districtId = $request->input('districtId','');
+        $deliveryStreet = $request->input('deliveryStreet','');
+        $deliveryEmail = $request->input('deliveryEmail','');
+
+        try{
+            if(!intval($deliveryId))
+            {
+                $deliveryAddress = [];
+                $deliveryAddress['name'] = $deliveryName;
+                $deliveryAddress['email'] = $deliveryEmail;
+                $deliveryAddress['phone'] = $deliveryPhone;
+                $deliveryAddress['street'] = $deliveryStreet;
+                $deliveryAddress['city_id'] = $cityId;
+                $deliveryAddress['district_id'] = $districtId;
+
+                $addressReceive = $addressService->createUserAddress(KACANA_USER_SYSTEM_ORDER_ID, $deliveryAddress);
+                $deliveryId = $addressReceive->id;
+            }
+
+            $order = $orderService->createOrder(KACANA_USER_SYSTEM_ORDER_ID, $deliveryId, 0, 0);
+
+            return redirect('/order/edit/'.$order->id);
+        } catch (\Exception $e) {
+            // @codeCoverageIgnoreStart
+            $return['error'] = $e->getMessage();
+            $return['errorMsg'] = $e->getMessage();
+            // @codeCoverageIgnoreEnd
+        }
+        return response()->json($return);
+    }
 }

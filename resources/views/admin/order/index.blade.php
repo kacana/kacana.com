@@ -1,5 +1,8 @@
-
 @extends('layouts.admin.master')
+
+@section('title', 'Danh sách đơn hàng')
+
+@section('section-content-id', 'content-list-order')
 
 @section('content')
     <section>
@@ -7,7 +10,7 @@
             <div class="box-header">
                 <h3 class="box-title">Quản lý đơn hàng</h3>
                 <div class="box-tools pull-left ">
-                    <button data-toggle="modal" data-target="#modal-create-product" class="btn btn-primary btn-sm">
+                    <button data-toggle="modal" data-target="#modal-create-order" class="btn btn-primary btn-sm">
                         <i class="fa fa-plus"></i> tạo đơn hàng
                     </button>
                 </div>
@@ -21,7 +24,6 @@
                 <div class="box box-primary">
                     <div class="box-header">
                         <h3 class="box-title">Tìm kiếm đơn hàng</h3>
-
                     </div>
                     <div class="box-body">
                         <form method="post" class="form-inline">
@@ -56,6 +58,8 @@
         </div>
     </section>
 @stop
+
+@extends('admin.order.order-modal')
 
 @section('javascript')
     Kacana.order.init();

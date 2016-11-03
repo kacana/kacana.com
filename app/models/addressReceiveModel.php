@@ -159,4 +159,12 @@ class addressReceiveModel extends Model {
         $this->where('user_id', $userId)->where('id', $id)->delete();
     }
 
+    public function searchAddressDeliveryByName($name){
+        return $this->where('name', 'LIKE', '%'.$name.'%')->get();
+    }
+
+    public function searchAddressDeliveryByPhone($phone){
+        return $this->where('phone', 'LIKE', '%'.$phone.'%')->get();
+    }
+
 }

@@ -33,6 +33,33 @@
                     </div>
                     <div class="box-body">
                         <div class="col-xs-12">
+                            <p class="lead">Thông tin Giá</p>
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <tbody><tr>
+                                        <th style="width:50%">Giá</th>
+                                        <td>{{formatMoney($order->origin_total)}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Số lượng</th>
+                                        <td>{{$order->quantity}} Sản phẩm</td>
+                                    </tr>
+                                    <tr>
+                                        <th>phí vận chuyển</th>
+                                        <td>{{formatMoney($order->shipping_fee)}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Giảm giá</th>
+                                        <td>{{formatMoney($order->discount)}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Tổng</th>
+                                        <td class="color-red">{{formatMoney($order->total + $order->shipping_fee)}}</td>
+                                    </tr>
+                                    </tbody></table>
+                            </div>
+                        </div>
+                        <div class="col-xs-12">
                             <p class="lead">Thông tin người mua hàng</p>
                             <form class="form-horizontal">
                                 <div class="box-body">
@@ -124,33 +151,6 @@
                             </div>
                             {!! Form::close() !!}
                         </div>
-                        <div class="col-xs-12">
-                            <p class="lead">Thông tin Giá</p>
-                            <div class="table-responsive">
-                                <table class="table">
-                                    <tbody><tr>
-                                        <th style="width:50%">Giá</th>
-                                        <td>{{formatMoney($order->total)}}</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Số lượng</th>
-                                        <td>{{$order->quantity}} Sản phẩm</td>
-                                    </tr>
-                                    <tr>
-                                        <th>phí vận chuyển</th>
-                                        <td>{{formatMoney($order->shipping_fee)}}</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Giảm giá</th>
-                                        <td>{{$order->deal}}%</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Tổng</th>
-                                        <td class="color-red">{{formatMoney($order->total + $order->shipping_fee - ($order->total*$order->deal/100))}}</td>
-                                    </tr>
-                                    </tbody></table>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -159,6 +159,9 @@
                 <div class="box box-primary box-body"> <!-- Search results -->
                     <div class="box-header with-border">
                         <h3 class="box-title">Chi tiết đơn hàng</h3>
+                        <div class="box-tools pull-right">
+                            <button data-toggle="modal" data-target="#modal-add-product-order" class="btn btn-box-tool"><i class="fa fa-plus"></i> Thêm sản phẩm</button>
+                        </div>
                     </div><!-- /.box-header -->
 
                     <div class="box-body table-responsive no-padding">
@@ -186,38 +189,77 @@
                                         <img style="width: 60%" class="img-responsive" src="{{$orderDetail->image}}">
                                     </div>
                                     <div class="col-xs-4 col-sm-4" >
-                                        <div class="cart-item-title" >
-                                          <a target="_blank" href="{{$orderDetail->product_url}}"> {{$orderDetail->name}}</a>
-                                        </div>
-
-                                        @if($orderDetail->color_id)
-                                            <div class="cart-item-color">
-                                                Màu sắc: {{$orderDetail->color->name}}
+                                        <form class="form-horizontal">
+                                            <div class="cart-item-title text-center" >
+                                              <a target="_blank" href="{{$orderDetail->product_url}}"> {{$orderDetail->name}}</a>
                                             </div>
-                                        @endif
 
-                                        @if($orderDetail->size_id)
-                                            <div class="cart-item-size" >
-                                                Kích thước: {{$orderDetail->size->name}}
+                                            @if(count($orderDetail->product->productProperties))
+                                                <div style="margin-top: 10px; margin-bottom: 5px;" class="form-group">
+                                                    <label class="col-sm-4 control-label" for="inputEmail3">màu & size</label>
+                                                    <div class="col-xs-8">
+                                                        <select disabled="disabled" class="form-control">
+                                                            @foreach($orderDetail->product->productProperties as $productProperty)
+                                                                @if(intval($productProperty->tag_size_id))
+                                                                    <option @if($productProperty->tag_color_id == $orderDetail->color_id && $productProperty->tag_size_id == $orderDetail->size_id) selected="true" @endif data-color-id="{{$productProperty->tag_color_id}}" data-size-id="{{$productProperty->tag_size_id}}" >
+                                                                        {{$productProperty->color->name}} - {{$productProperty->size->name}}
+                                                                    </option>
+                                                                @else
+                                                                    <option @if($productProperty->tag_color_id == $orderDetail->color_id) selected="true" @endif data-color-id="{{$productProperty->tag_color_id}}">
+                                                                        {{$productProperty->color->name}}
+                                                                    </option>
+                                                                @endif
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            @endif
+
+                                            <div class="cart-item-price" >
+                                                <div style="margin-bottom: 5px;" class="form-group">
+                                                    <label class="col-sm-4 control-label" for="inputEmail3">Giá</label>
+                                                    <div class="col-xs-8">
+                                                        <input disabled="disabled" id="inputPassword3" value="{{formatMoney($orderDetail->price)}}" class="form-control" placeholder="Password" type="text">
+                                                    </div>
+                                                </div>
                                             </div>
-                                        @endif
 
-                                        <div class="cart-item-price" >
-                                            Giá: {{formatMoney($orderDetail->price)}}
-                                        </div>
-                                        @if($orderDetail->discount)
-                                            Giảm giá: {{formatMoney($orderDetail->discount)}}
-                                        @endif
-                                        <div class="cart-item-price" >
-                                            Số lượng: {{$orderDetail->quantity}}
-                                        </div>
-                                        <div class="cart-item-price color-red" >
-                                            Tổng: {{formatMoney($orderDetail->subtotal)}}
-                                        </div>
+                                            <div class="cart-item-price" >
+                                                <div style="margin-bottom: 5px;" class="form-group">
+                                                    <label class="col-sm-4 text-green control-label" for="inputEmail3">Giảm giá</label>
+                                                    <div class="col-xs-8">
+                                                        <input disabled="disabled" id="inputPassword3" value="{{formatMoney($orderDetail->discount)}}" class="form-control" placeholder="Password" type="text">
+                                                    </div>
+                                                </div>
+                                            </div>
 
-                                        <div class="cart-button-remove" >
-                                            <a data-id="{{$orderDetail->id}}" href="#remove-detail-item" >xoá sản phẩm này</a>
-                                        </div>
+                                            <div class="cart-item-price" >
+                                                <div style="margin-bottom: 5px;" class="form-group">
+                                                    <label class="col-sm-4 control-label" for="inputEmail3">Số lượng</label>
+                                                    <div class="col-xs-8">
+                                                        <input disabled="disabled" id="inputPassword3" value="{{$orderDetail->quantity}}" class="form-control" placeholder="Password" type="number">
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="cart-item-price" >
+                                                <div style="margin-bottom: 5px;" class="form-group">
+                                                    <label class="col-sm-4 text-red control-label" for="inputEmail3">Tổng</label>
+                                                    <div class="col-xs-8">
+                                                        <input disabled="disabled" id="inputPassword3" value="{{formatMoney($orderDetail->subtotal)}}" class="form-control" placeholder="Password" type="text">
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="cart-item-action text-right" >
+                                                <a data-id="{{$orderDetail->id}}" data-toggle="tooltip" data-original-title="xoá sản phẩm này" href="#remove-detail-item" >
+                                                    <i class="fa fa-trash" ></i>
+                                                </a>
+                                                <a data-id="{{$orderDetail->id}}" style="margin-left: 10px" data-toggle="tooltip" data-original-title="sữa sản phẩm này" href="#edit-detail-item" >
+                                                    <i class="fa fa-pencil" ></i>
+                                                </a>
+                                            </div>
+                                        </form>
                                     </div>
                                     <div class="col-xs-3 col-sm-3 order-detail-service" data-image="{{$orderDetail->image}}" data-name="{{$orderDetail->name}}" data-order-detail-id="{{$orderDetail->id}}">
                                         <a target="_blank" href="{{$orderDetail->product->source_url}}"> Link đặt hàng</a>

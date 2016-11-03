@@ -686,7 +686,7 @@ class productModel extends Model  {
     }
 
     public function getmainDiscountAttribute($value){
-        return ($this->attributes['sell_price']*20/100);
+        return 0;
     }
 
     public function getImageAttribute($value)

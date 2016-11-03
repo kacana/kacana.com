@@ -126,6 +126,7 @@ class orderModel extends Model  {
         $selectData = DB::table('orders')
             ->select($datatables::pluck($columns, 'db'))
             ->leftJoin('users', 'orders.user_id', '=', 'users.id')
+            ->leftJoin('address_receive', 'address_receive.id', '=', 'orders.address_id')
             ->orderBy($order['field'], $order['dir'])
             ->skip($limit['offset'])
             ->take($limit['limit']);

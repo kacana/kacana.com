@@ -181,4 +181,20 @@ class addressService {
         return $this->_receiveModel->deleteMyAddress($userId, $id);
     }
 
+    public function searchAddressDelivery($search, $type){
+        $items = false;
+
+        if($type == 'name')
+            $items = $this->_receiveModel->searchAddressDeliveryByName($search);
+        else if($type == 'phone')
+            $items = $this->_receiveModel->searchAddressDeliveryByPhone($search);
+        if ($items)
+            foreach ($items as &$item){
+                $item->district = $item->district;
+                $item->city = $item->city;
+            }
+
+        return $items;
+    }
+
 }

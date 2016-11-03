@@ -46,11 +46,13 @@ class orderService {
      * @param $userId
      * @param $addressId
      * @param $total
+     * @param $discount
+     * @param $originTotal
      * @param $quantity
      * @param int $status
      * @return orderModel
      */
-    public function createOrder($userId, $addressId, $total, $quantity, $status = KACANA_ORDER_STATUS_NEW){
+    public function createOrder($userId, $addressId, $total = 0, $quantity = 0, $originTotal = 0, $discount = 0, $status = KACANA_ORDER_STATUS_NEW){
         $address = $this->_addressService->getAddressReceiveById($addressId);
 
         $addressStr = $address->street;
@@ -60,6 +62,8 @@ class orderService {
         $orderData->address_id = $addressId;
         $orderData->total = $total;
         $orderData->quantity = $quantity;
+        $orderData->discount = $discount;
+        $orderData->origin_total = $originTotal;
         $orderData->status = $status;
         $orderData->address = $addressStr.', '.$address->district->name.', '.$address->city->name;
         $order = $this->_orderModel->createItem($orderData);
@@ -147,12 +151,13 @@ class orderService {
         $columns = array(
             array( 'db' => 'orders.id', 'dt' => 0 ),
             array( 'db' => 'users.name', 'dt' => 1 ),
-            array( 'db' => 'users.phone', 'dt' => 2 ),
-            array( 'db' => 'orders.total', 'dt' => 3 ),
-            array( 'db' => 'orders.quantity', 'dt' => 4 ),
-            array( 'db' => 'orders.status', 'dt' => 5 ),
-            array( 'db' => 'orders.created', 'dt' => 6 ),
-            array( 'db' => 'orders.updated', 'dt' => 7 )
+            array( 'db' => 'address_receive.name AS delivery_name', 'dt' => 2 ),
+            array( 'db' => 'address_receive.phone AS delivery_phone', 'dt' => 3 ),
+            array( 'db' => 'orders.total', 'dt' => 4 ),
+            array( 'db' => 'orders.quantity', 'dt' => 5 ),
+            array( 'db' => 'orders.status', 'dt' => 6 ),
+            array( 'db' => 'orders.created', 'dt' => 7 ),
+            array( 'db' => 'orders.updated', 'dt' => 8 )
         );
 
         $return = $orderModel->generateOrderTable($request, $columns);

@@ -271,7 +271,7 @@ class cartService {
         $addressReceive = $addressService->createUserAddress($user->id, $order, $addressDefault);
 
         // create new order for user
-        $order = $orderService->createOrder($user->id, $addressReceive->id, $cart->total, $cart->quantity);
+        $order = $orderService->createOrder($user->id, $addressReceive->id, $cart->total, $cart->quantity, $cart->originTotal, $cart->discount);
         $items = $cart->items;
         foreach($items as $item)
         {
@@ -320,7 +320,7 @@ class cartService {
 
 
         // create new order for user
-        $order = $orderService->createOrder($user->id, $addressId, $cart->total, $cart->quantity);
+        $order = $orderService->createOrder($user->id, $addressId, $cart->total, $cart->quantity, $cart->originTotal, $cart->discount);
         $items = $cart->items;
         foreach($items as $item)
         {
