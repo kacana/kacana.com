@@ -267,6 +267,11 @@ var productPackage = {
                     else
                        $(this).parents('.form-group').find('button').attr('disabled', 'disabled');
                 });
+
+                $page.find('#group-tag-for-product').select2({
+                    closeOnSelect: false
+                });
+
                 $page.on('click','#add-group-tag-to-product-tag', Kacana.product.detail.addGroupTagToProductTag);
                 $page.on('click','#remove-group-tag-from-product-tag', Kacana.product.detail.removeGroupTagFromProductTag);
 
@@ -296,7 +301,7 @@ var productPackage = {
 
             },
             addGroupTagToProductTag: function () {
-                var groupTagId = $(this).parents('.form-group').find('select').val();
+                var groupTagIds = $(this).parents('.form-group').find('select').val();
 
                 var errorCallBack = function(e){
                     console.log(e);
@@ -306,15 +311,23 @@ var productPackage = {
                     var tagInput = $('#tag_search_product');
                     if(data.ok)
                     {
-                        var tags = data.data.childs;
+                        // var tags = data.data.childs;
+                        var tags = data.data;
                         for(var i = 0; i < tags.length; i++){
                             if($.inArray( tags[i].id.toString(), tagInput.val()) == -1)
                                 tagInput.append('<option value="'+tags[i].id.toString()+'" selected >'+tags[i].name+'</option>').trigger("change");
+
+                            var tagChilds = tags[i].childs;
+                            for(var j = 0; j < tagChilds.length; j++){
+                                if($.inArray( tagChilds[j].id.toString(), tagInput.val()) == -1)
+                                    tagInput.append('<option value="'+tagChilds[j].id.toString()+'" selected >'+tagChilds[j].name+'</option>').trigger("change");
+                            }
+
                         }
                     }
                 };
 
-                Kacana.ajax.tag.getGroupTag(groupTagId, callBack, errorCallBack);
+                Kacana.ajax.tag.getGroupTag(groupTagIds, callBack, errorCallBack);
 
             },
             removeGroupTagFromProductTag: function () {
@@ -328,12 +341,20 @@ var productPackage = {
                       var tagInput = $('#tag_search_product');
                       if(data.ok)
                       {
-                          var tags = data.data.childs;
+                          var tags = data.data;
                           for(var i = 0; i < tags.length; i++){
                               if($.inArray( tags[i].id.toString(), tagInput.val()) >= 0)
                               {
                                   tagInput.find('option[value="'+tags[i].id.toString()+'"]').remove();
                                   tagInput.trigger("change");
+                              }
+
+                              var tagChilds = tags[i].childs;
+                              for(var j = 0; j < tagChilds.length; j++){
+                                  if($.inArray( tagChilds[j].id.toString(), tagInput.val()) >= 0) {
+                                      tagInput.find('option[value="'+tagChilds[j].id.toString()+'"]').remove();
+                                      tagInput.trigger("change");
+                                  }
                               }
 
                           }

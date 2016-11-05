@@ -438,12 +438,17 @@ class TagController extends BaseController {
     public function getGroupTag(Request $request)
     {
         $tagService = new tagService();
-        $tagId = $request->input('tagId');
+        $tagIds = $request->input('tagIds');
         $return['ok'] = 0;
 
         try {
-            $tag = $tagService->getTagById($tagId, TAG_RELATION_TYPE_GROUP);
-            $return['data'] = $tag;
+            $tags = array();
+            for($i= 0; $i<count($tagIds); $i++)
+            {
+                array_push($tags, $tagService->getTagById($tagIds[$i], TAG_RELATION_TYPE_GROUP));
+            }
+
+            $return['data'] = $tags;
             $return['ok'] = 1;
         } catch (\Exception $e) {
             // @codeCoverageIgnoreStart

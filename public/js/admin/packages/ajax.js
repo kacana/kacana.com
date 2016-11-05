@@ -313,12 +313,12 @@ var ajaxPackage = {
                 var options = [];
                 Kacana.ajax.init(url, dataType, type, dataPost, callBack, errorCallBack, options);
             },
-            getGroupTag: function (tagId, callBack, errorCallBack) {
+            getGroupTag: function (tagIds, callBack, errorCallBack) {
                 var url = '/tag/getGroupTag';
                 var dataType = 'json';
                 var type = 'post';
                 var dataPost ={
-                    tagId: tagId
+                    tagIds: tagIds
                 };
                 var options = [];
                 Kacana.ajax.init(url, dataType, type, dataPost, callBack, errorCallBack, options);

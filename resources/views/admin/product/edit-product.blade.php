@@ -143,8 +143,7 @@
                             {!! Form::label('name', 'Tag Group') !!}
                             <button disabled="disabled" type="button" id="add-group-tag-to-product-tag" class="btn btn-xs btn-primary"><i class="fa fa-plus" ></i> Thêm</button>
                             <button disabled="disabled" type="button" id="remove-group-tag-from-product-tag" class="btn btn-xs btn-danger"><i class="fa fa-trash" ></i> Xoá</button>
-                            <select id="group-tag-for-product" class="form-control">
-                                <option selected="selected" value="" >Chọn tag group</option>
+                            <select id="group-tag-for-product" class="form-control" multiple size="3">
                                 @if(count($groupTag))
                                     @foreach($groupTag as $item)
                                         <option value="{{$item->child_id}}" >{{$item->name}}</option>
