@@ -6,9 +6,15 @@
 
 @section('content')
     <section>
+        <input id="shipping_id" value="{{$ship->id}}" class="hidden" >
         <div class="custom-box">
             <div class="box-header">
-                <h3 class="box-title">Mã Đơn Hàng: #{{$ship->id}} Của [{{$ship->addressReceive->name}}] Tổng {{formatMoney($ship->total)}} +  Phí: {{formatMoney($ship->fee)}}</h3>
+                <h3 class="box-title">Mã Đơn Hàng: #{{$ship->id}} Của [{{$ship->addressReceive->name}}] Tổng {{formatMoney($ship->total + $ship->fee - $ship->extra_discount - $ship->paid)}}</h3>
+                <div class="box-tools pull-left ">
+                    <button data-target="#modal-print-order" class="btn btn-success btn-sm">
+                        <i class="fa fa-print"></i> in vận đơn
+                    </button>
+                </div>
             </div><!-- /.box-header -->
         </div>
     </section>
@@ -24,6 +30,43 @@
                         </div>
                     </div>
                     <div class="box-body">
+                        <div class="col-xs-12">
+                             <p class="lead">Thông tin Giá</p>
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <tbody>
+
+                                    <tr>
+                                        <th style="width:50%">Status</th>
+                                        <td>{!! $ship->statusDesc !!}</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="text-red" style="width:50%">Giá COD</th>
+                                        <td>{{formatMoney($ship->total + $ship->fee - $ship->extra_discount - $ship->paid)}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Số lượng</th>
+                                        <td>{{count($ship->orderDetail)}} Sản phẩm</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Phí vận chuyển thực  tế</th>
+                                        <td>{{formatMoney($ship->origin_fee)}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="text-green">Giảm thêm</th>
+                                        <td>{{formatMoney($ship->extra_discount)}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>phí vận chuyển</th>
+                                        <td>{{formatMoney($ship->fee)}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="text-purple">Đã thanh toán</th>
+                                        <td>{{formatMoney($ship->paid)}}</td>
+                                    </tr>
+                                    </tbody></table>
+                            </div>
+                        </div>
                         <div class="col-xs-12">
                             <p class="lead">Thông tin nhận hàng</p>
                             {!! Form::open(array('method'=>'put', 'id' =>'form-edit-order', 'class'=>"form-horizontal")) !!}
@@ -74,29 +117,10 @@
                             </div>
                             {!! Form::close() !!}
                         </div>
-                        <div class="col-xs-12">
-                            <p class="lead">Thông tin Giá</p>
-                            <div class="table-responsive">
-                                <table class="table">
-                                    <tbody><tr>
-                                        <th style="width:50%">Giá COD</th>
-                                        <td>{{formatMoney($ship->total)}}</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Số lượng</th>
-                                        <td>{{count($ship->orderDetail)}} Sản phẩm</td>
-                                    </tr>
-                                    <tr>
-                                        <th>phí vận chuyển</th>
-                                        <td>{{formatMoney($ship->fee)}}</td>
-                                    </tr>
-                                    </tbody></table>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
-            <div class="col-xs-4">
+            <div class="col-xs-8">
                 <div class="box box-primary box-body"> <!-- Search results -->
                     <div class="box-header with-border">
                         <h3 class="box-title">Chi tiết đơn hàng</h3>
@@ -158,23 +182,10 @@
                     </div><!-- /.box-body -->
                 </div><!-- /.box -->
             </div>
-            <div class="col-xs-4">
-                <div class="box box-primary box-body"> <!-- Search results -->
-                    <div class="box-header with-border">
-                        <h3 class="box-title">Tình trạng đơn hàng</h3>
-                    </div>
-                    <div class="box-body table-responsive no-padding">
-                        <h4>
-                            {!! $ship->statusDesc !!}
-                        </h4>
-                    </div>
-                </div>
-            </div>
-
         </div>
     </section>
 @stop
 
 @section('javascript')
-    Kacana.order.detail.init();
+    Kacana.shipping.init();
 @stop

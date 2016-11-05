@@ -189,23 +189,23 @@
                                         <img style="width: 60%" class="img-responsive" src="{{$orderDetail->image}}">
                                     </div>
                                     <div class="col-xs-4 col-sm-4" >
-                                        <form class="form-horizontal">
+                                        <form method="POST" accept-charset="UTF-8" action="/order/updateOrderDetail/{{$order->id}}/{{$orderDetail->id}}" class="form-horizontal">
                                             <div class="cart-item-title text-center" >
                                               <a target="_blank" href="{{$orderDetail->product_url}}"> {{$orderDetail->name}}</a>
                                             </div>
 
                                             @if(count($orderDetail->product->productProperties))
                                                 <div style="margin-top: 10px; margin-bottom: 5px;" class="form-group">
-                                                    <label class="col-sm-4 control-label" for="inputEmail3">màu & size</label>
+                                                    <label class="col-sm-4 control-label" >màu & size</label>
                                                     <div class="col-xs-8">
-                                                        <select disabled="disabled" class="form-control">
+                                                        <select disabled="disabled" name="product-properties" class="form-control product-properties" data-color-id="{{$orderDetail->color_id}}" data-size-id="{{$orderDetail->size_id}}" >
                                                             @foreach($orderDetail->product->productProperties as $productProperty)
                                                                 @if(intval($productProperty->tag_size_id))
-                                                                    <option @if($productProperty->tag_color_id == $orderDetail->color_id && $productProperty->tag_size_id == $orderDetail->size_id) selected="true" @endif data-color-id="{{$productProperty->tag_color_id}}" data-size-id="{{$productProperty->tag_size_id}}" >
+                                                                    <option value="{{$productProperty->tag_color_id}}-{{$productProperty->tag_size_id}}" @if($productProperty->tag_color_id == $orderDetail->color_id && $productProperty->tag_size_id == $orderDetail->size_id) selected="true" @endif data-color-id="{{$productProperty->tag_color_id}}" data-size-id="{{$productProperty->tag_size_id}}" >
                                                                         {{$productProperty->color->name}} - {{$productProperty->size->name}}
                                                                     </option>
                                                                 @else
-                                                                    <option @if($productProperty->tag_color_id == $orderDetail->color_id) selected="true" @endif data-color-id="{{$productProperty->tag_color_id}}">
+                                                                    <option value="{{$productProperty->tag_color_id}}-{{$productProperty->tag_size_id}}" @if($productProperty->tag_color_id == $orderDetail->color_id) selected="true" @endif data-color-id="{{$productProperty->tag_color_id}}">
                                                                         {{$productProperty->color->name}}
                                                                     </option>
                                                                 @endif
@@ -219,7 +219,7 @@
                                                 <div style="margin-bottom: 5px;" class="form-group">
                                                     <label class="col-sm-4 control-label" for="inputEmail3">Giá</label>
                                                     <div class="col-xs-8">
-                                                        <input disabled="disabled" id="inputPassword3" value="{{formatMoney($orderDetail->price)}}" class="form-control" placeholder="Password" type="text">
+                                                        <input disabled="disabled" value="{{formatMoney($orderDetail->price)}}" data-value="{{$orderDetail->price}}" class="form-control product-price" placeholder="Password" type="text">
                                                     </div>
                                                 </div>
                                             </div>
@@ -228,7 +228,7 @@
                                                 <div style="margin-bottom: 5px;" class="form-group">
                                                     <label class="col-sm-4 text-green control-label" for="inputEmail3">Giảm giá</label>
                                                     <div class="col-xs-8">
-                                                        <input disabled="disabled" id="inputPassword3" value="{{formatMoney($orderDetail->discount)}}" class="form-control" placeholder="Password" type="text">
+                                                        <input name="product-discount" disabled="disabled" value="{{formatMoney($orderDetail->discount)}}" data-value="{{$orderDetail->discount}}" class="form-control product-discount" placeholder="Giảm giá" type="text">
                                                     </div>
                                                 </div>
                                             </div>
@@ -237,7 +237,7 @@
                                                 <div style="margin-bottom: 5px;" class="form-group">
                                                     <label class="col-sm-4 control-label" for="inputEmail3">Số lượng</label>
                                                     <div class="col-xs-8">
-                                                        <input disabled="disabled" id="inputPassword3" value="{{$orderDetail->quantity}}" class="form-control" placeholder="Password" type="number">
+                                                        <input min="1" name="product-quantity" disabled="disabled" value="{{$orderDetail->quantity}}" data-value="{{$orderDetail->quantity}}" class="form-control product-quantity" placeholder="Password" type="number">
                                                     </div>
                                                 </div>
                                             </div>
@@ -246,18 +246,26 @@
                                                 <div style="margin-bottom: 5px;" class="form-group">
                                                     <label class="col-sm-4 text-red control-label" for="inputEmail3">Tổng</label>
                                                     <div class="col-xs-8">
-                                                        <input disabled="disabled" id="inputPassword3" value="{{formatMoney($orderDetail->subtotal)}}" class="form-control" placeholder="Password" type="text">
+                                                        <input disabled="disabled" value="{{formatMoney($orderDetail->subtotal)}}" data-value="{{$orderDetail->subtotal}}" class="form-control product-total" placeholder="Password" type="text">
                                                     </div>
                                                 </div>
                                             </div>
 
                                             <div class="cart-item-action text-right" >
-                                                <a data-id="{{$orderDetail->id}}" data-toggle="tooltip" data-original-title="xoá sản phẩm này" href="#remove-detail-item" >
-                                                    <i class="fa fa-trash" ></i>
+                                                <a class="hidden" data-id="{{$orderDetail->id}}" style="margin-left: 10px" data-toggle="tooltip" data-original-title="quay lại" href="#cancel-edit-detail-item" >
+                                                    <i class="fa fa-reply text-red" ></i>
                                                 </a>
-                                                <a data-id="{{$orderDetail->id}}" style="margin-left: 10px" data-toggle="tooltip" data-original-title="sữa sản phẩm này" href="#edit-detail-item" >
-                                                    <i class="fa fa-pencil" ></i>
+                                                <a class="hidden" data-id="{{$orderDetail->id}}" style="margin-left: 10px" data-toggle="tooltip" data-original-title="ok" href="#submit-edit-detail-item" >
+                                                    <i class="fa fa-check text-green" ></i>
                                                 </a>
+                                                @if(!$orderDetail->shipping_service_code)
+                                                    <a data-id="{{$orderDetail->id}}" style="margin-left: 10px" data-toggle="tooltip" data-original-title="sửa sản phẩm này" href="#edit-detail-item" >
+                                                        <i class="fa fa-pencil" ></i>
+                                                    </a>
+                                                    <a data-id="{{$orderDetail->id}}"  style="margin-left: 10px" data-toggle="tooltip" data-original-title="xoá sản phẩm này" href="/order/deleteOrderDetail/?orderId={{$order->id}}&orderDetailId={{$orderDetail->id}}" >
+                                                        <i class="fa fa-trash" ></i>
+                                                    </a>
+                                                @endif
                                             </div>
                                         </form>
                                     </div>

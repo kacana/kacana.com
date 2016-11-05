@@ -43,12 +43,16 @@ class shippingModel extends Model {
      * @param $addressReceiveId
      * @return bool
      */
-    public function createShippingRow($shippingData, $address, $subtotal, $addressReceiveId){
+    public function createShippingRow($shippingData, $address, $subtotal, $addressReceiveId,  $shipFee, $extraDiscount, $extraDiscountDesc, $paid){
         $shipping = new shippingModel();
 
         $shipping->id = $shippingData->OrderCode;
-        $shipping->fee  = $shippingData->TotalFee;
+        $shipping->origin_fee  = $shippingData->TotalFee;
+        $shipping->fee  = $shipFee;
+        $shipping->extra_discount  = $extraDiscount;
+        $shipping->extra_discount_desc  = $extraDiscountDesc;
         $shipping->total  = $subtotal;
+        $shipping->paid  = $paid;
         $shipping->address  = $address;
         $shipping->address_receive_id  = $addressReceiveId;
         $shipping->created = date('Y-m-d H:i:s');

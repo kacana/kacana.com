@@ -685,7 +685,7 @@ class productModel extends Model  {
         return str_replace('src="'.AWS_CDN_URL.'/images/product','src="'.AWS_CDN_URL.PRODUCT_IMAGE_PLACE_HOLDER.'" data-original="'.AWS_CDN_URL.'/images/product', $this->attributes['description'] );
     }
 
-    public function getmainDiscountAttribute($value){
+    public function getMainDiscountAttribute($value){
         return 0;
     }
 

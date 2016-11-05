@@ -735,6 +735,11 @@ class productService {
         return true;
     }
 
+    public function searchProductByName($name){
+        $productModel = new productModel();
+        return $productModel->suggestSearchProduct($name);
+    }
+
 //    public function fixProductPrice(){
 //        $productModel = new productModel();
 //        $productGalleryModel = new productGalleryModel();

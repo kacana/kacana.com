@@ -1,8 +1,15 @@
 var shippingPackage = {
     shipping:{
-        pageDetail: $("#content-list-shipping"),
+        pageDetail: $("#content-detail-shipping"),
         init: function(){
+            Kacana.shipping.pageDetail = $("#content-detail-shipping");
             Kacana.shipping.setupDatatableForShipping();
+            Kacana.shipping.pageDetail.on('click', 'button[data-target="#modal-print-order"]', function () {
+                var shippingId = $('#shipping_id').val();
+                console.log(shippingId);
+                window.open('/shipping/printOrder/?id='+shippingId, 'Receipt Information', 'height=900,width=940');
+                return true;
+            });
         },
         setupDatatableForShipping: function () {
             var $formInline = $('.form-inline');
@@ -32,14 +39,14 @@ var shippingPackage = {
                     'title': 'created',
                     'width':'12%',
                     'render': function ( data, type, full, meta ) {
-                        return data ? data.slice(0, -8) : '';
+                        return data ? data.slice(0, -8) +'<br><b>' + data.slice(11, 19)+'</b>' : '';
                     }
                 },
                 {
                     'title': 'Updated',
                     'width':'12%',
                     'render': function ( data, type, full, meta ) {
-                        return data ? data.slice(0, -8) : '';
+                        return data ? data.slice(0, -8) +'<br><b>' + data.slice(11, 19)+'</b>' : '';
                     }
                 },
                 {

@@ -5,6 +5,7 @@ use App\services\orderService;
 use App\models\shippingModel;
 use Kacana\DataTables;
 use Kacana\ViewGenerateHelper;
+use Cache;
 
 /**
  * Class shipService
@@ -150,7 +151,14 @@ class shipService {
      * @return mixed
      */
     public function getPickHubs(){
+        $keyCachePickHubs = '__Key_Cache_Pick_Hubs_GHN__';
+
+        if(Cache::get($keyCachePickHubs))
+            return Cache::get($keyCachePickHubs);
+
         $results = $this->makeRequest('GetPickHubs');
+        Cache::put($keyCachePickHubs, $results->body->HubInfo, 1440);
+
         return $results->body->HubInfo;
     }
 
@@ -247,7 +255,7 @@ class shipService {
      * @param $height
      * @return mixed
      */
-    public function createShippingOrder($orderDetailIds, $orderId, $shippingServiceTypeId, $pickHubId, $weight, $length, $width, $height){
+    public function createShippingOrder($orderDetailIds, $orderId, $shippingServiceTypeId, $pickHubId, $weight, $length, $width, $height, $originShipFee, $shipFee, $extraDiscount, $extraDiscountDesc, $paid){
 
         $orderService = new orderService();
         $params = array();
@@ -256,10 +264,12 @@ class shipService {
         $orderDetails = $orderService->getOrderDetailByIds($orderDetailIds);
 
         $subtotal = 0;
+        $discount = 0;
         foreach($orderDetails as $orderDetail){
-            $subtotal = $orderDetail->subtotal;
+            $subtotal += $orderDetail->subtotal;
+            $discount += $orderDetail->discount;
         }
-
+        $CODAmount = $subtotal + $shipFee - $extraDiscount - $paid;
 
         $params['RecipientName'] = $order->addressReceive->name;
         $params['RecipientPhone'] = $order->addressReceive->phone;
@@ -272,12 +282,12 @@ class shipService {
         $params['Height'] = $height;
         $params['ContentNote'] = 'Cho khách xem hàng trước!';
         $params['SealCode'] = 'kacana_order_'.$orderId;
-        $params['CODAmount'] = $subtotal;
+        $params['CODAmount'] = $CODAmount;
         $params['PickHubID'] = $pickHubId;
 
         $results = $this->makeRequest('CreateShippingOrder', $params);
-        print_r($results);die;
-//        $this->createShippingRow($results->body, $orderDetailIds, $order, $subtotal);
+
+        $this->createShippingRow($results->body, $orderDetailIds, $order, $subtotal,$shipFee, $extraDiscount, $extraDiscountDesc, $paid);
 
         return $results->body;
     }
@@ -287,14 +297,16 @@ class shipService {
      * @param $orderDetailIds
      * @param $order
      * @param $subtotal
-     * @param $ExpectedDeliveryTime
+     * @param $shipFee
+     * @param $extraDiscount
+     * @param $extraDiscountDesc
      * @return bool
      */
-    public function createShippingRow($shipping, $orderDetailIds, $order, $subtotal){
+    public function createShippingRow($shipping, $orderDetailIds, $order, $subtotal,  $shipFee, $extraDiscount, $extraDiscountDesc, $paid){
         $orderService = new orderService();
 
         $address = $order->addressReceive->name.' - '.$order->address;
-        $this->_shippingModel->createShippingRow($shipping, $address, $subtotal, $order->addressReceive->id);
+        $this->_shippingModel->createShippingRow($shipping, $address, $subtotal, $order->addressReceive->id, $shipFee, $extraDiscount, $extraDiscountDesc, $paid);
 
         foreach($orderDetailIds as $orderDetailId){
             $orderService->updateOrderDetail($orderDetailId, ['shipping_service_code' => $shipping->OrderCode]);

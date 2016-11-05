@@ -1,3 +1,21 @@
 .search-address-delivery{
   z-index: 9999;
 }
+.search-product-add-to-order{
+  z-index: 9999;
+  max-height: 300px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  li.ui-menu-item.ui-state-focus:hover{
+    background: none!important;
+
+  }
+}
+#modal-shipping-order{
+  .order-detail-item{
+    border-bottom: 1px solid @color-border;
+    &:last-child{
+      border: none;
+    }
+  }
+}

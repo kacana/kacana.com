@@ -1,6 +1,7 @@
 <?php namespace App\Http\Controllers\Admin;
 
 use App\services\addressService;
+use App\services\productService;
 use App\services\shipService;
 use Illuminate\Http\Request;
 use App\services\orderService;
@@ -53,6 +54,7 @@ class OrderController extends BaseController {
             $user_address = $order->addressReceive;
 
             $hubInfos = $shipService->getPickHubs();
+
             $mainHub = $shipService->getPickHubMain($hubInfos);
             $serviceList = $shipService->getServiceList($user_address->district->code,  $mainHub->DistrictCode);
             $shippingServiceInfos = $shipService->calculateServiceFee($user_address->district->code, $mainHub->DistrictCode, $serviceList);
@@ -229,5 +231,178 @@ class OrderController extends BaseController {
             // @codeCoverageIgnoreEnd
         }
         return response()->json($return);
+    }
+
+    public function updateOrderDetail($domain, $orderId, $orderDetailId, Request $request){
+        $orderService = new orderService();
+
+        $order = $orderService->getOrderById($orderId);
+        $orderDetails = $order->orderDetail;
+        $orderDetailProperty = $request->input('product-properties', '');
+        $orderDetailDiscount = $request->input('product-discount', 0);
+        $orderDetailQuantity = $request->input('product-quantity', 0);
+
+        $total = 0;
+        $discount = 0;
+        $originTotal = 0;
+        $quantity = 0;
+
+        try{
+
+            foreach ($orderDetails as $orderDetail){
+                if($orderDetail->id == $orderDetailId)
+                {
+                    $orderDetailProperty = explode('-', $orderDetailProperty);
+                    $dataOrderDetail = [
+                        'color_id'=>$orderDetailProperty[0],
+                        'size_id'=>isset($orderDetailProperty[1])?$orderDetailProperty[1]:'',
+                        'discount'=> $orderDetailDiscount,
+                        'quantity' => $orderDetailQuantity,
+                        'subtotal' => $orderDetail->price * $orderDetailQuantity - $orderDetailDiscount
+                    ];
+                    $orderService->updateOrderDetail($orderDetailId, $dataOrderDetail);
+
+                    $originTotal += $orderDetail->price * $orderDetailQuantity;
+                    $total += $orderDetail->price * $orderDetailQuantity - $orderDetailDiscount;
+                    $discount += $orderDetailDiscount;
+                    $quantity += $orderDetailQuantity;
+
+                }
+                else
+                {
+                    $originTotal += $orderDetail->price * $orderDetail->quantity;
+                    $total += $orderDetail->subtotal;
+                    $discount += $orderDetail->discount;
+                    $quantity += $orderDetail->quantity;
+                }
+            }
+
+            $dataOrder = [
+                'total' => $total,
+                'origin_total' => $originTotal,
+                'quantity' => $quantity,
+                'discount' => $discount
+            ];
+
+            $orderService->updateOrder($orderId, $dataOrder);
+
+            return redirect('/order/edit/'.$orderId);
+
+        } catch (\Exception $e) {
+            if($request->ajax())
+            {
+                $result['error'] = $e->getMessage();
+                return $result;
+            }
+            else
+                return view('errors.404', ['error_message' => $e]);
+        }
+    }
+
+    public function searchProduct(Request $request){
+        $productService = new productService();
+        $search = $request->input('search', '');
+        $return['ok'] = 0;
+
+        try{
+            $return['ok'] = 1;
+            $return['data'] = $productService->searchProductByName($search);
+        } catch (\Exception $e) {
+            if($request->ajax())
+            {
+                $result['error'] = $e->getMessage();
+                return $result;
+            }
+            else
+                return view('errors.404', ['error_message' => $e]);
+        }
+
+        return response()->json($return);
+    }
+
+    public function addProductToOrder(Request $request){
+        $productService = new productService();
+        $orderService = new orderService();
+
+        $orderId = $request->input('orderId');
+        $productId = $request->input('productId');
+
+        try{
+            $order = $orderService->getOrderById($orderId);
+            $total = $order->total;
+            $discount = $order->discount;
+            $originTotal = $order->origin_total;
+            $quantity = $order->quantity;
+
+            $product = $productService->getProductById($productId);
+
+            $productDiscount = 0;
+
+            if($product->mainDiscount)
+                $productDiscount = $product->mainDiscount;
+            elseif ($product->discount)
+                $productDiscount = $product->discount;
+
+            $orderDetailData = new \stdClass();
+
+            $orderDetailData->order_id =  $orderId;
+            $orderDetailData->name = $product->name;
+            $orderDetailData->price = $product->sell_price;
+            $orderDetailData->discount = $product->discount;
+            $orderDetailData->quantity = 1;
+            $orderDetailData->product_id = $product->id;;
+            $orderDetailData->product_url = urlProductDetail($product);
+            $orderDetailData->image = $product->image;
+            $orderDetailData->subtotal = $product->sell_price - $productDiscount;
+            $orderService->createOrderDetailAdmin($orderDetailData);
+
+            $total += $product->sell_price - $productDiscount;
+            $discount += $productDiscount;
+            $originTotal += $product->sell_price;
+            $quantity +=1;
+
+            $dataOrder = [
+                'total' => $total,
+                'origin_total' => $originTotal,
+                'quantity' => $quantity,
+                'discount' => $discount
+            ];
+
+            $orderService->updateOrder($orderId, $dataOrder);
+
+            return redirect('/order/edit/'.$orderId);
+
+        } catch (\Exception $e) {
+            if($request->ajax())
+            {
+                $result['error'] = $e->getMessage();
+                return $result;
+            }
+            else
+                return view('errors.404', ['error_message' => $e]);
+        }
+
+    }
+
+    public function deleteOrderDetail(Request $request){
+        $orderService = new orderService();
+
+        $orderId = $request->input('orderId');
+        $orderDetailId = $request->input('orderDetailId');
+
+        try{
+            $orderService->deleteOrderDetail($orderId, $orderDetailId);
+
+            return redirect('/order/edit/'.$orderId);
+
+        } catch (\Exception $e) {
+            if($request->ajax())
+            {
+                $result['error'] = $e->getMessage();
+                return $result;
+            }
+            else
+                return view('errors.404', ['error_message' => $e]);
+        }
     }
 }

@@ -136,4 +136,11 @@ class orderDetailModel extends Model  {
     public function getItemsByOrderIds($ids){
         return $this->whereIn('id', $ids)->get();
     }
+
+    public function deleteOrderDetail($orderId, $orderDetailId){
+        $select = $this->where('order_id', $orderId)
+            ->where('id', $orderDetailId);
+
+        $select->delete();
+    }
 }

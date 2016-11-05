@@ -230,11 +230,34 @@ var orderPackage = {
                 });
         },
         detail: {
+            page: false,
             init: function(){
+                Kacana.order.detail.page = $('#content-edit-order');
                 Kacana.order.detail.bindEvent();
             },
             bindEvent: function(){
-                $("#content-edit-order").on('click','a[href="#update-order-service-id"]',function(){
+                Kacana.order.detail.page.on('click', 'a[href="#edit-detail-item"]', function () {
+                    var form = $(this).parents('form');
+                    form.find('.product-properties, .product-discount, .product-quantity').prop('disabled', false);
+                    form.find('a[href="#submit-edit-detail-item"], a[href="#cancel-edit-detail-item"]').removeClass('hidden');
+                    form.find('a[href="#edit-detail-item"]').addClass('hidden');
+                    form.find('.product-discount').val(form.find('.product-discount').data('value'));
+                });
+
+                Kacana.order.detail.page.on('click', 'a[href="#cancel-edit-detail-item"]', function () {
+                    var form = $(this).parents('form');
+                    form.trigger("reset");
+                    form.find('.product-properties, .product-discount, .product-quantity').prop('disabled', true);
+                    form.find('a[href="#submit-edit-detail-item"], a[href="#cancel-edit-detail-item"]').addClass('hidden');
+                    form.find('a[href="#edit-detail-item"]').removeClass('hidden');
+
+                });
+                Kacana.order.detail.page.on('click', 'a[href="#submit-edit-detail-item"]', function () {
+                    var form = $(this).parents('form');
+                    form.submit();
+                });
+
+                Kacana.order.detail.page.on('click','a[href="#update-order-service-id"]',function(){
                     var that = $(this);
                     var wrap = $(this).parents('.order-detail-service');
                     swal({
@@ -278,6 +301,50 @@ var orderPackage = {
                 $('#content-edit-order').on('click', 'button[data-target="#modal-shipping-order"]', Kacana.order.detail.openModalShipping);
 
                 $('#modal-shipping-order').on('click', '#btn-check-fee-ship', Kacana.order.detail.checkFeeShipping);
+                $('#modal-shipping-order').on('click', 'input[name="orderDetailId[]"]', Kacana.order.detail.checkTotalCOD);
+                $('#modal-shipping-order').on('click', 'input[name="shippingServiceTypeId"]', Kacana.order.detail.checkOriginShipFee);
+
+                Kacana.order.detail.addProductModal();
+            },
+            addProductModal: function () {
+                var modal = $('#modal-add-product-order');
+
+                modal.find('#order_search_product_to_add').autocomplete({
+                    source: function( request, response ) {
+
+                        var callback = function(data){
+                            console.log(data);
+                            if(data.ok)
+                                response( data.data );
+                            else
+                                swal({
+                                    title: 'Error!',
+                                    text: 'Opp!something wrong on processing.',
+                                    type: 'error',
+                                    confirmButtonText: 'Cool'
+                                });
+                        };
+
+                        var errorCallback = function(){
+                            // do something here if error
+                        };
+
+                        var data = {search: request.term};
+                        Kacana.ajax.order.searchProduct(data, callback, errorCallback);
+                    },
+                    minLength: 2,
+                    select: function( event, ui ) {
+                        Kacana.order.chooseAddressDelivery(ui.item);
+                        return false;
+                    }
+                }).autocomplete( "widget" ).addClass("search-product-add-to-order");
+
+                modal.find('#order_search_product_to_add').autocomplete( "instance" )._renderItem = function( ul, item ) {
+                    return $( "<li>" )
+                        .append( '<div><a href="/order/addProductToOrder/?orderId='+$("#order_id").val()+'&productId='+item.id+'" ><img style="height: 50px;" src="'+item.image+'">' + item.name + '</a></div>' )
+                        .appendTo( ul );
+                };
+
             },
             checkFeeShipping: function () {
                 var weight = $('#form-shipping-order').find('#Weight').val();
@@ -293,6 +360,7 @@ var orderPackage = {
                         var listShippingFeeTemplate = $('#template-shipping-fee');
                         var listShippingFeeGenerate = $.tmpl(listShippingFeeTemplate, {'listFee': data.data});
                         modal.find('#list-shipping-fee').empty().append(listShippingFeeGenerate);
+                        Kacana.order.detail.checkOriginShipFee();
                     }
                     Kacana.utils.closeLoading();
 
@@ -314,6 +382,32 @@ var orderPackage = {
                 Kacana.ajax.order.checkFeeShipping(dataPost, callback, errorCallback);
                 return false;
             },
+            checkTotalCOD: function (changeFeeShip) {
+                var modal = $('#modal-shipping-order');
+                var total = 0;
+                modal.find('input[name="orderDetailId[]"]:checked').each(function () {
+                    total += parseInt($(this).data('total'));
+                });
+
+                modal.find('#total_cod').val(total);
+                if(changeFeeShip)
+                {
+                    if(total>500)
+                    {
+                        modal.find('#ship_fee').val(0);
+                    }
+                }
+
+            },
+            checkOriginShipFee: function () {
+                var modal = $('#modal-shipping-order');
+                var total = 0;
+                modal.find('input[name="shippingServiceTypeId"]:checked').each(function () {
+                    total = parseInt($(this).data('value'));
+                });
+
+                modal.find('#origin-ship-fee').val(total);
+            },
             openModalShipping: function(){
                 var modal = $('#modal-shipping-order');
 
@@ -327,6 +421,8 @@ var orderPackage = {
                             data.data = '';
                         var shippingOrderGenerate = $.tmpl(shippingOrderTemplate, {'orderDetails': data.data, 'addressReceive': data.addressReceive});
                         modal.find('.modal-dialog').empty().append(shippingOrderGenerate);
+                        Kacana.order.detail.checkTotalCOD(true);
+                        Kacana.order.detail.checkOriginShipFee();
                     }
                 };
 

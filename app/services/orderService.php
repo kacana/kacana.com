@@ -105,6 +105,10 @@ class orderService {
         return $this->_orderDetailModel->createItem($orderDetailData);
     }
 
+    public function createOrderDetailAdmin($item){
+        return $this->_orderDetailModel->createItem($item);
+    }
+
     /**
      * @param $id
      * @return \Illuminate\Support\Collection|null|static
@@ -232,6 +236,12 @@ class orderService {
         return $orderDetailModel->updateOrderDetail($id, $data);
     }
 
+
+    public function updateOrder($id, $data)
+    {
+        return $this->_orderModel->updateItem($id, $data);
+    }
+
     /**
      * @param $orderId
      * @param $userId
@@ -308,6 +318,10 @@ class orderService {
 
 
         return $this->_orderModel->reportOrder($startTime, $endTime, $type);
+    }
+
+    public function deleteOrderDetail($orderId, $orderDetailId){
+        return $this->_orderDetailModel->deleteOrderDetail($orderId, $orderDetailId);
     }
 
 
