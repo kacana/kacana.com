@@ -694,9 +694,12 @@ class productModel extends Model  {
         return AWS_CDN_URL.$value;
     }
 
-    public function getProductToCreateCsv($limit = 1000, $offset = 0){
-        $products = $this->leftJoin('product_tag', 'products.id', '=', 'product_tag.product_id')
-            ->where('product_tag.type','=', KACANA_PRODUCT_TAG_TYPE_MENU)->groupBy('products.id');
+    public function getProductToCreateCsv($limit = false, $offset = 0){
+        $products = $this->join('product_tag', 'products.id', '=', 'product_tag.product_id')
+            ->leftJoin('tag_relations', 'product_tag.tag_id', '=', 'tag_relations.child_id')
+            ->where('tag_relations.status', '=', TAG_RELATION_STATUS_ACTIVE)
+            ->where('tag_relations.tag_type_id', '=', TAG_RELATION_TYPE_MENU)
+            ->where('products.status', '=', KACANA_PRODUCT_STATUS_ACTIVE)->groupBy('products.id');
 
         if($limit)
         {
