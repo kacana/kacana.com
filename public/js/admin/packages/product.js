@@ -318,11 +318,13 @@ var productPackage = {
                                 tagInput.append('<option value="'+tags[i].id.toString()+'" selected >'+tags[i].name+'</option>').trigger("change");
 
                             var tagChilds = tags[i].childs;
-                            for(var j = 0; j < tagChilds.length; j++){
-                                if($.inArray( tagChilds[j].id.toString(), tagInput.val()) == -1)
-                                    tagInput.append('<option value="'+tagChilds[j].id.toString()+'" selected >'+tagChilds[j].name+'</option>').trigger("change");
+                            if(tagChilds !== undefined)
+                            {
+                                for(var j = 0; j < tagChilds.length; j++){
+                                    if($.inArray( tagChilds[j].id.toString(), tagInput.val()) == -1)
+                                        tagInput.append('<option value="'+tagChilds[j].id.toString()+'" selected >'+tagChilds[j].name+'</option>').trigger("change");
+                                }
                             }
-
                         }
                     }
                 };
