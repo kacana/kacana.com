@@ -1,5 +1,5 @@
 @extends('layouts.client.master')
-<?
+<?php
     $user = $order->user;
     $orderDetail = $order->orderDetail;
     $address = $order->addressReceive;

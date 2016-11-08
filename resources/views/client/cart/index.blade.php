@@ -88,7 +88,7 @@
     @include('client.cart.modal')
 @stop
 
-@section('google-param-prodid', implode(", ",$cart->productIds))
+@section('google-param-prodid', isset($cart->productIds)?implode(", ", $cart->productIds):0)
 @section('google-param-pagetype', 'cart')
-@section('google-param-totalvalue', $cart->total)
+@section('google-param-totalvalue', isset($cart->total)?$cart->total:0)
 
