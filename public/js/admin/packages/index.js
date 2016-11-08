@@ -215,7 +215,7 @@ var indexPackage = {
                         {
                             'title': 'Product Image',
                             "render": function ( data, type, full, meta ) {
-                                return '<image style="max-height: 40px" src="//d1f7p3vikjjz1z.cloudfront.net' + data + '"></image>';
+                                return '<image style="max-height: 40px" src="//image.kacana.vn' + data + '"></image>';
                             }
                         },
                         {
@@ -255,7 +255,7 @@ var indexPackage = {
                         {
                             'title': 'Product Image',
                             "render": function ( data, type, full, meta ) {
-                                return '<image style="max-height: 40px" src="//d1f7p3vikjjz1z.cloudfront.net' + data + '"></image>';
+                                return '<image style="max-height: 40px" src="//image.kacana.vn' + data + '"></image>';
                             }
                         },
                         {

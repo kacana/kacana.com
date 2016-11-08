@@ -102,6 +102,12 @@ class productGalleryModel extends Model  {
         return $this->where('id', $id)->update($item);
     }
 
+    public function updateImage($id, $image){
+        $item['image'] = $image;
+
+        return $this->where('id', $id)->update($item);
+    }
+
     public function getImageAttribute($value)
     {
         return AWS_CDN_URL.$value;

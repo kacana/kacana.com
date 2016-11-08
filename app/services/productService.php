@@ -740,55 +740,47 @@ class productService {
         return $productModel->suggestSearchProduct($name);
     }
 
-//    public function fixProductPrice(){
-//        $productModel = new productModel();
-//        $productGalleryModel = new productGalleryModel();
-//        $productGalleryService = new productGalleryService();
-//
+    public function fixProductPrice(){
+        $productModel = new productModel();
+        $productGalleryModel = new productGalleryModel();
+        $productGalleryService = new productGalleryService();
+
+        $files = Storage::disk('s3')->files('images/client');
+        foreach ($files as $file)
+        {
+            Storage::disk('s3_new')->put($file, Storage::disk('s3')->get($file));
+        }
+        print_r($files);die;
+
 //        $products = productModel::all()->sortByDesc("id");
 //
 //        foreach ($products as $product){
-//
-//            if($product->id <= 418)
-//            {
-//                $priceUpdate = 0;
-//                if($product->sell_price > 2000000)
-//                    $priceUpdate = $product->sell_price + 100000 - 200000;
-//                elseif($product->sell_price > 1500000)
-//                    $priceUpdate = $product->sell_price + 100000 - 150000;
-//                elseif($product->sell_price > 1000000)
-//                    $priceUpdate = $product->sell_price + 100000 - 100000;
-//                elseif($product->sell_price > 500000)
-//                    $priceUpdate = $product->sell_price + 100000 - 50000;
-//                elseif($product->sell_price > 300000)
-//                    $priceUpdate = $product->sell_price + 100000 - 30000;
-//                else
-//                    $priceUpdate = $product->sell_price + 100000 - 20000;
-//
-//                $productModel->updatePrice($product->id, $priceUpdate);
+//            $image_count = 1;
+//            if (Storage::disk('s3')->exists($product->getOriginal('image')) && Storage::disk('s3')->size($product->getOriginal('image'))) {
+//                $fileContent = Storage::disk('s3')->get($product->getOriginal('image'));
+//                $imageName = '/images/product/'.$product->name.' '.$image_count.'.jpg';
+//                Storage::disk('s3_new')->put($imageName, $fileContent);
+//                $productModel->updateImage($product->id, $imageName);
 //            }
 //
-//            if($product->id <= 418) {
-//                foreach ($product->galleries as $gallery) {
-//                    if (Storage::disk('local')->exists($gallery->getOriginal('image')) && filesize(PATH_PUBLIC . $gallery->getOriginal('image'))) {
-//                        if ($gallery->type == PRODUCT_IMAGE_TYPE_SLIDE) {
-//                            $thumbPath = str_replace(PATH_PUBLIC, '', $productGalleryService->createThumbnail(PATH_PUBLIC . $gallery->getOriginal('image'), 80, 80, [255, 255, 255]));
-//                            $productGalleryModel->updateThumb($gallery->id, $thumbPath);
-//                            $fileContent = Storage::disk('local')->get($thumbPath);
-//                            Storage::put($thumbPath, $fileContent);
-//                        }
+//            foreach ($product->galleries as $gallery) {
+//                $image_count++;
+//                if (Storage::disk('s3')->exists($gallery->getOriginal('image')) && Storage::disk('s3')->size($gallery->getOriginal('image'))) {
+//                    $imageName = '/images/product/'.$product->name.' '.$image_count.'.jpg';
+//                    $fileContent = Storage::disk('s3')->get($gallery->getOriginal('image'));
+//                    Storage::disk('s3_new')->put($imageName, $fileContent);
+//                    $productGalleryModel->updateImage($gallery->id, $imageName);
+//                    if ($gallery->type == PRODUCT_IMAGE_TYPE_SLIDE) {
+//                        $imageName = '/images/product/'.$product->name.' thumb '.$image_count.'.jpg';
 //
-//                        $fileContent = Storage::disk('local')->get($gallery->getOriginal('image'));
-//                        Storage::put($gallery->getOriginal('image'), $fileContent);
+//                        $fileContent = Storage::disk('s3')->get($gallery->getOriginal('thumb'));
+//                        Storage::disk('s3_new')->put($imageName, $fileContent);
+//                        $productGalleryModel->updateThumb($gallery->id, $imageName);
 //                    }
-//                }
-//                if (Storage::disk('local')->exists($product->getOriginal('image')) && PATH_PUBLIC . $product->getOriginal('image')) {
-//                    $fileContent = Storage::disk('local')->get($product->getOriginal('image'));
-//                    Storage::put($product->getOriginal('image'), $fileContent);
 //                }
 //            }
 //        }
-//    }
+    }
 }
 
 
