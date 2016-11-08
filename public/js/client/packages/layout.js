@@ -158,14 +158,12 @@ var layoutPackage = {
                     else{
                         $('#ac-gn-searchresults').find('.tag-search-result').addClass('hide')
                     }
-
-
-
                 }
 
                 Kacana.utils.loading.closeLoading();
                 Kacana.layout.suggestSearchProductProcessing = false;
                 $('#ac-gn-searchresults').removeAttr('disabled');
+                $('#header #ac-gn-searchform-input').removeAttr('disabled');
             };
 
             var errorCallback = function () {
@@ -180,10 +178,11 @@ var layoutPackage = {
                 {
                     Kacana.layout.suggestSearchProductProcessing = true;
                     $('#ac-gn-searchresults').attr('disabled', 'disabled');
+                    $('#header #ac-gn-searchform-input').attr('disabled', 'disabled');
                     Kacana.utils.loading.loading($('#ac-gn-searchresults'));
                     Kacana.ajax.homepage.suggestSearchProduct(search, callBack, errorCallback);
                 }
-            }, 00);
+            }, 500);
 
         },
         showSearch: function () {

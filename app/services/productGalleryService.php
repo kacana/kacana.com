@@ -26,16 +26,26 @@ class productGalleryService {
      */
     public function addProductImage($id, $imageName, $type){
         $productGallery = new productGalleryModel();
+        $productModel = new productModel();
+        $prefixPath = '/images/product/';
+        $product = $productModel->getProductById($id, false);
+
         $thumbPath = '';
+        $newThumbPath = '';
+        $imageNameFinal = explode('.', $imageName);
+        $typeImage = $imageNameFinal[count($imageNameFinal)-1];
 
         if($type == PRODUCT_IMAGE_TYPE_SLIDE)
         {
+            $newThumbPath = $prefixPath.$product->name.' thumb '.time().'.'.$typeImage;
             $thumbPath = str_replace(PATH_PUBLIC, '', $this->createThumbnail(PATH_PUBLIC . $imageName, 80, 80, [255, 255, 255]));
-            $this->uploadToS3($thumbPath);
-        }
-        $return = $productGallery->addProductImage($id, $imageName, $thumbPath, $type);
 
-        $this->uploadToS3($imageName);
+            $this->uploadToS3($thumbPath, $newThumbPath);
+        }
+        $newImageName = $prefixPath.$product->name.' '.time().'.'.$typeImage;
+        $return = $productGallery->addProductImage($id, $newImageName, $newThumbPath, $type);
+
+        $this->uploadToS3($imageName, $newImageName);
 
         return $return;
     }
@@ -115,16 +125,18 @@ class productGalleryService {
 
     /**
      * @param $path
+     * @param $newPath
      * @return bool
      */
     public function uploadToS3($path, $newPath = false){
         if(Storage::disk('local')->exists($path))
         {
             $fileContent = Storage::disk('local')->get($path);
-            Storage::put($path, $fileContent);
 
             if($newPath)
-                Storage::move($path, $newPath);
+                Storage::put($newPath, $fileContent);
+            else
+                Storage::put($path, $fileContent);
 
             Storage::disk('local')->delete($path);
             return true;

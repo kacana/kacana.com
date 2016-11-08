@@ -493,16 +493,23 @@ class productService {
     public function updateImage($productId, $imageName){
         $productModel = new productModel();
         $productGalleryService = new productGalleryService();
-
+        $prefixPath = '/images/product/';
         $product = $productModel->getProductById($productId, false);
-
+        $newImageName = $imageName;
         if($product->getOriginal('image'))
             $productGalleryService->deleteFromS3($product->getOriginal('image'));
 
         if($imageName)
-            $productGalleryService->uploadToS3($imageName);
+        {
+            $imageNameFinal = explode('.', $imageName);
+            $typeImage = $imageNameFinal[count($imageNameFinal)-1];
+            $newImageName = $prefixPath.$product->name.' '.time().'.'.$typeImage;
 
-        return $productModel->updateImage($productId, $imageName);
+            $productGalleryService->uploadToS3($imageName, $newImageName);
+        }
+
+
+        return $productModel->updateImage($productId, $newImageName);
     }
 
 
