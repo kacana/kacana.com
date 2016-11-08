@@ -462,6 +462,12 @@ class productModel extends Model  {
         return $this->where('id', $id)->update($item);
     }
 
+    public function updateDescription($id, $desc){
+        $item['description'] = $desc;
+
+        return $this->where('id', $id)->update($item);
+    }
+
     /**
      * @param $id
      * @param $sellPrice

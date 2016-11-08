@@ -39,8 +39,6 @@ class IndexController extends BaseController {
             $newestProduct = $productService->getNewestProduct($userId);
             $discountProduct = $productService->getDiscountProduct($userId);
             return view('client.index.index', array('items'=>$data, 'newest' => $newestProduct, 'discount' => $discountProduct));
-
-
 	}
 
 	public function searchProduct($domain, $searchString, Request $request){

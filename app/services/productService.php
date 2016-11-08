@@ -752,13 +752,6 @@ class productService {
         $productGalleryModel = new productGalleryModel();
         $productGalleryService = new productGalleryService();
 
-        $files = Storage::disk('s3')->files('images/client');
-        foreach ($files as $file)
-        {
-            Storage::disk('s3_new')->put($file, Storage::disk('s3')->get($file));
-        }
-        print_r($files);die;
-
 //        $products = productModel::all()->sortByDesc("id");
 //
 //        foreach ($products as $product){
