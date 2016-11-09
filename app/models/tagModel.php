@@ -429,4 +429,27 @@ class tagModel extends Model  {
     {
         return AWS_CDN_URL.$value;
     }
+
+    public function getAllTagHaveProduct(){
+
+        $query = $this->join('product_tag', 'tags.id', '=', 'product_tag.tag_id')
+                        ->join('products', 'products.id', '=', 'product_tag.product_id')
+                        ->join('tag_relations', 'product_tag.tag_id', '=', 'tag_relations.child_id')
+                        ->where('tag_relations.status', '=', TAG_RELATION_STATUS_ACTIVE)
+                        ->whereExists(function ($query) {
+                            $query->select(DB::raw(1))
+                                ->from('product_tag as product_tag_check')
+                                ->whereRaw('kacana_product_tag_check.product_id = kacana_product_tag.product_id')
+                                ->join('tag_relations as tag_relation_check', 'product_tag_check.tag_id', '=', 'tag_relation_check.child_id')
+                                ->where('tag_relation_check.status', '=', TAG_RELATION_STATUS_ACTIVE)
+                                ->where('tag_relation_check.tag_type_id', '=', TAG_RELATION_TYPE_MENU);
+                        })
+                        ->select(['tag_relations.*', 'tags.*', 'tag_relations.status AS relation_status'])
+                        ->groupBy('tags.id');
+
+        $results = $query->get();
+
+        return $results ? $results : false;
+
+    }
 }

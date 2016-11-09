@@ -22,14 +22,19 @@ Route::pattern('nameDomain', '(www.kacana.com|kacana.com|dev.kacana.com|staging.
 
 Route::group(['prefix' => 'auth/'], function(){
     // Authentication routes...
-    Route::get('login', 'Auth\AuthController@getLogin');
+    Route::get('login', array('as'=>'authGetLogin', 'uses' => 'Auth\AuthController@getLogin'));
     Route::post('login', 'Auth\AuthController@authLogin');
     Route::get('sign-out', 'Auth\AuthController@getLogout');
 
     // Registration routes...
-    Route::any('signup', 'Auth\SignupController@signup');
+    Route::any('signup', array('as'=>'authGetSignup', 'uses' =>  'Auth\SignupController@signup'));
     Route::any('signup/socialLoginCallback', 'Auth\SignupController@socialLoginCallback');
 });
+
+Route::any('/sitemap.xml',                                      array('as'=>'sitemap',                   'uses'=>'Client\SitemapController@index'));
+Route::any('/sitemap-tags.xml',                                 array('as'=>'sitemap-tags.xml',          'uses'=>'Client\SitemapController@sitemapTags'));
+Route::any('/sitemap-products.xml',                             array('as'=>'sitemap-products.xml',      'uses'=>'Client\SitemapController@sitemapProducts'));
+Route::any('/sitemap-pages.xml',                               array('as'=>'sitemap-pages.xml',        'uses'=>'Client\SitemapController@sitemapPages'));
 
 /*********************************************************
  *

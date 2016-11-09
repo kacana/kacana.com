@@ -705,7 +705,9 @@ class productModel extends Model  {
             ->leftJoin('tag_relations', 'product_tag.tag_id', '=', 'tag_relations.child_id')
             ->where('tag_relations.status', '=', TAG_RELATION_STATUS_ACTIVE)
             ->where('tag_relations.tag_type_id', '=', TAG_RELATION_TYPE_MENU)
-            ->where('products.status', '=', KACANA_PRODUCT_STATUS_ACTIVE)->groupBy('products.id');
+            ->where('products.status', '=', KACANA_PRODUCT_STATUS_ACTIVE)->groupBy('products.id')
+            ->select(['products.*', 'product_tag.*']);
+
 
         if($limit)
         {

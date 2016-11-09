@@ -411,6 +411,11 @@ class tagService {
         return  $tagModel->getTagByIdsHaveProduct($tagRelationId);
     }
 
+    public function getAllTagHaveProduct(){
+        $tagModel = new tagModel();
+        return  $tagModel->getAllTagHaveProduct();
+    }
+
     public function formatMetaKeyword($tags){
         $tagNameArray = [];
         if(count($tags))

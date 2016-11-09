@@ -1,5 +1,5 @@
 @extends('layouts.client.master')
-@section('meta-title', 'Sản phẩm: '.$tag->name)
+@section('meta-title', $tag->name)
 @section('meta-description', $tag->short_desc)
 @section('meta-keyword', implode(", ",$tag->tagKeyword))
 

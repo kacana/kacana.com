@@ -747,6 +747,11 @@ class productService {
         return $productModel->suggestSearchProduct($name);
     }
 
+    public function getAllProductAvailable(){
+        $productModel = new productModel();
+        return $productModel->getProductToCreateCsv();
+    }
+
     public function fixProductPrice(){
         $productModel = new productModel();
         $productGalleryModel = new productGalleryModel();
