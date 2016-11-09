@@ -73,16 +73,6 @@ class SitemapController extends BaseController {
             }
         }
 
-        $tagAvailables = $tagService->getAllTagHaveProduct();
-
-        foreach ($tagAvailables as $tag){
-            if(!in_array($tag->id, $tagIdCheck))
-            {
-                array_push($tagIdCheck , $tag->id);
-                $sitemap_tags->add(urlTag($tag), $tag->updated, '0.8', 'weekly');
-            }
-        }
-
         return $sitemap_tags->render('xml');
     }
 
