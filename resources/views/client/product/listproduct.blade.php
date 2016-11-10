@@ -68,7 +68,7 @@
                     <div class="col-md-12">
                         <h3 class="color-grey">Sản phẩm nổi bật</h3>
                         @foreach($tag->allChilds as $subTag)
-                           <a class="color-grey-light" href="{{urlTag($subTag)}}" >{{$subTag->name}}</a> ,
+                           <a class=" tag-relation-suggestion color-grey-light" href="{{urlTag($subTag)}}" >{{$subTag->name}}</a>
                         @endforeach
                     </div>
                 </div>

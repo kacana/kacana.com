@@ -218,6 +218,20 @@
                          </div>
                      </section>
                  </div>
+                <div class="toogle" data-plugin-toggle="">
+                     <section class="toggle active">
+                         <label>
+                             <h2 class="description-detail-title">Có thể bạn đang tìm kiếm</h2>
+                             <i class="pe-7s-close"></i>
+                         </label>
+                         <div class="description-detail-title-footer"></div>
+                         <div class="toggle-content" style="display: none;">
+                             @foreach($item->tag as $tag)
+                                 <a class="color-grey-light tag-relation-suggestion" href="{{urlTag($tag)}}" >{{$tag->name}}</a>
+                             @endforeach
+                         </div>
+                     </section>
+                 </div>
             </span>
         </div>
     </div>
