@@ -13,7 +13,7 @@
                                         <div class="col-xs-12">
                                             <div class="vpadding-10 hpadding-10">
                                                 <div class="color-green" ><strong>{{$userAddress->name}}</strong></div>
-                                                <div>{{$userAddress->street}}</div>
+                                                <div>{{$userAddress->street}} @if($userAddress->ward_id), {{$userAddress->ward->name}} @endif</div>
                                                 <div>{{$userAddress->district->name}}, {{$userAddress->city->name}}</div>
                                                 <div>{{$userAddress->phone}}</div>
                                             </div>

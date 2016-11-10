@@ -34,17 +34,14 @@
                         </select>
                     </div>
                 </div>
-                {{--<div class="form-group">--}}
-                    {{--<label class="col-md-4 control-label" for="">Phường, xã</label>--}}
-                    {{--<div class="col-md-5">--}}
-                        {{--<select disabled="true" name="wardId" class="form-control">--}}
-                            {{--<option value="">Chọn phường/xã</option>--}}
-                            {{--@foreach($listWard as $item)--}}
-                                {{--<option data-city-id="{{$item->city_id}}" data-district-id="{{$item->district_id}}"  value="{{$item->id}}">{{$item->name}}</option>--}}
-                            {{--@endforeach--}}
-                        {{--</select>--}}
-                    {{--</div>--}}
-                {{--</div>--}}
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="">Phường, xã</label>
+                    <div class="col-md-8">
+                        <select disabled="true" name="wardId" class="form-control">
+                            <option value="">Chọn phường/xã</option>
+                        </select>
+                    </div>
+                </div>
                 <div class="form-group">
                     <label class="col-md-4 control-label" for="">Điện thoại di động</label>
                     <div class="col-md-8">

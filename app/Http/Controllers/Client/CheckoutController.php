@@ -107,7 +107,7 @@ class CheckoutController extends BaseController {
         $order['street'] = $request->get('street', false);
         $order['city_id'] = $request->get('cityId', false);
         $order['district_id'] = $request->get('districtId', false);
-        $order['wardId'] = $request->get('wardId', '');
+        $order['ward_id'] = $request->get('wardId', '');
         $order['phone'] = $request->get('phone', false);
         $checkoutAddressId = $request->get('checkout-address-id', false);
 

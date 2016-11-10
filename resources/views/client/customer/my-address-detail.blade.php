@@ -1,5 +1,10 @@
 @extends('layouts.client.master')
-@section('meta-title', 'Chi tiết địa chỉ - '. $address->name)
+@if(isset($address))
+    @section('meta-title', 'Chi tiết địa chỉ - '. $address->name)
+@else
+    @section('meta-title', 'Thêm địa chỉ mới')
+@endif
+
 @section('top-infomation')
     <section class="parallax" id="product-list-top-menu" data-stellar-background-ratio="0.5" style="background-image: url('/images/client/homepage/account-cover.jpg');">
         <div class="container">
@@ -28,9 +33,15 @@
                 <div class="col-xs-12 col-sm-9">
                     <div class="row">
                         <div class="col-xs-12">
-                            <p>
-                                Bấm cập nhật để cập nhật địa chỉ của bạn
-                            </p>
+                            @if(isset($address))
+                                <p>
+                                    Bấm cập nhật để cập nhật địa chỉ của bạn
+                                </p>
+                            @else
+                                <p>
+                                    Bấm thêm mới để thêm mới địa chỉ
+                                </p>
+                            @endif
                         </div>
                     </div>
                     <div class="row">
@@ -87,13 +98,16 @@
                                     <div class="form-group">
                                         <label class="col-md-4 control-label" for="">Quận/huyện</label>
                                         <div class="col-md-5">
-                                            <select @if(!isset($address->city_id)) disabled="true" @endif name="districtId" class="form-control">
+                                            <select data-district="{{$listDistrict}}" disabled="true" name="districtId" class="form-control">
                                                 <option value="">Chọn quận/huyện</option>
-                                                @foreach($listDistrict as $item)
-                                                    <option data-city-id="{{$item->city_id}}"
-                                                            @if(isset($address->district_id) && $address->district_id == $item->id) selected="selected" @endif
-                                                            value="{{$item->id}}">{{$item->name}}</option>
-                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label" for="">Phường, xã</label>
+                                        <div class="col-md-5">
+                                            <select disabled="true" name="wardId" class="form-control">
+                                                <option value="">Chọn phường/xã</option>
                                             </select>
                                         </div>
                                     </div>

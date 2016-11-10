@@ -67,4 +67,9 @@ class addressDistrictModel extends Model {
 
         return $district;
     }
+
+    public function getDistrictByCode($code, $typeService){
+        return $this->where('code', $code)
+            ->where('type_service', $typeService)->first();
+    }
 }

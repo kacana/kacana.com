@@ -81,6 +81,14 @@ class addressService {
     }
 
     /**
+     * @param $districtId
+     * get list ward to show when order
+     */
+    public function getListWardByDistrictId($districtId){
+        return $this->_wardModel->getItemsByDistrictId($districtId);
+    }
+
+    /**
      * get city by id
      *
      * @param $id
@@ -164,6 +172,18 @@ class addressService {
     }
 
     /**
+     * @param $name
+     * @param $cityId
+     * @param $districtId
+     * @param $code
+     * @param $type
+     * @return addressDistrictModel
+     */
+    public function createWard($name, $cityId, $districtId, $code, $type){
+        return $this->_wardModel->createWard($name, $cityId, $districtId, $code, $type);
+    }
+
+    /**
      * @param $userId
      * @param $id
      * @return true
@@ -195,6 +215,14 @@ class addressService {
             }
 
         return $items;
+    }
+
+    public function getDistrictByCode($code, $typeService){
+        return $this->_districtModel->getDistrictByCode($code, $typeService);
+    }
+
+    public function getCityByCode($code, $typeService){
+        return $this->_cityModel->getCityByCode($code, $typeService);
     }
 
 }

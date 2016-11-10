@@ -363,6 +363,13 @@ var customerPackage = {
                                 },
                             }
                         },
+                        wardId: {
+                            validators: {
+                                notEmpty: {
+                                    message: 'Vui lòng chọn phường/xã'
+                                },
+                            }
+                        },
                         districtId: {
                             validators: {
                                 notEmpty: {
@@ -391,25 +398,73 @@ var customerPackage = {
                 });
 
                 form.on('change', 'select[name="cityId"]', Kacana.customer.address.changeCity);
+                form.on('change', 'select[name="districtId"]', Kacana.customer.address.changeDistrict);
             },
             changeCity: function(){
                 var form = $('#form_address_step');
                 var districtSelect = $('select[name="districtId"]');
+                var wardSelect = $('select[name="wardId"]');
 
                 var cityId = $(this).val();
+
+                form.formValidation('enableFieldValidators', 'wardId', false).formValidation('resetField', 'wardId');
+                wardSelect.val('').attr('disabled', true).find('option[value=""]').show();
                 form.formValidation('enableFieldValidators', 'districtId', true).formValidation('resetField', 'districtId');
                 districtSelect.val('');
 
                 if(parseInt(cityId))
                 {
-                    districtSelect.find('option').hide();
-                    districtSelect.find('option[data-city-id="'+cityId+'"]').show();
-                    districtSelect.removeAttr('disabled').find('option[value=""]').show();
+                    var listDistrict = districtSelect.data('district');
+                    var listOptionDistrict = '<option value="" style="display: block;">Chọn quận/huyện</option>';
+
+                    for(var i =0 ; i <  listDistrict.length ; i++){
+                        if(listDistrict[i].city_id == parseInt(cityId))
+                            listOptionDistrict +='<option data-city-id="'+listDistrict[i].city_id+'" value="'+listDistrict[i].id+'">'+listDistrict[i].name+'</option>';
+                    }
+
+                    districtSelect.html(listOptionDistrict);
+                    districtSelect.removeAttr('disabled')
                 }
                 else
                 {
                     form.formValidation('enableFieldValidators', 'districtId', false).formValidation('resetField', 'districtId');
                     districtSelect.val('').attr('disabled', true).find('option[value=""]').show();
+                }
+            },
+            changeDistrict: function(){
+
+                var form = $('#form_address_step');
+                var districtId = $(this).val();
+                var wardSelect = $('select[name="wardId"]');
+                form.formValidation('enableFieldValidators', 'wardId', true).formValidation('resetField', 'wardId');
+                wardSelect.val('');
+
+                if(parseInt(districtId))
+                {
+                    var callBack = function(data){
+                        if(data.ok){
+                            var items = data.data;
+                            var strOption = '<option value="">Chọn phường/xã</option>';
+                            for(var i = 0; i < items.length; i++){
+                                strOption += '<option value="'+items[i].id+'">'+items[i].name+'</option>'
+                            }
+                            form.find('select[name="wardId"]').html(strOption);
+                            Kacana.utils.loading.closeLoading();
+                            wardSelect.removeAttr('disabled').show();
+                        }
+                        else
+                            Kacana.utils.showError('có cái gì sai sai ở đây! vui lòng gọi: 0906.054.206');
+                    };
+                    var errorCallBack = function(data){
+                        Kacana.utils.showError('có cái gì sai sai ở đây! vui lòng gọi: 0906.054.206');
+                        Kacana.utils.loading.closeLoading();
+                    };
+
+                    Kacana.utils.loading.loading($('#form_address_step').parents('.panel-heading'));
+                    Kacana.ajax.cart.getWardByDistrictId(districtId, callBack, errorCallBack);
+                }
+                else{
+                    wardSelect.val('').attr('disabled', true);
                 }
             }
         }

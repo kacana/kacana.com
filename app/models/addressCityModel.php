@@ -76,5 +76,9 @@ class addressCityModel extends Model {
 
     }
 
+    public function getCityByCode($code, $typeService){
+        return $this->where('code', $code)
+            ->where('type_service', $typeService)->first();
+    }
 
 }

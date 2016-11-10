@@ -753,10 +753,40 @@ class productService {
     }
 
     public function fixProductPrice(){
-        $productModel = new productModel();
-        $productGalleryModel = new productGalleryModel();
-        $productGalleryService = new productGalleryService();
-
+//        $productModel = new productModel();
+//        $productGalleryModel = new productGalleryModel();
+//        $productGalleryService = new productGalleryService();
+//        $addressService = new addressService();
+//        $shipService = new shipService();
+//
+////        print_r($shipService->GetDistrictProvinceData());die;
+//
+//        $row = 0;
+//        if (($handle = fopen(PATH_PUBLIC."/doc/wards.csv", "r")) !== FALSE) {
+//            while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
+//                $num = count($data);
+//
+//                $row++;
+//                if($row > 1 && isset($data[6]) && isset($data[8])){
+//                        $district = $addressService->getDistrictByCode($data[4],1);
+//                        if(!$district)
+//                        {
+//                            $city = $addressService->getCityByCode($data[1], 1);
+//                            if(!$city)
+//                            {
+//                               $city = $addressService->createCity($data[0], 1, $data[1]);
+//                            }
+//                            $district = $addressService->createDistrict($data[3], $city->id, $data[4], 1);
+//                        }
+//                        else{
+//                            $addressService->createWard($data[6], $district->city_id, $district->id, $data[8], 1);
+//                        }
+//                }
+//                else
+//                    echo $row.PHP_EOL;
+//            }
+//            fclose($handle);die;
+//        }
 //        $products = productModel::all()->sortByDesc("id");
 //
 //        foreach ($products as $product){

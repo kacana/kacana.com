@@ -151,8 +151,13 @@ var ajaxPackage = {
                 var options = [];
                 Kacana.ajax.init(url, dataType, type, dataPost, callBack, errorCallBack, options);
             },
-            changeCity: function(data, callBack, errorCallBack){
-                Kacana.ajax.init('/cart/showListWards?'+data, '', 'post', '', callBack, errorCallBack, []);
+            getWardByDistrictId: function(districtId, callBack, errorCallBack){
+                var url = '/cart/getWardByDistrictId?districtId='+districtId;
+                var dataType = 'json';
+                var type = 'get';
+                var dataPost = {};
+                var options = [];
+                Kacana.ajax.init(url, dataType, type, dataPost, callBack, errorCallBack, options);
             }
         },
         tagpage: {

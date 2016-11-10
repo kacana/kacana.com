@@ -97,7 +97,7 @@ class addressReceiveModel extends Model {
         $addReceive->street = $item['street'];
         $addReceive->city_id = $item['city_id'];
         $addReceive->district_id = $item['district_id'];
-        $addReceive->ward_id = isset($item['wardId'])?$item['wardId']:'';
+        $addReceive->ward_id = isset($item['ward_id'])?$item['ward_id']:'';
         $addReceive->user_id = $userId;
         if($default)
             $addReceive->default = $default;

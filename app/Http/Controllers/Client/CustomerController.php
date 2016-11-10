@@ -171,12 +171,12 @@ class CustomerController extends BaseController {
             }
 
             if($request->isMethod('post')){
-
                 $addressArray = array();
                 $addressArray['name'] = $request->get('name', false);
                 $addressArray['street'] = $request->get('street', false);
                 $addressArray['city_id'] = $request->get('cityId', false);
                 $addressArray['district_id'] = $request->get('districtId', false);
+                $addressArray['ward_id'] = $request->get('wardId', false);
                 $addressArray['phone'] = $request->get('phone', false);
                 $addressArray['id'] = $id;
                 if($id){
@@ -219,6 +219,7 @@ class CustomerController extends BaseController {
                 $addressArray['street'] = $request->get('street', false);
                 $addressArray['city_id'] = $request->get('cityId', false);
                 $addressArray['district_id'] = $request->get('districtId', false);
+                $addressArray['ward_id'] = $request->get('wardId', false);
                 $addressArray['phone'] = $request->get('phone', false);
 
                 $data['address'] = $addressService->createUserAddress($user->id, $addressArray);

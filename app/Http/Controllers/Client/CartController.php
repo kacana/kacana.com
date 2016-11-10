@@ -6,6 +6,7 @@ use App\models\addressWardModel;
 use App\models\orderDetailModel;
 use App\models\productGalleryModel;
 use App\models\User;
+use App\services\addressService;
 use App\services\productService;
 use App\services\cartService;
 use App\services\tagService;
@@ -292,6 +293,25 @@ class CartController extends BaseController {
             }
 
 
+        }
+        catch (\Exception $e) {
+            // @codeCoverageIgnoreStart
+            $result['error'] = $e->getMessage();
+            // @codeCoverageIgnoreEnd
+        }
+
+        return response()->json($result);
+
+    }
+
+    public function getWardByDistrictId(Request $request){
+        $addressService = new addressService();
+
+        $districtId = $request->input('districtId');
+        $result['ok'] = 0;
+        try{
+            $result['data'] = $addressService->getListWardByDistrictId($districtId);
+            $result['ok'] = 1;
         }
         catch (\Exception $e) {
             // @codeCoverageIgnoreStart

@@ -9,7 +9,7 @@ var checkoutPackage = {
         bindEvent: function(){
             Kacana.checkout.page.on('click', 'input[name="optionSignup"]', Kacana.checkout.checkOptionOrder);
             Kacana.checkout.page.on('change', 'select[name="cityId"]', Kacana.checkout.changeCity);
-            // Kacana.checkout.page.on('change', 'select[name="districtId"]', Kacana.checkout.changeDistrict);
+            Kacana.checkout.page.on('change', 'select[name="districtId"]', Kacana.checkout.changeDistrict);
         },
         checkOptionOrder: function(){
             var inputPassword = $('#password');
@@ -71,13 +71,13 @@ var checkoutPackage = {
                             },
                         }
                     },
-                    // wardId: {
-                    //     validators: {
-                    //         notEmpty: {
-                    //             message: 'Vui lòng chọn phường/xã'
-                    //         },
-                    //     }
-                    // },
+                    wardId: {
+                        validators: {
+                            notEmpty: {
+                                message: 'Vui lòng chọn phường/xã'
+                            },
+                        }
+                    },
                     phone: {
                         validators: {
                             notEmpty: {
@@ -161,13 +161,12 @@ var checkoutPackage = {
         changeCity: function(){
             var form = $('#form_address_step');
             var districtSelect = $('select[name="districtId"]');
-            // var wardSelect = $('select[name="wardId"]');
+            var wardSelect = $('select[name="wardId"]');
 
             var cityId = $(this).val();
 
-            // form.formValidation('enableFieldValidators', 'wardId', false).formValidation('resetField', 'wardId');
-            // wardSelect.val('').attr('disabled', true).find('option[value=""]').show();
-
+            form.formValidation('enableFieldValidators', 'wardId', false).formValidation('resetField', 'wardId');
+            wardSelect.val('').attr('disabled', true).find('option[value=""]').show();
             form.formValidation('enableFieldValidators', 'districtId', true).formValidation('resetField', 'districtId');
             districtSelect.val('');
 
@@ -191,6 +190,7 @@ var checkoutPackage = {
             }
         },
         changeDistrict: function(){
+
             var form = $('#form_address_step');
             var districtId = $(this).val();
             var wardSelect = $('select[name="wardId"]');
@@ -199,13 +199,30 @@ var checkoutPackage = {
 
             if(parseInt(districtId))
             {
-                wardSelect.find('option').hide();
-                wardSelect.find('option[data-district-id="'+districtId+'"]').show();
-                wardSelect.removeAttr('disabled').find('option[value=""]').show();
+                var callBack = function(data){
+                    if(data.ok){
+                        var items = data.data;
+                        var strOption = '<option value="">Chọn phường/xã</option>';
+                        for(var i = 0; i < items.length; i++){
+                            strOption += '<option value="'+items[i].id+'">'+items[i].name+'</option>'
+                        }
+                        Kacana.checkout.page.find('select[name="wardId"]').html(strOption);
+                        Kacana.utils.loading.closeLoading();
+                        wardSelect.removeAttr('disabled').show();
+                    }
+                    else
+                        Kacana.utils.showError('có cái gì sai sai ở đây! vui lòng gọi: 0906.054.206');
+                };
+                var errorCallBack = function(data){
+                    Kacana.utils.showError('có cái gì sai sai ở đây! vui lòng gọi: 0906.054.206');
+                    Kacana.utils.loading.closeLoading();
+                };
+
+                Kacana.utils.loading.loading($('#form_address_step').parents('.panel-heading'));
+                Kacana.ajax.cart.getWardByDistrictId(districtId, callBack, errorCallBack);
             }
             else{
-                wardSelect.val('').attr('disabled', true).find('option[value=""]').show();
-                form.formValidation('enableFieldValidators', 'ward', false).formValidation('resetField', 'wardId');
+                wardSelect.val('').attr('disabled', true);
             }
         }
     }

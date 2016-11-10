@@ -250,8 +250,8 @@ class cartService {
         if(!$order['district_id'])
             throw new \Exception('bad districtId');
 
-//        if(!$order['ward_id'])
-//            throw new \Exception('bad ward_id');
+        if(!$order['ward_id'])
+            throw new \Exception('bad ward_id');
 
         if(!$order['phone'])
             throw new \Exception('bad phone number');
