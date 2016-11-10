@@ -8,6 +8,7 @@ var orderPackage = {
             Kacana.order.setupDatatableForOrder();
             Kacana.order.createBaseOrder();
             $('#modal-create-order').on('change', 'select[name="cityId"]', Kacana.order.changeCity);
+            $('#modal-create-order').on('change', 'select[name="districtId"]', Kacana.order.changeDistrict);
 
             $('#modal-create-order').on('click', '#create-new-address-delivery', function () {
                 var modal = $('#modal-create-order');
@@ -15,6 +16,7 @@ var orderPackage = {
                 modal.find('#deliveryPhone').removeAttr('disabled');
                 modal.find('select[name="cityId"]').removeAttr('disabled');
                 modal.find('select[name="districtId"]').removeAttr('disabled');
+                modal.find('select[name="wardId"]').removeAttr('disabled');
                 modal.find('#deliveryId').val(0);
                 modal.find('#deliveryStreet').removeAttr('disabled');
                 modal.find('#deliveryEmail').removeAttr('disabled');
@@ -107,12 +109,12 @@ var orderPackage = {
         changeCity: function () {
             var form = $('#modal-create-order');
             var districtSelect = $('select[name="districtId"]');
-            // var wardSelect = $('select[name="wardId"]');
+            var wardSelect = $('select[name="wardId"]');
 
             var cityId = $(this).val();
 
             // form.formValidation('enableFieldValidators', 'wardId', false).formValidation('resetField', 'wardId');
-            // wardSelect.val('').attr('disabled', true).find('option[value=""]').show();
+            wardSelect.val('').attr('disabled', true);
 
             // form.formValidation('enableFieldValidators', 'districtId', true).formValidation('resetField', 'districtId');
             districtSelect.val('');
@@ -136,12 +138,53 @@ var orderPackage = {
                 districtSelect.val('').attr('disabled', true).find('option[value=""]').show();
             }
         },
+        changeDistrict: function () {
+            var form = $('#modal-create-order');
+            var districtId = $(this).val();
+            var wardSelect = $('select[name="wardId"]');
+            // form.formValidation('enableFieldValidators', 'wardId', true).formValidation('resetField', 'wardId');
+            wardSelect.val('');
+
+            if(parseInt(districtId))
+            {
+                var callBack = function(data){
+                    if(data.ok){
+                        var items = data.data;
+                        var strOption = '<option value="">Chọn phường/xã</option>';
+                        for(var i = 0; i < items.length; i++){
+                            strOption += '<option value="'+items[i].id+'">'+items[i].name+'</option>'
+                        }
+                        form.find('select[name="wardId"]').html(strOption);
+                        Kacana.utils.closeLoading();
+                        wardSelect.removeAttr('disabled').show();
+                    }
+                    else
+                        Kacana.utils.showError('có cái gì sai sai ở đây! vui lòng gọi: 0906.054.206');
+                };
+                var errorCallBack = function(data){
+                    Kacana.utils.showError('có cái gì sai sai ở đây! vui lòng gọi: 0906.054.206');
+                    Kacana.utils.closeLoading();
+                };
+
+                Kacana.utils.loading($('#modal-create-order'));
+                Kacana.ajax.order.getWardByDistrictId(districtId, callBack, errorCallBack);
+            }
+            else{
+                wardSelect.val('').attr('disabled', true);
+            }
+        },
         chooseAddressDelivery: function ($item) {
             var modal = $('#modal-create-order');
             modal.find('#deliveryName').val($item.name).attr('disabled', true);
             modal.find('#deliveryPhone').val($item.phone).attr('disabled', true);
             modal.find('select[name="cityId"]').val($item.city_id).trigger('change').attr('disabled', true);
             modal.find('select[name="districtId"]').val($item.district_id).attr('disabled', true);
+            var ward = '<option value="">Chọn phường/xã</option>';
+            if($item.ward_id)
+                ward = '<option selected value="'+$item.ward_id+'">'+$item.ward.name+'</option>';
+
+            modal.find('select[name="wardId"]').html(ward);
+
             modal.find('#deliveryStreet').val($item.street).attr('disabled', true);
             modal.find('#deliveryId').val($item.id);
             modal.find('#deliveryEmail').val($item.email).attr('disabled', true);
@@ -288,14 +331,70 @@ var orderPackage = {
                 });
 
                 $("#content-edit-order").on('change','#city_id',function(){
+                    var form = ("#content-edit-order");
+                    var districtSelect = $("#content-edit-order").find('select[name="district_id"]');
+                    var wardSelect = $("#content-edit-order").find('select[name="ward_id"]');
+
                     var cityId = $(this).val();
-                    $("#content-edit-order").find('#district option[data-city-id="'+cityId+'"]').eq(0).attr('selected', 'selected');
-                    $("#content-edit-order").find('#district option').each(function(){
-                        if($(this).data('city-id') == cityId)
-                            $(this).removeClass('hidden');
-                        else
-                            $(this).addClass('hidden');
-                    });
+
+                    wardSelect.val('').attr('disabled', true);
+
+                    districtSelect.val('');
+
+                    if(parseInt(cityId))
+                    {
+                        var listDistrict = districtSelect.data('district');
+                        var listOptionDistrict = '<option value="" style="display: block;">Chọn quận/huyện</option>';
+
+                        for(var i =0 ; i <  listDistrict.length ; i++){
+                            if(listDistrict[i].city_id == parseInt(cityId))
+                                listOptionDistrict +='<option data-city-id="'+listDistrict[i].city_id+'" value="'+listDistrict[i].id+'">'+listDistrict[i].name+'</option>';
+                        }
+
+                        districtSelect.html(listOptionDistrict);
+                        districtSelect.removeAttr('disabled')
+                    }
+                    else
+                    {
+                        districtSelect.val('').attr('disabled', true).find('option[value=""]').show();
+                    }
+
+                });
+
+                $("#content-edit-order").on('change','#district',function(){
+                    var form = $("#content-edit-order");
+                    var districtId = $(this).val();
+                    var wardSelect = $('select[name="ward_id"]');
+                    // form.formValidation('enableFieldValidators', 'wardId', true).formValidation('resetField', 'wardId');
+                    wardSelect.val('');
+
+                    if(parseInt(districtId))
+                    {
+                        var callBack = function(data){
+                            if(data.ok){
+                                var items = data.data;
+                                var strOption = '<option value="">Chọn phường/xã</option>';
+                                for(var i = 0; i < items.length; i++){
+                                    strOption += '<option value="'+items[i].id+'">'+items[i].name+'</option>'
+                                }
+                                form.find('select[name="ward_id"]').html(strOption);
+                                Kacana.utils.closeLoading();
+                                wardSelect.removeAttr('disabled').show();
+                            }
+                            else
+                                Kacana.utils.showError('có cái gì sai sai ở đây! vui lòng gọi: 0906.054.206');
+                        };
+                        var errorCallBack = function(data){
+                            Kacana.utils.showError('có cái gì sai sai ở đây! vui lòng gọi: 0906.054.206');
+                            Kacana.utils.closeLoading();
+                        };
+
+                        Kacana.utils.loading($("#content-edit-order"));
+                        Kacana.ajax.order.getWardByDistrictId(districtId, callBack, errorCallBack);
+                    }
+                    else{
+                        wardSelect.val('').attr('disabled', true);
+                    }
                 });
 
                 $('#content-edit-order').on('click', 'button[data-target="#modal-shipping-order"]', Kacana.order.detail.openModalShipping);

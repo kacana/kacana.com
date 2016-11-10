@@ -399,7 +399,16 @@ var ajaxPackage = {
                 var dataPost = data;
                 var options = [];
                 Kacana.ajax.init(url, dataType, type, dataPost, callBack, errorCallBack, options);
+            },
+            getWardByDistrictId: function(districtId, callBack, errorCallBack){
+                var url = '/order/getWardByDistrictId?districtId='+districtId;
+                var dataType = 'json';
+                var type = 'get';
+                var dataPost = {};
+                var options = [];
+                Kacana.ajax.init(url, dataType, type, dataPost, callBack, errorCallBack, options);
             }
+
         }
      }
 };

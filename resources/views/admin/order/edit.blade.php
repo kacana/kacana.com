@@ -119,32 +119,44 @@
                                 <div class="form-group">
                                     {!! Form::label('Email', 'Email', array('class'=>'col-sm-3 control-label')) !!}
                                     <div class="col-sm-9">
-                                        {!! Form::text('email', $user_address->email, array('required', 'class' => 'form-control', 'placeholder' => 'Email')) !!}
+                                        {!! Form::text('email', $user_address->email, array( 'class' => 'form-control', 'placeholder' => 'Email')) !!}
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     {!! Form::label('street', 'Địa chỉ', array('class'=>'col-sm-3 control-label'))!!}
                                     <div class="col-sm-9">
-                                    {!! Form::text('street', $user_address->street, array('class'=>'form-control', 'placeholder'=>'Địa chỉ')) !!}
+                                    {!! Form::text('street', $user_address->street, array('required', 'class'=>'form-control', 'placeholder'=>'Địa chỉ')) !!}
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     {!! Form::label('city_id', 'Thành phố', array('class'=>'col-sm-3 control-label'))!!}
                                     <div class="col-sm-9">
-                                    {!! Form::select('city_id', $cities, $user_address->city_id, array('class'=>'form-control')) !!}
+                                    {!! Form::select('city_id', $cities, $user_address->city_id, array('required', 'class'=>'form-control')) !!}
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     {!! Form::label('district_id', 'Quận', array('class'=>'col-sm-3 control-label'))!!}
                                     <div class="col-sm-9">
-                                        <select id="district" class="form-control" name="district_id">
+                                        <select required data-district="{{$districts}}" id="district" class="form-control" name="district_id">
                                             @foreach($districts as $district)
-                                                <option @if(($user_address->district_id == $district->id)) selected="selected" @endif class="@if(!($user_address->city_id == $district->city_id)) hidden @endif" data-city-id="{{$district->city_id}}" value="{{$district->id}}">{{$district->name}}</option>
+                                                @if(($user_address->city_id == $district->city_id))
+                                                    <option @if(($user_address->district_id == $district->id)) selected="selected" @endif data-city-id="{{$district->city_id}}" value="{{$district->id}}">{{$district->name}}</option>
+                                                @endif
                                             @endforeach
                                         </select>
                                     </div>
                                 </div>
-
+                                <div class="form-group">
+                                    {!! Form::label('district_id', 'Quận', array('class'=>'col-sm-3 control-label'))!!}
+                                    <div class="col-sm-9">
+                                        <select required id="wardId" class="form-control" name="ward_id">
+                                            <option value="">Chọn phường/xã</option>
+                                            @foreach($wards as $ward)
+                                                <option @if(($user_address->ward_id == $ward->id)) selected="selected" @endif value="{{$ward->id}}">{{$ward->name}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
                             </div>
                             <div class="modal-footer">
                                 <button type="submit" id="btn-update"class="btn btn-primary">Cập nhật</button>

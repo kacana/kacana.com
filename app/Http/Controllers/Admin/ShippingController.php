@@ -24,6 +24,8 @@ class ShippingController extends BaseController {
         $originShipFee = $request->input('originShipFee', 0);
         $extraDiscount = $request->input('extraDiscount', 0);
         $extraDiscountDesc = $request->input('extraDiscountDesc', '');
+        $OrderClientNote = $request->input('OrderClientNote', '');
+        $OrderContentNote = $request->input('OrderContentNote', '');
 
         $weight = $request->input('Weight', KACANA_SHIP_DEFAULT_WEIGHT);
         $length = $request->input('Length', KACANA_SHIP_DEFAULT_LENGTH);
@@ -31,7 +33,7 @@ class ShippingController extends BaseController {
         $height = $request->input('Height', KACANA_SHIP_DEFAULT_HEIGHT);
 
         try{
-            $ship = $shipService->createShippingOrder($orderDetailIds, $orderId, $shippingServiceTypeId, $pickHubId, $weight, $length, $width, $height, $originShipFee, $shipFee, $extraDiscount, $extraDiscountDesc, $paid);
+            $ship = $shipService->createShippingOrder($orderDetailIds, $orderId, $shippingServiceTypeId, $pickHubId, $weight, $length, $width, $height, $originShipFee, $shipFee, $extraDiscount, $extraDiscountDesc, $OrderClientNote, $OrderContentNote, $paid);
             return redirect('/shipping/detail?id='.$ship->OrderCode);
         } catch (\Exception $e) {
             // @codeCoverageIgnoreStart

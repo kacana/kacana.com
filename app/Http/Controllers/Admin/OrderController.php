@@ -60,7 +60,7 @@ class OrderController extends BaseController {
             $shippingServiceInfos = $shipService->calculateServiceFee($user_address->district->code, $mainHub->DistrictCode, $serviceList);
 
             $cities = $addressService->getListCity()->lists('name', 'id');
-            $wards = $addressService->getListWard()->lists('name', 'id');
+            $wards = $addressService->getListWardByDistrictId($user_address->district_id);
             $districts = $addressService->getListDistrict();
             return view('admin.order.edit', compact('order', 'buyer', 'user_address', 'cities', 'districts', 'wards', 'shippingServiceInfos', 'hubInfos'));
         } catch (\Exception $e) {
@@ -203,6 +203,7 @@ class OrderController extends BaseController {
         $deliveryPhone = $request->input('deliveryPhone','');
         $cityId = $request->input('cityId','');
         $districtId = $request->input('districtId','');
+        $wardId = $request->input('wardId','');
         $deliveryStreet = $request->input('deliveryStreet','');
         $deliveryEmail = $request->input('deliveryEmail','');
 
@@ -216,6 +217,7 @@ class OrderController extends BaseController {
                 $deliveryAddress['street'] = $deliveryStreet;
                 $deliveryAddress['city_id'] = $cityId;
                 $deliveryAddress['district_id'] = $districtId;
+                $deliveryAddress['ward_id'] = $wardId;
 
                 $addressReceive = $addressService->createUserAddress(KACANA_USER_SYSTEM_ORDER_ID, $deliveryAddress);
                 $deliveryId = $addressReceive->id;
@@ -404,5 +406,24 @@ class OrderController extends BaseController {
             else
                 return view('errors.404', ['error_message' => $e]);
         }
+    }
+
+    public function getWardByDistrictId(Request $request){
+        $addressService = new addressService();
+
+        $districtId = $request->input('districtId');
+        $result['ok'] = 0;
+        try{
+            $result['data'] = $addressService->getListWardByDistrictId($districtId);
+            $result['ok'] = 1;
+        }
+        catch (\Exception $e) {
+            // @codeCoverageIgnoreStart
+            $result['error'] = $e->getMessage();
+            // @codeCoverageIgnoreEnd
+        }
+
+        return response()->json($result);
+
     }
 }

@@ -135,8 +135,9 @@ Route::group(['domain'=>KACANA_AUTH_ADMIN_NAME.'.{nameDomain}','middleware' => '
     Route::any('/order/createOrder',                         array('as'=>'OrderCreateOrder',                'uses'=>'Admin\OrderController@createOrder'));
     Route::post('/order/updateOrderDetail/{orderId}/{orderDetailId}', array('as'=>'OrderUpdateOrderDetail', 'uses'=>'Admin\OrderController@updateOrderDetail'));
     Route::post('/order/searchProduct',                      array('as'=>'OrderSearchProduct',              'uses'=>'Admin\OrderController@searchProduct'));
-    Route::get('/order/addProductToOrder',                  array('as'=>'OrderAddProductToOrder',           'uses'=>'Admin\OrderController@addProductToOrder'));
-    Route::get('/order/deleteOrderDetail',                  array('as'=>'OrderDeleteOrderDetail',           'uses'=>'Admin\OrderController@deleteOrderDetail'));
+    Route::get('/order/addProductToOrder',                   array('as'=>'OrderAddProductToOrder',           'uses'=>'Admin\OrderController@addProductToOrder'));
+    Route::get('/order/deleteOrderDetail',                   array('as'=>'OrderDeleteOrderDetail',           'uses'=>'Admin\OrderController@deleteOrderDetail'));
+    Route::get('/order/getWardByDistrictId',                 array('as'=>'OrderGetWardByDistrictId',         'uses'=>'Admin\OrderController@getWardByDistrictId'));
 
     //Shipping Controller
     Route::any('/shipping',                                  array('as'=>'listShipping',                 'uses'=>'Admin\ShippingController@index'));

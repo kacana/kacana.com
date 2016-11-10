@@ -34,6 +34,12 @@
                                     <option value="">Chọn quận/huyện</option>
                                 </select>
                             </div>
+                            <div class="form-group col-xs-6">
+                                <label class="control-label" for="">Phường, xã</label>
+                                <select required disabled="true" name="wardId" class="form-control">
+                                    <option value="">Chọn phường/xã</option>
+                                </select>
+                            </div>
                             <div class="form-group col-xs-12">
                                 <label for="deliveryStreet">Địa chỉ - lầu, số nhà, đường, phường</label>
                                 <textarea required id="deliveryStreet" class="deliveryStreet form-control" rows="3" size="50" placeholder="Địa chỉ - lầu, số nhà, đường, phường" name="deliveryStreet"></textarea>

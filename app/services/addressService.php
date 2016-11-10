@@ -212,6 +212,7 @@ class addressService {
             foreach ($items as &$item){
                 $item->district = $item->district;
                 $item->city = $item->city;
+                $item->ward = $item->ward;
             }
 
         return $items;

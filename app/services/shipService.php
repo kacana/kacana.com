@@ -255,7 +255,7 @@ class shipService {
      * @param $height
      * @return mixed
      */
-    public function createShippingOrder($orderDetailIds, $orderId, $shippingServiceTypeId, $pickHubId, $weight, $length, $width, $height, $originShipFee, $shipFee, $extraDiscount, $extraDiscountDesc, $paid){
+    public function createShippingOrder($orderDetailIds, $orderId, $shippingServiceTypeId, $pickHubId, $weight, $length, $width, $height, $originShipFee, $shipFee, $extraDiscount, $extraDiscountDesc, $OrderClientNote, $OrderContentNote, $paid){
 
         $orderService = new orderService();
         $params = array();
@@ -280,10 +280,12 @@ class shipService {
         $params['Length'] = $length;
         $params['Width'] = $width;
         $params['Height'] = $height;
-        $params['ContentNote'] = 'Cho khách xem hàng trước!';
+        $params['ClientNote'] = $OrderClientNote. '--' .$OrderContentNote;
         $params['SealCode'] = 'kacana_order_'.$orderId;
         $params['CODAmount'] = $CODAmount;
         $params['PickHubID'] = $pickHubId;
+        if($order->addressReceive->ward_id)
+            $params['ToWardCode'] = $order->addressReceive->ward->code;
 
         $results = $this->makeRequest('CreateShippingOrder', $params);
 

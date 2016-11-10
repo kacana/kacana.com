@@ -55,35 +55,51 @@
                 <div class="clear" ></div>
             </div>
             <div class="border-top padding-1" >
-                <div class="form-group col-xs-3">
+                <div class="form-group col-xs-4">
                     <label class="control-label text-red" for="phone">Tổng COD</label>
                     <div>
                         <input id="total_cod" disabled="disabled" class="form-control" type="text" value="0" name="totalCod" plaequired="required">
                     </div>
                 </div>
 
-                <div style="margin: 0 10px" class="form-group  col-xs-3">
+                <div style="margin: 0 10px" class="form-group  col-xs-4">
                     <label class="control-label" for="phone">Phí Ship</label>
                     <div >
                         <input id="ship_fee" class="form-control" type="text" value="40000" name="shipFee" placeholder="Phí ship" required="required">
                     </div>
                 </div>
-                <div class="form-group  col-xs-3">
+                <div class="form-group  col-xs-4">
                     <label class="control-label text-purple" for="phone">Đã thanh toán</label>
                     <div >
                         <input id="paid" class="form-control" type="text" value="0" name="paid" placeholder="Đã thanh " required="required">
                     </div>
                 </div>
-                <div style="margin: 0 10px" class="form-group  col-xs-3">
+                <div style="margin-right: 10px" class="form-group  col-xs-6">
                     <label class="control-label text-green" for="phone">Giảm thêm</label>
                     <div >
                         <input id="extra_discount" class="form-control" type="text" value="0" name="extraDiscount" placeholder="Giảm thêm" required="required">
                     </div>
                 </div>
-                <div class="form-group  col-xs-12 ">
+                <div class="form-group col-xs-6 ">
                     <label class="control-label text-green" for="phone">Diễn giải giảm thêm</label>
                     <div >
                         <textarea class="form-control" rows="1" size="50" placeholder="Mô tả cho việc giảm thêm để in vận đơn" name="extraDiscountDesc"></textarea>
+                    </div>
+                </div>
+                <div  style="margin-right: 10px" class="form-group  col-xs-6 ">
+                    <label class="control-label text-red" for="phone">Ghi chú đơn hàng(bắt buộc)</label>
+                    <div >
+                        <select class="form-control" name="OrderClientNote" >
+                            <option value="Cho xem hàng, không cho thử" >Cho xem hàng, không cho thử</option>
+                            <option value="" >Không cho xem hàng</option>
+                            <option value="Cho thử hàng" >Cho thử hàng</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group col-xs-6 ">
+                    <label class="control-label text-green" for="phone">Ghi chú đơn hàng</label>
+                    <div >
+                        <textarea class="form-control" rows="1" size="50" placeholder="Ghi chú đơn hàng" name="OrderContentNote"></textarea>
                     </div>
                 </div>
                 <div class="clear" ></div>
@@ -123,7 +139,7 @@
                 <div class="form-group">
                     <label class="col-sm-2 control-label" for="phone">Đến</label>
                     <div class="col-sm-10">
-                        <b>{{$user_address->name}}</b><br> {{$user_address->street}}, {{$user_address->district->name}}, {{$user_address->city->name}}
+                        <b>{{$user_address->name}}</b><br> {{$user_address->street}}, {{$user_address->district->name}}, @if($user_address->ward_id) {{$user_address->ward->name}} @endif {{$user_address->city->name}}
                     </div>
                 </div>
                 <div class="form-group">
