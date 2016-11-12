@@ -3,7 +3,7 @@
 @section('meta-title', $item->name)
 @section('meta-description', $item->meta)
 @section('meta-keyword', implode(", ", $item->metaKeyword))
-@section('meta-image', rawurlencode('http:'.$item->image))
+@section('meta-image', 'http:'.AWS_CDN_URL.str_replace(' ', '%20',$item->getOriginal('image')))
 {{--*/ $indexImage = 0 /*--}}
 
 @section('content')
