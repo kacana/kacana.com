@@ -3,7 +3,7 @@
 @section('meta-title', $item->name)
 @section('meta-description', $item->meta)
 @section('meta-keyword', implode(", ", $item->metaKeyword))
-@section('meta-image', 'http:'.$item->image)
+@section('meta-image', rawurlencode('http:'.$item->image))
 {{--*/ $indexImage = 0 /*--}}
 
 @section('content')
