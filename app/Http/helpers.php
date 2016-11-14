@@ -299,7 +299,7 @@ function limitString($str, $len = 100){
 function fixHtml($html) {
 
     $htmlFixer = new Kacana\HtmlFixer();
-    if($html)
+    if(trim($html))
         return $htmlFixer->getFixedHtml($html);
     else
         return $html;
