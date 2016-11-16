@@ -186,9 +186,8 @@
     font-size: 20px;
     font-weight: 400;
     text-shadow: 0 0 0 #000;
-    width: 230px;
+    width: 100%;
     border-radius: 2px;
-    margin-bottom: 10px;
     &:hover{
       background: linear-gradient(#51a9ee,#147bcd);
     }
@@ -199,19 +198,27 @@
   }
   .save-product-wrap{
     display: inline-block;
-    position: absolute;
-    margin-left: 30px;
     a{
       color: @color-green;
       text-decoration: none;
+      font-size: 12px;
+      height: 20px;
+      display: block;
+      overflow: hidden;
+      padding: 0 0 0 25px;
       i.pe-7s-like{
-        font-size: 43px;
-        display: block;
+        font-size: 20px;
+        margin-left: -25px;
+        position: absolute;
       }
       i.fa-heart{
-        font-size: 35px;
+        font-size: 17px;
+        margin: 2px 0 0 -23px;
+        position: absolute;
         display: none;
-        padding: 4px 0 0 4px;
+      }
+      span{
+
       }
     }
     &:hover a, &.active a{
@@ -220,8 +227,17 @@
         display: none;
       }
       i.fa-heart{
-        display: block;
+        display: inline-block;
       }
+    }
+  }
+  .btn-post-to-facebook{
+    color: #496397;
+    font-size: 12px;
+    text-decoration: none;
+    i{
+      font-size: 17px;
+      margin-right: 5px;
     }
   }
   .shop-rule{
@@ -330,6 +346,37 @@
       max-height: 200px;
       text-shadow: 0 3px 5px #000;
     }
+}
+
+#modal-post-to-facebook{
+  .wrap-list-image-post-to-facebook{
+    width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    height: 130px;
+    .list-image-post-to-facebook{
+      height: 100px;
+      white-space: nowrap;
+      .item-image-post-to-facebook{
+        height: 100px;
+        img{
+          border: 2px solid @color-border;
+          height: 100%;
+          margin: 5px;
+          padding: 5px;
+          &.active{
+            border-color: @color-green;
+          }
+        }
+      }
+    }
+  }
+  .desc-post-to-facebook{
+    width: 100%;
+    border: 1px solid @color-border;
+    height:80px;
+    padding: 5px;
+  }
 }
 @-moz-document url-prefix() {
   select.select-custom {

@@ -133,7 +133,116 @@ var productdetailPackage = {
             });
 
             Kacana.productdetail.page.on('click', '#add-cart-btn', Kacana.productdetail.checkout);
+            Kacana.productdetail.page.on('click', 'a[href="#post-to-facebook"]', Kacana.productdetail.postToFacebook);
             Kacana.productdetail.checkColorAvailable();
+            Kacana.productdetail.bindEventPostToFacebook();
+        },
+        bindEventPostToFacebook: function () {
+            var modal = $('#modal-post-to-facebook');
+
+            modal.on('click','.item-image-post-to-facebook img', function () {
+               $(this).toggleClass('active');
+                if(modal.find('.item-image-post-to-facebook img.active').length)
+                    modal.find('.btn-post-to-facebook').removeClass('disabled');
+                else
+                    modal.find('.btn-post-to-facebook').addClass('disabled');
+            });
+
+            modal.on('click', '.btn-post-to-facebook', function () {
+                var images = [];
+                var productId = Kacana.productdetail.page.data('id');
+                var descPost = modal.find('.desc-post-to-facebook').val();
+                modal.find('.item-image-post-to-facebook img.active').each(function () {
+                    images.push(($(this).data('id')));
+                });
+
+
+                var callBack = function(data) {
+
+                    if(data.ok){
+                        sweetAlert(
+                            'Hoàn thành',
+                            'Kacana đã đăng một bài viết lên Facebook của bạn!',
+                            'success'
+                        );
+                    }
+                    else
+                    {
+                        Kacana.utils.showError('có cái gì sai sai ở đây! vui lòng gọi: 0906.054.206');
+                    }
+                    Kacana.utils.loading.closeLoading();
+                };
+                var errorCallBack = function(data){
+                    Kacana.utils.loading.closeLoading();
+
+                };
+
+                var data = {
+                    productId: productId,
+                    descPost: descPost,
+                    images: images
+                };
+                modal.modal('hide');
+
+                Kacana.utils.loading.loading();
+                Kacana.ajax.product.postProductToFacebook(data, callBack, errorCallBack);
+
+            });
+        },
+        showPopupPostToFacebook: function () {
+            var modal = $('#modal-post-to-facebook');
+            modal.find('.item-image-post-to-facebook img').removeClass('active');
+            modal.find('.desc-post-to-facebook').val('');
+            modal.find('.btn-post-to-facebook').addClass('disabled');
+            modal.modal();
+        },
+        postToFacebook: function () {
+            var hasSocial = $(this).data('has-social');
+
+            if(hasSocial == 1)
+            {
+                Kacana.productdetail.showPopupPostToFacebook();
+            }
+            else if($(this).data('logged') != 0)
+            {
+                Kacana.utils.facebook.postToFacebook(Kacana.productdetail.facebookPostCallback);
+            }
+        },
+        facebookPostCallback: function (response) {
+            if(response.status == 'connected')
+            {
+                response = response.authResponse;
+                var accessToken = response.accessToken;
+                Kacana.productdetail.facebookCallbackAllowPost(accessToken);
+
+            }
+            else{
+                Kacana.utils.showError('get access facebook failed');
+            }
+        },
+        facebookCallbackAllowPost: function (accessToken) {
+            var callBack = function(data) {
+
+                if(data.ok){
+                    Kacana.productdetail.showPopupPostToFacebook();
+                }
+                else
+                {
+                    Kacana.utils.showError('có cái gì sai sai ở đây! vui lòng gọi: 0906.054.206');
+                }
+                Kacana.utils.loading.closeLoading();
+            };
+            var errorCallBack = function(data){
+                Kacana.utils.loading.closeLoading();
+
+            };
+
+            var data = {
+                accessToken: accessToken
+            };
+
+            Kacana.utils.loading.loading();
+            Kacana.ajax.auth.facebookCallbackAllowPost(data, callBack, errorCallBack);
         },
         checkColorAvailable: function () {
             if(Kacana.productdetail.page.find('a[href="#choose-product-color"]').length == 1){

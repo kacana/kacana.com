@@ -515,4 +515,43 @@ class userService {
 
         return $this->_userProductLike->reportUserProductLike($startTime, $endTime, $type);
     }
+
+    public function updateFacebookAccessToken($profiles, $accessToken, $user){
+        $userSocialModel = new userSocialModel();
+        $result['ok'] = 0;
+
+        if(!$profiles)
+        {
+            $result['error_code'] = KACANA_AUTH_SIGNUP_BAD_FACEBOOK_PROFILE;
+            $result['error_message'] = 'Chúng tôi không thể lấy thông tin từ facebook của bạn!';
+            return $result;
+        }
+
+        $userSocial = $userSocialModel->getItemBySocialId($profiles['id'], KACANA_SOCIAL_TYPE_FACEBOOK);
+
+        if($userSocial)
+        {
+            if($userSocial->user_id == $user->id){
+                $items = [
+                    'ref' => 1,
+                    'token' => $accessToken,
+                    'social_id' => $profiles['id']
+                ];
+                $userSocialModel->updateItem($user->id, KACANA_SOCIAL_TYPE_FACEBOOK, $items);
+                $result['ok'] = 1;
+            }
+            else
+            {
+                $result['error_code'] = KACANA_AUTH_SIGNUP_EXISTS_SOCIAL_ACCOUNT;
+                $result['error_message'] = 'Tài khoản facebook này đã được sử dụng vui lòng đăng nhập lại!';
+                return $result;
+            }
+
+        }
+        else{
+            $userSocialModel->createItem($user->id, KACANA_SOCIAL_TYPE_FACEBOOK, $accessToken, $profiles['id']);
+            $result['ok'] = 1;
+        }
+        return $result;
+    }
 }

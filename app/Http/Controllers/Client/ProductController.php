@@ -135,4 +135,33 @@ class ProductController extends BaseController {
 
         return response()->json($result);
     }
+
+    public function postProductToFacebook(Request $request)
+    {
+        $productService = new productService();
+
+        $productId = $request->input('productId', 0);
+        $descPost = $request->input('descPost', 0);
+        $images = $request->input('images', 0);
+
+        $result['ok'] = 0;
+
+        try{
+            if(\Auth::check()){
+                $user = \Auth::user();
+                $productService->postProductToFacebook($productId, $descPost, $images, $user->id);
+                $result['ok'] = 1;
+            }
+        } catch (\Exception $e) {
+            if($request->ajax())
+            {
+                $result['error'] = $e->getMessage();
+                return $result;
+            }
+            else
+                return view('errors.404', ['error_message' => $e]);
+        }
+
+        return response()->json($result);
+    }
 }

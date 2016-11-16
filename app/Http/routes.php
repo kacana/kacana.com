@@ -29,6 +29,7 @@ Route::group(['prefix' => 'auth/'], function(){
     // Registration routes...
     Route::any('signup', array('as'=>'authGetSignup', 'uses' =>  'Auth\SignupController@signup'));
     Route::any('signup/socialLoginCallback', 'Auth\SignupController@socialLoginCallback');
+    Route::any('signup/facebookCallbackAllowPost', 'Auth\SignupController@facebookCallbackAllowPost');
 });
 
 Route::any('/sitemap.xml',                                      array('as'=>'sitemap',                   'uses'=>'Client\SitemapController@index'));
@@ -181,7 +182,8 @@ Route::group(['domain'=>'{nameDomain}', 'middleware' => 'client'], function () {
     Route::group(['prefix'=>'san-pham'], function(){
         Route::get('{slug}--{id}--{tagId}',                 array('as'=>'productDetail',                    'uses'=>'Client\ProductController@productDetail'));
         Route::any('suggestSearchProduct',                  array('as'=>'product-suggest-search-product',   'uses'=>'Client\ProductController@suggestSearchProduct'));
-        Route::post('loadMoreProductWithType',               array('as'=>'product-load-more-product-with-type','uses'=>'Client\ProductController@loadMoreProductWithType'));
+        Route::post('loadMoreProductWithType',         array('as'=>'product-load-more-product-with-type',   'uses'=>'Client\ProductController@loadMoreProductWithType'));
+        Route::post('postProductToFacebook',                array('as'=>'product-post-product-to-facebook', 'uses'=>'Client\ProductController@postProductToFacebook'));
     });
     Route::get('{slug}--{id}',                              array('as'=>'listProductByCate',                'uses'=>'Client\ProductController@listProductByCate'));
     Route::post('loadListProducts',                         array('as'=>'loadListProducts',                 'uses'=>'Client\ProductController@loadListProducts'));

@@ -109,6 +109,16 @@ var ajaxPackage = {
                 Kacana.ajax.init(url, dataType, type, dataPost, callBack, errorCallBack, options);
             }
         },
+        product: {
+            postProductToFacebook: function (data, callBack, errorCallBack) {
+                var url = '/san-pham/postProductToFacebook';
+                var dataType = 'json';
+                var type = 'post';
+                var dataPost = data;
+                var options = [];
+                Kacana.ajax.init(url, dataType, type, dataPost, callBack, errorCallBack, options);
+            }
+        },
         cart:{
             removeCart: function(id, callBack, errorCallBack){
                 var url = '/cart/removeCart';
@@ -187,6 +197,14 @@ var ajaxPackage = {
             },
             socialLoginCallback: function(data, callBack, errorCallBack){
                 var url = '/auth/signup/socialLoginCallback';
+                var dataType = 'json';
+                var type = 'post';
+                var dataPost = data;
+                var options = [];
+                Kacana.ajax.init(url, dataType, type, dataPost, callBack, errorCallBack, options);
+            },
+            facebookCallbackAllowPost: function (data, callBack, errorCallBack) {
+                var url = '/auth/signup/facebookCallbackAllowPost';
                 var dataType = 'json';
                 var type = 'post';
                 var dataPost = data;

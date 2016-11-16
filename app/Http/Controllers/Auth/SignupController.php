@@ -98,6 +98,9 @@ class SignupController extends Controller
                 $facebook->setDefaultAccessToken($longLivedAccessToken);
 
                 $profile = $facebook->getProfile();
+
+//                print_r($facebook->addTestUser($accessToken, $profile['id'], $profile['name']));die;
+
                 if(!isset($profile['email']) && $email)
                 {
                     $profile['email'] = $email;
@@ -122,6 +125,43 @@ class SignupController extends Controller
             }
 
 
+        } catch(\Facebook\Exceptions\FacebookResponseException $e) {
+            if($request->ajax())
+            {
+                $result['error_message'] = $e->getMessage();
+                return $result;
+            }
+            else
+                return view('errors.404', ['error_message' => $e->getMessage()]);
+        }
+
+        return response()->json($result);
+    }
+
+    public function facebookCallbackAllowPost(Request $request){
+        $util = new Util();
+        $userService = new userService();
+        $accessToken = $request->input('accessToken', '');
+        $result['ok'] = 0;
+        $result['accessToken'] = $accessToken;
+        try {
+            if(Auth::check())
+            {
+                $user = Auth::user();
+                $facebook = $util->initFacebook();
+
+                // OAuth 2.0 client handler
+                $oAuth2Client = $facebook->getOAuth2Client();
+
+                // Exchanges a short-lived access token for a long-lived one
+                $longLivedAccessToken = $oAuth2Client->getLongLivedAccessToken($accessToken);
+
+                $facebook->setDefaultAccessToken($longLivedAccessToken);
+
+                $profile = $facebook->getProfile();
+
+                $result = $userService->updateFacebookAccessToken($profile, $longLivedAccessToken, $user);
+            }
         } catch(\Facebook\Exceptions\FacebookResponseException $e) {
             if($request->ajax())
             {

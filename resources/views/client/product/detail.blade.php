@@ -21,8 +21,7 @@
         <div class="row">
             <div class="col-xs-12 col-sm-5">
                 <div class="summary entry-summary">
-                    <h1 class="name-product">{{$item->name}}</h1>
-
+                    <h1 class="name-product">{{ucfirst($item->name)}}</h1>
                     <p class="price">
                         <span class="amount">
                             @if($item->discount)
@@ -135,26 +134,50 @@
                             @endforeach
                         </ul>
                     @endif
-
-                    <button type="submit" class="btn btn-primary add-to-cart" id="add-cart-btn">
-                         Đặt Mua
-                    </button>
-                    <span class=@if($item->isLiked)"save-product-wrap active"@else"save-product-wrap"@endif >
-                    <a
-                            data-product-id="{{$item->id}}"
-                            data-product-url="{{urlProductDetail($item)}}"
-                            href=@if(\Kacana\Util::isLoggedIn() && !$item->isLiked)"#save-product-like"@elseif(\Kacana\Util::isLoggedIn() && $item->isLiked)"#remove-product-like"@else"#login-header-popup"@endif
-                            data-offset="3"
-                            data-distance-away="0"
-                            data-position="bottom left"
-                            data-title=@if(\Kacana\Util::isLoggedIn() && !$item->isLiked)"Lưu sản phẩm này"@elseif(\Kacana\Util::isLoggedIn() && $item->isLiked)"Bỏ lưu sản phẩm này"@else"Đăng nhập để lưu sản phẩm"@endif
-                            data-popup-kacana="title"
-                            class="save-product" >
-
-                        <i class="pe-7s-like" ></i>
-                        <i class="fa fa-heart" ></i>
-                    </a>
-                    </span>
+                    <div class="row">
+                        <span class="col-xs-8">
+                            <button type="submit" class="btn btn-primary add-to-cart" id="add-cart-btn">
+                                Đặt Mua
+                            </button>
+                        </span>
+                    </div>
+                    <div class="row vpadding-10" >
+                        <div class="col-xs-4">
+                            <span class=@if($item->isLiked)"save-product-wrap active"@else"save-product-wrap"@endif >
+                                <a  data-product-id="{{$item->id}}"
+                                    data-product-url="{{urlProductDetail($item)}}"
+                                    href=@if(\Kacana\Util::isLoggedIn() && !$item->isLiked)"#save-product-like"@elseif(\Kacana\Util::isLoggedIn() && $item->isLiked)"#remove-product-like"@else"#login-header-popup"@endif
+                                    class="save-product" >
+                                    <i class="pe-7s-like" ></i>
+                                    <i class="fa fa-heart" ></i>
+                                    <span>
+                                        @if(\Kacana\Util::isLoggedIn() && !$item->isLiked)
+                                        Lưu sản phẩm này
+                                        @elseif(\Kacana\Util::isLoggedIn() && $item->isLiked)
+                                            Bỏ lưu sản phẩm này
+                                        @else
+                                            Lưu sản phẩm này
+                                        @endif
+                                    </span>
+                                </a>
+                            </span>
+                        </div>
+                        <div class="col-xs-6">
+                            <span>
+                                <a @if(!\Kacana\Util::isLoggedIn())
+                                        data-popup-kacana="title"
+                                        data-title="Đăng nhập để đăng lên Facebook"
+                                        data-logged="0"
+                                   @elseif(\Kacana\Util::hasSocial(KACANA_SOCIAL_TYPE_FACEBOOK))
+                                        data-has-social="1"
+                                   @endif
+                                   class="btn-post-to-facebook"
+                                   href="#post-to-facebook" >
+                                    <i class="fa fa-facebook" ></i> Đăng lên Facebook
+                                </a>
+                            </span>
+                        </div>
+                    </div>
                     <div class="shop-rule row" >
                         <div class="col-md-12">
                             @include('client.product.order-rule')

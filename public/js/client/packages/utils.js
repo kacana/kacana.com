@@ -68,6 +68,9 @@ var utilsPackage = {
             login : function(callback){
                 FB.login(callback,{scope:'email,public_profile,user_friends'});
             },
+            postToFacebook: function (callback) {
+                FB.login(callback,{scope:'email,public_profile,user_friends, publish_actions, user_photos'});
+            },
             me : function(callback){
 
                 FB.api('/me', callback);

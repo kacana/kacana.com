@@ -5,8 +5,11 @@ use App\models\productPropertiesModel;
 use App\models\productTagModel;
 use App\models\productViewModel;
 use App\models\tagModel;
+use App\models\User;
 use App\models\userProductLikeModel;
+use App\models\userSocialModel;
 use Kacana\DataTables;
+use Kacana\Util;
 use Kacana\ViewGenerateHelper;
 use Kacana\HtmlFixer;
 use Cache;
@@ -750,6 +753,31 @@ class productService {
     public function getAllProductAvailable(){
         $productModel = new productModel();
         return $productModel->getProductToCreateCsv();
+    }
+
+    public function postProductToFacebook($productId, $descPost, $images, $userId){
+        $productModel = new productModel();
+        $userSocialModel = new userSocialModel();
+        $util = new Util();
+
+        $socialAccount = $userSocialModel->getItem($userId, KACANA_SOCIAL_TYPE_FACEBOOK);
+        $facebook = $util->initFacebook();
+        $facebook->setDefaultAccessToken($socialAccount->token);
+
+        $product = $productModel->getProductById($productId);
+        if(!$product)
+            throw new \Exception('BAD Product ID');
+
+        $galleries = $product->galleries;
+        $arrayFbMedia = [];
+
+        foreach ($galleries as $gallery)
+        {
+            if(in_array($gallery->id, $images))
+                array_push($arrayFbMedia, $facebook->postPhoto('http:'.AWS_CDN_URL.str_replace(' ', '%20',$gallery->getOriginal('image')), $product->name));
+        }
+
+        return $facebook->postFeed($arrayFbMedia, $descPost);
     }
 
     public function fixProductPrice(){
