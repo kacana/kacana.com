@@ -20,6 +20,13 @@ module.exports = function(grunt) {
                 ],
                 dest: '../../public/js/client/client.js'
             },
+            partner: {
+                src: [
+                    '../../public/js/partner/packages/core.js',
+                    '../../public/js/partner/packages/*.js'
+                ],
+                dest: '../../public/js/partner/partner.js'
+            },
         },
         uglify: {
             options: {
@@ -33,6 +40,11 @@ module.exports = function(grunt) {
             client: {
                 files: {
                     '../../public/js/client/client.min.js': ['<%= concat.client.dest %>']
+                }
+            },
+            partner: {
+                files: {
+                    '../../public/js/partner/partner.min.js': ['<%= concat.partner.dest %>']
                 }
             }
         },
@@ -52,6 +64,14 @@ module.exports = function(grunt) {
                 files: {
                     "../../public/css/client/client.css": "../../public/css/client/client.less"
                 }
+            },
+            partner: {
+                options: {
+                    paths: ["../../public/css/partner/"]
+                },
+                files: {
+                    "../../public/css/partner/partner.css": "../../public/css/partner/partner.less"
+                }
             }
         },
         cssmin: {
@@ -69,6 +89,14 @@ module.exports = function(grunt) {
                 },
                 files: {
                     "../../public/css/client/client.min.css": ["../../public/css/client/client.css"]
+                }
+            },
+            partner: {
+                options:{
+                    keepSpecialComments:0
+                },
+                files: {
+                    "../../public/css/partner/partner.min.css": ["../../public/css/partner/partner.css"]
                 }
             }
         },
@@ -89,10 +117,6 @@ module.exports = function(grunt) {
             }
         },
         watch: {
-            /*test: {
-             files: ['<%= jshint.files %>'],
-             tasks: ['jshint', 'qunit']
-             },*/
             jsAdmin: {
                 files: ['<%= concat.admin.src %>'],
                 tasks: ['jsAdmin']
@@ -108,6 +132,14 @@ module.exports = function(grunt) {
             cssClient: {
                 files: ['../../public/css/client/packages/*'],
                 tasks: ['cssClient']
+            },
+            jsPartner: {
+                files: ['<%= concat.partner.src %>'],
+                tasks: ['jsPartner']
+            },
+            cssPartner: {
+                files: ['../../public/css/partner/packages/*'],
+                tasks: ['cssPartner']
             }
         },
         closureCompiler:  {
@@ -118,7 +150,6 @@ module.exports = function(grunt) {
                 compilerOpts: {
                     compilation_level: 'SIMPLE_OPTIMIZATIONS',
                     externs: ['externs/*.js'],
-                    //define: ["'goog.DEBUG=false'"],
                     warning_level: 'verbose',
                     jscomp_off: ['checkTypes', 'fileoverviewTags'],
                     summary_detail_level: 3,
@@ -135,6 +166,10 @@ module.exports = function(grunt) {
             clientKacana: {
                 src: '../../public/js/client/client.js',
                 dest: '../../public/js/client/client.compile.js'
+            },
+            partnerKacana: {
+                src: '../../public/js/partner/partner.js',
+                dest: '../../public/js/partner/partner.compile.js'
             }
         }
     });
@@ -158,5 +193,9 @@ module.exports = function(grunt) {
     grunt.registerTask('jsClient', ['concat:client', 'uglify:client']);
     grunt.registerTask('closure', ['closureCompiler:client']);
     grunt.registerTask('cssClient', ['less:client','cssmin:client']);
+
+    grunt.registerTask('jsPartner', ['concat:partner', 'uglify:partner']);
+    grunt.registerTask('closure', ['closureCompiler:partner']);
+    grunt.registerTask('cssPartner', ['less:partner','cssmin:partner']);
 
 };

@@ -10,6 +10,12 @@
 /public/js/client/client.js
 /public/js/client/client.min.js
 
+/public/css/partner/partner.css
+/public/css/partner/partner.min.css
+/public/js/partner/partner.js
+/public/js/partner/partner.min.js
+
+/storage
 /public/images/product
 /public/images/tag
 /config

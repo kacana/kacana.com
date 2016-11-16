@@ -23,8 +23,11 @@
         <link href="/lib/waitMe/waitMe.min.css" rel="stylesheet">
         <link href="/lib/select2/select2.min.css" rel="stylesheet">
         <link href="/lib/colorpicker/bootstrap-colorpicker.min.css" rel="stylesheet">
+        <link href="/lib/morris/morris.css" rel="stylesheet">
+        <link href="/lib/daterangepicker/daterangepicker.css" rel="stylesheet">
 
         <script src="/lib/jquery/jquery-2.1.3.js" charset="utf-8" type="text/javascript"></script>
+        <script src="/lib/raphael/raphael.js" charset="utf-8" type="text/javascript"></script>
         <script src="/lib/jquery/jquery-ui-1.11.4/jquery-ui.min.js" charset="utf-8" type="text/javascript"></script>
         <script src="/lib/bootstrap/js/bootstrap.min.js" charset="utf-8" type="text/javascript"></script>
         <script src='/lib/fastclick/fastclick.min.js'></script>
@@ -48,6 +51,9 @@
         <script src="/lib/colorpicker/bootstrap-colorpicker.min.js" type="text/javascript"></script>
         <script src="/lib/tmpl/jquery.tmpl.min.js"></script>
         <script src="/lib/tmpl/jquery.tmplPlus.min.js"></script>
+        <script src="/lib/morris/morris.min.js"></script>
+        <script src="/lib/daterangepicker/moment.min.js"></script>
+        <script src="/lib/daterangepicker/daterangepicker.js"></script>
 
         <!--[if lt IE 9]>
         <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
