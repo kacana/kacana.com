@@ -136,6 +136,18 @@ var productdetailPackage = {
             Kacana.productdetail.page.on('click', 'a[href="#post-to-facebook"]', Kacana.productdetail.postToFacebook);
             Kacana.productdetail.checkColorAvailable();
             Kacana.productdetail.bindEventPostToFacebook();
+
+            setTimeout(function() {
+                var callBack = function(data) {
+                    console.log('tracking product view is DONE!')
+                };
+                var errorCallBack = function(data){
+
+                };
+                var productId = Kacana.productdetail.page.data('id');
+                var data = {productId: productId};
+                Kacana.ajax.product.trackUserProductView(data, callBack, errorCallBack);
+            }, 5000);
         },
         bindEventPostToFacebook: function () {
             var modal = $('#modal-post-to-facebook');

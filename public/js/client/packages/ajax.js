@@ -117,6 +117,14 @@ var ajaxPackage = {
                 var dataPost = data;
                 var options = [];
                 Kacana.ajax.init(url, dataType, type, dataPost, callBack, errorCallBack, options);
+            },
+            trackUserProductView: function (data, callBack, errorCallBack) {
+                var url = '/san-pham/trackUserProductView';
+                var dataType = 'json';
+                var type = 'post';
+                var dataPost = data;
+                var options = [];
+                Kacana.ajax.init(url, dataType, type, dataPost, callBack, errorCallBack, options);
             }
         },
         cart:{

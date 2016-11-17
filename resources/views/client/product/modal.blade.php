@@ -21,11 +21,13 @@
                 <label class="color-grey">Chọn hình</label>
                 <div class="wrap-list-image-post-to-facebook">
                     <div class="list-image-post-to-facebook">
-                        @foreach($productSlide as $gallery)
-                            <span class="item-image-post-to-facebook">
-                            <img data-id="{{$gallery->id}}" class="rsTmb" src="{{$gallery->image}}">
-                        </span>
-                        @endforeach
+                        @if(isset($productSlide))
+                            @foreach($productSlide as $gallery)
+                                <span class="item-image-post-to-facebook">
+                                <img data-id="{{$gallery->id}}" class="rsTmb" src="{{$gallery->image}}">
+                            </span>
+                            @endforeach
+                        @endif
                     </div>
                 </div>
                 <label class="color-grey vpadding-10">Nội dung</label>

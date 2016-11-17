@@ -22,7 +22,6 @@ class ProductController extends BaseController {
         try{
             $product = $productService->getProductById($id, $userId);
             $product->metaKeyword = $tagService->formatMetaKeyword($product->tag);
-            $productService->trackUserProductView($id, $userId, $request->ip());
             $data['item'] = $product;
             $data['tag'] = $tagService->getTagById($tagId, false);
             $data['productSlide'] = $productGallery->getImagesProductByProductId($id, PRODUCT_IMAGE_TYPE_SLIDE);
@@ -162,6 +161,26 @@ class ProductController extends BaseController {
                 return view('errors.404', ['error_message' => $e]);
         }
 
+        return response()->json($result);
+    }
+
+    public function trackUserProductView(Request $request){
+        $productService = new productService();
+        $productId = $request->input('productId');
+        $userId = (\Kacana\Util::isLoggedIn())?$this->_user->id:0;
+        $result['ok'] = 0;
+        try{
+            $productService->trackUserProductView($productId, $userId, $request->ip());
+            $result['ok'] = 1;
+        } catch (\Exception $e) {
+            if($request->ajax())
+            {
+                $result['error'] = $e->getMessage();
+                return $result;
+            }
+            else
+                return view('errors.404', ['error_message' => $e->getMessage()]);
+        }
         return response()->json($result);
     }
 }
