@@ -147,7 +147,7 @@ var productdetailPackage = {
                 var productId = Kacana.productdetail.page.data('id');
                 var data = {productId: productId};
                 Kacana.ajax.product.trackUserProductView(data, callBack, errorCallBack);
-            }, 5000);
+            }, 3000);
         },
         bindEventPostToFacebook: function () {
             var modal = $('#modal-post-to-facebook');
