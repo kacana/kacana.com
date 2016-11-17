@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>Admin Customer | <?= $user->name;?> </title>
+        <title>Admin Customer</title>
         <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
         <meta name="csrf-token" content="{{ csrf_token() }}">
         <!-- Bootstrap 3.3.4 -->
@@ -79,13 +79,13 @@
         <div class="wrapper">
             <header class="main-header">
 
-                @include('layouts.cus.header')
+                @include('layouts.partner.header')
 
             </header>
             <!-- Left side column. contains the logo and sidebar -->
             <aside class="main-sidebar">
                 <!-- sidebar: style can be found in sidebar.less -->
-                @include('layouts.cus.slidebar')
+                @include('layouts.partner.slidebar')
                 <!-- /.sidebar -->
             </aside>
 
@@ -97,12 +97,12 @@
             </div><!-- /.content-wrapper -->
 
             <footer class="main-footer">
-                @include('layouts.cus.footer')
+                @include('layouts.partner.footer')
             </footer>
 
             <!-- Control Sidebar -->
             <aside class="control-sidebar control-sidebar-dark">
-                @include('layouts.cus.control-slidebar')
+                @include('layouts.partner.control-slidebar')
             </aside><!-- /.control-sidebar -->
             <!-- Add the sidebar's background. This div must be placed
                  immediately after the control sidebar -->

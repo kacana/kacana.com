@@ -2,6 +2,7 @@
 
 use Closure;
 use Illuminate\Contracts\Auth\Guard;
+use Illuminate\Support\Facades\Auth;
 
 class Authenticate {
 
@@ -48,13 +49,17 @@ class Authenticate {
             $host = explode('.', $request->getHttpHost());
             $role = $host[0];
             $user = $this->auth->user();
-            if ($role == KACANA_USER_ROLE_ADMIN && $user->role != KACANA_USER_ROLE_ADMIN)
+            if (($role == KACANA_USER_ROLE_ADMIN && $user->role == KACANA_USER_ROLE_ADMIN) ||
+                (($role == KACANA_USER_ROLE_PARTNER && $user->role == KACANA_USER_ROLE_PARTNER)) ||
+                (($role != KACANA_USER_ROLE_PARTNER && $role != KACANA_USER_ROLE_ADMIN))
+            )
             {
-                return redirect()->guest('auth/login');
+                return $next($request);
             }
             else
             {
-                return $next($request);
+                \Auth::logout();
+                return redirect()->to('auth/login')->with('__error_code_login_one_check__', KACANA_AUTH_LOGIN_ERROR_NOT_PERMISSION);
             }
         }
 	}

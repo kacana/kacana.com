@@ -7,6 +7,7 @@ use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 use Illuminate\Http\Request;
 use Auth;
 use App\services\authService;
+use Session;
 
 /**
  * Class AuthController
@@ -24,16 +25,17 @@ class AuthController extends Controller
      */
     public function getLogin(Request $request)
     {
-        $host = explode('.', $request->getHttpHost());
-        $role = $host[0];
-        $user = Auth::user();
-
-        if(Auth::check() && (($role == KACANA_USER_ROLE_ADMIN && $user->role == KACANA_USER_ROLE_ADMIN) || $role != KACANA_USER_ROLE_ADMIN))
+        $errorCode = Session::get('__error_code_login_one_check__', 0);
+        Session::forget('__error_code_login_one_check__');
+        $error_message = '';
+        if(Auth::check())
             return redirect()->intended('/');
         else
         {
-            Auth::logout();
-            return view('auth.login');
+            if($errorCode == KACANA_AUTH_LOGIN_ERROR_NOT_PERMISSION)
+                $error_message = 'Tài khoản này bị từ chối truy cập vào hệ thống, vui lòng liên hệ  admin@kacana.com hoặc <a href="tel:0906054206">0906.054.206</a>';
+
+            return view('auth.login', ['error_code' => $errorCode, 'error_message' => $error_message]);
         }
     }
 

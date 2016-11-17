@@ -156,11 +156,14 @@ Route::group(['domain'=>KACANA_AUTH_ADMIN_NAME.'.{nameDomain}','middleware' => '
 
 });
 
-Route::group(['domain'=>KACANA_AUTH_CUS_NAME.'.{nameDomain}','middleware' => 'auth'], function () {
+Route::group(['domain'=>KACANA_AUTH_PARTNER_NAME.'.{nameDomain}','middleware' => 'auth'], function () {
 
-    Route::any('/', 'Cus\IndexController@index');
+    Route::get('/',                                         array('as'=>'partner_index',                                'uses'=>'Partner\IndexController@index'));
+    Route::get('/social_account',                           array('as'=>'partner_social_account',                       'uses'=>'Partner\SocialController@index'));
+
+
+    //upload function
     Route::any('/upload/chunk',                              array('as'=>'upload',     'uses'=>'Client\UploadController@chunk'));
-
 });
 
 

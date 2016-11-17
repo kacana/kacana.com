@@ -8,11 +8,11 @@ use Illuminate\Http\Request;
 use App\services\orderService;
 use Kacana\Util;
 
-class IndexController extends BaseController {
+class SocialController extends BaseController {
 
 
     public function index(Request $request)
     {
-        return view('partner.index.index');
+        return view('partner.social.index');
 	}
 }

@@ -25,9 +25,9 @@
         </div>
         <div class="container login-form-wrap background-white" >
             <div class="col-xs-12 col-sm-8 login-form-block" >
-                @if(isset($error_message))
+                @if(isset($error_message) && $error_message)
                     <div class="alert alert-danger">
-                        {{$error_message}}
+                        {!! $error_message !!}
                     </div>
                 @endif
                 <form id="login-signup-form" class="form-horizontal form-bordered" method="post">

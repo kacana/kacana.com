@@ -10,7 +10,8 @@ class BaseController extends Controller {
 
 	public function __construct()
 	{
-		$Util = new Util();
-		$this->_user = $Util->getCurrentUser();
+        $Util = new Util();
+        $this->_user = $Util->getCurrentUser();
+        View::share('user', $Util::getCurrentUser());
 	}
 }
