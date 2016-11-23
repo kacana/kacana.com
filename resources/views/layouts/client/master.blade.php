@@ -147,7 +147,6 @@
 </head>
 <body class="cbp-spmenu-push">
 <div id="fb-root"></div>
-<div id="fb-root"></div>
 
 <div class="body">
 

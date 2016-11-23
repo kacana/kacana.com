@@ -2,6 +2,7 @@
 
 use App\Http\Requests\Request;
 use App\models\User;
+use App\models\userBusinessSocialModel;
 use App\models\userProductLikeModel;
 use App\models\userSocialModel;
 use Kacana\DataTables;
@@ -34,6 +35,11 @@ class userService {
     protected $_userSocial;
 
     /**
+     * @var
+     */
+    protected $_userBusinessSocial;
+
+    /**
      * userService constructor.
      */
     public function __construct()
@@ -41,6 +47,7 @@ class userService {
         $this->_userModel = new User();
         $this->_userProductLike = new userProductLikeModel();
         $this->_userSocial = new userSocialModel();
+        $this->_userBusinessSocial = new userBusinessSocialModel();
     }
 
     /**
@@ -110,7 +117,11 @@ class userService {
 
         return $return;
     }
-    
+
+    /**
+     * @param $request
+     * @return array
+     */
     public function reportDetailTableUser($request){
         $userModel = new User();
         $datatables = new DataTables();
@@ -403,6 +414,11 @@ class userService {
         return $result;
     }
 
+    /**
+     * @param $email
+     * @return bool|mixed
+     * @throws \Exception
+     */
     public function forgotPassword($email){
         $userModel = new User();
         $emailService = new mailService();
@@ -426,6 +442,12 @@ class userService {
 
     }
 
+    /**
+     * @param $email
+     * @param $password
+     * @return bool
+     * @throws \Exception
+     */
     public function checkResetPassword($email, $password){
 
         if(!Validator::make(['email' => $email], ['email' => 'required|email'])){
@@ -466,14 +488,27 @@ class userService {
         return $result;
     }
 
+    /**
+     * @param bool $duration
+     * @return mixed
+     */
     public function getCountLike($duration = false){
         return $this->_userProductLike->countLike($duration);
     }
 
+    /**
+     * @param bool $duration
+     * @return mixed
+     */
     public function getCountUser($duration = false){
         return $this->_userModel->countUser($duration);
     }
 
+    /**
+     * @param $dateRange
+     * @param $type
+     * @return mixed
+     */
     public function getUserReport($dateRange, $type){
         if(!$dateRange)
         {
@@ -490,6 +525,11 @@ class userService {
         return $this->_userModel->reportUser($startTime, $endTime, $type);
     }
 
+    /**
+     * @param $dateSelected
+     * @param $type
+     * @return mixed
+     */
     public function getUserReportDetail($dateSelected, $type){
 
 
@@ -500,6 +540,11 @@ class userService {
     }
 
 
+    /**
+     * @param $dateRange
+     * @param $type
+     * @return mixed
+     */
     public function getUserProductLikeReport($dateRange, $type){
         if(!$dateRange)
         {
@@ -516,6 +561,12 @@ class userService {
         return $this->_userProductLike->reportUserProductLike($startTime, $endTime, $type);
     }
 
+    /**
+     * @param $profiles
+     * @param $accessToken
+     * @param $user
+     * @return mixed
+     */
     public function updateFacebookAccessToken($profiles, $accessToken, $user){
         $userSocialModel = new userSocialModel();
         $result['ok'] = 0;
@@ -553,5 +604,105 @@ class userService {
             $result['ok'] = 1;
         }
         return $result;
+    }
+
+    /**
+     * @param $userId
+     * @param int $type
+     * @return mixed
+     */
+    public function getUserAccountBusinessSocial($userId, $type = KACANA_SOCIAL_TYPE_FACEBOOK){
+        return $this->_userBusinessSocial->getItemsByUserId($userId, $type);
+    }
+
+    /**
+     * @param $profiles
+     * @param $accessToken
+     * @param $user
+     * @return mixed
+     */
+    public function createBusinessSocialAccount($profiles, $accessToken, $user){
+        $userBusinessSocialModel = new userBusinessSocialModel();
+        $userId = $user->id;
+        $userSocials = $userBusinessSocialModel->getItemsByUserId($userId, KACANA_SOCIAL_TYPE_FACEBOOK);
+
+        $result['ok'] = 0;
+
+        if(!$profiles)
+        {
+            $result['error_code'] = KACANA_AUTH_SIGNUP_BAD_FACEBOOK_PROFILE;
+            $result['error_message'] = 'Chúng tôi không thể lấy thông tin từ facebook của bạn!';
+            return $result;
+        }
+        $data = array(
+            'social_id' => $profiles['id'],
+            'type' => KACANA_SOCIAL_TYPE_FACEBOOK,
+            'user_id' => $userId,
+            'email' => isset($profiles['email'])?$profiles['email']:'',
+            'name' => $profiles['name'],
+            'token' => $accessToken->getValue(),
+            'token_expire' => $accessToken->getExpiresAt()->format('Y-m-d H:i:s'),
+            'status' => KACANA_USER_BUSINESS_SOCIAL_STATUS_ACTIVE,
+            'image' => 'http://graph.facebook.com/'.$profiles['id'].'/picture?type=large'
+        );
+
+        $userSocial = $userBusinessSocialModel->getItemBySocialId($profiles['id'], KACANA_SOCIAL_TYPE_FACEBOOK);
+
+        if($userSocial)
+        {
+            if($userSocial->user_id != $userId)
+            {
+                $result['error_code'] = KACANA_AUTH_SIGNUP_EXISTS_SOCIAL_ACCOUNT;
+                $result['error_message'] = 'tài khoản facebook này đã sử dụng trong hệ thống!';
+                return $result;
+            }
+            elseif($userSocial->user_id == $userId &&
+                (count($userSocials) > KACANA_USER_BUSINESS_ACCOUNT_LIMIT ||
+                    ($userSocial->status != KACANA_USER_BUSINESS_SOCIAL_STATUS_ACTIVE && count($userSocials) == KACANA_USER_BUSINESS_ACCOUNT_LIMIT )
+                ))
+            {
+                $result['error_code'] = KACANA_AUTH_LIMIT_BUSINESS_ACCOUNT;
+                $result['error_message'] = 'Bạn chỉ có thể thêm '.KACANA_USER_BUSINESS_ACCOUNT_LIMIT.' tài khoản facebook! Vui lòng xoá một tài khoản để thêm vào hoặc liên hệ với admin 0906.054.206';
+                return $result;
+            }
+            elseif ($userSocial->user_id == $userId && count($userSocials) <= KACANA_USER_BUSINESS_ACCOUNT_LIMIT)
+            {
+                $result['ok'] = 1;
+                $result['data'] = $userBusinessSocialModel->updateItem($userId, KACANA_SOCIAL_TYPE_FACEBOOK, $data['social_id'], $data);
+
+                return $result;
+            }
+
+        }
+
+        if(count($userSocials) >= KACANA_USER_BUSINESS_ACCOUNT_LIMIT)
+        {
+            $result['error_code'] = KACANA_AUTH_LIMIT_BUSINESS_ACCOUNT;
+            $result['error_message'] = 'Bạn chỉ có thể thêm '.KACANA_USER_BUSINESS_ACCOUNT_LIMIT.' tài khoản facebook! Vui lòng xoá một tài khoản để thêm vào hoặc liên hệ với admin 0906.054.206';
+            return $result;
+        }
+        else
+        {
+            $result['ok'] = 1;
+            $result['data'] = $userBusinessSocialModel->createItem($data);
+
+            return $result;
+        }
+    }
+
+    /**
+     * @param $name
+     * @param $socialId
+     * @param $type
+     * @param $userId
+     * @return mixed
+     */
+    public function updateNameBusinessSocialAccount($name, $socialId, $type, $userId){
+        $userBusinessSocialModel = new userBusinessSocialModel();
+        return $userBusinessSocialModel->updateItem($userId, $type, $socialId, ['name' => $name]);
+    }
+
+    public function deleteBusinessSocialAccount($socialId, $type, $userId){
+        return $this->_userBusinessSocial->updateItem($userId, $type, $socialId, ['status' => KACANA_USER_BUSINESS_SOCIAL_STATUS_INACTIVE]);
     }
 }

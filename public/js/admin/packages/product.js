@@ -46,20 +46,23 @@ var productPackage = {
                       'title': 'sell price'
                   },
                   {
+                      'title': 'boot priority'
+                  },
+                  {
                       'title': 'status',
                   },
                   {
                       'title': 'created',
                       'width':'12%',
                       'render': function ( data, type, full, meta ) {
-                          return data ? data.slice(0, -8) : '';
+                          return data ? data.slice(0, -8) +'<br><b>' + data.slice(11, 19)+'</b>' : '';
                       }
                   },
                   {
                       'title': 'Updated',
                       'width':'12%',
                       'render': function ( data, type, full, meta ) {
-                          return data ? data.slice(0, -8) : '';
+                          return data ? data.slice(0, -8) +'<br><b>' + data.slice(11, 19)+'</b>' : '';
                       }
                   },
                   {
@@ -67,7 +70,7 @@ var productPackage = {
                       'class':'center',
                       'sortable':false,
                       'render': function ( data, type, full, meta ) {
-                          return '<a href="/product/editProduct/'+full[0]+'" class="btn btn-default btn-xs"><i class="fa fa-pencil"></i></a> <a href="#posts-to-facebook" data-product-id="'+full[0]+'" class="btn btn-default btn-xs"><i class="fa fa-facebook"></i></a>';
+                          return '<a href="/product/editProduct/'+full[0]+'" class="btn btn-default btn-xs"><i class="fa fa-pencil"></i></a>';
                       }
                   }
               ];

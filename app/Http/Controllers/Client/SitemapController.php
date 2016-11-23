@@ -51,8 +51,6 @@ class SitemapController extends BaseController {
 
         $mainTags = $tagService->getRootTag();
 
-        // set cache
-        $sitemap_tags->setCache('__sitemap_tags__', 3600);
 
         $tagIdCheck = [];
 

@@ -70,6 +70,24 @@ class ViewGenerateHelper {
             case 'orders_status_'.KACANA_ORDER_STATUS_COMPLETE:
                 $iconStatus = '<span class="label label-success"><i class="fa fa-chevron-down"></i> complete</span>';
                 break;
+            case 'products_boot_priority_'.KACANA_PRODUCT_BOOT_PRIORITY_LEVEL_0:
+                $iconStatus = '<i class="fa fa-circle"></i> priority 0';
+                break;
+            case 'products_boot_priority_'.KACANA_PRODUCT_BOOT_PRIORITY_LEVEL_1:
+                $iconStatus = '<i class="fa fa-rocket"></i> priority 1';
+                break;
+            case 'products_boot_priority_'.KACANA_PRODUCT_BOOT_PRIORITY_LEVEL_2:
+                $iconStatus = '<i class="fa fa-rocket"></i> priority 2';
+                break;
+            case 'products_boot_priority_'.KACANA_PRODUCT_BOOT_PRIORITY_LEVEL_3:
+                $iconStatus = '<i class="fa fa-rocket"></i> priority 3';
+                break;
+            case 'products_boot_priority_'.KACANA_PRODUCT_BOOT_PRIORITY_LEVEL_4:
+                $iconStatus = '<i class="fa fa-rocket"></i> priority 4';
+                break;
+            case 'products_boot_priority_'.KACANA_PRODUCT_BOOT_PRIORITY_LEVEL_5:
+                $iconStatus = '<i class="fa fa-rocket"></i> priority 5';
+                break;
             default:
                 $iconStatus = '<i class="fa fa-ban-circle"></i> Disabled ';
                 break;

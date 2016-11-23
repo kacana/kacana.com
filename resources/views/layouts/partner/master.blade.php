@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>Admin Customer</title>
+        <title>Kacana - @yield('title', 'Partner Management')</title>
         <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
         <meta name="csrf-token" content="{{ csrf_token() }}">
         <!-- Bootstrap 3.3.4 -->
@@ -21,10 +21,15 @@
              folder instead of downloading all of them to reduce the load. -->
         <link href="/lib/adminLTE/css/skins/_all-skins.min.css" rel="stylesheet" type="text/css" />
         <link rel="stylesheet" href="//cdn.datatables.net/1.10.7/css/jquery.dataTables.min.css">
-        <link href="/css/admin/admin.css" rel="stylesheet" type="text/css" />
+        <link href="/css/partner/partner.css" rel="stylesheet" type="text/css" />
         <link href="https://cdn.datatables.net/1.10.9/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css"/>
         <link href="https://cdn.datatables.net/select/1.0.1/css/select.dataTables.min.css" rel="stylesheet" type="text/css"/>
         <link href="/lib/cropper/cropper.min.css" rel="stylesheet" type="text/css"/>
+        <!-- wait me CSS -->
+        <link href="/lib/waitMe/waitMe.min.css" rel="stylesheet">
+
+        <!-- sweet alert CSS -->
+        <link href="/lib/sweetalert2/sweetalert2.min.css" rel="stylesheet">
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
         <script charset="utf-8" type="text/javascript" src="/lib/jquery/jquery-2.1.3.js"></script>
@@ -43,6 +48,8 @@
         <script src="/lib/slimScroll/jquery.slimscroll.min.js" type="text/javascript"></script>
         <!-- ChartJS 1.0.1 -->
         <script src="/lib/chartjs/Chart.min.js" type="text/javascript"></script>
+        <script src="/lib/sweetalert2/sweetalert2.min.js" type="text/javascript"></script>
+        <script src="/lib/waitMe/waitMe.min.js" type="text/javascript"></script>
 
         <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
         {{--<script src="/lib/adminLTE/js/pages/dashboard2.js" type="text/javascript"></script>--}}
@@ -51,7 +58,7 @@
         <script src="/lib/adminLTE/js/demo.js" type="text/javascript"></script>
 
         <script src="//cdn.datatables.net/1.10.7/js/jquery.dataTables.js" type="text/javascript"></script>
-        <script src="/js/admin/admin.js" type="text/javascript"></script>
+        <script src="/js/partner/partner.js" type="text/javascript"></script>
         <!--[if lt IE 9]>
         <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
         <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
@@ -64,18 +71,16 @@
         <script src="/lib/plupload/js/plupload.full.min.js" type="text/javascript"></script>
         <script src="/lib/cropper/cropper.min.js" type="text/javascript"></script>
 
-        {!! Html::style('/lib/jqTree/jqtree.css') !!}
-        {!! Html::script('/lib/jqTree/tree.jquery.js') !!}
-
-        <script type="text/javascript">
-
+        <script type="application/javascript">
             $(function() {
+                Kacana.layout.init();
                 @yield('javascript')
             });
         </script>
 
     </head>
     <body class="skin-blue sidebar-mini">
+        <div id="fb-root"></div>
         <div class="wrapper">
             <header class="main-header">
 
@@ -90,9 +95,11 @@
             </aside>
 
             <!-- Content Wrapper. Contains page content -->
-            <div class="content-wrapper">
+            <div id="@yield('section-content-id')" class="content-wrapper">
 
                 @yield('content')
+
+                @yield('section-modal')
 
             </div><!-- /.content-wrapper -->
 

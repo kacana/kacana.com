@@ -23,6 +23,7 @@ module.exports = function(grunt) {
             partner: {
                 src: [
                     '../../public/js/partner/packages/core.js',
+                    '../../public/js/client/packages/utils.js',
                     '../../public/js/partner/packages/*.js'
                 ],
                 dest: '../../public/js/partner/partner.js'

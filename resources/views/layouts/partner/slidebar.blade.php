@@ -11,9 +11,9 @@
 
         <li class="header">Kacana Tool</li>
         <li class="treeview {{($controller == 'ProductController')?'active':''}}">
-            <a href="{{URL::to('/user')}}">
+            <a href="{{URL::to('/product')}}">
                 <i class="fa fa-rocket text-red"></i>
-                <span class="text-red" >Product boot</span>
+                <span class="text-red" ><b>Product boot</b></span>
             </a>
         </li>
         <li class="treeview {{($controller == 'ProductController')?'active':''}}">

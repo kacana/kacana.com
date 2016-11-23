@@ -64,16 +64,25 @@ class productService {
             array( 'db' => 'products.name', 'dt' => 1 ),
             array( 'db' => 'products.price', 'dt' => 2 ),
             array( 'db' => 'products.sell_price', 'dt' => 3 ),
-            array( 'db' => 'products.status', 'dt' => 4 ),
-            array( 'db' => 'products.created', 'dt' => 5 ),
-            array( 'db' => 'products.updated', 'dt' => 6 )
+            array( 'db' => 'products.boot_priority', 'dt' => 4 ),
+            array( 'db' => 'products.status', 'dt' => 5 ),
+            array( 'db' => 'products.created', 'dt' => 6 ),
+            array( 'db' => 'products.updated', 'dt' => 7 )
         );
 
         $return = $productModel->generateProductTable($request, $columns);
         $statusOptions = [KACANA_PRODUCT_STATUS_ACTIVE, KACANA_PRODUCT_STATUS_INACTIVE];
+        $bootPriorityOptions = [KACANA_PRODUCT_BOOT_PRIORITY_LEVEL_0,
+                                KACANA_PRODUCT_BOOT_PRIORITY_LEVEL_1,
+                                KACANA_PRODUCT_BOOT_PRIORITY_LEVEL_2,
+                                KACANA_PRODUCT_BOOT_PRIORITY_LEVEL_3,
+                                KACANA_PRODUCT_BOOT_PRIORITY_LEVEL_4,
+                                KACANA_PRODUCT_BOOT_PRIORITY_LEVEL_5,
+                                ];
         if(count($return['data'])) {
             foreach ($return['data'] as &$res) {
                 $res->status = $viewHelper->dropdownView('products', $res->id, $res->status, 'status', $statusOptions);
+                $res->boot_priority = $viewHelper->dropdownView('products', $res->id, $res->boot_priority, 'boot_priority', $bootPriorityOptions);
             }
         }
 

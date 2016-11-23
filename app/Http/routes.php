@@ -158,8 +158,16 @@ Route::group(['domain'=>KACANA_AUTH_ADMIN_NAME.'.{nameDomain}','middleware' => '
 
 Route::group(['domain'=>KACANA_AUTH_PARTNER_NAME.'.{nameDomain}','middleware' => 'auth'], function () {
 
-    Route::get('/',                                         array('as'=>'partner_index',                                'uses'=>'Partner\IndexController@index'));
-    Route::get('/social_account',                           array('as'=>'partner_social_account',                       'uses'=>'Partner\SocialController@index'));
+    Route::get('/',                                         array('as'=>'partner_index',                                        'uses'=>'Partner\IndexController@index'));
+
+    // SOCIAL CONTROLLER
+    Route::get('/social_account',                           array('as'=>'partner_social_account',                               'uses'=>'Partner\SocialController@index'));
+    Route::post('/social_account/addFacebookAccount',       array('as'=>'partner_social_account_add_facebook_account',          'uses'=>'Partner\SocialController@addFacebookAccount'));
+    Route::post('/social_account/changeNameSocialItem',     array('as'=>'partner_social_account_change_name_social-item',       'uses'=>'Partner\SocialController@changeNameSocialItem'));
+    Route::post('/social_account/deleteSocialItem',         array('as'=>'partner_social_account_delete_social_item',            'uses'=>'Partner\SocialController@deleteSocialItem'));
+
+    //PRODUCT CONTROLLER
+    Route::get('/product',                                  array('as'=>'partner_product',                                      'uses'=>'Partner\ProductController@index'));
 
 
     //upload function
