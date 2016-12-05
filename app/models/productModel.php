@@ -110,58 +110,6 @@ class productModel extends Model  {
         return $product->save();
     }
 
-    /*
-     * Update Description with image
-     *
-     * @param string $description
-     * @param int $id
-     * @param boolean $is_edit
-     * @return void
-     */
-    /**
-     * @param $descriptions
-     * @param $id
-     * @param bool $is_edit
-     */
-    function updateDescWithImg($descriptions, $id, $is_edit=false)
-    {
-        preg_match_all('/(http|https):\/\/[^ ]+(\.gif|\.jpg|\.jpeg|\.png)/',$descriptions, $out);
-        if($out[0]){
-            $count = 1;
-            //count item already renamed
-            if($is_edit){
-                foreach($out[0] as $img){
-                    if(strrpos($img, 'tmp')=== FALSE) {
-                        $count++;
-                    }
-                }
-            }
-            foreach($out[0] as $img){
-                if(strrpos($img, 'tmp')!== FALSE) {
-                    $img_file = str_replace(LINK_IMAGE . 'images/product/tmp/', '', $img);
-                    $path = public_path(PRODUCT_IMAGE . $id);
-
-                    $img_arr = explode('.', strtolower($img_file));
-
-                    $img_name = $img_arr[0];
-                    $type = end($img_arr);
-                    $new_name = PREFIX_IMG_PRODUCT . str_slug($img_name, "-") . "_" . $count . '.' . $type;
-
-                    if (!file_exists($path)) {
-                        mkdir($path, 0777, true);
-                    } else {
-                        chmod($path, 0777);
-                    }
-                    Image::make($img)->save($path . '/' . $new_name);
-                    $descriptions = str_replace('tmp/' . $img_file, $id . '/' . $new_name, $descriptions);
-                    unlink(public_path(PRODUCT_IMAGE.'tmp/') . $img_file);
-                }
-                $count++;
-            }
-        }
-        $this->where('id', $id)->update(array('description' => $descriptions));
-    }
-
     /**
      * @param $id
      * @param $inputs
@@ -267,6 +215,54 @@ class productModel extends Model  {
 
         // Data set length
         $recordsFiltered = $selectLength = DB::table('products')
+            ->select($datatables::pluck($columns, 'db'));
+
+        if($where){
+            $selectData->whereRaw($where);
+            $recordsFiltered->whereRaw($where);
+        }
+
+        /*
+         * Output
+         */
+        return array(
+            "draw"            => intval( $request['draw'] ),
+            "recordsTotal"    => intval( $selectLength->count() ),
+            "recordsFiltered" => intval( $recordsFiltered->count() ),
+            "data"            => $selectData->get()
+        );
+    }
+
+    /*
+     * generate product table boot model
+     *
+     * @param $request
+     * @param $columns
+     * @return array
+     */
+    /**
+     * @param $request
+     * @param $columns
+     * @return array
+     */
+    public function generateProductBootTable($request, $columns){
+
+        $datatables = new DataTables();
+        $limit = $datatables::limit( $request, $columns );
+        $order = $datatables::order( $request, $columns );
+        $where = $datatables::filter( $request, $columns );
+
+        // Main query to actually get the data
+        $selectData = DB::table('products')
+            ->select($datatables::pluck($columns, 'db'))
+            ->orderBy($order['field'], $order['dir'])
+            ->where('products.boot_priority', '>', 0)
+            ->skip($limit['offset'])
+            ->take($limit['limit']);
+
+        // Data set length
+        $recordsFiltered = $selectLength = DB::table('products')
+            ->where('products.boot_priority', '>', 0)
             ->select($datatables::pluck($columns, 'db'));
 
         if($where){
@@ -716,4 +712,26 @@ class productModel extends Model  {
         else
             return $products->get();
     }
+
+    public function getProductsToBoot($productIds){
+        $products = $this->whereIn('products.id', $productIds)
+            ->where('products.boot_priority', '>', 0);
+
+        return $products->get();
+    }
+
+    public function getProductValid($productId){
+        $products = $this->join('product_tag', 'products.id', '=', 'product_tag.product_id')
+            ->leftJoin('tag_relations', 'product_tag.tag_id', '=', 'tag_relations.child_id')
+            ->where('tag_relations.status', '=', TAG_RELATION_STATUS_ACTIVE)
+            ->where('tag_relations.tag_type_id', '=', TAG_RELATION_TYPE_MENU)
+            ->where('products.status', '=', KACANA_PRODUCT_STATUS_ACTIVE)
+            ->where('products.id', '=', $productId)
+            ->select(['products.*', 'product_tag.*']);
+
+            return $products->first();
+    }
+
+
+
 }

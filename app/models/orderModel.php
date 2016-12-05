@@ -128,6 +128,7 @@ class orderModel extends Model  {
             ->leftJoin('users', 'orders.user_id', '=', 'users.id')
             ->leftJoin('address_receive', 'address_receive.id', '=', 'orders.address_id')
             ->orderBy($order['field'], $order['dir'])
+            ->whereNotIn('orders.status', [KACANA_ORDER_PARTNER_STATUS_CANCEL, KACANA_ORDER_PARTNER_STATUS_NEW])
             ->skip($limit['offset'])
             ->take($limit['limit']);
 
@@ -151,6 +152,52 @@ class orderModel extends Model  {
             "data"            => $selectData->get()
         );
     }
+
+    /**
+     * @param $request
+     * @param $columns
+     * @return array
+     */
+    public function generateOrderTableByUserId($request, $columns, $userId){
+
+        $datatables = new DataTables();
+
+        $limit = $datatables::limit( $request, $columns );
+        $order = $datatables::order( $request, $columns );
+        $where = $datatables::filter( $request, $columns );
+
+        // Main query to actually get the data
+        $selectData = DB::table('orders')
+            ->select($datatables::pluck($columns, 'db'))
+            ->leftJoin('users', 'orders.user_id', '=', 'users.id')
+            ->leftJoin('address_receive', 'address_receive.id', '=', 'orders.address_id')
+            ->orderBy($order['field'], $order['dir'])
+            ->where('orders.user_id', '=', $userId)
+            ->skip($limit['offset'])
+            ->take($limit['limit']);
+
+        // Data set length
+        $recordsFiltered = $selectLength = DB::table('orders')
+            ->leftJoin('users', 'orders.user_id', '=', 'users.id')
+            ->leftJoin('address_receive', 'address_receive.id', '=', 'orders.address_id')
+            ->select($datatables::pluck($columns, 'db'));
+
+        if($where){
+            $selectData->whereRaw($where);
+            $recordsFiltered->whereRaw($where);
+        }
+
+        /*
+         * Output
+         */
+        return array(
+            "draw"            => intval( $request['draw'] ),
+            "recordsTotal"    => intval( $selectLength->count() ),
+            "recordsFiltered" => intval( $recordsFiltered->count() ),
+            "data"            => $selectData->get()
+        );
+    }
+
     public function reportDetailTableOrder($request, $columns){
 
         $datatables = new DataTables();

@@ -166,12 +166,34 @@ Route::group(['domain'=>KACANA_AUTH_PARTNER_NAME.'.{nameDomain}','middleware' =>
     Route::post('/social_account/changeNameSocialItem',     array('as'=>'partner_social_account_change_name_social-item',       'uses'=>'Partner\SocialController@changeNameSocialItem'));
     Route::post('/social_account/deleteSocialItem',         array('as'=>'partner_social_account_delete_social_item',            'uses'=>'Partner\SocialController@deleteSocialItem'));
 
+
     //PRODUCT CONTROLLER
     Route::get('/product',                                  array('as'=>'partner_product',                                      'uses'=>'Partner\ProductController@index'));
+    Route::get('/product/generateProductBootTable',         array('as'=>'partner_product_generate_product_boot_table',          'uses'=>'Partner\ProductController@generateProductBootTable'));
+    Route::post('/product/productSupperBoot',               array('as'=>'partner_product_supper_boot',                          'uses'=>'Partner\ProductController@productSupperBoot'));
+    Route::post('/product/postToSocial',                    array('as'=>'partner_product_post_to_social',                       'uses'=>'Partner\ProductController@postToSocial'));
 
 
     //upload function
     Route::any('/upload/chunk',                              array('as'=>'upload',     'uses'=>'Client\UploadController@chunk'));
+
+    //Order Request
+    Route::any('/order',                                     array('as'=>'listOrder',                       'uses'=>'Partner\OrderController@index'));
+    Route::any('/order/generateOrderTable',                  array('as'=>'generateOrderTable',              'uses'=>'Partner\OrderController@generateOrderTable'));
+    Route::any('/order/edit/{id}',                           array('as'=>'edit',                            'uses'=>'Partner\OrderController@edit'));
+    Route::any('/order/orderDetails/{id}',                   array('as'=>'orderDetails',                    'uses'=>'Partner\OrderController@getListOrderDetail'));
+    Route::get('/order/deleteOrderDetail/{id}',              array('as'=>'orderDetails',                    'uses'=>'Partner\OrderController@deleteOrderDetail'));
+    Route::post('/order/updateOrderService',                 array('as'=>'updateOrderService',              'uses'=>'Partner\OrderController@updateOrderService'));
+    Route::any('/order/getOrderDetailisOrdered',             array('as'=>'getOrderDetailisOrdered',         'uses'=>'Partner\OrderController@getOrderDetailisOrdered'));
+    Route::any('/order/checkFeeShipping',                    array('as'=>'checkFeeShipping',                'uses'=>'Partner\OrderController@checkFeeShipping'));
+    Route::any('/order/searchAddressDelivery',               array('as'=>'searchAddressDelivery',           'uses'=>'Partner\OrderController@searchAddressDelivery'));
+    Route::any('/order/createOrder',                         array('as'=>'OrderCreateOrder',                'uses'=>'Partner\OrderController@createOrder'));
+    Route::post('/order/updateOrderDetail/{orderId}/{orderDetailId}', array('as'=>'OrderUpdateOrderDetail', 'uses'=>'Partner\OrderController@updateOrderDetail'));
+    Route::post('/order/searchProduct',                      array('as'=>'OrderSearchProduct',              'uses'=>'Partner\OrderController@searchProduct'));
+    Route::get('/order/addProductToOrder',                   array('as'=>'OrderAddProductToOrder',           'uses'=>'Partner\OrderController@addProductToOrder'));
+    Route::get('/order/deleteOrderDetail',                   array('as'=>'OrderDeleteOrderDetail',           'uses'=>'Partner\OrderController@deleteOrderDetail'));
+    Route::get('/order/getWardByDistrictId',                 array('as'=>'OrderGetWardByDistrictId',         'uses'=>'Partner\OrderController@getWardByDistrictId'));
+    Route::get('/order/cancelOrder',                         array('as'=>'OrderCancelOrder',                 'uses'=>'Partner\OrderController@cancelOrder'));
 });
 
 

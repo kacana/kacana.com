@@ -39,10 +39,24 @@ var utilsPackage = {
                 'error'
             )
         },
-        formatCurrency: function(n, currency){
-            return currency + " " + parseFloat(n).toFixed(2).replace(/./g, function(c, i, a) {
-                    return i > 0 && c !== "." && (a.length - i) % 3 === 0 ? "," + c : c;
-                });
+        formatCurrency: function(num){
+            var str = num.toString().replace("$", ""), parts = false, output = [], i = 1, formatted = null;
+            if(str.indexOf(".") > 0) {
+                parts = str.split(".");
+                str = parts[0];
+            }
+            str = str.split("").reverse();
+            for(var j = 0, len = str.length; j < len; j++) {
+                if(str[j] != ",") {
+                    output.push(str[j]);
+                    if(i%3 == 0 && j < (len - 1)) {
+                        output.push(",");
+                    }
+                    i++;
+                }
+            }
+            formatted = output.reverse().join("");
+            return(formatted + ((parts) ? "." + parts[1].substr(0, 2) : "") + " đ");
         },
         facebook: {
             init:function(){
@@ -96,7 +110,7 @@ var utilsPackage = {
             initScript:function(){
                 var params = {
                     'client_id': '727230078895-kn5lrk7hv3rmmrqf2b05r80iu15hsqqb.apps.googleusercontent.com',
-                    'scope': 'https://www.googleapis.com/auth/plus.login https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/plus.me'
+                    'scope': 'https://www.googleapis.com/auth/urlshortener https://www.googleapis.com/auth/plus.login https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/plus.me'
                 };
                 gapi.load('auth2', function() {
                     Kacana.utils.google.auth2 = gapi.auth2.init(params);

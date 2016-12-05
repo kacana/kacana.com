@@ -145,6 +145,9 @@ class DataTables {
                 $column = $columns[ $columnIdx ];
 
                 if ( $requestColumn['searchable'] == 'true' ) {
+                    $fieldName = explode(' AS ',$column['db']);
+                    if(count($fieldName) == 2)
+                        $column['db'] = $fieldName[0];
                     $globalSearch[] = KACANA_PREFIX_DATABASE.$column['db'].' LIKE '.('""%'.$str.'%"');
                 }
             }
@@ -169,8 +172,14 @@ class DataTables {
                 }
 
                 if(isset($requestColumn['search']['orWhere']) && $requestColumn['search']['orWhere'] === 'true'){
+                    $fieldName = explode(' AS ',$column['db']);
+                    if(count($fieldName) == 2)
+                        $column['db'] = $fieldName[0];
                     $columnSearchOR[] = KACANA_PREFIX_DATABASE.$column['db'].' LIKE '.($str);
                 }else{
+                    $fieldName = explode(' AS ',$column['db']);
+                    if(count($fieldName) == 2)
+                        $column['db'] = $fieldName[0];
                     $columnSearch[] = KACANA_PREFIX_DATABASE.$column['db'].' LIKE '.($str);
                 }
             }

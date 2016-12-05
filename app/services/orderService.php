@@ -169,9 +169,18 @@ class orderService {
         if(count($return['data'])) {
             $optionStatus = [KACANA_ORDER_STATUS_NEW, KACANA_ORDER_STATUS_PROCESSING, KACANA_ORDER_STATUS_CANCEL, KACANA_ORDER_STATUS_COMPLETE];
 
-            foreach ($return['data'] as &$res) {
-                $res->status = $viewHelper->dropdownView('orders', $res->id, $res->status, 'status', $optionStatus);
-                $res->total = formatMoney($res->total);
+            foreach ($return['data'] as &$order) {
+
+                if($order->status == KACANA_ORDER_STATUS_NEW )
+                    $order->status = '<span class="label label-info">mới tạo</span>';
+                elseif($order->status == KACANA_ORDER_STATUS_CANCEL)
+                    $order->status = '<span class="label label-danger">KACANA huỷ</span>';
+                elseif($order->status == KACANA_ORDER_STATUS_PROCESSING)
+                    $order->status = '<span class="label label-waring">đang xử lý</span>';
+                elseif($order->status == KACANA_ORDER_STATUS_COMPLETE)
+                    $order->status = '<span class="label label-success">hoàn thành</span>';
+
+                $order->total = formatMoney($order->total);
             }
         }
 
@@ -181,6 +190,59 @@ class orderService {
 
         return $return;
     }
+
+    /**
+     * @param $request
+     * @param $userId
+     * @return array
+     */
+    public function generateOrderTableByUserId($request, $userId){
+        $orderModel = new orderModel();
+        $datatables = new DataTables();
+        $viewHelper = new ViewGenerateHelper();
+
+        $columns = array(
+            array( 'db' => 'orders.id', 'dt' => 0 ),
+            array( 'db' => 'address_receive.name AS delivery_name', 'dt' => 1 ),
+            array( 'db' => 'address_receive.phone AS delivery_phone', 'dt' => 2 ),
+            array( 'db' => 'orders.total', 'dt' => 3 ),
+            array( 'db' => 'orders.quantity', 'dt' => 4 ),
+            array( 'db' => 'orders.status', 'dt' => 5 ),
+            array( 'db' => 'orders.created', 'dt' => 6 ),
+            array( 'db' => 'orders.updated', 'dt' => 7 )
+        );
+
+        $return = $orderModel->generateOrderTableByUserId($request, $columns, $userId);
+
+        if(count($return['data'])) {
+            $optionStatus = [KACANA_ORDER_STATUS_NEW, KACANA_ORDER_STATUS_PROCESSING, KACANA_ORDER_STATUS_CANCEL, KACANA_ORDER_STATUS_COMPLETE];
+
+            foreach ($return['data'] as &$order) {
+
+                if($order->status == KACANA_ORDER_PARTNER_STATUS_NEW)
+                    $order->status = '<span class="label label-info">mới tạo</span>';
+                elseif($order->status == KACANA_ORDER_STATUS_NEW )
+                    $order->status = '<span class="label label-info">đã gửi</span>';
+                elseif($order->status == KACANA_ORDER_PARTNER_STATUS_CANCEL)
+                    $order->status = '<span class="label label-danger">đã huỷ</span>';
+                elseif($order->status == KACANA_ORDER_STATUS_CANCEL)
+                    $order->status = '<span class="label label-danger">KACANA huỷ</span>';
+                elseif($order->status == KACANA_ORDER_STATUS_PROCESSING)
+                    $order->status = '<span class="label label-waring">đang xử lý</span>';
+                elseif($order->status == KACANA_ORDER_STATUS_COMPLETE)
+                    $order->status = '<span class="label label-success">hoàn thành</span>';
+
+                $order->total = formatMoney($order->total);
+            }
+        }
+
+
+
+        $return['data'] = $datatables::data_output( $columns, $return['data'] );
+
+        return $return;
+    }
+
     public function reportDetailTableOrder($request){
         $orderModel = new orderModel();
         $datatables = new DataTables();
@@ -235,7 +297,6 @@ class orderService {
 
         return $orderDetailModel->updateOrderDetail($id, $data);
     }
-
 
     public function updateOrder($id, $data)
     {
@@ -324,7 +385,17 @@ class orderService {
         return $this->_orderDetailModel->deleteOrderDetail($orderId, $orderDetailId);
     }
 
+    public function cancelOrder($orderId, $userId, $status){
+        $order = $this->_orderModel->getById($orderId);
 
+        if(($order->status == KACANA_ORDER_STATUS_NEW || $order->status == KACANA_ORDER_PARTNER_STATUS_NEW) && $order->user_id == $userId )
+            $order->updateItem($orderId, ['status' => $status]);
+        else
+            return false;
+
+        return true;
+
+    }
 }
 
 

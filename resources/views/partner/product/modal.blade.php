@@ -1,23 +1,59 @@
-<div id="modal-edit-name-social-item" class="modal fade" tabindex="-1" role="dialog">
+<div id="modal-supper-boot-product" class="modal fade" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                <h4 class="modal-title" id="myModalLabel">Tên tài khoản</h4>
+                <h4 class="modal-title" id="myModalLabel">Super boot sản </h4>
             </div>
             <div class="modal-body">
-                <span class="col-xs-offset-4 col-xs-4">
-                    <img class="social-item-image-modal img-responsive" src="" >
-                </span>
-                <span class="col-xs-12 vpadding-20" >
-                    <input class="form-control text-center social-item-name-modal" required placeholder="Nhập tên tài khoản" >
-                </span>
-                <div class="clear"></div>
+                <label class="vpadding-10 hpadding-10 text-center text-red title-index" >Chọn hình sản phẩm</label>
+                <div class="list-product-super-boot-item" >
+
+                </div>
+                <label class="vpadding-10 hpadding-10 text-center text-red title-index" >Mô tả bài đăng</label>
+                <div contenteditable="true" class="desc-post-to-social" >
+                    </div>
+                <label class="vpadding-10 hpadding-10 text-center text-red title-index" >Chọn tài khoản cần đăng</label>
+                <div class="list-social-post">
+                    <ul class="social-list clearfix">
+                        @foreach($facebookAccountBusiness as $item)
+                            <li data-social-id="{{$item->social_id}}" data-type="{{$item->type}}" class="active">
+                                <img src="{{$item->image}}">
+                                <a class="social-name" href="#">{{$item->name}}</a>
+                            </li>
+                        @endforeach
+                    </ul>
+                </div>
             </div>
             <div class="modal-footer">
-                <a type="button" href="#change-name-social-item" class="btn btn-primary">Cập nhật</a>
+                <a type="button" href="#btn-post-to-social" class="btn btn-primary"><i class="fa fa-rocket"></i> Đăng bài</a>
                 <button type="button" class="btn btn-warning" data-dismiss="modal" class="btn">Huỷ</button>
             </div>
         </div>
     </div>
 </div>
+
+<script id="template-desc-super-post-to-social" type="template">
+    <br><br>🛫 Giao hàng toàn quốc<br>💵 Thanh toán khi nhận hàng<br>🏍 Miễn phí vận chuyển với đơn hàng trên 500k<br>📱 Mua hàng: {{$user->phone}}
+</script>
+
+<script id="template-product-super-boot-item" type="template">
+    @{{each  products}}
+        <div class="product-boot-item" data-product-id="${this.id}">
+            <label class="name-product-boot-item">${this.name}</label>
+            <div class="wrap-list-image-post-to-facebook">
+                <div class="list-image-post-to-facebook">
+                    <span data-id="image" class="item-image-post-to-facebook active">
+                        <img class="rsTmb" src="${this.image}">
+                    </span>
+                    @{{each this.list_gallery}}
+                        <span data-id="${this.id}" class="item-image-post-to-facebook">
+                            <img src="${this.image}">
+                        </span>
+                    @{{/each}}
+                </div>
+            </div>
+            <div contenteditable="true" placeholder="mô tả sản phẩm" id="caption-image-${this.id}" class="caption-image"></div>
+        </div>
+    @{{/each}}
+</script>

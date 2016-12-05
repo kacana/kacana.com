@@ -24,7 +24,6 @@
                 <div class="box box-primary">
                     <div class="box-header">
                         <h3 class="box-title">Search product</h3>
-
                     </div>
                     <div class="box-body">
                         <form method="post" class="form-inline">

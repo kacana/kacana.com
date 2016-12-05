@@ -1,5 +1,6 @@
 <?php namespace App\services;
 
+use App\Http\Requests\Request;
 use App\models\productModel;
 use App\models\productPropertiesModel;
 use App\models\productTagModel;
@@ -16,6 +17,7 @@ use Cache;
 use App\models\productGalleryModel;
 use \Storage;
 use Carbon\Carbon;
+use Shorten;
 /**
  * Class productService
  * @package App\services
@@ -86,6 +88,26 @@ class productService {
             }
         }
 
+        $return['data'] = $datatables::data_output( $columns, $return['data'] );
+
+        return $return;
+    }
+
+    public function generateProductBootTable($request){
+        $productModel = new productModel();
+        $datatables = new DataTables();
+        $viewHelper = new ViewGenerateHelper();
+
+        $columns = array(
+            array( 'db' => 'products.id', 'dt' => 0 ),
+            array( 'db' => 'products.name', 'dt' => 1 ),
+            array( 'db' => 'products.image', 'dt' => 2 ),
+            array( 'db' => 'products.sell_price', 'dt' => 3 ),
+            array( 'db' => 'products.discount', 'dt' => 4 ),
+            array( 'db' => 'products.updated', 'dt' => 5 ),
+        );
+
+        $return = $productModel->generateProductBootTable($request, $columns);
         $return['data'] = $datatables::data_output( $columns, $return['data'] );
 
         return $return;
@@ -783,10 +805,41 @@ class productService {
         foreach ($galleries as $gallery)
         {
             if(in_array($gallery->id, $images))
+            {
                 array_push($arrayFbMedia, $facebook->postPhoto('http:'.AWS_CDN_URL.str_replace(' ', '%20',$gallery->getOriginal('image')), $product->name));
+            }
         }
-
         return $facebook->postFeed($arrayFbMedia, $descPost);
+    }
+
+    public function getProductsToBoot($productIds, $userId){
+        $productModel = new productModel();
+        $util = new Util();
+
+        $google = $util->initGoogle();
+
+        if(!count($productIds))
+            throw new \Exception('BAD Product ID');
+
+        $products = $productModel->getProductsToBoot($productIds);
+        foreach ($products as &$product)
+        {
+            $product->list_gallery = $product->galleries;
+            $product->price = 0;
+            $product->sell_price = formatMoney($product->sell_price);
+            $product->caption = '👝👜👛'.ucfirst($product->name).'<br>🤑Giá: '.$product->sell_price.'<br>🎒👝💼'.$product->short_description;
+
+//            $productTemp = $productModel->getProductValid($product->id);
+//            if($productTemp)
+//            {
+//                $url = urlProductDetail($productTemp);
+////                echo $url.'?partnerId='.$userId;die;
+//                $shortUrl = Shorten::url('http://www.kacana.vn/san-pham/tui-tote-deo-cheo-han-quoc-ms0185--1888--387');
+//                $product->caption .= '<br>Chi tiết sản phẩm: '. $shortUrl;
+//            }
+        }
+        return $products;
+
     }
 
     public function fixProductPrice(){

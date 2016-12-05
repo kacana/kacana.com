@@ -201,13 +201,13 @@ class addressService {
         return $this->_receiveModel->deleteMyAddress($userId, $id);
     }
 
-    public function searchAddressDelivery($search, $type){
+    public function searchAddressDelivery($search, $type, $userId = false){
         $items = false;
 
         if($type == 'name')
-            $items = $this->_receiveModel->searchAddressDeliveryByName($search);
+            $items = $this->_receiveModel->searchAddressDeliveryByName($search, $userId);
         else if($type == 'phone')
-            $items = $this->_receiveModel->searchAddressDeliveryByPhone($search);
+            $items = $this->_receiveModel->searchAddressDeliveryByPhone($search, $userId);
         if ($items)
             foreach ($items as &$item){
                 $item->district = $item->district;

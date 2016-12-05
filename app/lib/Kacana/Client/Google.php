@@ -51,4 +51,16 @@ class Google
         $this->_googleOauth = new \Google_Service_Oauth2($this->_googleClient);
         return $this->_googleOauth;
     }
+
+    // Shorten a URL
+    public function shorten($longUrl) {
+        $this->_googleClient->setAccessToken(json_encode(["access_token" => 'ya29.Ci-nA63j_-YJy7-M4u0F490pttfSg-Gka2xLyDzaqmfWgDCMXLVsisYGoGLmqT55Vg']));
+        $service = new \Google_Service_Urlshortener($this->_googleClient);
+
+        $url = new \Google_Service_Urlshortener_Url();
+        $url->longUrl = $longUrl;
+
+        print_r($service->url->insert($url));die;
+        return $service->url->insert($url);
+    }
 }

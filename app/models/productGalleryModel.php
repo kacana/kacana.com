@@ -92,8 +92,11 @@ class productGalleryModel extends Model  {
         return $this->find($id);
     }
 
-    public function getById($id){
-        return $this->find($id);
+    public function getById($id, $productId = 0){
+        if($productId)
+            return $this->where('product_id', $productId)->find($id);
+        else
+            return $this->find($id);
     }
 
     public function updateThumb($id, $thumb){

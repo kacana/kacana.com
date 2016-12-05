@@ -7,7 +7,7 @@
         <meta name="csrf-token" content="{{ csrf_token() }}">
         <!-- Bootstrap 3.3.4 -->
         <link rel="stylesheet" href="/lib/bootstrap/css/bootstrap.min.css">
-        <link rel="stylesheet" href="/lib/bootstrap/css/bootstrap-theme.min.css">
+        <link rel="stylesheet" href="/lib/jquery/jquery-ui-1.11.4/jquery-ui.min.css">
 
         <!-- Font Awesome Icons -->
         <link rel="stylesheet" href="/lib/fontawesome/css/font-awesome.css">
@@ -27,6 +27,7 @@
         <link href="/lib/cropper/cropper.min.css" rel="stylesheet" type="text/css"/>
         <!-- wait me CSS -->
         <link href="/lib/waitMe/waitMe.min.css" rel="stylesheet">
+        <script src="/lib/iCheck/all.css" type="text/javascript"></script>
 
         <!-- sweet alert CSS -->
         <link href="/lib/sweetalert2/sweetalert2.min.css" rel="stylesheet">
@@ -44,12 +45,14 @@
         <!-- jvectormap -->
         <script src="/lib/jvectormap/jquery-jvectormap-1.2.2.min.js" type="text/javascript"></script>
         <script src="/lib/jvectormap/jquery-jvectormap-world-mill-en.js" type="text/javascript"></script>
-        <!-- SlimScroll 1.3.0 -->
-        <script src="/lib/slimScroll/jquery.slimscroll.min.js" type="text/javascript"></script>
+        <script src="/lib/jquery/jquery-ui-1.11.4/jquery-ui.min.js" charset="utf-8" type="text/javascript"></script>
+
         <!-- ChartJS 1.0.1 -->
         <script src="/lib/chartjs/Chart.min.js" type="text/javascript"></script>
         <script src="/lib/sweetalert2/sweetalert2.min.js" type="text/javascript"></script>
         <script src="/lib/waitMe/waitMe.min.js" type="text/javascript"></script>
+        <script src="/lib/iCheck/icheck.min.js" type="text/javascript"></script>
+        <script src="/lib/nicescroll/jquery.nicescroll.min.js" type="text/javascript"></script>
 
         <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
         {{--<script src="/lib/adminLTE/js/pages/dashboard2.js" type="text/javascript"></script>--}}
@@ -63,6 +66,9 @@
         <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
         <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
         <![endif]-->
+
+        <script src="/lib/tmpl/jquery.tmpl.min.js"></script>
+        <script src="/lib/tmpl/jquery.tmplPlus.min.js"></script>
 
         <!-- include summernote css/js-->
         <link href="/lib/summernote/summernote.css" rel="stylesheet">

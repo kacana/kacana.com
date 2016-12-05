@@ -31,7 +31,7 @@
 
         <li class="header">Order Manager</li>
         <li class="treeview {{($controller == 'AdvisoryController')?'active':''}}">
-            <a href="{{URL::to('/advisory')}}">
+            <a href="{{URL::to('/order')}}">
                 <i class="fa fa-plane"></i>
                 <span>My order</span>
             </a>

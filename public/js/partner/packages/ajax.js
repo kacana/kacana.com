@@ -89,6 +89,94 @@ var ajaxPackage = {
 
                 Kacana.ajax.init(url, dataType, type, dataPost, callBack, errorCallBack, options);
             }
+        },
+        product: {
+            generateProductBootTable: function(data, callBack, errorCallBack){
+                var url = '/product/generateProductBootTable';
+                var dataType = 'json';
+                var type = 'get';
+                var dataPost = data;
+                var options = [];
+
+                Kacana.ajax.init(url, dataType, type, dataPost, callBack, errorCallBack, options);
+            },
+            productSupperBoot: function(productIds, callBack, errorCallBack){
+                var url = '/product/productSupperBoot';
+                var dataType = 'json';
+                var type = 'post';
+                var dataPost = {
+                    productIds: productIds
+                };
+                var options = [];
+
+                Kacana.ajax.init(url, dataType, type, dataPost, callBack, errorCallBack, options);
+            },
+            postToSocial: function (data, callBack, errorCallBack) {
+                var url = '/product/postToSocial';
+                var dataType = 'json';
+                var type = 'post';
+                var dataPost = data;
+                var options = [];
+
+                Kacana.ajax.init(url, dataType, type, dataPost, callBack, errorCallBack, options);
+            }
+        },
+        order:{
+            changeCity: function(id, callBack, errorCallBack){
+                Kacana.ajax.init('/user/showListWards/'+id, '', 'get', '', callBack, errorCallBack, []);
+            },
+            deleteOrderDetail: function(id, callBack, errorCallBack){
+                Kacana.ajax.init('/order/deleteOrderDetail/'+id,'', 'get', '', callBack, errorCallBack, []);
+            },
+            updateOrderService: function(data, callBack, errorCallBack){
+                var url = '/order/updateOrderService';
+                var dataType = 'json';
+                var type = 'post';
+                var dataPost = data;
+                var options = [];
+                Kacana.ajax.init(url, dataType, type, dataPost, callBack, errorCallBack, options);
+            },
+            getOrderDetailisOrdered: function(data, callBack, errorCallBack){
+                var url = '/order/getOrderDetailisOrdered';
+                var dataType = 'json';
+                var type = 'post';
+                var dataPost = data;
+                var options = [];
+                Kacana.ajax.init(url, dataType, type, dataPost, callBack, errorCallBack, options);
+            },
+            checkFeeShipping: function(data, callBack, errorCallBack){
+                var url = '/order/checkFeeShipping';
+                var dataType = 'json';
+                var type = 'post';
+                var dataPost = data;
+                var options = [];
+                Kacana.ajax.init(url, dataType, type, dataPost, callBack, errorCallBack, options);
+            },
+            searchAddressDelivery: function (data, callBack, errorCallBack) {
+                var url = '/order/searchAddressDelivery';
+                var dataType = 'json';
+                var type = 'post';
+                var dataPost = data;
+                var options = [];
+                Kacana.ajax.init(url, dataType, type, dataPost, callBack, errorCallBack, options);
+            },
+            searchProduct: function (data, callBack, errorCallBack) {
+                var url = '/order/searchProduct';
+                var dataType = 'json';
+                var type = 'post';
+                var dataPost = data;
+                var options = [];
+                Kacana.ajax.init(url, dataType, type, dataPost, callBack, errorCallBack, options);
+            },
+            getWardByDistrictId: function(districtId, callBack, errorCallBack){
+                var url = '/order/getWardByDistrictId?districtId='+districtId;
+                var dataType = 'json';
+                var type = 'get';
+                var dataPost = {};
+                var options = [];
+                Kacana.ajax.init(url, dataType, type, dataPost, callBack, errorCallBack, options);
+            }
+
         }
     }
 };
