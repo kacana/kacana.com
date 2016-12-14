@@ -1,15 +1,14 @@
 @extends('layouts.admin.master')
 
+@section('title', 'Người dùng')
+
+@section('section-content-id', 'content-list-user')
+
 @section('content')
     <section>
         <div class="custom-box">
             <div class="box-header">
                 <h3 class="box-title">Quản lý Người dùng</h3>
-                <div class="box-tools pull-left ">
-                    <button data-toggle="modal" data-target="#modal-create-product" class="btn btn-primary btn-sm">
-                        <i class="fa fa-plus"></i> Create user
-                    </button>
-                </div>
             </div><!-- /.box-header -->
         </div>
     </section>
@@ -29,8 +28,9 @@
                             <input type="text" name="phone" class="form-control" placeholder="Search Phone"/>
                             <select class="form-control" name="searchRole">
                                 <option value="">All Role</option>
-                                <option value="'{{KACANA_USER_ROLE_ADMIN}}'">Admin</option>
-                                <option value="'{{KACANA_USER_ROLE_BUYER}}'">Buyer</option>
+                                <option value="{{KACANA_USER_ROLE_ADMIN}}">Admin</option>
+                                <option value="{{KACANA_USER_ROLE_BUYER}}">Buyer</option>
+                                <option value="{{KACANA_USER_ROLE_PARTNER}}">Partner</option>
                             </select>
                             <select class="form-control" name="searchStatus">
                                 <option value="">All Status</option>

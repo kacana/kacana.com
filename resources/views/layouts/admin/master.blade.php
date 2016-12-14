@@ -7,7 +7,6 @@
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
         <link rel="stylesheet" href="/lib/bootstrap/css/bootstrap.min.css">
-        <link rel="stylesheet" href="/lib/bootstrap/css/bootstrap-theme.min.css">
         <link rel="stylesheet" href="/lib/fontawesome/css/font-awesome.css">
         <link rel="stylesheet" href="/lib/jquery/jquery-ui-1.11.4/jquery-ui.min.css">
         <link href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet" type="text/css" />

@@ -1,6 +1,6 @@
 @extends('layouts.partner.master')
 
-@section('title','Edit Order #'.$order->id )
+@section('title','Edit Order #'.$order->order_code )
 
 @section('section-content-id', 'content-edit-order')
 
@@ -8,22 +8,21 @@
     <section>
         <div class="custom-box">
             <div class="box-header">
-                <h3 class="box-title">Đơn Hàng: #{{$order->id}} Của [{{$order->user->name}}] Tổng {{formatMoney($order->total)}}</h3>
+                <h3 class="box-title">Đơn Hàng: #{{$order->order_code}} Của [{{$order->user->name}}] Tổng {{formatMoney($order->total)}}</h3>
                 <div class="box-tools pull-left ">
                     @if($order->status == KACANA_ORDER_PARTNER_STATUS_NEW)
-                        <a href="/order/cancelOrder?orderId={{$order->id}}" class="btn btn-danger">
+                        <a href="#cancel-order" data-order-id="{{$order->id}}" class="btn btn-danger">
                             Huỷ đơn hàng
                         </a>
-                        <button data-toggle="modal" data-target="#modal-remove-" class="btn btn-success">
-                            Gửi đơn hàng cho KACANA
-                        </button>
+                        @if(count($order->orderDetail))
+                            <a href="/order/sendOrder?orderId={{$order->id}}" class="btn btn-info">
+                                Gửi đơn hàng cho KACANA
+                            </a>
+                        @endif
                     @elseif($order->status == KACANA_ORDER_STATUS_NEW )
-                        <a href="/order/cancelOrder?orderId={{$order->id}}" class="btn btn-danger">
-                            Huỷ đơn hàng
-                        </a>
-                        <button data-toggle="modal" data-target="#modal-remove-" class="btn btn-success">
+                        <a class="btn btn-info">
                             Đơn hàng đã gửi cho KACANA
-                        </button>
+                        </a>
                     @elseif($order->status == KACANA_ORDER_PARTNER_STATUS_CANCEL)
                         <a href="#" class="btn btn-danger">
                             Đơn hàng đã huỷ
@@ -89,9 +88,10 @@
                             <form class="form-horizontal">
                                 <div class="box-body">
                                     <div class="form-group">
-                                        <label class="col-sm-3 control-label" for="inputEmail3">Order ID:</label>
+                                        <label class="col-sm-3 control-label" for="inputEmail3">Order Code:</label>
                                         <div class="col-sm-9">
-                                            <input value="{{$order->id}}" data-user-id="{{$order->user_id}}" id="order_id" disabled="disabled"  class="form-control disabled">
+                                            <input value="{{$order->order_code}}" data-user-id="{{$order->user_id}}" id="order_code_id" disabled="disabled"  class="form-control disabled">
+                                            <input value="{{$order->id}}" data-user-id="{{$order->user_id}}" id="order_id" disabled="disabled"  class="form-control hidden disabled">
                                             <input value="{{$order->address_id}}" id="order_address_id" disabled="disabled"  class="form-control hidden disabled">
                                         </div>
                                     </div>
@@ -131,38 +131,58 @@
                                     <input type="hidden" name="id" value="{{$user_address->id}}" />
                                     {!! Form::label('name', 'Họ và tên', array('class'=>'col-sm-3 control-label')) !!}
                                     <div class="col-sm-9">
-                                      {!! Form::text('name', $user_address->name, array('required', 'class' => 'form-control', 'placeholder' => 'Họ và tên')) !!}
+                                        @if($order->status == KACANA_ORDER_PARTNER_STATUS_NEW)
+                                            {!! Form::text('name', $user_address->name, array('required', 'class' => 'form-control', 'placeholder' => 'Họ và tên')) !!}
+                                        @else
+                                            {!! Form::text('name', $user_address->name, array('required', 'disabled'=>'disabled', 'class' => 'form-control', 'placeholder' => 'Họ và tên')) !!}
+                                        @endif
                                     </div>
                                 </div>
                                 <!-- phone number -->
                                 <div class="form-group">
                                     {!! Form::label('phone', 'Điện thoại', array('class'=>'col-sm-3 control-label')) !!}
                                     <div class="col-sm-9">
-                                    {!! Form::text('phone', $user_address->phone, array('required', 'class' => 'form-control', 'placeholder' => 'Điện thoại')) !!}
+                                        @if($order->status == KACANA_ORDER_PARTNER_STATUS_NEW)
+                                            {!! Form::text('phone', $user_address->phone, array('required', 'class' => 'form-control', 'placeholder' => 'Điện thoại')) !!}
+                                        @else
+                                            {!! Form::text('phone', $user_address->phone, array('required', 'disabled'=>'disabled', 'class' => 'form-control', 'placeholder' => 'Điện thoại')) !!}
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     {!! Form::label('Email', 'Email', array('class'=>'col-sm-3 control-label')) !!}
                                     <div class="col-sm-9">
-                                        {!! Form::text('email', $user_address->email, array( 'class' => 'form-control', 'placeholder' => 'Email')) !!}
+                                        @if($order->status == KACANA_ORDER_PARTNER_STATUS_NEW)
+                                            {!! Form::text('email', $user_address->email, array( 'class' => 'form-control', 'placeholder' => 'Email')) !!}
+                                        @else
+                                            {!! Form::text('email', $user_address->email, array( 'class' => 'form-control', 'disabled'=>'disabled', 'placeholder' => 'Email')) !!}
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     {!! Form::label('street', 'Địa chỉ', array('class'=>'col-sm-3 control-label'))!!}
                                     <div class="col-sm-9">
-                                    {!! Form::text('street', $user_address->street, array('required', 'class'=>'form-control', 'placeholder'=>'Địa chỉ')) !!}
+                                        @if($order->status == KACANA_ORDER_PARTNER_STATUS_NEW)
+                                            {!! Form::text('street', $user_address->street, array('required', 'class'=>'form-control', 'placeholder'=>'Địa chỉ')) !!}
+                                        @else
+                                            {!! Form::text('street', $user_address->street, array('required', 'class'=>'form-control', 'disabled'=>'disabled', 'placeholder'=>'Địa chỉ')) !!}
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     {!! Form::label('city_id', 'Thành phố', array('class'=>'col-sm-3 control-label'))!!}
                                     <div class="col-sm-9">
-                                    {!! Form::select('city_id', $cities, $user_address->city_id, array('required', 'class'=>'form-control')) !!}
+                                        @if($order->status == KACANA_ORDER_PARTNER_STATUS_NEW)
+                                            {!! Form::select('city_id', $cities, $user_address->city_id, array('required', 'class'=>'form-control')) !!}
+                                        @else
+                                            {!! Form::select('city_id', $cities, $user_address->city_id, array('required', 'disabled'=>'disabled', 'class'=>'form-control')) !!}
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     {!! Form::label('district_id', 'Quận', array('class'=>'col-sm-3 control-label'))!!}
                                     <div class="col-sm-9">
-                                        <select required data-district="{{$districts}}" id="district" class="form-control" name="district_id">
+                                        <select required data-district="{{$districts}}" id="district" @if($order->status != KACANA_ORDER_PARTNER_STATUS_NEW) disabled="disabled" @endif class="form-control" name="district_id">
                                             @foreach($districts as $district)
                                                 @if(($user_address->city_id == $district->city_id))
                                                     <option @if(($user_address->district_id == $district->id)) selected="selected" @endif data-city-id="{{$district->city_id}}" value="{{$district->id}}">{{$district->name}}</option>
@@ -174,7 +194,7 @@
                                 <div class="form-group">
                                     {!! Form::label('district_id', 'Quận', array('class'=>'col-sm-3 control-label'))!!}
                                     <div class="col-sm-9">
-                                        <select required id="wardId" class="form-control" name="ward_id">
+                                        <select required id="wardId" @if($order->status != KACANA_ORDER_PARTNER_STATUS_NEW) disabled="disabled" @endif class="form-control" name="ward_id">
                                             <option value="">Chọn phường/xã</option>
                                             @foreach($wards as $ward)
                                                 <option @if(($user_address->ward_id == $ward->id)) selected="selected" @endif value="{{$ward->id}}">{{$ward->name}}</option>
@@ -183,9 +203,11 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="modal-footer">
-                                <button type="submit" id="btn-update"class="btn btn-primary">Cập nhật</button>
-                            </div>
+                            @if($order->status == KACANA_ORDER_PARTNER_STATUS_NEW)
+                                <div class="modal-footer">
+                                    <button type="submit" id="btn-update"class="btn btn-primary">Cập nhật</button>
+                                </div>
+                            @endif
                             {!! Form::close() !!}
                         </div>
                     </div>
@@ -214,7 +236,7 @@
                                         <h4 class="color-grey-light">Chi tiết</h4>
                                     </div>
                                     <div class="col-xs-2 col-sm-2" >
-                                        <h4 class="color-grey-light text-center">Shipping</h4>
+                                        <h4 class="color-grey-light text-center">Tình trạng</h4>
                                     </div>
                                 </div>
                             </div>
@@ -286,35 +308,30 @@
                                                     </div>
                                                 </div>
                                             </div>
-
-                                            <div class="cart-item-action text-right" >
-                                                <a class="hidden" data-id="{{$orderDetail->id}}" style="margin-left: 10px" data-toggle="tooltip" data-original-title="quay lại" href="#cancel-edit-detail-item" >
-                                                    <i class="fa fa-reply text-red" ></i>
-                                                </a>
-                                                <a class="hidden" data-id="{{$orderDetail->id}}" style="margin-left: 10px" data-toggle="tooltip" data-original-title="ok" href="#submit-edit-detail-item" >
-                                                    <i class="fa fa-check text-green" ></i>
-                                                </a>
-                                                @if(!$orderDetail->shipping_service_code)
-                                                    <a data-id="{{$orderDetail->id}}" style="margin-left: 10px" data-toggle="tooltip" data-original-title="sửa sản phẩm này" href="#edit-detail-item" >
-                                                        <i class="fa fa-pencil" ></i>
+                                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                            @if($order->status == KACANA_ORDER_PARTNER_STATUS_NEW)
+                                                <div class="cart-item-action text-right" >
+                                                    <a class="hidden" data-id="{{$orderDetail->id}}" style="margin-left: 10px" data-toggle="tooltip" data-original-title="quay lại" href="#cancel-edit-detail-item" >
+                                                        <i class="fa fa-reply text-red" ></i>
                                                     </a>
-                                                    <a data-id="{{$orderDetail->id}}"  style="margin-left: 10px" data-toggle="tooltip" data-original-title="xoá sản phẩm này" href="/order/deleteOrderDetail/?orderId={{$order->id}}&orderDetailId={{$orderDetail->id}}" >
-                                                        <i class="fa fa-trash" ></i>
+                                                    <a class="hidden" data-id="{{$orderDetail->id}}" style="margin-left: 10px" data-toggle="tooltip" data-original-title="ok" href="#submit-edit-detail-item" >
+                                                        <i class="fa fa-check text-green" ></i>
                                                     </a>
-                                                @endif
-                                            </div>
+                                                    @if(!$orderDetail->shipping_service_code)
+                                                        <a data-id="{{$orderDetail->id}}" style="margin-left: 10px" data-toggle="tooltip" data-original-title="sửa sản phẩm này" href="#edit-detail-item" >
+                                                            <i class="fa fa-pencil" ></i>
+                                                        </a>
+                                                        <a data-id="{{$orderDetail->id}}"  style="margin-left: 10px" data-toggle="tooltip" data-original-title="xoá sản phẩm này" href="/order/deleteOrderDetail/?orderId={{$order->id}}&orderDetailId={{$orderDetail->id}}" >
+                                                            <i class="fa fa-trash" ></i>
+                                                        </a>
+                                                    @endif
+                                                </div>
+                                            @endif
                                         </form>
                                     </div>
 
                                     <div class="col-xs-2 text-center col-sm-2 cart-item-total" >
-                                        @if($orderDetail->shipping_service_code)
-                                          <a target="_blank" href="/shipping/detail?id={{$orderDetail->shipping->id}}" class="label label-success" >đã ship: {{$orderDetail->shipping_service_code}}</a>
-                                        <br>
-                                        <br>
-                                          {!! \Kacana\ViewGenerateHelper::getStatusDescriptionShip($orderDetail->shipping->status, $orderDetail->shipping->id) !!}
-                                        @else
-                                            <label class="label label-danger" >chưa ship</label>
-                                        @endif
+                                        {!! \Kacana\ViewGenerateHelper::getStatusDescriptionOrderDetail($orderDetail) !!}
                                     </div>
                                 </div>
                             </div>

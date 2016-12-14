@@ -310,8 +310,10 @@ class shipService {
         $address = $order->addressReceive->name.' - '.$order->address;
         $this->_shippingModel->createShippingRow($shipping, $address, $subtotal, $order->addressReceive->id, $shipFee, $extraDiscount, $extraDiscountDesc, $paid);
 
-        foreach($orderDetailIds as $orderDetailId){
-            $orderService->updateOrderDetail($orderDetailId, ['shipping_service_code' => $shipping->OrderCode]);
+        $orderDetails = $orderService->getOrderDetailByIds($orderDetailIds);
+        foreach($orderDetails as $orderDetail){
+
+            $orderService->updateOrderDetail($orderDetail->id, ['shipping_service_code' => $shipping->OrderCode, 'order_service_status' => KACANA_ORDER_SERVICE_STATUS_SHIPPING, 'order_id' => $orderDetail->order_id]);
         }
 
         return true;

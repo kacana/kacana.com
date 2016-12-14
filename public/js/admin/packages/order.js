@@ -200,6 +200,9 @@ var orderPackage = {
                     'width':'5%'
                 },
                 {
+                    'title': 'code'
+                },
+                {
                     'title': 'order by'
                 },
                 {
@@ -248,9 +251,10 @@ var orderPackage = {
             };
 
             var cacheLoadedCallBack = function(oData){
-                $formInline.find('input[name="name"]').val(oData.columns[1].search.search);
-                $formInline.find('input[name="phone"]').val(oData.columns[2].search.search);
-                $formInline.find('select[name="searchStatus"]').val(oData.columns[5].search.search);
+                $formInline.find('input[name="code"]').val(oData.columns[1].search.search);
+                $formInline.find('input[name="name"]').val(oData.columns[2].search.search);
+                $formInline.find('input[name="phone"]').val(oData.columns[3].search.search);
+                $formInline.find('select[name="searchStatus"]').val(oData.columns[6].search.search);
             };
 
             var datatable = Kacana.datatable.order(element, columns, addParamsCallBack, cacheLoadedCallBack);
@@ -262,12 +266,14 @@ var orderPackage = {
                     var api = datatable.api(true);
 
                     var name = $formInline.find('input[name="name"]').val();
+                    var code = $formInline.find('input[name="code"]').val();
                     var phone = $formInline.find('input[name="phone"]').val();
                     var status = $formInline.find('select[name="searchStatus"]').val();
 
-                    api.column(1).search(name)
-                        .column(2).search(phone)
-                        .column(5).search(status, true);
+                    api.column(2).search(name)
+                        .column(3).search(phone)
+                        .column(1).search(code)
+                        .column(6).search(status, true);
 
                     api.draw();
                 });
@@ -285,6 +291,22 @@ var orderPackage = {
                     form.find('a[href="#submit-edit-detail-item"], a[href="#cancel-edit-detail-item"]').removeClass('hidden');
                     form.find('a[href="#edit-detail-item"]').addClass('hidden');
                     form.find('.product-discount').val(form.find('.product-discount').data('value'));
+                });
+
+                Kacana.order.detail.page.on('click','a[href="#cancel-order"]', function () {
+                    var orderId = $(this).data('order-id');
+
+                    swal({
+                        title: 'Bạn có chắc huỷ đơn hàng?',
+                        text: "Đơn hàng này sẽ bị huỷ và không thể khôi phục!",
+                        type: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Huỷ đơn hàng!'
+                    }).then(function () {
+                        window.location.href = "/order/cancelOrder?orderId="+orderId;
+                    })
                 });
 
                 Kacana.order.detail.page.on('click', 'a[href="#cancel-edit-detail-item"]', function () {
@@ -542,6 +564,7 @@ var orderPackage = {
                 var detailOrderId = wrap.data('order-detail-id');
                 var orderServiceId = wrap.find('input[name="order-service-id"]').val();
                 var status = obj.data('status');
+                var orderId = $("#order_id").val();
 
                 var callback = function(data){
                     if(data.ok){
@@ -563,7 +586,8 @@ var orderPackage = {
                 var dataPost = {
                     id: detailOrderId,
                     order_service_id : orderServiceId,
-                    order_service_status: status
+                    order_service_status: status,
+                    order_id: orderId
                 };
                 Kacana.ajax.order.updateOrderService(dataPost, callback, errorCallback);
             },

@@ -41,15 +41,21 @@ class OrderController extends BaseController {
      * @param int $id
      * @return Response
      */
-    public function edit($domain, Request $request,$id){
+    public function edit($domain, Request $request,$code){
         $orderService = new orderService();
         $addressService = new addressService();
         $shipService = new shipService();
         try {
+            $order = $orderService->getOrderByOrderCode($code);
+            $id = $order->id;
+            if($order->user_id != $this->_user->id)
+                return redirect('/order');
+
             if($request->isMethod('PUT')){
-                $addressService->updateAddressReceive($request->all());
+                if($order->user_id == $this->_user->id && $order->status == KACANA_ORDER_PARTNER_STATUS_NEW)
+                    $addressService->updateAddressReceive($request->all());
             }
-            $order = $orderService->getOrderById($id);
+
             $buyer = $order->user;
             $user_address = $order->addressReceive;
 
@@ -74,57 +80,6 @@ class OrderController extends BaseController {
         }
     }
 
-    public function checkFeeShipping(Request $request){
-        $orderService = new orderService();
-        $addressService = new addressService();
-        $shipService = new shipService();
-
-        $weight = $request->input('weight', KACANA_SHIP_DEFAULT_WEIGHT);
-        $length = $request->input('length', KACANA_SHIP_DEFAULT_LENGTH);
-        $width = $request->input('width', KACANA_SHIP_DEFAULT_WIDTH);
-        $height = $request->input('height', KACANA_SHIP_DEFAULT_HEIGHT);
-        $orderId = $request->input('orderId', 0);
-        $pickDistrictCode = $request->input('pickDistrictCode', 0);
-
-        $return['ok'] = 0;
-
-        try{
-            $order = $orderService->getOrderById($orderId);
-            $user_address = $order->addressReceive;
-            $serviceList = $shipService->getServiceList($user_address->district->code,  $pickDistrictCode);
-
-            $return['data'] = $shipService->calculateServiceFee($user_address->district->code, $pickDistrictCode, $serviceList, $weight, $length, $width, $height);
-
-            $return['ok'] = 1;
-        } catch (\Exception $e) {
-            // @codeCoverageIgnoreStart
-            $return['error'] = $e->getMessage();
-            $return['errorMsg'] = $e->getMessage();
-            // @codeCoverageIgnoreEnd
-        }
-
-        return response()->json($return);
-    }
-
-    public function updateOrderService(Request $request){
-        $params = $request->all();
-        $orderService = new orderService();
-        $return['ok'] = 0;
-        try {
-            $return['ok'] = 1;
-            $return['data'] = $orderService->updateOrderDetail($params['id'], $params);
-
-        } catch (\Exception $e) {
-            // @codeCoverageIgnoreStart
-
-            $return['error'] = $e->getMessage();
-            $return['errorMsg'] = $e->getMessage();
-            // @codeCoverageIgnoreEnd
-        }
-
-        return response()->json($return);
-    }
-
     public function getOrderDetailisOrdered(Request $request){
         $orderService = new orderService();
 
@@ -136,35 +91,6 @@ class OrderController extends BaseController {
             $return['order'] = $orderService->getOrderById($orderId);
             $return['addressReceive'] = $orderService->getOrderById($orderId)->addressReceive;
             $return['data'] = $orderService->getOrderDetailisOrdered($orderId, $addressId);
-        } catch (\Exception $e) {
-            // @codeCoverageIgnoreStart
-            $return['error'] = $e->getMessage();
-            $return['errorMsg'] = $e->getMessage();
-            // @codeCoverageIgnoreEnd
-        }
-
-        return response()->json($return);
-    }
-
-    public function shipping(Request $request){
-
-        $shipService = new shipService();
-
-        $orderId = $request->input('orderId');
-        $orderDetailIds = $request->input('orderDetailId');
-        $pickHubId = $request->input('pickHubId', KACANA_SHIP_STORE_MAIN_ID);
-        $shippingServiceTypeId = $request->input('shippingServiceTypeId', 0);
-        $ExpectedDeliveryTime = $request->input('ExpectedDeliveryTime', '');
-
-        $weight = $request->input('Weight', KACANA_SHIP_DEFAULT_WEIGHT);
-        $length = $request->input('Length', KACANA_SHIP_DEFAULT_LENGTH);
-        $width = $request->input('Width', KACANA_SHIP_DEFAULT_WIDTH);
-        $height = $request->input('Height', KACANA_SHIP_DEFAULT_HEIGHT);
-
-
-        try{
-            $ship = $shipService->createShippingOrder($orderDetailIds, $orderId, $shippingServiceTypeId, $pickHubId, $weight, $length, $width, $height, $ExpectedDeliveryTime);
-
         } catch (\Exception $e) {
             // @codeCoverageIgnoreStart
             $return['error'] = $e->getMessage();
@@ -225,7 +151,7 @@ class OrderController extends BaseController {
 
             $order = $orderService->createOrder($this->_user->id, $deliveryId, 0, 0, 0, 0, KACANA_ORDER_PARTNER_STATUS_NEW);
 
-            return redirect('/order/edit/'.$order->id);
+            return redirect('/order/edit/'.$order->order_code);
         } catch (\Exception $e) {
             // @codeCoverageIgnoreStart
             $return['error'] = $e->getMessage();
@@ -241,7 +167,6 @@ class OrderController extends BaseController {
         $order = $orderService->getOrderById($orderId);
         $orderDetails = $order->orderDetail;
         $orderDetailProperty = $request->input('product-properties', '');
-        $orderDetailDiscount = $request->input('product-discount', 0);
         $orderDetailQuantity = $request->input('product-quantity', 0);
 
         $total = 0;
@@ -254,11 +179,12 @@ class OrderController extends BaseController {
             foreach ($orderDetails as $orderDetail){
                 if($orderDetail->id == $orderDetailId)
                 {
+                    $orderDetailDiscount = $orderDetail->discount*$orderDetailQuantity;
+
                     $orderDetailProperty = explode('-', $orderDetailProperty);
                     $dataOrderDetail = [
                         'color_id'=>$orderDetailProperty[0],
                         'size_id'=>isset($orderDetailProperty[1])?$orderDetailProperty[1]:'',
-                        'discount'=> $orderDetailDiscount,
                         'quantity' => $orderDetailQuantity,
                         'subtotal' => $orderDetail->price * $orderDetailQuantity - $orderDetailDiscount
                     ];
@@ -288,7 +214,7 @@ class OrderController extends BaseController {
 
             $orderService->updateOrder($orderId, $dataOrder);
 
-            return redirect('/order/edit/'.$orderId);
+            return redirect('/order/edit/'.$order->order_code);
 
         } catch (\Exception $e) {
             if($request->ajax())
@@ -372,7 +298,7 @@ class OrderController extends BaseController {
 
             $orderService->updateOrder($orderId, $dataOrder);
 
-            return redirect('/order/edit/'.$orderId);
+            return redirect('/order/edit/'.$order->order_code);
 
         } catch (\Exception $e) {
             if($request->ajax())
@@ -393,9 +319,28 @@ class OrderController extends BaseController {
         $orderDetailId = $request->input('orderDetailId');
 
         try{
+
+
+            $order = $orderService->getOrderById($orderId);
+            $orderDetail = $orderService->getOrderDetailById($orderDetailId);
+
+            $originTotal = $order->origin_total - ($orderDetail->price * $orderDetail->quantity);
+            $total = $order->total - $orderDetail->subtotal;
+            $discount = $order->discount - $orderDetail->discount;
+            $quantity = $order->quantity - $orderDetail->quantity;
+
+            $dataOrder = [
+                'total' => $total,
+                'origin_total' => $originTotal,
+                'quantity' => $quantity,
+                'discount' => $discount
+            ];
+
+            $orderService->updateOrder($orderId, $dataOrder);
+
             $orderService->deleteOrderDetail($orderId, $orderDetailId);
 
-            return redirect('/order/edit/'.$orderId);
+            return redirect('/order/edit/'.$order->order_code);
 
         } catch (\Exception $e) {
             if($request->ajax())
@@ -447,5 +392,28 @@ class OrderController extends BaseController {
         }
 
         return redirect('/order');
+    }
+
+    public function sendOrder(Request $request){
+        $orderService = new orderService;
+        $addressService = new addressService();
+
+        $orderId = $request->input('orderId', 0);
+        $order = $orderService->getOrderById($orderId);
+        try {
+            $return['data'] = $orderService->sendOrder($orderId, $this->_user->id);
+            $return['ok'] = 1;
+
+        } catch (\Exception $e) {
+            if($request->ajax())
+            {
+                $result['error'] = $e->getMessage();
+                return $result;
+            }
+            else
+                return view('errors.404', ['error_message' => $e->getMessage()]);
+        }
+
+        return redirect('/order/edit/'.$order->order_code);
     }
 }

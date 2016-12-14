@@ -56,5 +56,18 @@ $action = getActionName(class_basename(Route::currentRouteAction()));
                 <span>Shipping</span>
             </a>
         </li>
+        <li class="header">Quản Lý Partner</li>
+        <li class="treeview {{($controller == 'PartnerController' && $action == 'index')?'active':''}}">
+            <a href="{{URL::to('/partner')}}">
+                <i class="fa fa-dollar fa-6"></i>
+                <span>Danh sách chờ chuyển</span>
+            </a>
+        </li>
+        <li class="treeview {{($controller == 'PartnerController' && $action == 'historyTransfer')?'active':''}}">
+            <a href="{{URL::to('/partner/historyTransfer')}}">
+                <i class="fa fa-money fa-6"></i>
+                <span>Lịch sử chuyển tiền</span>
+            </a>
+        </li>
     </ul>
 </section>

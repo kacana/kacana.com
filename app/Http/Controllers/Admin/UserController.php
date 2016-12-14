@@ -5,6 +5,8 @@ use App\Http\Requests\addressReceiveModelRequest;
 use App\models\UserAddress;
 use App\models\UserType;
 use App\models\addressReceiveModel;
+use App\services\addressService;
+use App\services\orderService;
 use GuzzleHttp\Psr7\Response;
 use Image;
 use Datatables;
@@ -14,6 +16,7 @@ use App\models\addressCityModel;
 use App\models\addressWardModel;
 use App\services\userService;
 use Illuminate\Http\Request;
+use Hash;
 
 class UserController extends BaseController {
 
@@ -53,13 +56,35 @@ class UserController extends BaseController {
 	 */
 	public function edit($domain, $id, UserRequest $request)
 	{
-        $user = User::find($id);
-        $types = UserType::lists('name', 'id');
-        if($request->all()){
-            $user->updateItem($id, $request->all());
-            $user = User::find($id);
+	    $userService = new userService();
+
+        if($request->isMethod('POST'))
+        {
+            $name = $request->input('name');
+            $email = $request->input('email');
+            $phone = $request->input('phone');
+            $role = $request->input('role');
+            $password = $request->input('password');
+
+            $dataUser = [
+                'name' => $name,
+                'email' => $email,
+                'phone' => $phone,
+                'role' => $role
+            ];
+
+            if($password){
+                $password = Hash::make(md5($password));
+
+                array_add($dataUser, 'password', $password);
+            }
+
+            $userService->updateItem($id, $dataUser);
         }
-        return view('admin.user.edit',array('item' =>$user, 'types' =>$types));
+
+        $user = $userService->getUserById($id);
+
+        return view('admin.user.edit',array('item' =>$user));
 	}
 
     public function showCreateForm()
@@ -85,40 +110,6 @@ class UserController extends BaseController {
         return $str;
     }
 
-    /*
-     * - function mame: getUserAddress
-     * list all user address on user detail page with table format
-     * @params: uid - id of user
-     */
-    public function getUserAddress($domain, $id)
-    {
-        $user_address = new UserAddress;
-        $list_address = $user_address->getUserAddress($id);
-
-        return Datatables::of($list_address)
-            ->edit_column('name', function($row){
-                return $row->addressReceive->name;
-            })
-            ->edit_column('email', function($row){
-                return $row->addressReceive->email;
-            })
-            ->edit_column('phone', function($row){
-                return $row->addressReceive->phone;
-            })
-            ->edit_column('street', function($row){
-                return $row->addressReceive->street;
-            })
-            ->edit_column('city', function($row){
-                return addressCityModel::showName($row->addressReceive->city_id);
-            })
-            ->edit_column('ward', function($row){
-                return addressWardModel::showName($row->addressReceive->ward_id);
-            })
-            ->add_column('action', function ($row) {
-                return showActionButton('Kacana.user.userAddress.showFormEdit('.$row->id.')', '', true);
-            })
-            ->make(true);
-    }
     /*
      * - function mame: showFormEditUserAddress
      */
@@ -159,6 +150,40 @@ class UserController extends BaseController {
         echo Form::select('ward_id', $lists,null, array('class'=>'form-control'));
     }
 
+    public function generateAddressReceiveByUserId($domain, $userId, Request $request){
 
+        $addressService = new addressService();
+        $params = $request->all();
+
+        try {
+            $return = $addressService->generateAddressReceiveByUserId($params, $userId);
+
+        } catch (\Exception $e) {
+            // @codeCoverageIgnoreStart
+            $return['error'] = $e->getMessage();
+            $return['errorMsg'] = $e->getMessage();
+            // @codeCoverageIgnoreEnd
+        }
+
+        return response()->json($return);
+    }
+
+    public function generateAllOrderDetailByUserTable($domain, Request $request, $userId){
+        $params = $request->all();
+
+        $orderService = new orderService();
+
+        try {
+            $return = $orderService->generateAllOrderDetailByUserTable($params, $userId);
+
+        } catch (\Exception $e) {
+            // @codeCoverageIgnoreStart
+            $return['error'] = $e->getMessage();
+            $return['errorMsg'] = $e->getMessage();
+            // @codeCoverageIgnoreEnd
+        }
+
+        return response()->json($return);
+    }
 
 }

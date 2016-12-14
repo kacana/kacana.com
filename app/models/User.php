@@ -89,6 +89,12 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         return $this->belongsToMany('App\models\productModel',  'user_product_like', 'user_id', 'product_id')->withPivot('created_at','product_url');
     }
 
+    public function partnerPayment()
+    {
+        return $this->hasMany('App\models\partnerPaymentModel', 'user_id', 'id');
+    }
+
+
     /**
      * @param $item
      * @return User
@@ -136,6 +142,10 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      */
     public function getUserByEmail($email){
         return $this->where('email', $email)->first();
+    }
+
+    public function getUserById($id){
+        return $this->find($id);
     }
 
     /**
@@ -270,6 +280,56 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
             $userReport->select('*',DB::raw('DATE_FORMAT(created, "%Y") as date'), (DB::raw('count(id) as item')))
                 ->groupBy('date');
         return $userReport->get();
+    }
+
+    public function generateUserWaitingTransferTable($request, $columns){
+        $datatables = new DataTables();
+
+        $limit = $datatables::limit( $request, $columns );
+        $order = $datatables::order( $request, $columns );
+        $where = $datatables::filter( $request, $columns );
+
+        // Main query to actually get the data
+        $selectData = DB::table('users')
+            ->select($datatables::pluck($columns, 'db'))
+            ->leftJoin('orders', 'orders.user_id', '=', 'users.id')
+            ->leftJoin('order_detail', 'order_detail.order_id', '=', 'orders.id')
+            ->leftJoin('shipping', 'shipping.id', '=', 'order_detail.shipping_service_code')
+            ->leftJoin('partner_payment_detail', 'order_detail.id', '=', 'partner_payment_detail.order_detail_id')
+            ->leftJoin('partner_payments', 'partner_payment_detail.payment_id', '=', 'partner_payments.id')
+            ->orderBy($order['field'], $order['dir'])
+            ->where('shipping.status', KACANA_SHIP_STATUS_FINISH)
+            ->whereNull('partner_payment_detail.payment_id')
+            ->groupBy('users.id')
+            ->skip($limit['offset'])
+            ->take($limit['limit']);
+
+        // Data set length
+        $recordsFiltered = $selectLength = DB::table('users')
+            ->leftJoin('orders', 'orders.user_id', '=', 'users.id')
+            ->leftJoin('order_detail', 'order_detail.order_id', '=', 'orders.id')
+            ->leftJoin('shipping', 'shipping.id', '=', 'order_detail.shipping_service_code')
+            ->leftJoin('partner_payment_detail', 'order_detail.id', '=', 'partner_payment_detail.order_detail_id')
+            ->leftJoin('partner_payments', 'partner_payment_detail.payment_id', '=', 'partner_payments.id')
+            ->where('shipping.status', KACANA_SHIP_STATUS_FINISH)
+            ->whereNull('partner_payment_detail.payment_id')
+            ->groupBy('users.id')
+            ->select($datatables::pluck($columns, 'db'));
+
+        if($where){
+            $selectData->whereRaw($where);
+            $recordsFiltered->whereRaw($where);
+        }
+
+        /*
+         * Output
+         */
+        return array(
+            "draw"            => intval( $request['draw'] ),
+            "recordsTotal"    => intval( $selectLength->count() ),
+            "recordsFiltered" => intval( $recordsFiltered->count() ),
+            "data"            => $selectData->get()
+        );
     }
 
 }

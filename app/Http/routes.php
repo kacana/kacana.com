@@ -108,7 +108,8 @@ Route::group(['domain'=>KACANA_AUTH_ADMIN_NAME.'.{nameDomain}','middleware' => '
     //user
     Route::any('/user',                                     array('as'=>'listUsers',                 'uses'=>'Admin\UserController@index'));
     Route::any('/user/generateUserTable',                   array('as'=>'generateUserTable',         'uses'=>'Admin\UserController@generateUserTable'));
-//    Route::any('/user/generateDetailTable',                   array('as'=>'generateDetailTable',         'uses'=>'Admin\UserController@generateDetailTable'));
+    Route::any('/user/generateAddressReceiveByUserId/{id}',      array('as'=>'generateAddressReceiveByUserId',      'uses'=>'Admin\UserController@generateAddressReceiveByUserId'));
+    Route::any('/user/generateAllOrderDetailByUserTable/{id}',   array('as'=>'generateAllOrderDetailByUserTable',   'uses'=>'Admin\UserController@generateAllOrderDetailByUserTable'));
     Route::post('/user/create',                             array('as'=>'createUser',                'uses'=>'Admin\UserController@create'));
     Route::any('/user/edit/{pid}',                          array('as'=>'editUser',                  'uses'=>'Admin\UserController@edit'));
     Route::get('/user/setStatus/{id}/{status}',             array('as'=>'setStatusUser',             'uses'=>'Admin\UserController@setStatus'));
@@ -139,13 +140,28 @@ Route::group(['domain'=>KACANA_AUTH_ADMIN_NAME.'.{nameDomain}','middleware' => '
     Route::get('/order/addProductToOrder',                   array('as'=>'OrderAddProductToOrder',           'uses'=>'Admin\OrderController@addProductToOrder'));
     Route::get('/order/deleteOrderDetail',                   array('as'=>'OrderDeleteOrderDetail',           'uses'=>'Admin\OrderController@deleteOrderDetail'));
     Route::get('/order/getWardByDistrictId',                 array('as'=>'OrderGetWardByDistrictId',         'uses'=>'Admin\OrderController@getWardByDistrictId'));
+    Route::get('/order/cancelOrder',                         array('as'=>'OrderCancelOrder',                 'uses'=>'Admin\OrderController@cancelOrder'));
 
     //Shipping Controller
-    Route::any('/shipping',                                  array('as'=>'listShipping',                 'uses'=>'Admin\ShippingController@index'));
-    Route::any('/shipping/createShipping',                   array('as'=>'createShipping',               'uses'=>'Admin\ShippingController@createShipping'));
-    Route::any('/shipping/generateShippingTable',            array('as'=>'generateShippingTable',        'uses'=>'Admin\ShippingController@generateShippingTable'));
-    Route::get('/shipping/detail/',                          array('as'=>'detailShipping',               'uses'=>'Admin\ShippingController@detail'));
-    Route::get('/shipping/printOrder/',                      array('as'=>'ShippingPrintOrder',               'uses'=>'Admin\ShippingController@printOrder'));
+    Route::any('/shipping',                                  array('as'=>'listShipping',                        'uses'=>'Admin\ShippingController@index'));
+    Route::any('/shipping/createShipping',                   array('as'=>'createShipping',                      'uses'=>'Admin\ShippingController@createShipping'));
+    Route::any('/shipping/generateShippingTable',            array('as'=>'generateShippingTable',               'uses'=>'Admin\ShippingController@generateShippingTable'));
+    Route::get('/shipping/detail/',                          array('as'=>'detailShipping',                      'uses'=>'Admin\ShippingController@detail'));
+    Route::get('/shipping/printOrder/',                      array('as'=>'ShippingPrintOrder',                  'uses'=>'Admin\ShippingController@printOrder'));
+
+    //Partner Controller
+    Route::any('/partner',                                          array('as'=>'listPartner',                              'uses'=>'Admin\PartnerController@index'));
+    Route::any('/partner/detail/{id}',                              array('as'=>'partnerDetail',                            'uses'=>'Admin\PartnerController@detail'));
+    Route::any('/partner/generateUserWaitingTransferTable',         array('as'=>'partnerGenerateUserWaitingTransferTable',  'uses'=>'Admin\PartnerController@generateUserWaitingTransferTable'));
+    Route::any('/partner/generateAllCommissionTable/{id}',          array('as'=>'partnerGenerateAllCommissionTable',        'uses'=>'Admin\PartnerController@generateAllCommissionTable'));
+    Route::any('/partner/generateTempCommissionTable/{id}',         array('as'=>'partnerGenerateTempCommissionTable',       'uses'=>'Admin\PartnerController@generateTempCommissionTable'));
+    Route::any('/partner/generateValidCommissionTable/{id}',        array('as'=>'partnerGenerateValidCommissionTable',      'uses'=>'Admin\PartnerController@generateValidCommissionTable'));
+    Route::any('/partner/generatePaymentCommissionTable/{id}',      array('as'=>'partnerGeneratePaymentCommissionTable',    'uses'=>'Admin\PartnerController@generatePaymentCommissionTable'));
+    Route::any('/partner/generatePaymentHistoryTable/{id}',         array('as'=>'partnerGeneratePaymentHistoryTable',       'uses'=>'Admin\PartnerController@generatePaymentHistoryTable'));
+    Route::any('/partner/transfer',                                 array('as'=>'partnerTransfer',                          'uses'=>'Admin\PartnerController@transfer'));
+    Route::any('/partner/historyTransfer',                          array('as'=>'partnerHistoryTransfer',                   'uses'=>'Admin\PartnerController@historyTransfer'));
+    Route::any('/partner/generatePartnerPaymentTable',              array('as'=>'partnerGeneratePartnerPaymentTable',       'uses'=>'Admin\PartnerController@generatePartnerPaymentTable'));
+    Route::any('/partner/detailTransfer/{id}',                      array('as'=>'partnerDetailTransfer',                    'uses'=>'Admin\PartnerController@detailTransfer'));
 
     Route::any('/upload/chunk',                              array('as'=>'upload',     'uses'=>'Client\UploadController@chunk'));
 
@@ -194,6 +210,23 @@ Route::group(['domain'=>KACANA_AUTH_PARTNER_NAME.'.{nameDomain}','middleware' =>
     Route::get('/order/deleteOrderDetail',                   array('as'=>'OrderDeleteOrderDetail',           'uses'=>'Partner\OrderController@deleteOrderDetail'));
     Route::get('/order/getWardByDistrictId',                 array('as'=>'OrderGetWardByDistrictId',         'uses'=>'Partner\OrderController@getWardByDistrictId'));
     Route::get('/order/cancelOrder',                         array('as'=>'OrderCancelOrder',                 'uses'=>'Partner\OrderController@cancelOrder'));
+    Route::get('/order/sendOrder',                           array('as'=>'OrderSendOrder',                     'uses'=>'Partner\OrderController@sendOrder'));
+
+
+    //Commission Request
+    Route::any('/commission',                                array('as'=>'commissionIndex',                             'uses'=>'Partner\CommissionController@index'));
+    Route::any('/commission/generateAllCommissionTable',     array('as'=>'commissionGenerateAllCommissionTable',        'uses'=>'Partner\CommissionController@generateAllCommissionTable'));
+    Route::any('/commission/generateTempCommissionTable',    array('as'=>'commissionGenerateTempCommissionTable',       'uses'=>'Partner\CommissionController@generateTempCommissionTable'));
+    Route::any('/commission/generateValidCommissionTable',   array('as'=>'commissionGenerateValidCommissionTable',      'uses'=>'Partner\CommissionController@generateValidCommissionTable'));
+    Route::any('/commission/generatePaymentCommissionTable', array('as'=>'commissionGeneratePaymentCommissionTable',    'uses'=>'Partner\CommissionController@generatePaymentCommissionTable'));
+    Route::any('/commission/generatePaymentHistoryTable',    array('as'=>'commissionGeneratePaymentHistoryTable',       'uses'=>'Partner\CommissionController@generatePaymentHistoryTable'));
+    Route::any('/commission/detailTransfer/{id}',            array('as'=>'commissionDetailTransfer',                    'uses'=>'Partner\CommissionController@detailTransfer'));
+
+    //Customer Request
+    Route::any('/customer',                                array('as'=>'customerIndex',                             'uses'=>'Partner\CustomerController@index'));
+    Route::any('/customer/generateCustomerTable',          array('as'=>'customerGenerateCustomerTable',             'uses'=>'Partner\CustomerController@generateCustomerTable'));
+    Route::any('/customer/generateAllCommissionByUserTable/{addressReceiveId}',array('as'=>'customerGenerateAllCommissionByUserTable', 'uses'=>'Partner\CustomerController@generateAllCommissionByUserTable'));
+    Route::any('/customer/edit/{id}',                      array('as'=>'customerEditAddress',                       'uses'=>'Partner\CustomerController@edit'));
 });
 
 

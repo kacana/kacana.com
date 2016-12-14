@@ -68,6 +68,7 @@ class orderService {
         $orderData->address = $addressStr.', '.$address->district->name.', '.$address->city->name;
         $order = $this->_orderModel->createItem($orderData);
         $this->_orderModel->updateItem($order->id, ['order_code' => crc32($order->id)]);
+        $order->order_code = crc32($order->id);
         return $order;
     }
 
@@ -119,6 +120,12 @@ class orderService {
         return $order;
     }
 
+    public function getOrderByOrderCode($code){
+        $orderModel = new orderModel();
+        $order = $orderModel->getOrderByOrderCode($code);
+        return $order;
+    }
+
 
     /**
      * @return int
@@ -154,14 +161,15 @@ class orderService {
 
         $columns = array(
             array( 'db' => 'orders.id', 'dt' => 0 ),
-            array( 'db' => 'users.name', 'dt' => 1 ),
-            array( 'db' => 'address_receive.name AS delivery_name', 'dt' => 2 ),
-            array( 'db' => 'address_receive.phone AS delivery_phone', 'dt' => 3 ),
-            array( 'db' => 'orders.total', 'dt' => 4 ),
-            array( 'db' => 'orders.quantity', 'dt' => 5 ),
-            array( 'db' => 'orders.status', 'dt' => 6 ),
-            array( 'db' => 'orders.created', 'dt' => 7 ),
-            array( 'db' => 'orders.updated', 'dt' => 8 )
+            array( 'db' => 'orders.order_code', 'dt' => 1 ),
+            array( 'db' => 'users.name', 'dt' => 2 ),
+            array( 'db' => 'address_receive.name AS delivery_name', 'dt' => 3 ),
+            array( 'db' => 'address_receive.phone AS delivery_phone', 'dt' => 4 ),
+            array( 'db' => 'orders.total', 'dt' => 5 ),
+            array( 'db' => 'orders.quantity', 'dt' => 6 ),
+            array( 'db' => 'orders.status', 'dt' => 7 ),
+            array( 'db' => 'orders.created', 'dt' => 8 ),
+            array( 'db' => 'orders.updated', 'dt' => 9 )
         );
 
         $return = $orderModel->generateOrderTable($request, $columns);
@@ -202,7 +210,7 @@ class orderService {
         $viewHelper = new ViewGenerateHelper();
 
         $columns = array(
-            array( 'db' => 'orders.id', 'dt' => 0 ),
+            array( 'db' => 'orders.order_code', 'dt' => 0 ),
             array( 'db' => 'address_receive.name AS delivery_name', 'dt' => 1 ),
             array( 'db' => 'address_receive.phone AS delivery_phone', 'dt' => 2 ),
             array( 'db' => 'orders.total', 'dt' => 3 ),
@@ -295,6 +303,19 @@ class orderService {
         if(isset($data['order_service_status']) && $data['order_service_status'] == KACANA_ORDER_SERVICE_STATUS_SOLD_OUT && isset($data['order_service_id']))
             unset($data['order_service_id']);
 
+        if(isset($data['order_service_status']) && isset($data['order_id']))
+        {
+            $orderNotProcessing = $orderDetailModel->getOrderDetailNotProcess($data['order_id']);
+
+            if(count($orderNotProcessing) == 1 && ($data['order_service_status'] == KACANA_ORDER_SERVICE_STATUS_SHIPPING || $data['order_service_status'] == KACANA_ORDER_SERVICE_STATUS_SOLD_OUT))
+                $this->_orderModel->updateItem($data['order_id'], ['status' => KACANA_ORDER_STATUS_COMPLETE]);
+            else
+                $this->_orderModel->updateItem($data['order_id'], ['status' => KACANA_ORDER_STATUS_PROCESSING]);
+        }
+
+
+        unset($data['order_id']);
+
         return $orderDetailModel->updateOrderDetail($id, $data);
     }
 
@@ -322,6 +343,15 @@ class orderService {
     public function getOrderDetailByIds($ids){
         $orderDetailModel = new orderDetailModel();
         return $orderDetailModel->getItemsByOrderIds($ids);
+    }
+
+    /**
+     * @param $id
+     * @return mixed
+     */
+    public function getOrderDetailById($id){
+        $orderDetailModel = new orderDetailModel();
+        return $orderDetailModel->getItemsById($id);
     }
 
     /**
@@ -388,13 +418,73 @@ class orderService {
     public function cancelOrder($orderId, $userId, $status){
         $order = $this->_orderModel->getById($orderId);
 
-        if(($order->status == KACANA_ORDER_STATUS_NEW || $order->status == KACANA_ORDER_PARTNER_STATUS_NEW) && $order->user_id == $userId )
-            $order->updateItem($orderId, ['status' => $status]);
+        if(($order->status == KACANA_ORDER_STATUS_NEW || $order->status == KACANA_ORDER_PARTNER_STATUS_NEW))
+        {
+            if($status == KACANA_ORDER_PARTNER_STATUS_CANCEL && $order->user_id == $userId)
+                $order->updateItem($orderId, ['status' => $status]);
+            elseif($status == KACANA_ORDER_STATUS_CANCEL)
+                $order->updateItem($orderId, ['status' => $status]);
+        }
         else
             return false;
 
         return true;
 
+    }
+
+    public function sendOrder($orderId, $userId)
+    {
+        $order = $this->_orderModel->getById($orderId);
+
+        if($order->status == KACANA_ORDER_PARTNER_STATUS_NEW && $order->user_id == $userId )
+            $order->updateItem($orderId, ['status' => KACANA_ORDER_STATUS_NEW]);
+        else
+            return false;
+
+        return true;
+    }
+
+    /**
+     * @param $request
+     * @param $userId
+     * @param $addressReceiveId
+     * @return array
+     */
+    public function generateAllOrderDetailByUserTable($request, $userId){
+        $orderDetailModel = new orderDetailModel();
+        $datatables = new DataTables();
+        $commissionService = new commissionService();
+
+        $columns = array(
+            array( 'db' => 'orders.order_code', 'dt' => 0 ),
+            array( 'db' => 'order_detail.name AS order_detail_name', 'dt' => 1 ),
+            array( 'db' => 'order_detail.image AS order_detail_image', 'dt' => 2 ),
+            array( 'db' => 'order_detail.order_service_status AS order_detail_status', 'dt' => 3 ),
+            array( 'db' => 'order_detail.subtotal', 'dt' => 4 ),
+            array( 'db' => 'order_detail.updated', 'dt' => 5 ),
+            array( 'db' => 'shipping.status AS shipping_status', 'dt' => 6 ),
+            array( 'db' => 'partner_payment_detail.payment_id', 'dt' => 7 ),
+            array( 'db' => 'order_detail.shipping_service_code', 'dt' => 8 ),
+            array( 'db' => 'partner_payments.ref AS payment_code', 'dt' => 9 ),
+            array( 'db' => 'orders.id AS order_id', 'dt' => 10 ),
+        );
+
+        $return = $orderDetailModel->generateAllOrderDetailByUserTable($request, $columns, $userId);
+
+        if(count($return['data'])) {
+
+            foreach ($return['data'] as &$orderDetail) {
+                $orderDetail->order_detail_status = $commissionService::getStatusOrderDetail($orderDetail);
+
+                $orderDetail->subtotal = formatMoney($orderDetail->subtotal);
+            }
+        }
+
+
+
+        $return['data'] = $datatables::data_output( $columns, $return['data'] );
+
+        return $return;
     }
 }
 

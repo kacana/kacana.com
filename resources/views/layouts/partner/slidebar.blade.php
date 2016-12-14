@@ -1,45 +1,45 @@
 <?php $controller = getControllerName(class_basename(Route::currentRouteAction()));?>
 <section class="sidebar">
     <ul class="sidebar-menu">
-        <li class="header">Statistical</li>
-        <li class="treeview">
-            <a href="#">
-                <i class="fa fa-dashboard"></i>
-                <span>Dashboard</span>
+        <li class="header">Thông tin</li>
+        <li class="treeview {{($controller == 'IndexController')?'active':''}}">
+            <a href="/">
+                <i class="fa fa-info"></i>
+                <span>Hướng dẫn</span>
             </a>
         </li>
 
-        <li class="header">Kacana Tool</li>
+        <li class="header">Công cụ Kacana</li>
         <li class="treeview {{($controller == 'ProductController')?'active':''}}">
             <a href="{{URL::to('/product')}}">
                 <i class="fa fa-rocket text-red"></i>
                 <span class="text-red" ><b>Product boot</b></span>
             </a>
         </li>
-        <li class="treeview {{($controller == 'ProductController')?'active':''}}">
+        <li class="treeview {{($controller == 'SocialController')?'active':''}}">
             <a href="{{URL::to('/social_account')}}">
                 <i class="fa fa-globe"></i>
-                <span>Social account</span>
+                <span>Tài khoản facebook</span>
             </a>
         </li>
-        <li class="treeview {{($controller == 'ProductController')?'active':''}}">
-            <a href="{{URL::to('/user')}}">
+        <li class="treeview {{($controller == 'CustomerController')?'active':''}}">
+            <a href="{{URL::to('/customer')}}">
                 <i class="fa fa-user"></i>
-                <span>My customer</span>
+                <span>khách hàng</span>
             </a>
         </li>
 
-        <li class="header">Order Manager</li>
-        <li class="treeview {{($controller == 'AdvisoryController')?'active':''}}">
-            <a href="{{URL::to('/order')}}">
-                <i class="fa fa-plane"></i>
-                <span>My order</span>
-            </a>
-        </li>
+        <li class="header">Quản lý đơn hàng</li>
         <li class="treeview {{($controller == 'OrderController')?'active':''}}">
             <a href="{{URL::to('/order')}}">
+                <i class="fa fa-plane"></i>
+                <span>Đơn hàng</span>
+            </a>
+        </li>
+        <li class="treeview {{($controller == 'CommissionController')?'active':''}}">
+            <a href="{{URL::to('/commission')}}">
                 <i class="fa fa-dollar"></i>
-                <span>My cash</span>
+                <span>Chiết khấu<span>
             </a>
         </li>
 

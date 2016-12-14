@@ -33,8 +33,8 @@
                                         </div>
                                         <div class="col-xs-8" >
                                             <p><b><a class="text-red social-item-name" target="_blank" href="https://facebook.com/{{$item->social_id}}" >{{$item->name}}</a></b></p>
-                                            <p class="text-aqua">Đăng 31 Sản phẩm</p>
-                                            <a class="btn btn-xs btn-info" href="#"><i class="fa fa-eye" ></i></a>
+                                            {{--<p class="text-aqua">Đăng 31 Sản phẩm</p>--}}
+                                            {{--<a class="btn btn-xs btn-info" href="#"><i class="fa fa-eye" ></i></a>--}}
                                             <a class="btn btn-xs btn-primary hmargin-10" href="#edit-name-social-item"><i class="fa fa-edit" ></i></a>
                                             <a class="btn btn-xs btn-danger" href="#delete-social-item"><i class="fa fa-trash" ></i></a>
                                         </div>

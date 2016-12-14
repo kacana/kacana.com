@@ -1,6 +1,7 @@
 <?php namespace App\models;
 
 use Illuminate\Database\Eloquent\Model;
+use Kacana\DataTables;
 
 class userAddressModel extends Model {
 
@@ -45,8 +46,5 @@ class userAddressModel extends Model {
         $userAddress->save();
         return $userAddress;
     }
-
-
-
 
 }

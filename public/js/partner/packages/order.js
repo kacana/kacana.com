@@ -22,6 +22,7 @@ var orderPackage = {
                 modal.find('#deliveryEmail').removeAttr('disabled');
                 modal.find('#create-new-address-delivery').hide();
             });
+
             Kacana.order.page.on('click', 'button[data-target="#modal-create-order"]', function () {
                 var modal = $('#modal-create-order');
                 modal.find('#deliveryName').val('').removeAttr('disabled');
@@ -196,8 +197,9 @@ var orderPackage = {
             $(element).parents('.box').css('overflow', 'auto');
             var columns = [
                 {
-                    'title': 'ID',
-                    'width':'5%'
+                    'title': 'mã đh',
+                    'width':'5%',
+                    'sortable':false
                 },
                 {
                     'title': 'người nhận'
@@ -279,10 +281,26 @@ var orderPackage = {
             bindEvent: function(){
                 Kacana.order.detail.page.on('click', 'a[href="#edit-detail-item"]', function () {
                     var form = $(this).parents('form');
-                    form.find('.product-properties, .product-discount, .product-quantity').prop('disabled', false);
+                    form.find('.product-properties, .product-quantity').prop('disabled', false);
                     form.find('a[href="#submit-edit-detail-item"], a[href="#cancel-edit-detail-item"]').removeClass('hidden');
                     form.find('a[href="#edit-detail-item"]').addClass('hidden');
                     form.find('.product-discount').val(form.find('.product-discount').data('value'));
+                });
+
+                Kacana.order.detail.page.on('click','a[href="#cancel-order"]', function () {
+                    var orderId = $(this).data('order-id');
+
+                    swal({
+                        title: 'Bạn có chắc huỷ đơn hàng?',
+                        text: "Đơn hàng này sẽ bị huỷ và không thể khôi phục!",
+                        type: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Huỷ đơn hàng!'
+                    }).then(function () {
+                        window.location.href = "/order/cancelOrder?orderId="+orderId;
+                    })
                 });
 
                 Kacana.order.detail.page.on('click', 'a[href="#cancel-edit-detail-item"]', function () {

@@ -27,6 +27,7 @@
                     </div>
                     <div class="box-body">
                         <form method="post" class="form-inline">
+                            <input type="text" name="code" class="form-control" placeholder="Search Code"/>
                             <input type="text" name="name" class="form-control" placeholder="Search Name"/>
                             <input type="text" name="phone" class="form-control" placeholder="Search Phone"/>
                             <select class="form-control" name="searchStatus">

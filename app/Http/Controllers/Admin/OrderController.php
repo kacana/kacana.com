@@ -426,4 +426,27 @@ class OrderController extends BaseController {
         return response()->json($result);
 
     }
+
+    public function cancelOrder(Request $request){
+        $orderService = new orderService;
+        $addressService = new addressService();
+
+        $orderId = $request->input('orderId', 0);
+
+        try {
+            $return['data'] = $orderService->cancelOrder($orderId, $this->_user->id, KACANA_ORDER_STATUS_CANCEL);
+            $return['ok'] = 1;
+
+        } catch (\Exception $e) {
+            if($request->ajax())
+            {
+                $result['error'] = $e->getMessage();
+                return $result;
+            }
+            else
+                return view('errors.404', ['error_message' => $e->getMessage()]);
+        }
+
+        return redirect('/order');
+    }
 }

@@ -229,8 +229,207 @@ var datatablePackage = {
             };
 
             return Kacana.datatable.init(element, url, columns, defaultSearchColumns, addParamsCallBack, cacheParamsCallBack, rowCallBack, drawCallBack, cacheLoadedCallBack, options);
-        }
+        },
+        generateAddressReceiveByUserId: function (element, columns, $userId,addParamsCallBack, cacheLoadedCallBack) {
+            var url = '/user/generateAddressReceiveByUserId/'+$userId;
+            var options = {
+                'order': [0, "desc"],
+                displayLength: 10
+            };
+            var defaultSearchColumns = [];
 
+            var cacheParamsCallBack = function(oData){
+                //do something
+            };
+
+            var drawCallBack = function(e){
+
+            };
+
+            var rowCallBack = function(){
+                //do something
+            };
+
+            return Kacana.datatable.init(element, url, columns, defaultSearchColumns, addParamsCallBack, cacheParamsCallBack, rowCallBack, drawCallBack, cacheLoadedCallBack, options);
+        },
+        generateAllOrderDetailByUserTable: function (element, columns, userId, addParamsCallBack, cacheLoadedCallBack) {
+            var url = '/user/generateAllOrderDetailByUserTable/'+userId;
+            var options = {
+                'order': [5, "desc"],
+                displayLength: 10
+            };
+            var defaultSearchColumns = [];
+
+            var cacheParamsCallBack = function(oData){
+                //do something
+            };
+
+            var drawCallBack = function(e){
+
+            };
+
+            var rowCallBack = function(){
+                //do something
+            };
+
+            return Kacana.datatable.init(element, url, columns, defaultSearchColumns, addParamsCallBack, cacheParamsCallBack, rowCallBack, drawCallBack, cacheLoadedCallBack, options);
+        },
+        generateUserWaitingTransferTable: function (element, columns, addParamsCallBack, cacheLoadedCallBack) {
+            var url = '/partner/generateUserWaitingTransferTable';
+            var options = {
+                'order': [1, "desc"],
+                displayLength: 10
+            };
+            var defaultSearchColumns = [];
+
+            var cacheParamsCallBack = function(oData){
+                //do something
+            };
+
+            var drawCallBack = function(e){
+
+            };
+
+            var rowCallBack = function(){
+                //do something
+            };
+
+            return Kacana.datatable.init(element, url, columns, defaultSearchColumns, addParamsCallBack, cacheParamsCallBack, rowCallBack, drawCallBack, cacheLoadedCallBack, options);
+        },
+        generateAllCommissionTable: function (element, columns, userId, addParamsCallBack, cacheLoadedCallBack) {
+            var url = '/partner/generateAllCommissionTable/'+userId;
+            var options = {
+                'order': [5, "desc"],
+                displayLength: 10
+            };
+            var defaultSearchColumns = [];
+
+            var cacheParamsCallBack = function(oData){
+                //do something
+            };
+
+            var drawCallBack = function(e){
+
+            };
+
+            var rowCallBack = function(){
+                //do something
+            };
+
+            return Kacana.datatable.init(element, url, columns, defaultSearchColumns, addParamsCallBack, cacheParamsCallBack, rowCallBack, drawCallBack, cacheLoadedCallBack, options);
+        },
+        generateTempCommissionTable: function (element, columns, userId, addParamsCallBack, cacheLoadedCallBack) {
+            var url = '/partner/generateTempCommissionTable/'+userId;
+            var options = {
+                'order': [5, "desc"],
+                displayLength: 10
+            };
+            var defaultSearchColumns = [];
+
+            var cacheParamsCallBack = function(oData){
+                //do something
+            };
+
+            var drawCallBack = function(e){
+
+            };
+
+            var rowCallBack = function(){
+                //do something
+            };
+
+            return Kacana.datatable.init(element, url, columns, defaultSearchColumns, addParamsCallBack, cacheParamsCallBack, rowCallBack, drawCallBack, cacheLoadedCallBack, options);
+        },
+        generateValidCommissionTable: function (element, columns, userId, addParamsCallBack, cacheLoadedCallBack) {
+            var url = '/partner/generateValidCommissionTable/'+userId;
+            var options = {
+                'order': [5, "desc"],
+                displayLength: 10
+            };
+            var defaultSearchColumns = [];
+
+            var cacheParamsCallBack = function(oData){
+                //do something
+            };
+
+            var drawCallBack = function(e){
+
+            };
+
+            var rowCallBack = function(){
+                //do something
+            };
+
+            return Kacana.datatable.init(element, url, columns, defaultSearchColumns, addParamsCallBack, cacheParamsCallBack, rowCallBack, drawCallBack, cacheLoadedCallBack, options);
+        },
+        generatePaymentCommissionTable: function (element, columns, userId, addParamsCallBack, cacheLoadedCallBack) {
+            var url = '/partner/generatePaymentCommissionTable/'+userId;
+            var options = {
+                'order': [5, "desc"],
+                displayLength: 10
+            };
+            var defaultSearchColumns = [];
+
+            var cacheParamsCallBack = function(oData){
+                //do something
+            };
+
+            var drawCallBack = function(e){
+
+            };
+
+            var rowCallBack = function(){
+                //do something
+            };
+
+            return Kacana.datatable.init(element, url, columns, defaultSearchColumns, addParamsCallBack, cacheParamsCallBack, rowCallBack, drawCallBack, cacheLoadedCallBack, options);
+        },
+        generatePaymentHistoryTable: function (element, columns, userId, addParamsCallBack, cacheLoadedCallBack) {
+            var url = '/partner/generatePaymentHistoryTable/'+userId;
+            var options = {
+                'order': [3, "desc"],
+                displayLength: 5,
+                dom: '<"top">rt<"bottom"<"col-xs-3"i><"col-xs-9"p>><"clear">'
+            };
+            var defaultSearchColumns = [];
+
+            var cacheParamsCallBack = function(oData){
+                //do something
+            };
+
+            var drawCallBack = function(e){
+
+            };
+
+            var rowCallBack = function(){
+                //do something
+            };
+
+            return Kacana.datatable.init(element, url, columns, defaultSearchColumns, addParamsCallBack, cacheParamsCallBack, rowCallBack, drawCallBack, cacheLoadedCallBack, options);
+        },
+        generatePartnerPaymentTable: function (element, columns, addParamsCallBack, cacheLoadedCallBack) {
+            var url = '/partner/generatePartnerPaymentTable/';
+            var options = {
+                'order': [4, "desc"],
+                displayLength: 10,
+                dom: '<"top">rt<"bottom"<"col-xs-3"i><"col-xs-9"p>><"clear">'
+            };
+            var defaultSearchColumns = [];
+
+            var cacheParamsCallBack = function(oData){
+                //do something
+            };
+
+            var drawCallBack = function(e){
+
+            };
+
+            var rowCallBack = function(){
+                //do something
+            };
+
+            return Kacana.datatable.init(element, url, columns, defaultSearchColumns, addParamsCallBack, cacheParamsCallBack, rowCallBack, drawCallBack, cacheLoadedCallBack, options);
+        }
     }
 };
 $.extend(true, Kacana, datatablePackage);

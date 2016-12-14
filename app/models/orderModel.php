@@ -100,6 +100,10 @@ class orderModel extends Model  {
         return $this->find($id);
     }
 
+    public function getOrderByOrderCode($code){
+        return $this->where('order_code', $code)->orderBy('created', 'DESC')->first();
+    }
+
 
     /**
      * @param $orderCode

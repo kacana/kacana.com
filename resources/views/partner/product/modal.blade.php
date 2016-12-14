@@ -15,18 +15,24 @@
                     </div>
                 <label class="vpadding-10 hpadding-10 text-center text-red title-index" >Chọn tài khoản cần đăng</label>
                 <div class="list-social-post">
-                    <ul class="social-list clearfix">
-                        @foreach($facebookAccountBusiness as $item)
-                            <li data-social-id="{{$item->social_id}}" data-type="{{$item->type}}" class="active">
-                                <img src="{{$item->image}}">
-                                <a class="social-name" href="#">{{$item->name}}</a>
-                            </li>
-                        @endforeach
-                    </ul>
+                    @if(count($facebookAccountBusiness))
+                        <ul class="social-list clearfix">
+                            @foreach($facebookAccountBusiness as $item)
+                                <li data-social-id="{{$item->social_id}}" data-type="{{$item->type}}" class="active">
+                                    <img src="{{$item->image}}">
+                                    <a class="social-name" href="#">{{$item->name}}</a>
+                                </li>
+                            @endforeach
+                        </ul>
+                    @else
+                      <h4> Không có tài khoản facebook! vui lòng thêm tài khoản facebook <a href="/social_account">tại đây</a></h4>
+                    @endif
                 </div>
             </div>
             <div class="modal-footer">
-                <a type="button" href="#btn-post-to-social" class="btn btn-primary"><i class="fa fa-rocket"></i> Đăng bài</a>
+                @if(count($facebookAccountBusiness))
+                    <a type="button" href="#btn-post-to-social" class="btn btn-primary"><i class="fa fa-rocket"></i> Đăng bài</a>
+                @endif
                 <button type="button" class="btn btn-warning" data-dismiss="modal" class="btn">Huỷ</button>
             </div>
         </div>

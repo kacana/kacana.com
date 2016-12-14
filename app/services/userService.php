@@ -1,6 +1,7 @@
 <?php namespace App\services;
 
 use App\Http\Requests\Request;
+use App\models\orderDetailModel;
 use App\models\User;
 use App\models\userBusinessSocialModel;
 use App\models\userProductLikeModel;
@@ -60,6 +61,10 @@ class userService {
         return ($this->_userModel->getUserByEmail($email))?$this->_userModel->getUserByEmail($email):false;
     }
 
+    public function getUserById($id){
+        return $this->_userModel->getUserById($id);
+    }
+
     /**
      * create user
      *
@@ -96,14 +101,15 @@ class userService {
             array( 'db' => 'users.role', 'dt' => 4 ),
             array( 'db' => 'users.status', 'dt' => 5 ),
             array( 'db' => 'users.created', 'dt' => 6 ),
-            array( 'db' => 'users.updated_at', 'dt' => 7 )
+            array( 'db' => 'users.updated_at', 'dt' => 7 ),
+            array( 'db' => 'users.role AS role_value', 'dt' => 8 ),
         );
 
         $return = $userModel->generateUserTable($request, $columns);
 
         if(count($return['data'])) {
             $optionStatus = [KACANA_TAG_STATUS_ACTIVE ,KACANA_USER_STATUS_INACTIVE, KACANA_USER_STATUS_BLOCK, KACANA_USER_STATUS_CREATE_BY_SYSTEM];
-            $optionRole = [KACANA_USER_ROLE_ADMIN, KACANA_USER_ROLE_BUYER];
+            $optionRole = [KACANA_USER_ROLE_ADMIN, KACANA_USER_ROLE_BUYER, KACANA_USER_ROLE_PARTNER];
 
             foreach ($return['data'] as &$res) {
                 $res->status = $viewHelper->dropdownView('users', $res->id, $res->status, 'status', $optionStatus);
@@ -704,5 +710,39 @@ class userService {
 
     public function deleteBusinessSocialAccount($socialId, $type, $userId){
         return $this->_userBusinessSocial->updateItem($userId, $type, $socialId, ['status' => KACANA_USER_BUSINESS_SOCIAL_STATUS_INACTIVE]);
+    }
+
+    public function generateUserWaitingTransferTable($request){
+        $userModel = new User();
+        $datatables = new DataTables();
+        $orderDetailModel = new orderDetailModel();
+        $commissionService = new commissionService();
+
+        $columns = array(
+            array( 'db' => 'users.id', 'dt' => 0 ),
+            array( 'db' => 'users.name', 'dt' => 1 ),
+            array( 'db' => 'users.phone', 'dt' => 2 ),
+            array( 'db' => 'orders.order_code AS product_quantity', 'dt' => 3 ),
+            array( 'db' => 'orders.discount AS commission_total', 'dt' => 4 ),
+            array( 'db' => 'users.created', 'dt' => 5 ),
+            array( 'db' => 'users.updated_at', 'dt' => 6 )
+        );
+
+        $return = $userModel->generateUserWaitingTransferTable($request, $columns);
+
+        if(count($return['data'])) {
+
+            foreach ($return['data'] as &$res) {
+                $validCommission = $orderDetailModel->validCommission($res->id);
+                $trimCommission = $commissionService->trimCommission($validCommission);
+
+                $res->product_quantity = count($validCommission);
+                $res->commission_total = formatMoney($trimCommission['total']);
+            }
+        }
+
+        $return['data'] = $datatables::data_output( $columns, $return['data'] );
+
+        return $return;
     }
 }

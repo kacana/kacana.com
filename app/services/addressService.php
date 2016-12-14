@@ -6,6 +6,9 @@ use App\models\addressReceiveModel;
 use App\models\addressWardModel;
 use App\models\addressDistrictModel;
 use App\models\userAddressModel;
+use Kacana\DataTables;
+use Kacana\ViewGenerateHelper;
+
 /**
  * Class shipService
  * @package App\services
@@ -226,4 +229,47 @@ class addressService {
         return $this->_cityModel->getCityByCode($code, $typeService);
     }
 
+    public function generateCustomerTable($request, $userId){
+
+        $datatables = new DataTables();
+        $viewHelper = new ViewGenerateHelper();
+
+        $columns = array(
+            array( 'db' => 'address_receive.name AS customer_name', 'dt' => 0 ),
+            array( 'db' => 'address_receive.phone', 'dt' => 1 ),
+            array( 'db' => 'address_receive.email', 'dt' => 2 ),
+            array( 'db' => 'address_city.name', 'dt' => 3 ),
+            array( 'db' => 'address_receive.created', 'dt' => 4 ),
+            array( 'db' => 'address_receive.id', 'dt' => 5 )
+        );
+
+        $return = $this->_receiveModel->generateCustomerTable($request, $columns, $userId);
+
+        $return['data'] = $datatables::data_output( $columns, $return['data'] );
+
+        return $return;
+    }
+
+    public function generateAddressReceiveByUserId($request, $userId){
+
+        $datatables = new DataTables();
+        $viewHelper = new ViewGenerateHelper();
+
+        $columns = array(
+            array( 'db' => 'address_receive.id', 'dt' => 0 ),
+            array( 'db' => 'address_receive.name AS customer_name', 'dt' => 1 ),
+            array( 'db' => 'address_receive.phone', 'dt' => 2 ),
+            array( 'db' => 'address_receive.email', 'dt' => 3 ),
+            array( 'db' => 'address_receive.street', 'dt' => 4 ),
+            array( 'db' => 'address_city.name AS city_name', 'dt' => 5 ),
+            array( 'db' => 'address_district.name AS district_name', 'dt' => 6 ),
+            array( 'db' => 'address_receive.created', 'dt' => 7 )
+        );
+
+        $return = $this->_receiveModel->generateAddressReceiveByUserId($request, $columns, $userId);
+
+        $return['data'] = $datatables::data_output( $columns, $return['data'] );
+
+        return $return;
+    }
 }

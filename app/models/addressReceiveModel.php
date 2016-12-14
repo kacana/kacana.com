@@ -2,6 +2,9 @@
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Kacana\DataTables;
+use DB;
+
 /**
  * Class addressReceiveModel
  * @package App\models
@@ -177,4 +180,84 @@ class addressReceiveModel extends Model {
         return $select->get();
     }
 
+
+    public function generateCustomerTable($request, $columns, $userId){
+        $datatables = new DataTables();
+
+        $limit = $datatables::limit( $request, $columns );
+        $order = $datatables::order( $request, $columns );
+        $where = $datatables::filter( $request, $columns );
+
+        // Main query to actually get the data
+        $selectData = DB::table('address_receive')
+            ->select($datatables::pluck($columns, 'db'))
+            ->leftJoin('address_city', 'address_receive.city_id', '=', 'address_city.id')
+            ->orderBy($order['field'], $order['dir'])
+            ->where('address_receive.user_id', '=', $userId)
+            ->skip($limit['offset'])
+            ->take($limit['limit']);
+
+        // Data set length
+        $recordsFiltered = $selectLength = DB::table('address_receive')
+            ->leftJoin('address_city', 'address_receive.city_id', '=', 'address_city.id')
+            ->orderBy($order['field'], $order['dir'])
+            ->where('address_receive.user_id', '=', $userId)
+            ->select($datatables::pluck($columns, 'db'));
+
+        if($where){
+            $selectData->whereRaw($where);
+            $recordsFiltered->whereRaw($where);
+        }
+
+        /*
+         * Output
+         */
+        return array(
+            "draw"            => intval( $request['draw'] ),
+            "recordsTotal"    => intval( $selectLength->count() ),
+            "recordsFiltered" => intval( $recordsFiltered->count() ),
+            "data"            => $selectData->get()
+        );
+    }
+
+    public function generateAddressReceiveByUserId($request, $columns, $userId){
+        $datatables = new DataTables();
+
+        $limit = $datatables::limit( $request, $columns );
+        $order = $datatables::order( $request, $columns );
+        $where = $datatables::filter( $request, $columns );
+
+        // Main query to actually get the data
+        $selectData = DB::table('address_receive')
+            ->select($datatables::pluck($columns, 'db'))
+            ->leftJoin('address_city', 'address_receive.city_id', '=', 'address_city.id')
+            ->leftJoin('address_district', 'address_receive.district_id', '=', 'address_district.id')
+            ->orderBy($order['field'], $order['dir'])
+            ->where('address_receive.user_id', '=', $userId)
+            ->skip($limit['offset'])
+            ->take($limit['limit']);
+
+        // Data set length
+        $recordsFiltered = $selectLength = DB::table('address_receive')
+            ->leftJoin('address_city', 'address_receive.city_id', '=', 'address_city.id')
+            ->leftJoin('address_district', 'address_receive.district_id', '=', 'address_district.id')
+            ->orderBy($order['field'], $order['dir'])
+            ->where('address_receive.user_id', '=', $userId)
+            ->select($datatables::pluck($columns, 'db'));
+
+        if($where){
+            $selectData->whereRaw($where);
+            $recordsFiltered->whereRaw($where);
+        }
+
+        /*
+         * Output
+         */
+        return array(
+            "draw"            => intval( $request['draw'] ),
+            "recordsTotal"    => intval( $selectLength->count() ),
+            "recordsFiltered" => intval( $recordsFiltered->count() ),
+            "data"            => $selectData->get()
+        );
+    }
 }
