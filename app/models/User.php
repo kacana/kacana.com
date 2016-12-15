@@ -299,6 +299,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
             ->leftJoin('partner_payments', 'partner_payment_detail.payment_id', '=', 'partner_payments.id')
             ->orderBy($order['field'], $order['dir'])
             ->where('shipping.status', KACANA_SHIP_STATUS_FINISH)
+            ->where('users.role', KACANA_USER_ROLE_PARTNER)
             ->whereNull('partner_payment_detail.payment_id')
             ->groupBy('users.id')
             ->skip($limit['offset'])
@@ -312,6 +313,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
             ->leftJoin('partner_payment_detail', 'order_detail.id', '=', 'partner_payment_detail.order_detail_id')
             ->leftJoin('partner_payments', 'partner_payment_detail.payment_id', '=', 'partner_payments.id')
             ->where('shipping.status', KACANA_SHIP_STATUS_FINISH)
+            ->where('users.role', KACANA_USER_ROLE_PARTNER)
             ->whereNull('partner_payment_detail.payment_id')
             ->groupBy('users.id')
             ->select($datatables::pluck($columns, 'db'));

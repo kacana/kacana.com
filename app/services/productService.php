@@ -826,17 +826,8 @@ class productService {
         {
             $product->list_gallery = $product->galleries;
             $product->price = 0;
+            $product->caption = '👝👜👛'.ucfirst($product->name).'<br>🤑Giá: '.formatMoney($product->sell_price - $product->discount).'<br>🎒👝💼'.$product->short_description;
             $product->sell_price = formatMoney($product->sell_price);
-            $product->caption = '👝👜👛'.ucfirst($product->name).'<br>🤑Giá: '.$product->sell_price.'<br>🎒👝💼'.$product->short_description;
-
-//            $productTemp = $productModel->getProductValid($product->id);
-//            if($productTemp)
-//            {
-//                $url = urlProductDetail($productTemp);
-////                echo $url.'?partnerId='.$userId;die;
-//                $shortUrl = Shorten::url('http://www.kacana.vn/san-pham/tui-tote-deo-cheo-han-quoc-ms0185--1888--387');
-//                $product->caption .= '<br>Chi tiết sản phẩm: '. $shortUrl;
-//            }
         }
         return $products;
 
