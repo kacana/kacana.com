@@ -23,8 +23,6 @@ class CreateCSVRemarketing extends Command implements SelfHandling {
 	public function handle()
 	{
         \Log::info('Tạo cron job trong laravel phần 2');
-//        $productService = new productService();
-//        $productService->createCsvBD();
 	}
 
 }
