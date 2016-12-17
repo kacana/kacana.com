@@ -1,6 +1,7 @@
 <?php namespace App\Http\Controllers\Client;
 
 use App\services\productService;
+use App\services\shipService;
 use App\services\tagService;
 use App\services\trackingService;
 use App\services\userService;

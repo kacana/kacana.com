@@ -22,7 +22,20 @@ class CreateCSVRemarketing extends Command implements SelfHandling {
 	 */
 	public function handle()
 	{
-        \Log::info('Tạo cron job trong laravel phần 2');
+	    $shipService = new shipService();
+
+        $ships = $shipService->getAllShippingProcessing();
+
+        foreach ($ships as $ship)
+        {
+            sleep(7);
+            $status = $shipService->GetOrderInfoStatus($ship->id);
+            $ship =  $shipService->updateShippingStatus($ship->id, $status);
+
+            \Log::info('__CRON__ Update status ship: '. $ship->id);
+        }
+
+
 	}
 
 }

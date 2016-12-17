@@ -1,2 +1,2 @@
 #!/bin/bash
-php artisan schedule:run
+while true; do php artisan schedule:run; sleep 120m; done

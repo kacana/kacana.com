@@ -110,4 +110,8 @@ class shippingModel extends Model {
         $this->where('id', $id)->update(['status' => $status]);
         return $this->find($id);
     }
+
+    public function getAllShippingProcessing(){
+        return $this->whereNotIn('status', [KACANA_SHIP_STATUS_FINISH, KACANA_SHIP_STATUS_CANCEL])->get();
+    }
 }

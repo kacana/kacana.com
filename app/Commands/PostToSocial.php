@@ -37,6 +37,7 @@ class PostToSocial extends Command implements SelfHandling, ShouldBeQueued {
         $payload = base64_decode($this->_payload);
         $data = json_decode($payload);
         \Log::info('__QUEUE__ PROCESSING post to social with social post id: '. $data->socialPostId);
+
         $socialService->postToSocial($data->socialPostId, $data->userId, $data->social, $data->images, $data->desc);
 
         \Log::info('__QUEUE__ SUCCESS post to social with social post id: '. $data->socialPostId);

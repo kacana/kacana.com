@@ -401,6 +401,9 @@ class shipService {
         return $this->_shippingModel->updateShippingStatus($id, $status);
     }
 
+    public function getAllShippingProcessing(){
+        return $this->_shippingModel->getAllShippingProcessing();
+    }
 }
 
 
