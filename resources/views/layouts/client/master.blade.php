@@ -94,6 +94,9 @@
     <!--Add the new slick-theme.css if you want the default styling-->
     <link rel="stylesheet" type="text/css" href="/lib/slick/slick-theme.css"/>
 
+    <link rel="stylesheet" href="/lib/nivo-slider/nivo-slider.css" media="screen">
+    <link rel="stylesheet" href="/lib/nivo-slider/default/default.css" media="screen">
+
     <!-- Head Libs -->
     <script src="/lib/ml-menu/ml-menu-modernizr.js"></script>
 
@@ -193,6 +196,7 @@
 <script src="/lib/vide/vide.js"></script>
 <script src="/lib/ml-menu/ml-menu.js"></script>
 <script src="/lib/lazyload/jquery.lazyload.min.js"></script>
+<script src="/lib/nivo-slider/jquery.nivo.slider.js"></script>
 
 <!-- Theme Base, Components and Settings -->
 <script src="/lib/theme/js/theme.js"></script>

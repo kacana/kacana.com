@@ -8,6 +8,25 @@ var homepagePackage = {
             Kacana.homepage.showPopupRequest();
             Kacana.homepage.closeAdvisePopup();
             Kacana.homepage.bindEvent();
+            if ($.isFunction($.fn.nivoSlider)) {
+                $('#homepage-main-slider').nivoSlider({
+                    effect: 'fade',
+                    slices: 15,
+                    boxCols: 8,
+                    boxRows: 4,
+                    animSpeed: 300,
+                    pauseTime: 5000,
+                    startSlide: 0,
+                    directionNav: true,
+                    controlNav: true,
+                    controlNavThumbs: false,
+                    pauseOnHover: true,
+                    manualAdvance: false,
+                    prevText: 'Prev',
+                    nextText: 'Next',
+                    randomStart: false
+                });
+            }
         },
         bindEvent: function () {
             Kacana.homepage.homePageId.on('click','a[href="#load-more-product-with-type"]', Kacana.homepage.loadMoreProductWithType);

@@ -1613,16 +1613,12 @@ aside ul.nav-list > li > a {
 /* Home Slider - Nivo Slider */
 .nivo-slider {
 	position: relative;
+	margin-top: 85px;
 }
 
 .nivo-slider .theme-default .nivoSlider {
-	border-radius: 10px 10px 0px 0px;
 	box-shadow: none;
 	margin-top: 10px;
-}
-
-.nivo-slider .theme-default .nivoSlider img {
-	border-radius: 10px 10px 0px 0px;
 }
 
 .nivo-slider .theme-default .nivo-controlNav {
