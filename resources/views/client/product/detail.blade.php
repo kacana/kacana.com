@@ -202,7 +202,7 @@
             <hr class="tall">
         </div>
         <div class="row product-information-detail">
-            <span class="col-xs-12">
+            <div class="col-xs-12">
                 @if($item->property)
                     <div class="toogle" data-plugin-toggle="">
                          <section class="toggle active">
@@ -229,6 +229,35 @@
                         </div>
                     </section>
                 </div>
+                <div class="toogle" data-plugin-toggle="">
+                    <section class="toggle active">
+                        <label>
+                            <h2 class="description-detail-title">Có thể bạn đang tìm kiếm</h2>
+                            <i class="pe-7s-close"></i>
+                        </label>
+                        <div class="description-detail-title-footer"></div>
+                        <div class="toggle-content" style="display: none;">
+                            @foreach($item->tag as $tag)
+                                <a class="color-grey-light tag-relation-suggestion" href="{{urlTag($tag)}}" >
+                                    <span class="tag-name">{{$tag->name}}</span>
+                                    <span class="tag-count">{{$tag->countProduct}}<br>SP</span>
+                                </a>
+                            @endforeach
+                        </div>
+                    </section>
+                </div>
+                <div class="toogle" data-plugin-toggle="">
+                    <section class="toggle">
+                        <label>
+                            <h2 class="description-detail-title">Sản phẩm tương tự</h2>
+                            <i class="pe-7s-close"></i>
+                        </label>
+                        <div class="description-detail-title-footer"></div>
+                        <div class="toggle-content">
+
+                        </div>
+                    </section>
+                </div>
                  <div class="toogle" data-plugin-toggle="">
                      <section class="toggle">
                          <label>
@@ -241,21 +270,7 @@
                          </div>
                      </section>
                  </div>
-                <div class="toogle" data-plugin-toggle="">
-                     <section class="toggle active">
-                         <label>
-                             <h2 class="description-detail-title">Có thể bạn đang tìm kiếm</h2>
-                             <i class="pe-7s-close"></i>
-                         </label>
-                         <div class="description-detail-title-footer"></div>
-                         <div class="toggle-content" style="display: none;">
-                             @foreach($item->tag as $tag)
-                                 <a class="color-grey-light tag-relation-suggestion" href="{{urlTag($tag)}}" >{{$tag->name}}</a>
-                             @endforeach
-                         </div>
-                     </section>
-                 </div>
-            </span>
+            </div>
         </div>
     </div>
 </div>

@@ -342,6 +342,17 @@ class productModel extends Model  {
         return $selectData->distinct()->count('products.id');
     }
 
+    public function countProductByTagId($tags){
+
+        $selectData = DB::table('products')
+            ->select('products.id')
+            ->leftJoin('product_tag', 'products.id', '=', 'product_tag.product_id')
+            ->where('products.status', KACANA_PRODUCT_STATUS_ACTIVE)
+            ->whereIn('product_tag.tag_id', $tags);
+
+        return $selectData->distinct()->count('products.id');
+    }
+
     public function searchProductByTagId($tags){
 
         $selectData = DB::table('products')

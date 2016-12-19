@@ -200,6 +200,16 @@ class productService {
         return $count;
     }
 
+    public function countProductByTagId($tagId){
+        $tagCache = '__count_product_by_tag_id__';
+        $productModel = new productModel();
+        $tagService = new tagService();
+        $subTag = $tagService->getAllChildTag($tagId);
+        $count = $productModel->countProductByTagId($subTag);
+        Cache::tags($tagCache)->put($tagId, $count, '3600');
+        return $count;
+    }
+
     /**
      * @param $id
      * @param $userId

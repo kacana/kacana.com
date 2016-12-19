@@ -956,11 +956,29 @@ body{
 }
 
 .tag-relation-suggestion{
-  background: #f1f1f1 none repeat scroll 0 0;
-  display: inline-block;
-  margin-bottom: 10px;
-  margin-right: 5px;
-  padding: 0 10px;
+  background: #E4E4E4;
+  float: left;
+  display: table;
+  margin-right: 20px;
+  vertical-align: middle;
+  font-weight: bold;
+  text-decoration: none;
+  margin-bottom: 15px;
+  font-size: 12px;
+  span.tag-name{
+    color: #333;
+    display: table-cell;
+    padding: 0px 10px;
+    vertical-align: middle;
+  }
+  span.tag-count{
+    color: #ffffff;
+    background: #7F8180;
+    display: table-cell;
+    padding: 0px 15px;
+    text-align: center;
+    vertical-align: middle;
+  }
   &:hover{
     text-decoration: none;
     color: @color-green;

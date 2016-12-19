@@ -416,11 +416,21 @@ class tagService {
         return  $tagModel->getAllTagHaveProduct();
     }
 
-    public function formatMetaKeyword($tags){
+    public function formatMetaKeyword(&$tags){
+        $productService = new productService();
         $tagNameArray = [];
+        $tagCache = '__count_product_by_tag_id__';
+
         if(count($tags))
-            foreach ($tags as $tag)
+            foreach ($tags as &$tag)
+            {
                 array_push($tagNameArray, $tag->name);
+                $countProduct = Cache::tags($tagCache)->get($tag->id);
+                if($countProduct)
+                    $tag->countProduct = $countProduct;
+                else
+                    $tag->countProduct = $productService->countProductByTagId($tag->id);
+            }
 
         return $tagNameArray;
     }
