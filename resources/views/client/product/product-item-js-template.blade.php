@@ -1,6 +1,6 @@
 <script id="template-product-item" type="template">
     @{{each products}}
-    <div class="col-xxs-12 col-xs-6 col-sm-4 col-md-3 product-item" >
+    <div class="col-xxs-12 col-xs-6 col-sm-4 col-md-4 product-item" >
         <div class="product-image" >
             <div class="product-image-inside royalSlider rsDefault" data-first-image="${this.image}"  >
                 <a data-rsbigimg="${this.image}" href="{{AWS_CDN_URL.PRODUCT_IMAGE_PLACE_HOLDER}}" class="rsImg" title="${this.name}">

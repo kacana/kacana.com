@@ -251,9 +251,12 @@
     }
   }
   .product-information-detail{
+    &#product-main-information{
+      position: relative;
+    }
     .product-description-detail{
       .toggle-content{
-        padding: 0 10px;
+        padding: 0 130px 0 10px;
         img{
           display: block;
           height: auto;
@@ -261,7 +264,7 @@
         }
       }
     }
-    section.toggle{
+    section{
       margin-bottom: 30px;
       >label
       {
@@ -274,6 +277,10 @@
         position: relative;
         h2{
           color: @color-green;
+          span{
+            padding: 0 10px;
+            background: #ffffff;
+          }
         }
         &:before, &:after{
           border: none;
@@ -300,12 +307,11 @@
       }
       .description-detail-title-footer{
         border-bottom: 1px solid @color-border;
-        border-left: 1px solid @color-border;
         display: block;
         height: 10px;
         width: 100%;
-        margin-bottom: 10px;
-        margin-top: -16px;
+        margin-top: -28px;
+        margin-bottom: 29px;
       }
       &.active{
         >label{
@@ -327,6 +333,24 @@
   hr.tall{
     margin: 20px 0;
     height: 1px;
+  }
+  #list-product-related-wrap{
+    position: unset;
+    margin-top: 10px;
+    #list-product-related{
+
+      &.fix-list-product-right{
+        position: fixed;
+        bottom: 10px;
+      }
+      &.absolute-list-product-right{
+        position: absolute;
+        bottom: 10px;
+      }
+      section label{
+        width: 100%;
+      }
+    }
   }
 }
 #product-list-top-menu{

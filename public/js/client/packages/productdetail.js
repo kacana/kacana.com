@@ -3,10 +3,22 @@ var productdetailPackage = {
         page: $('#product-detail'),
         adviseBtnClass: $('.btn-advise'),
         actionSendBtn: $("#btn-create"),
+        offset: 0,
+        heightMainInfo: 0,
         init: function(){
             Kacana.productdetail.showPopupRequest();
             Kacana.productdetail.closeAdvisePopup();
             Kacana.productdetail.bindEvent();
+            $('body .list-color-product').on('init', function (slick) {
+                if(!$('.list-color-product').not('.slick-initialized').length)
+                {
+                    $('#product-detail-gallery').removeClass('hidden');
+                    $('.list-color-product').removeClass('hidden');
+                    Kacana.productdetail.setHeightForRightMenu();
+                }
+            });
+
+            Kacana.homepage.applySlideImage();
 
             $('#product-detail-gallery, #product-detail-gallery-mobile').royalSlider({
                 fullscreen: {
@@ -40,41 +52,6 @@ var productdetailPackage = {
                 imgHeight: 695
             });
 
-            $('.list-color-product').slick({
-                dots: false,
-                infinite: false,
-                speed: 300,
-                slidesToShow: 5,
-                slidesToScroll: 3,
-                arrows: true,
-                responsive: [
-                    {
-                        breakpoint: 992,
-                        settings: {
-                            slidesToShow: 4,
-                            slidesToScroll: 3,
-                        }
-                    },
-                    {
-                        breakpoint: 768,
-                        settings: {
-                            slidesToShow: 5,
-                            slidesToScroll: 3
-                        }
-                    },
-                    {
-                        breakpoint: 480,
-                        settings: {
-                            slidesToShow: 5,
-                            slidesToScroll: 3
-                        }
-                    }
-                    // You can unslick at a given breakpoint now by adding:
-                    // settings: "unslick"
-                    // instead of a settings object
-                ]
-            });
-
             $('.product-information-detail img').lazyload();
 
             if(window.location.hash) {
@@ -89,6 +66,23 @@ var productdetailPackage = {
             slideImageProduct.owlCarousel({
                 items : 1,
                 animateOut: 'fadeOut'
+            });
+
+            $('#product-detail').on('mousedown','img.rsMainSlideImage, .product-title a', function (e) {
+                switch(e.which)
+                {
+                    case 1:
+                        Kacana.homepage.goToDetailPage($(this), 'left');
+                        break;
+                    case 2:
+                        Kacana.homepage.goToDetailPage($(this), 'middle');
+                        break;
+                    case 3:
+                        //right Click
+                        break;
+                }
+                return true;
+
             });
 
             Kacana.productdetail.page.on('click', 'a[href="#choose-product-color"]', function () {
@@ -148,6 +142,72 @@ var productdetailPackage = {
                 var data = {productId: productId};
                 Kacana.ajax.product.trackUserProductView(data, callBack, errorCallBack);
             }, 3000);
+
+            $(window).scroll(function () {
+                var listProductRelated = $('#list-product-related');
+
+                if($(window).width() < 768)
+                {
+                    listProductRelated.removeClass('fix-list-product-right');
+                    listProductRelated.removeClass('absolute-list-product-right');
+                    listProductRelated.removeAttr('style');
+                    return true;
+                }
+
+
+                if(!Kacana.productdetail.offset)
+                {
+                    Kacana.productdetail.offset = $('#list-product-related').offset();
+                }
+
+                Kacana.productdetail.heightMainInfo = $('#product-main-information').height();
+
+                var scrollTop = $(window).scrollTop();
+
+                var offsetTop = Kacana.productdetail.offset.top;
+                var heightElement = listProductRelated.height();
+                var widthElement = listProductRelated.width();
+                var heightScreen = $(window).height();
+
+//                 console.log(heightScreen);
+//                 console.log(scrollTop);
+//                 console.log(heightElement);
+//                 console.log(offsetTop);
+// console.log('--------');
+//                 console.log(Kacana.productdetail.heightMainInfo);
+//                 console.log(scrollTop);
+//                 console.log(heightElement + offsetTop - heightScreen);
+//                 console.log(heightElement + offsetTop);
+
+                if(scrollTop >= (heightElement + offsetTop - heightScreen))
+                {
+                    if(scrollTop > Kacana.productdetail.heightMainInfo)
+                    {
+                        listProductRelated.removeClass('fix-list-product-right');
+                        listProductRelated.addClass('absolute-list-product-right');
+                        // console.log('absolute');
+                    }
+                    else{
+                        listProductRelated.addClass('fix-list-product-right');
+                        listProductRelated.removeClass('absolute-list-product-right');
+                        listProductRelated.css('width', widthElement);
+                        // console.log('fixed');
+                    }
+                }
+                else
+                {
+                    listProductRelated.removeClass('fix-list-product-right');
+                    listProductRelated.removeClass('absolute-list-product-right');
+                    // console.log('release');
+                }
+
+
+            });
+        },
+        setHeightForRightMenu: function () {
+            var listProductRelated = $('#list-product-related');
+            var heightElement = listProductRelated.height();
+            listProductRelated.css('height', heightElement);
         },
         bindEventPostToFacebook: function () {
             var modal = $('#modal-post-to-facebook');

@@ -1,13 +1,13 @@
 @extends('layouts.client.master')
 
-@section('meta-title', ucfirst($item->name))
-@section('meta-description', $item->meta)
-@section('meta-keyword', implode(", ", $item->metaKeyword))
-@section('meta-image', 'http:'.AWS_CDN_URL.str_replace(' ', '%20',$item->getOriginal('image')))
+@section('meta-title', ucfirst($product->name))
+@section('meta-description', $product->meta)
+@section('meta-keyword', implode(", ", $product->metaKeyword))
+@section('meta-image', 'http:'.AWS_CDN_URL.str_replace(' ', '%20',$product->getOriginal('image')))
 {{--*/ $indexImage = 0 /*--}}
 
 @section('content')
-<div role="main" id="product-detail" data-id="{{$item->id}}" data-tag-id="{{$tag->id}}" class="main shop">
+<div role="main" id="product-detail" data-id="{{$product->id}}" data-tag-id="{{$tag->id}}" class="main shop">
     <section class="header-page-title">
         <div class="container">
             <div class="row">
@@ -21,27 +21,27 @@
         <div class="row">
             <div class="col-xs-12 col-sm-5">
                 <div class="summary entry-summary">
-                    <h1 class="name-product">{{ucfirst($item->name)}}</h1>
+                    <h1 class="name-product">{{ucfirst($product->name)}}</h1>
                     <p class="price">
                         <span class="amount">
-                            @if($item->discount)
-                                {{formatMoney($item->sell_price - $item->discount)}}
-                            @elseif($item->main_discount)
-                                {{formatMoney($item->sell_price - $item->main_discount)}}
+                            @if($product->discount)
+                                {{formatMoney($product->sell_price - $product->discount)}}
+                            @elseif($product->main_discount)
+                                {{formatMoney($product->sell_price - $product->main_discount)}}
                             @else
-                                {{formatMoney($item->sell_price)}}
+                                {{formatMoney($product->sell_price)}}
                             @endif
                         </span>
                     </p>
 
-                    @if($item->discount)
+                    @if($product->discount)
                         <div class="block-promotions table">
                             <div class="block-promotions-title cell">ĐANG KHUYẾN MÃI</div>
                             <div class="block-promotions-infos cell">
                                 <p>
-                                    ĐANG GIẢM GIÁ TỪ {{formatMoney($item->sell_price)}} XUỐNG CÒN
+                                    ĐANG GIẢM GIÁ TỪ {{formatMoney($product->sell_price)}} XUỐNG CÒN
                                     <span class="text-danger">
-                                        <b>{{formatMoney($item->sell_price - $item->discount)}}</b>
+                                        <b>{{formatMoney($product->sell_price - $product->discount)}}</b>
                                     </span>
                                 </p>
                                 <p class="row">
@@ -54,14 +54,14 @@
                                 </p>
                             </div>
                         </div>
-                    @elseif($item->main_discount)
+                    @elseif($product->main_discount)
                         <div class="block-promotions table">
                             <div class="block-promotions-title cell">ĐANG KHUYẾN MÃI</div>
                             <div class="block-promotions-infos cell">
                                 <p>
-                                    ĐANG GIẢM GIÁ TỪ {{formatMoney($item->sell_price)}} XUỐNG CÒN
+                                    ĐANG GIẢM GIÁ TỪ {{formatMoney($product->sell_price)}} XUỐNG CÒN
                                     <span class="text-danger">
-                                        <b>{{formatMoney($item->sell_price - $item->main_discount)}}</b>
+                                        <b>{{formatMoney($product->sell_price - $product->main_discount)}}</b>
                                     </span>
                                 </p>
                                 <p class="row">
@@ -76,7 +76,7 @@
                         </div>
                     @endif
 
-                    <p >{{$item->short_description}}</p>
+                    <p >{{$product->short_description}}</p>
                     <div class="row" >
                         <div class="col-xxs-12 col-xxs-offset-0 col-xs-10 col-xs-offset-1 hidden-sm hidden-md hidden-lg">
                             <div id="product-detail-gallery-mobile" class="royalSlider rsDefault">
@@ -84,7 +84,7 @@
                                     @foreach($productSlide as $gallery)
                                         @if($gallery->type == PRODUCT_IMAGE_TYPE_SLIDE)
                                             <a id="" class="rsImg bugaga" data-rsbigimg="{{$gallery->image}}" href="{{$gallery->image}}">
-                                                {{$item->name}}
+                                                {{$product->name}}
                                                 <img class="rsTmb" src="{{$gallery->thumb}}">
                                             </a>
                                         @endif
@@ -94,12 +94,12 @@
                         </div>
                     </div>
 
-                    @if(count($item->properties))
+                    @if(count($product->properties))
                         <h4>
                             Màu sắc
                         </h4>
-                        <div class="list-color-product multiple-items nav">
-                            @foreach($item->properties as $property)
+                        <div class="list-color-product hidden multiple-items nav">
+                            @foreach($product->properties as $property)
                                 @if($productSlide && count($productSlide)>0)
                                     @foreach($productSlide as $galleryIndex => $gallery)
                                         @if($gallery->id == $property->product_gallery_id)
@@ -122,12 +122,12 @@
                         </div>
                     @endif
 
-                    @if(isset($item->propertiesSize))
+                    @if(isset($product->propertiesSize))
                         <h4>
                             Kích thước
                         </h4>
                         <ul class="list-size-product nav">
-                            @foreach($item->propertiesSize as $propertySize)
+                            @foreach($product->propertiesSize as $propertySize)
                                 <li>
                                     <a class="disable" href="#choose-product-size" data-id="{{$propertySize->id}}" data-color="{{json_encode($propertySize->colorIds)}}" >{{$propertySize->name}}</a>
                                 </li>
@@ -143,17 +143,17 @@
                     </div>
                     <div class="row vpadding-10" >
                         <div class="col-xs-4">
-                            <span class=@if($item->isLiked)"save-product-wrap active"@else"save-product-wrap"@endif >
-                                <a  data-product-id="{{$item->id}}"
-                                    data-product-url="{{urlProductDetail($item)}}"
-                                    href=@if(\Kacana\Util::isLoggedIn() && !$item->isLiked)"#save-product-like"@elseif(\Kacana\Util::isLoggedIn() && $item->isLiked)"#remove-product-like"@else"#login-header-popup"@endif
+                            <span class=@if($product->isLiked)"save-product-wrap active"@else"save-product-wrap"@endif >
+                                <a  data-product-id="{{$product->id}}"
+                                    data-product-url="{{urlProductDetail($product)}}"
+                                    href=@if(\Kacana\Util::isLoggedIn() && !$product->isLiked)"#save-product-like"@elseif(\Kacana\Util::isLoggedIn() && $product->isLiked)"#remove-product-like"@else"#login-header-popup"@endif
                                     class="save-product" >
                                     <i class="pe-7s-like" ></i>
                                     <i class="fa fa-heart" ></i>
                                     <span>
-                                        @if(\Kacana\Util::isLoggedIn() && !$item->isLiked)
+                                        @if(\Kacana\Util::isLoggedIn() && !$product->isLiked)
                                         Lưu sản phẩm này
-                                        @elseif(\Kacana\Util::isLoggedIn() && $item->isLiked)
+                                        @elseif(\Kacana\Util::isLoggedIn() && $product->isLiked)
                                             Bỏ lưu sản phẩm này
                                         @else
                                             Lưu sản phẩm này
@@ -186,11 +186,11 @@
                 </div>
             </div>
             <div class="hidden-xs col-sm-5 col-sm-offset-2">
-                <div id="product-detail-gallery" class="royalSlider rsDefault">
+                <div id="product-detail-gallery" class="royalSlider hidden rsDefault">
                     @if($productSlide && count($productSlide)>0)
                         @foreach($productSlide as $gallery)
-                            <a id="product-detail-gallery-id-{{$item->id}}" class="rsImg bugaga" data-rsbigimg="{{$gallery->image}}" href="{{$gallery->image}}">
-                                {{$item->name}}
+                            <a id="product-detail-gallery-id-{{$product->id}}" class="rsImg bugaga" data-rsbigimg="{{$gallery->image}}" href="{{$gallery->image}}">
+                                {{$product->name}}
                                 <img class="rsTmb" src="{{$gallery->thumb}}">
                             </a>
                         @endforeach
@@ -199,20 +199,18 @@
             </div>
         </div>
         <div class="row" >
-            <hr class="tall">
         </div>
-        <div class="row product-information-detail">
-            <div class="col-xs-12">
-                @if($item->property)
+        <div id="product-main-information" class="row product-information-detail">
+            <div class="col-xs-12 col-sm-8">
+                @if($product->property)
                     <div class="toogle" data-plugin-toggle="">
                          <section class="toggle active">
                              <label>
-                                 <h2 class="description-detail-title">Thuộc tính sản phẩm</h2>
-                                 <i class="pe-7s-close"></i>
+                                 <h2 class="center description-detail-title"><span>Thuộc tính sản phẩm</span></h2>
                              </label>
                              <div class="description-detail-title-footer"></div>
-                             <div class="toggle-content" style="display: none;">
-                                 {!! fixHtml($item->property)  !!}
+                             <div class="toggle-content">
+                                 {!! fixHtml($product->property)  !!}
                              </div>
                          </section>
                      </div>
@@ -220,49 +218,18 @@
                 <div class="toogle product-description-detail" data-plugin-toggle="">
                     <section class="toggle active">
                         <label>
-                            <h2 class="description-detail-title">Thông tin chi tiết</h2>
-                            <i class="pe-7s-close"></i>
+                            <h2 class="center description-detail-title"><span>Thông tin chi tiết</span></h2>
                         </label>
                         <div class="description-detail-title-footer"></div>
                         <div class="toggle-content">
-                            {!! $item->descriptionLazyLoad  !!}
-                        </div>
-                    </section>
-                </div>
-                <div class="toogle" data-plugin-toggle="">
-                    <section class="toggle active">
-                        <label>
-                            <h2 class="description-detail-title">Có thể bạn đang tìm kiếm</h2>
-                            <i class="pe-7s-close"></i>
-                        </label>
-                        <div class="description-detail-title-footer"></div>
-                        <div class="toggle-content" style="display: none;">
-                            @foreach($item->tag as $tag)
-                                <a class="color-grey-light tag-relation-suggestion" href="{{urlTag($tag)}}" >
-                                    <span class="tag-name">{{$tag->name}}</span>
-                                    <span class="tag-count">{{$tag->countProduct}}<br>SP</span>
-                                </a>
-                            @endforeach
-                        </div>
-                    </section>
-                </div>
-                <div class="toogle" data-plugin-toggle="">
-                    <section class="toggle">
-                        <label>
-                            <h2 class="description-detail-title">Sản phẩm tương tự</h2>
-                            <i class="pe-7s-close"></i>
-                        </label>
-                        <div class="description-detail-title-footer"></div>
-                        <div class="toggle-content">
-
+                            {!! $product->descriptionLazyLoad  !!}
                         </div>
                     </section>
                 </div>
                  <div class="toogle" data-plugin-toggle="">
-                     <section class="toggle">
+                     <section class="toggle active">
                          <label>
-                             <h2 class="description-detail-title">Đánh giá và bình luận</h2>
-                             <i class="pe-7s-close"></i>
+                             <h2 class="center description-detail-title"><span>Đánh giá và bình luận</span></h2>
                          </label>
                          <div class="description-detail-title-footer"></div>
                          <div class="toggle-content" style="display: none;">
@@ -270,6 +237,55 @@
                          </div>
                      </section>
                  </div>
+            </div>
+            <div id="list-product-related-wrap" class="col-xs-12 col-sm-4">
+                <div id="list-product-related">
+                    <section >
+                        <label>
+                            <h2 class="center description-detail-title"><span>Sản phẩm tương tự</span></h2>
+                        </label>
+                        <div class="description-detail-title-footer"></div>
+                        <div class="toggle-content">
+                            <div class="row" >
+                                <div id="listProductPage">
+                                    <div class="block-tag">
+                                        <div class="block-tag-body as-accessories-results">
+                                            <div class="taglist as-search-results-tiles background-white" id="content">
+                                                @forelse($productRelated as $item)
+                                                    @if($item->id != $product->id)
+                                                        <div class="col-xs-12 product-item" >
+                                                            @include('client.product.product-item-temple')
+                                                        </div>
+                                                    @endif
+                                                @endforeach
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+        <div class="row product-information-detail">
+            <div class="col-xs-12">
+                <div class="toogle" data-plugin-toggle="">
+                    <section class="toggle active">
+                        <label>
+                            <h2 class="center description-detail-title"><span>Có thể bạn đang tìm kiếm</span></h2>
+                        </label>
+                        <div class="description-detail-title-footer"></div>
+                        <div class="toggle-content">
+                            @foreach($product->tag as $productTag)
+                                <a class="color-grey-light tag-relation-suggestion" href="{{urlTag($productTag)}}" >
+                                    <span class="tag-name">{{$productTag->name}}</span>
+                                    <span class="tag-count">{{$productTag->countProduct}}<br>SP</span>
+                                </a>
+                            @endforeach
+                        </div>
+                    </section>
+                </div>
             </div>
         </div>
     </div>
@@ -285,6 +301,6 @@
 @stop
 
 
-@section('google-param-prodid', $item->id)
+@section('google-param-prodid', $product->id)
 @section('google-param-pagetype', 'product')
-@section('google-param-totalvalue', $item->sell_price)
+@section('google-param-totalvalue', $product->sell_price)

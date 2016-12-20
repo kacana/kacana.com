@@ -22,10 +22,12 @@
                 </div>
             </div>
             <div class="block-tag-body" >
-                <div class="container background-white" >
+                <div class="container taglist background-white" >
                     <div class="row">
                         @foreach($newest as $item)
-                            @include('client.product.product-item-temple')
+                            <div class="col-xxs-12 col-xs-6 col-sm-4 col-md-4 product-item" >
+                                @include('client.product.product-item-temple')
+                            </div>
                         @endforeach
                     </div>
                 </div>
@@ -61,10 +63,12 @@
                 </div>
             </div>
             <div class="block-tag-body" >
-                <div class="container background-white" >
+                <div class="container taglist background-white" >
                     <div class="row">
                         @foreach($discount as $item)
-                            @include('client.product.product-item-temple')
+                            <div class="col-xxs-12 col-xs-6 col-sm-4 col-md-4 product-item" >
+                                @include('client.product.product-item-temple')
+                            </div>
                         @endforeach
                     </div>
                 </div>
@@ -104,11 +108,13 @@
                 </div>
             </div>
             <div class="block-tag-body" >
-                <div class="container background-white" >
+                <div class="container taglist background-white" >
                     <div class="row">
                         @if(count($block['products'])>0)
                             @foreach($block['products'] as $item)
-                                @include('client.product.product-item-temple')
+                                <div class="col-xxs-12 col-xs-6 col-sm-4 col-md-4 product-item" >
+                                    @include('client.product.product-item-temple')
+                                </div>
                             @endforeach
                         @endif
                     </div>

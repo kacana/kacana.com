@@ -119,7 +119,7 @@ var homepagePackage = {
             });
             $.rsModules.globalCaption = $.rsProto._initGlobalCaption;
 
-            $('.product-image-inside').royalSlider({
+            $('.product-item .product-image-inside').royalSlider({
                 fullscreen: {
                     enabled: true,
                     nativeFS: false

@@ -39,7 +39,9 @@
                 {{--@include('client.product.sidebar')--}}
                 <div class="container taglist as-search-results-tiles background-white" id="content">
                     @forelse($items as $item)
-                        @include('client.product.product-item-temple')
+                        <div class="col-xxs-12 col-xs-6 col-sm-4 col-md-4 product-item" >
+                            @include('client.product.product-item-temple')
+                        </div>
                     @empty
                     @endforelse
                 </div>
@@ -68,7 +70,10 @@
                     <div class="col-md-12">
                         <h3 class="color-grey">Sản phẩm nổi bật</h3>
                         @foreach($tag->allChilds as $subTag)
-                           <a class=" tag-relation-suggestion color-grey-light" href="{{urlTag($subTag)}}" >{{$subTag->name}}</a>
+                            <a class="color-grey-light tag-relation-suggestion" href="{{urlTag($subTag)}}" >
+                                <span class="tag-name">{{$subTag->name}}</span>
+                                <span class="tag-count">{{$subTag->countProduct}}<br>SP</span>
+                            </a>
                         @endforeach
                     </div>
                 </div>
