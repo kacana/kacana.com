@@ -24,7 +24,7 @@ class ProductController extends BaseController {
             $tagIdRelated = 0;
             $product->metaKeyword = $tagService->formatMetaKeyword($product->tag, $tagIdRelated);
 
-            $data['productRelated'] = $productService->getProductByTagId($tagIdRelated);
+            $data['productRelated'] = $productService->getProductByTagId($tagIdRelated, 10);
             $data['product'] = $product;
             $data['tag'] = $tagService->getTagById($tagId, false);
             $data['productSlide'] = $productGallery->getImagesProductByProductId($id, PRODUCT_IMAGE_TYPE_SLIDE);
