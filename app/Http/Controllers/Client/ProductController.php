@@ -21,10 +21,32 @@ class ProductController extends BaseController {
         $userId = (\Kacana\Util::isLoggedIn())?$this->_user->id:0;
         try{
             $product = $productService->getProductById($id, $userId);
-            $tagIdRelated = 0;
-            $product->metaKeyword = $tagService->formatMetaKeyword($product->tag, $tagIdRelated);
+            $tagIdRelateds = [];
+            $product->metaKeyword = $tagService->formatMetaKeyword($product->tag, $tagIdRelateds);
 
-            $data['productRelated'] = $productService->getProductByTagId($tagIdRelated, 10);
+            $data['productRelated'] = [];
+            $productRelationIds = [];
+
+            foreach ($tagIdRelateds as $tagIdRelated => $numberProductByTagId)
+            {
+                $productRelations = $productService->getProductByTagId($tagIdRelated, 100);
+
+                foreach ($productRelations as $productRelation)
+                {
+                    if(!in_array($productRelation->id, $productRelationIds))
+                    {
+                        array_push($data['productRelated'], $productRelation);
+                        array_push($productRelationIds, $productRelation->id);
+                    }
+
+                    if(count($data['productRelated']) > 8)
+                        break;
+                }
+
+                if(count($data['productRelated']) > 8)
+                    break;
+            }
+
             $data['product'] = $product;
             $data['tag'] = $tagService->getTagById($tagId, false);
             $data['productSlide'] = $productGallery->getImagesProductByProductId($id, PRODUCT_IMAGE_TYPE_SLIDE);
@@ -61,7 +83,7 @@ class ProductController extends BaseController {
             $data['items'] = $productService->getProductByTagId($tagId, $limit, $userId, $page, $options);
             $tags = $tagService->getTagById($tagId, false);
             $tags->allChilds = $tagService->getAllChildTagHaveProduct($tagId);
-            $tagIdRelated = 0;
+            $tagIdRelated = [];
             $tags->tagKeyword = $tagService->formatMetaKeyword($tags->allChilds, $tagIdRelated);
 
             $data['tag'] = $tags;

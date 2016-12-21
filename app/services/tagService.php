@@ -420,8 +420,7 @@ class tagService {
         $productService = new productService();
         $tagNameArray = [];
         $tagCache = '__count_product_by_tag_id__';
-        $tempMinCount = 100000;
-        Cache::flush();
+        $tagIdRelatedArray =[];
         if(count($tags))
             foreach ($tags as &$tag)
             {
@@ -430,15 +429,11 @@ class tagService {
                 if(!$countProduct)
                     $countProduct = $productService->countProductByTagId($tag->id);
 
+                $tagIdRelated[$tag->id] = $countProduct;
 
-                if($tempMinCount > $countProduct)
-                {
-                    $tempMinCount = $countProduct;
-                    $tagIdRelated = $tag->id;
-                }
                 $tag->countProduct = $countProduct;
             }
-
+        asort($tagIdRelated);
         return $tagNameArray;
     }
 
