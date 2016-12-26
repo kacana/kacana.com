@@ -7,7 +7,7 @@ use App\services\trackingService;
 use App\services\userService;
 use Illuminate\Http\Request;
 use Kacana\Util;
-
+use Pusher;
 /**
  * Class IndexController
  * @package App\Http\Controllers\Client
@@ -63,5 +63,9 @@ class IndexController extends BaseController {
         $result['search'] = $searchString;
         return view('client.index.search', $result);
 
+    }
+
+    public function testMessages(){
+        return view('client.index.test-messages');
     }
 }

@@ -1,7 +1,7 @@
 <?php
 /**
  * A helper file for Laravel 5, to provide autocomplete information to your IDE
- * Generated for Laravel 5.0.35 on 2016-12-02.
+ * Generated for Laravel 5.0.35 on 2016-12-22.
  *
  * @author Barry vd. Heuvel <barryvdh@gmail.com>
  * @see https://github.com/barryvdh/laravel-ide-helper
@@ -12846,4 +12846,6 @@ namespace {
 
 
 }
+
+
 

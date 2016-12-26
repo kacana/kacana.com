@@ -158,10 +158,9 @@
     <div role="main" class="main">
         @yield('top-infomation')
 
-{{--        @include('layouts.client.home-intro')--}}
-
         @yield('content')
 
+        @include('layouts.client.chat')
     </div>
 
     @include('layouts.client.footer')
@@ -214,6 +213,7 @@
 <script src="/lib/theme/js/theme.init.js"></script>
 
 <script type="text/javascript" src="/lib/slick/slick.min.js"></script>
+<script src="/lib/pusher/pusher.min.js"></script>
 
 <!-- js owner -->
 <script src="/js/client/client.js"></script>
@@ -255,6 +255,7 @@ Không thể liên kết thẻ tiếp thị lại với thông tin nhận dạng
     $(function() {
         @yield('javascript')
 
+        Kacana.chat.init();
         Kacana.layout.init();
     });
 </script>

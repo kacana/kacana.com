@@ -66,6 +66,17 @@ var utilsPackage = {
             formatted = output.reverse().join("");
             return(formatted + ((parts) ? "." + parts[1].substr(0, 2) : "") + " đ");
         },
+        KPusher: function () {
+            // Enable pusher logging - don't include this in production
+            Pusher.logToConsole = true;
+
+            var pusher = new Pusher('65bb7e6aa3cfdd3b4b63', {
+                cluster: 'ap1',
+                encrypted: true
+            });
+
+            return pusher;
+        }
     }
 };
 

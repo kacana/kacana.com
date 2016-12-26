@@ -169,6 +169,13 @@ Route::group(['domain'=>KACANA_AUTH_ADMIN_NAME.'.{nameDomain}','middleware' => '
 
     Route::any('/base/changeStatus',                         array('as'=>'changeStatus',     'uses'=>'Admin\BaseController@changeStatus'));
 
+    Route::group(['prefix'=>'chat'], function(){
+        Route::any('/',                                         array('as'=>'Chat.list',                        'uses'=>'Admin\ChatController@index'));
+        Route::any('sendMessage',                               array('as'=>'Chat.send.message',                'uses'=>'Admin\ChatController@sendMessage'));
+        Route::get('getNewMessage',                             array('as'=>'Chat.get.new.message',             'uses'=>'Admin\ChatController@getNewMessage'));
+        Route::get('getOldThread',                              array('as'=>'Chat.get.old.thread',              'uses'=>'Admin\ChatController@getOldThread'));
+    });
+
 
 });
 
@@ -244,6 +251,8 @@ Route::group(['domain'=>'{nameDomain}', 'middleware' => 'client'], function () {
     Route::post('/index/saveProductLike',                   array('as'=>'homepage-save-product-like',       'uses'=>'Client\IndexController@saveProductLike'));
     Route::any('/tim-kiem/{search}',                        array('as'=>'homepage-search',                  'uses'=>'Client\IndexController@searchProduct'));
 
+    Route::any('/index/testMessages',                      array('as'=>'homepage-test-message',            'uses'=>'Client\IndexController@testMessages'));
+
     //product
     Route::group(['prefix'=>'san-pham'], function(){
         Route::get('{slug}--{id}--{tagId}',                 array('as'=>'productDetail',                        'uses'=>'Client\ProductController@productDetail'));
@@ -300,4 +309,10 @@ Route::group(['domain'=>'{nameDomain}', 'middleware' => 'client'], function () {
         Route::post('saveProductLike',                      array('as'=>'CustomerSaveProductLike',          'uses'=>'Client\CustomerController@saveProductLike'));
         Route::post('removeProductLike',                    array('as'=>'CustomerRemoveProductLike',        'uses'=>'Client\CustomerController@removeProductLike'));
     });
+
+    Route::group(['prefix'=>'chat'], function(){
+        Route::any('createNewMessage',                     array('as'=>'Chat.create.new.message',          'uses'=>'Client\ChatController@createNewMessage'));
+        Route::any('createNewThread',                     array('as'=>'Chat.create.new.thread',          'uses'=>'Client\ChatController@createNewThread'));
+    });
+
 });

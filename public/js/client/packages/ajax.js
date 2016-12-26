@@ -219,6 +219,24 @@ var ajaxPackage = {
                 var options = [];
                 Kacana.ajax.init(url, dataType, type, dataPost, callBack, errorCallBack, options);
             }
+        },
+        chat:{
+            createNewThread: function (data, callBack, errorCallBack) {
+                var url = '/chat/createNewThread';
+                var dataType = 'json';
+                var type = 'post';
+                var dataPost = data;
+                var options = [];
+                Kacana.ajax.init(url, dataType, type, dataPost, callBack, errorCallBack, options);
+            },
+            createNewMessage: function (data, callBack, errorCallBack) {
+                var url = '/chat/createNewMessage';
+                var dataType = 'json';
+                var type = 'post';
+                var dataPost = data;
+                var options = [];
+                Kacana.ajax.init(url, dataType, type, dataPost, callBack, errorCallBack, options);
+            }
         }
     }
 };

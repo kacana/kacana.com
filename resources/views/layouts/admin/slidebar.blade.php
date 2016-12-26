@@ -41,7 +41,16 @@ $action = getActionName(class_basename(Route::currentRouteAction()));
 
         <li class="header">Admin</li>
         <li class="treeview {{($controller == 'UserController')?'active':''}}"><a href="{{URL::to('/user')}}"><i class="fa fa-user"></i><span>Người dùng</span></a>
-        </li>
+
+        <li class="{{($controller == 'ChatController')?'active':''}}">
+            <a href="{{URL::to('/chat')}}">
+                <i class="fa fa-comments-o"></i>
+                <span>Chat</span>
+                <span class="pull-right-container">
+                  <small class="label pull-right bg-red">12</small>
+                </span>
+            </a>
+         </li>
 
         <li class="header">Quản Lý Đơn Hàng</li>
         <li class="treeview {{($controller == 'OrderController')?'active':''}}">

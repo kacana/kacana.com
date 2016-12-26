@@ -53,6 +53,7 @@
         <script src="/lib/morris/morris.min.js"></script>
         <script src="/lib/daterangepicker/moment.min.js"></script>
         <script src="/lib/daterangepicker/daterangepicker.js"></script>
+        <script src="/lib/pusher/pusher.min.js"></script>
 
         <!--[if lt IE 9]>
         <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>

@@ -408,7 +408,32 @@ var ajaxPackage = {
                 var options = [];
                 Kacana.ajax.init(url, dataType, type, dataPost, callBack, errorCallBack, options);
             }
-
+        },
+        chat: {
+            createNewThread: function(data, callBack, errorCallBack){
+                var url = '/chat/sendMessage';
+                var dataType = 'json';
+                var type = 'post';
+                var dataPost = data;
+                var options = [];
+                Kacana.ajax.init(url, dataType, type, dataPost, callBack, errorCallBack, options);
+            },
+            getNewMessage: function(data, callBack, errorCallBack){
+                var url = '/chat/getNewMessage';
+                var dataType = 'json';
+                var type = 'get';
+                var dataPost = data;
+                var options = [];
+                Kacana.ajax.init(url, dataType, type, dataPost, callBack, errorCallBack, options);
+            },
+            getOldThread: function(data, callBack, errorCallBack){
+                var url = '/chat/getOldThread';
+                var dataType = 'json';
+                var type = 'get';
+                var dataPost = data;
+                var options = [];
+                Kacana.ajax.init(url, dataType, type, dataPost, callBack, errorCallBack, options);
+            },
         }
      }
 };
