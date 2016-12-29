@@ -30,8 +30,11 @@ class ChatController extends BaseController {
 
             $chatType = KACANA_CHAT_TYPE_ASK;
 
+
             $pusher->createNewPush($message, KACANA_CHAT_THREAD_PREFIX.$threadId, $chatType);
             $chatService->createNewMessage($threadId, $userId, $chatType, $message);
+            $chatService->updateLastRead($threadId, $userId, 0);
+            $pusher->createNewThread($threadId, 'message');
 
             $result['ok'] = 1;
             $result['thread'] = $threadId;
@@ -67,9 +70,37 @@ class ChatController extends BaseController {
 
             $pusher->createNewPush($message, $threadId, $chatType);
             $chatService->createNewMessage($chatThread->id, $userId, $chatType, $message);
+            $chatService->updateLastRead($chatThread->id, $userId, 0);
+            $pusher->createNewThread($chatThread->id, 'thread');
 
             $result['ok'] = 1;
             $result['threadId'] = $chatThread->id;
+            $result['keyRead'] = $chatThread->key_read;
+        }
+        catch (\Exception $e) {
+            if($request->ajax())
+            {
+                $result['error'] = $e->getMessage();
+                return $result;
+            }
+            else
+                return view('errors.404', ['error_message' => $e]);
+        }
+
+        return response()->json($result);
+    }
+
+    public function getUserMessage(Request $request){
+        $chatService = new chatService();
+
+        $result['ok'] = 0;
+        $keyRead = $request->input('keyRead', '');
+        $threadId = $request->input('threadId', 0);
+
+        try{
+            $result['messages'] = $chatService->getUserMessage($threadId, $keyRead);
+            $result['ok'] = 1;
+            $result['thread'] = $threadId;
         }
         catch (\Exception $e) {
             if($request->ajax())

@@ -30,6 +30,7 @@ class chatThreadModel extends Model {
 
         $thread->subject = $subject;
         $thread->ref = $ref;
+        $thread->key_read = md5('chat-'.time());
 
         $thread->save();
 
@@ -43,9 +44,11 @@ class chatThreadModel extends Model {
     public function getNewThreadMesaage(){
         $threads = $this->leftJoin('chat_messages', 'chat_messages.id', '=', 'chat_threads.id')
             ->leftJoin('chat_participants', 'chat_participants.thread_id', '=', 'chat_threads.id')
-            ->where('chat_messages.created_at', '>', 'chat_participants.last_read')
+            ->where('chat_participants.is_read' ,'=', 0)
             ->orWhereNull('chat_participants.id')
-            ->groupBy('chat_threads.id');
+            ->orderBy('chat_messages.created_at', 'asc')
+            ->groupBy('chat_threads.id')
+            ->select(['chat_threads.*']);
 
         return $threads->get();
     }
@@ -57,7 +60,9 @@ class chatThreadModel extends Model {
         $threads = $this->leftJoin('chat_messages', 'chat_messages.id', '=', 'chat_threads.id')
             ->leftJoin('chat_participants', 'chat_participants.thread_id', '=', 'chat_threads.id')
             ->whereNotIn('chat_threads.id', $newThreadIds)
-            ->groupBy('chat_threads.id');
+            ->orderBy('chat_messages.created_at', 'asc')
+            ->groupBy('chat_threads.id')
+            ->select(['chat_threads.*']);
 
         return $threads->get();
     }

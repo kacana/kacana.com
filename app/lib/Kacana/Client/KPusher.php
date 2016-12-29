@@ -23,6 +23,16 @@ class KPusher extends Pusher
         $data['date'] =  date('Y-m-d H:i:s');
         $this->trigger($this->_chanelName, $threadId, $data);
     }
+
+    public function createNewThread($threadId, $type){
+
+        $data['threadId'] = $threadId;
+        $data['type'] = $type;
+        $data['subject'] = 'new chat message';
+        $data['date'] =  date('Y-m-d H:i:s');
+
+        $this->trigger($this->_chanelName, KACANA_REAL_PUSHER_NEW_THREAD, $data);
+    }
 }
 
 ?>

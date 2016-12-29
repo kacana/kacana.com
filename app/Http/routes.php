@@ -174,6 +174,7 @@ Route::group(['domain'=>KACANA_AUTH_ADMIN_NAME.'.{nameDomain}','middleware' => '
         Route::any('sendMessage',                               array('as'=>'Chat.send.message',                'uses'=>'Admin\ChatController@sendMessage'));
         Route::get('getNewMessage',                             array('as'=>'Chat.get.new.message',             'uses'=>'Admin\ChatController@getNewMessage'));
         Route::get('getOldThread',                              array('as'=>'Chat.get.old.thread',              'uses'=>'Admin\ChatController@getOldThread'));
+        Route::post('updateLastRead',                           array('as'=>'Chat.update.last.read',            'uses'=>'Admin\ChatController@updateLastRead'));
     });
 
 
@@ -305,14 +306,15 @@ Route::group(['domain'=>'{nameDomain}', 'middleware' => 'client'], function () {
         Route::any('/kiem-tra-don-hang/{orderCode}',        array('as'=>'CustomerTrackingMyOrder',          'uses'=>'Client\CustomerController@trackingMyOrder'));
         Route::post('cap-nhat-thong-tin',                   array('as'=>'CustomerAccountUpdateInformation', 'uses'=>'Client\CustomerController@accountUpdateInformation'));
         Route::post('cap-nhat-mat-khau',                    array('as'=>'CustomerAccountUpdatePassword',    'uses'=>'Client\CustomerController@accountUpdatePassword'));
-        Route::get('danh-sach-yeu-thich',                  array('as'=>'CustomerProductLike',              'uses'=>'Client\CustomerController@productLike'));
+        Route::get('danh-sach-yeu-thich',                   array('as'=>'CustomerProductLike',              'uses'=>'Client\CustomerController@productLike'));
         Route::post('saveProductLike',                      array('as'=>'CustomerSaveProductLike',          'uses'=>'Client\CustomerController@saveProductLike'));
         Route::post('removeProductLike',                    array('as'=>'CustomerRemoveProductLike',        'uses'=>'Client\CustomerController@removeProductLike'));
     });
 
     Route::group(['prefix'=>'chat'], function(){
-        Route::any('createNewMessage',                     array('as'=>'Chat.create.new.message',          'uses'=>'Client\ChatController@createNewMessage'));
-        Route::any('createNewThread',                     array('as'=>'Chat.create.new.thread',          'uses'=>'Client\ChatController@createNewThread'));
+        Route::any('createNewMessage',                      array('as'=>'Chat.create.new.message',          'uses'=>'Client\ChatController@createNewMessage'));
+        Route::any('createNewThread',                       array('as'=>'Chat.create.new.thread',          'uses'=>'Client\ChatController@createNewThread'));
+        Route::any('getUserMessage',                        array('as'=>'Chat.get.user.message',          'uses'=>'Client\ChatController@getUserMessage'));
     });
 
 });

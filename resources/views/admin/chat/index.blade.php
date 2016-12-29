@@ -13,8 +13,10 @@
 		</div>
 	</section>
 
-	<section id="chat-thread-list" class="content">
+	<section class="content">
+		<div id="chat-thread-list" class="row" >
 
+		</div>
 	</section>
 @stop
 

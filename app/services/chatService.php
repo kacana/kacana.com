@@ -61,6 +61,14 @@ class chatService {
         return $this->_chatThreadModel->getOldThread($newThreadIds);
     }
 
+    public function updateLastRead($threadId, $userId, $isRead = 1){
+        return $this->_chatParticipantModel->updateLastRead($threadId, $userId, $isRead);
+    }
+
+    public function getUserMessage($threadId, $keyRead){
+        return $this->_chatMessageModel->getUserMessage($threadId, $keyRead);
+    }
+
 
 }
 

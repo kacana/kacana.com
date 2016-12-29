@@ -96,7 +96,7 @@
             </footer>
 
             <!-- Control Sidebar -->
-            <aside class="control-sidebar control-sidebar-dark">
+            <aside id="slidebar-right-side" class="control-sidebar control-sidebar-dark">
                 @include('layouts.admin.control-slidebar')
             </aside><!-- /.control-sidebar -->
             <!-- Add the sidebar's background. This div must be placed

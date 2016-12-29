@@ -2,11 +2,65 @@ var chatPackage = {
     chat:{
         page: false,
         threadId: 0,
+        keyStorge: '__chat_session_user__',
+        soundMessage: false,
+        iconMessage: false,
         init: function(){
             // Kacana.chat.setUpSocketChat();
             Kacana.chat.page = $('#chat-window-wrap');
+            Kacana.chat.soundMessage = $('#chat-sound-new-message')[0];
+            Kacana.chat.iconMessage = Kacana.chat.page.find('.top_menu .fa');
             // Kacana.chat.clientChat();
             Kacana.chat.bindEvent();
+            Kacana.chat.checkHistoryMessage();
+        },
+        checkHistoryMessage: function () {
+            var dataStorge = Lockr.get(Kacana.chat.keyStorge);
+
+            if(dataStorge !== undefined)
+            {
+                var callBack = function(data){
+                    if(data.ok){
+                       var messages = data.messages;
+                        var lastMessageReply = false;
+
+                        for (var i = 0; i < messages.length; i++){
+                            var message = messages[i];
+                            if(message.type == 'ask')
+                                Kacana.chat.sendMessage(message.body, 'right');
+                            else
+                            {
+                                lastMessageReply = message.body;
+                                Kacana.chat.sendMessage(message.body, 'left');
+                            }
+
+                        }
+
+                        if(lastMessageReply && lastMessageReply !=  dataStorge.lastReply)
+                        {
+                            Kacana.chat.iconMessage.addClass('have-new-message');
+                            Kacana.chat.iconMessage.data('last-reply', lastMessageReply);
+                        }
+
+                    }
+                    else
+                        Kacana.utils.showError('có cái gì sai sai ở đây! vui lòng gọi: 0906.054.206');
+                };
+
+                var errorCallBack = function(data){
+                    Kacana.utils.showError('có cái gì sai sai ở đây! vui lòng gọi: 0906.054.206');
+                    Kacana.utils.loading.closeLoading();
+                };
+
+                var data = {
+                    threadId: dataStorge.threadId,
+                    keyRead: dataStorge.keyRead
+                };
+
+                Kacana.chat.threadId = dataStorge.threadId;
+                Kacana.chat.setUpSocketChat(Kacana.chat.threadId);
+                Kacana.ajax.chat.getUserMessage(data, callBack, errorCallBack);
+            }
         },
         bindEvent: function () {
             Kacana.chat.page.on('click', '.top_menu',  Kacana.chat.toggleChatWindow)
@@ -39,6 +93,10 @@ var chatPackage = {
                 if(data.ok){
                     Kacana.chat.threadId = data.threadId;
                     Kacana.chat.setUpSocketChat(Kacana.chat.threadId);
+                    data.time = $.now();
+
+                    Lockr.set(Kacana.chat.keyStorge, data);
+
                 }
                 else
                     Kacana.utils.showError('có cái gì sai sai ở đây! vui lòng gọi: 0906.054.206');
@@ -86,6 +144,13 @@ var chatPackage = {
             {
                 Kacana.chat.page.css('height', '386px');
                 Kacana.chat.page.addClass('active');
+
+                if(Kacana.chat.iconMessage.hasClass('have-new-message'))
+                {
+                    Kacana.chat.iconMessage.removeClass('have-new-message');
+                    Kacana.chat.updateLastMessageReply(Kacana.chat.iconMessage.data('last-reply'));
+
+                }
                 if(!Kacana.chat.page.find('.messages').html())
                 {
                     Kacana.chat.sendMessage('Xin chào - Muốn hỗ trợ gì nè! :)', 'left');
@@ -105,6 +170,16 @@ var chatPackage = {
             channel.bind('Kacana-Client-Thread-'+threadId, function(data) {
                 if(data.type == 'reply')
                 {
+                    if($('#chat-window-wrap').hasClass('active'))
+                    {
+                        Kacana.chat.updateLastMessageReply(data.message);
+                    }
+                    else{
+                        Kacana.chat.iconMessage.addClass('have-new-message');
+                        Kacana.chat.iconMessage.data('last-reply', data.message);
+                    }
+
+                    Kacana.chat.soundMessage.play();
                     Kacana.chat.sendMessage(data.message, 'left');
                 }
             });
@@ -138,12 +213,17 @@ var chatPackage = {
             });
 
             message.draw();
-            return $messages.animate({ scrollTop: $messages.prop('scrollHeight') }, 300);
+            return $messages.animate({ scrollTop: $messages.prop('scrollHeight') }, 100);
         },
         getMessageTextClient: function () {
             var $message_input;
             $message_input = Kacana.chat.page.find('.message_input');
             return $message_input.val();
+        },
+        updateLastMessageReply: function (lastMessage) {
+            var dataStorge = Lockr.get(Kacana.chat.keyStorge);
+            dataStorge.lastReply = lastMessage;
+            Lockr.set(Kacana.chat.keyStorge, dataStorge);
         }
     }
 };

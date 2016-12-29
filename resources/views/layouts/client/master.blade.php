@@ -214,6 +214,7 @@
 
 <script type="text/javascript" src="/lib/slick/slick.min.js"></script>
 <script src="/lib/pusher/pusher.min.js"></script>
+<script src="/lib/lockr/lockr.min.js"></script>
 
 <!-- js owner -->
 <script src="/js/client/client.js"></script>

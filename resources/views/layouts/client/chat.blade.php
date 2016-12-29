@@ -25,4 +25,9 @@
             </div>
         </li>
     </div>
+    <div class="hidden">
+        <audio id="chat-sound-new-message" controls>
+            <source src="/sound/message.mp3" type="audio/mpeg">
+        </audio>
+    </div>
 </div>

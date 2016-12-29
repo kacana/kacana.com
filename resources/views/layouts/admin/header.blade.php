@@ -57,8 +57,8 @@
             </li>
             <!-- Control Sidebar Toggle Button -->
             <li>
-                <a href="#" data-toggle="control-sidebar"><i class="fa fa-comments-o"></i>
-                    <span class="label label-success">4</span>
+                <a href="#" id="btn-show-list-chat-right-side" data-toggle="control-sidebar"><i class="fa fa-comments-o"></i>
+                    <span class="label label-success"></span>
                 </a>
             </li>
         </ul>

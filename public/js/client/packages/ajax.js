@@ -236,6 +236,14 @@ var ajaxPackage = {
                 var dataPost = data;
                 var options = [];
                 Kacana.ajax.init(url, dataType, type, dataPost, callBack, errorCallBack, options);
+            },
+            getUserMessage: function (data, callBack, errorCallBack) {
+                var url = '/chat/getUserMessage';
+                var dataType = 'json';
+                var type = 'post';
+                var dataPost = data;
+                var options = [];
+                Kacana.ajax.init(url, dataType, type, dataPost, callBack, errorCallBack, options);
             }
         }
     }

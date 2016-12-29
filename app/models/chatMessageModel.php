@@ -39,4 +39,20 @@ class chatMessageModel extends Model {
         return $message;
     }
 
+    /**
+     * @param $threadId
+     * @param $keyRead
+     * @return mixed
+     */
+    public function getUserMessage($threadId, $keyRead){
+        $messages = $this->join('chat_threads', 'chat_messages.thread_id', '=', 'chat_threads.id')
+            ->leftJoin('chat_participants', 'chat_participants.thread_id', '=', 'chat_threads.id')
+            ->where('chat_threads.id', $threadId)
+            ->where('chat_threads.key_read', $keyRead)
+            ->orderBy('chat_threads.created_at', 'asc')
+            ->select(['chat_messages.*', 'isRead' => 'chat_participants.is_read']);
+
+        return $messages->get();
+    }
+
 }

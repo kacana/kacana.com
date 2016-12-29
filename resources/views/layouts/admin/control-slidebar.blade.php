@@ -7,49 +7,25 @@
     <!-- Home tab content -->
     <div class="tab-pane active" id="control-sidebar-chat-tab">
         <h3 class="control-sidebar-heading">Message Processing</h3>
-        <ul class='control-sidebar-menu'>
-            <li>
-                <a data-thread-id="15" href="#create-thread-message" class="create-thread-message" >
-                    <i class="menu-icon fa fa-paper-plane bg-green"></i>
-                    <div class="menu-info">
-                        <h4 class="control-sidebar-subheading">Chat 221</h4>
-                        <p>19/12/2016 <small>20:12</small></p>
-                    </div>
-                </a>
-            </li>
-            <li>
-                <a >
-                    <i class="menu-icon fa fa-paper-plane bg-green"></i>
-                    <div class="menu-info">
-                        <h4 class="control-sidebar-subheading">Chat 432</h4>
-                        <p>25/12/2016 <small>20:12</small></p>
-                    </div>
-                </a>
-            </li>
+        <ul id="list-chat-right-side-new" class='control-sidebar-menu'>
+
         </ul><!-- /.control-sidebar-menu -->
 
         <h3 class="control-sidebar-heading">Message Thread</h3>
-        <ul class='control-sidebar-menu'>
-            <li>
-                <a >
-                    <i class="menu-icon fa fa-check bg-aqua"></i>
-                    <div class="menu-info">
-                        <h4 class="control-sidebar-subheading">Chat 126</h4>
-                        <p>19/12/2016 <small>20:12</small></p>
-                    </div>
-                </a>
-            </li>
-            @for($i = 0 ; $i < 5 ;$i++)
-                <li>
-                    <a >
-                        <i class="menu-icon fa fa-check bg-aqua"></i>
-                        <div class="menu-info">
-                            <h4 class="control-sidebar-subheading">Chat 57{{$i}}</h4>
-                            <p>25/12/2016 <small>20:12</small></p>
-                        </div>
-                    </a>
-                </li>
-            @endfor
+        <ul id="list-chat-right-side-old" class='control-sidebar-menu'>
+
         </ul>
+
+        <div class="hidden">
+            <audio id="chat-sound-new-message" controls>
+                <source src="/sound/message.mp3" type="audio/mpeg">
+            </audio>
+        </div>
+
+        <div class="hidden">
+            <audio id="chat-sound-new-thread" controls>
+                <source src="/sound/thread.mp3" type="audio/mpeg">
+            </audio>
+        </div>
     </div>
 </div>
