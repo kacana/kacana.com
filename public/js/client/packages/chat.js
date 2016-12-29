@@ -15,9 +15,9 @@ var chatPackage = {
             Kacana.chat.checkHistoryMessage();
         },
         checkHistoryMessage: function () {
-            var dataStorge = Lockr.get(Kacana.chat.keyStorge);
+            var dataStorage = Lockr.get(Kacana.chat.keyStorge);
 
-            if(dataStorge !== undefined)
+            if(dataStorage !== undefined)
             {
                 var callBack = function(data){
                     if(data.ok){
@@ -36,12 +36,17 @@ var chatPackage = {
 
                         }
 
-                        if(lastMessageReply && lastMessageReply !=  dataStorge.lastReply)
+                        if(lastMessageReply && lastMessageReply !=  dataStorage.lastReply)
                         {
                             Kacana.chat.iconMessage.addClass('have-new-message');
                             Kacana.chat.iconMessage.data('last-reply', lastMessageReply);
                         }
 
+                        var durationSession = ($.now() - dataStorage.time)/1000/60;
+                        if(durationSession < 30)
+                        {
+                            Kacana.chat.page.find('.top_menu').click();
+                        }
                     }
                     else
                         Kacana.utils.showError('có cái gì sai sai ở đây! vui lòng gọi: 0906.054.206');
@@ -53,11 +58,11 @@ var chatPackage = {
                 };
 
                 var data = {
-                    threadId: dataStorge.threadId,
-                    keyRead: dataStorge.keyRead
+                    threadId: dataStorage.threadId,
+                    keyRead: dataStorage.keyRead
                 };
 
-                Kacana.chat.threadId = dataStorge.threadId;
+                Kacana.chat.threadId = dataStorage.threadId;
                 Kacana.chat.setUpSocketChat(Kacana.chat.threadId);
                 Kacana.ajax.chat.getUserMessage(data, callBack, errorCallBack);
             }
@@ -117,6 +122,7 @@ var chatPackage = {
             var callBack = function(data){
                 if(data.ok){
                     console.log('pushed message');
+                    Kacana.chat.updateStorageTime();
                 }
                 else
                     Kacana.utils.showError('có cái gì sai sai ở đây! vui lòng gọi: 0906.054.206');
@@ -151,6 +157,9 @@ var chatPackage = {
                     Kacana.chat.updateLastMessageReply(Kacana.chat.iconMessage.data('last-reply'));
 
                 }
+
+                Kacana.chat.page.find('.message_input').focus();
+
                 if(!Kacana.chat.page.find('.messages').html())
                 {
                     Kacana.chat.sendMessage('Xin chào - Muốn hỗ trợ gì nè! :)', 'left');
@@ -161,7 +170,11 @@ var chatPackage = {
             // Enable pusher logging - don't include this in production
             Pusher.logToConsole = true;
 
-            var pusher = new Pusher('65bb7e6aa3cfdd3b4b63', {
+            // var pusherKey = '21054d1ab37cab6eb74f'; // development key
+            var pusherKey = '65bb7e6aa3cfdd3b4b63'; // production key
+
+
+            var pusher = new Pusher(pusherKey, {
                 cluster: 'ap1',
                 encrypted: true
             });
@@ -179,6 +192,7 @@ var chatPackage = {
                         Kacana.chat.iconMessage.data('last-reply', data.message);
                     }
 
+                    Kacana.chat.updateStorageTime();
                     Kacana.chat.soundMessage.play();
                     Kacana.chat.sendMessage(data.message, 'left');
                 }
@@ -213,7 +227,7 @@ var chatPackage = {
             });
 
             message.draw();
-            return $messages.animate({ scrollTop: $messages.prop('scrollHeight') }, 100);
+            return $messages.animate({ scrollTop: $messages.prop('scrollHeight') }, 0);
         },
         getMessageTextClient: function () {
             var $message_input;
@@ -221,10 +235,16 @@ var chatPackage = {
             return $message_input.val();
         },
         updateLastMessageReply: function (lastMessage) {
-            var dataStorge = Lockr.get(Kacana.chat.keyStorge);
-            dataStorge.lastReply = lastMessage;
-            Lockr.set(Kacana.chat.keyStorge, dataStorge);
-        }
+            var dataStorage = Lockr.get(Kacana.chat.keyStorge);
+            dataStorage.lastReply = lastMessage;
+            dataStorage.time = $.now();
+            Lockr.set(Kacana.chat.keyStorge, dataStorage);
+        },
+        updateStorageTime: function () {
+            var dataStorage = Lockr.get(Kacana.chat.keyStorge);
+            dataStorage.time = $.now();
+            Lockr.set(Kacana.chat.keyStorge, dataStorage);
+        },
     }
 };
 

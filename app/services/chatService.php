@@ -12,6 +12,7 @@ use App\models\tagModel;
 use App\models\User;
 use App\models\userProductLikeModel;
 use App\models\userSocialModel;
+use Kacana\Client\KPusher;
 use Kacana\DataTables;
 use Kacana\Util;
 use Kacana\ViewGenerateHelper;
@@ -72,6 +73,25 @@ class chatService {
 
     public function getUserMessageByThreadId($threadId){
         return $this->_chatMessageModel->getUserMessageByThreadId($threadId);
+    }
+
+    public function checkTimeAutoReply($id){
+        $pusher = new KPusher();
+
+        if(date('H') < 7 || date('H') > 22)
+        {
+            if(date('H') > 3 && date('H') < 7)
+                $message = 'Hiện tại Kacana không online. Bạn vui lòng để lại <b class="color-red">Số điện thoại</b> hay <b class="color-red">Email</b>. Kacana sẽ liên lạc với Bạn trong thời gian sớm nhất!<br> Cảm ơn và chúc bạn ngày mới nhiều niềm vui';
+            else
+                $message = 'Hiện tại Kacana không online. Bạn vui lòng để lại <b class="color-red">Số điện thoại</b> hay <b class="color-red">Email</b>. Kacana sẽ liên lạc với Bạn trong thời gian sớm nhất!<br> Cảm ơn và chúc bạn ngủ ngon';
+
+            $chatType = KACANA_CHAT_TYPE_REPLY;
+            $threadId = KACANA_CHAT_THREAD_PREFIX.$id;
+
+            $pusher->createNewPush($message, $threadId, $chatType);
+
+            $this->createNewMessage($id, '0', $chatType, $message);
+        }
     }
 
 

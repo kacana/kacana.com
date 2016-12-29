@@ -69,8 +69,10 @@ var utilsPackage = {
         KPusher: function () {
             // Enable pusher logging - don't include this in production
             Pusher.logToConsole = true;
+            // var pusherKey = '21054d1ab37cab6eb74f'; // development key
+            var pusherKey = '65bb7e6aa3cfdd3b4b63'; // production key
 
-            var pusher = new Pusher('65bb7e6aa3cfdd3b4b63', {
+            var pusher = new Pusher(pusherKey, {
                 cluster: 'ap1',
                 encrypted: true
             });
