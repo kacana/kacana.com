@@ -39,6 +39,7 @@ class chatService {
 
     public function createNewThread($subject , $ref)
     {
+        $mailService = new mailService();
         return $this->_chatThreadModel->createNewThread($subject, $ref);
     }
 
@@ -67,6 +68,10 @@ class chatService {
 
     public function getUserMessage($threadId, $keyRead){
         return $this->_chatMessageModel->getUserMessage($threadId, $keyRead);
+    }
+
+    public function getUserMessageByThreadId($threadId){
+        return $this->_chatMessageModel->getUserMessageByThreadId($threadId);
     }
 
 

@@ -47,7 +47,6 @@ $action = getActionName(class_basename(Route::currentRouteAction()));
                 <i class="fa fa-comments-o"></i>
                 <span>Chat</span>
                 <span class="pull-right-container">
-                  <small class="label pull-right bg-red">12</small>
                 </span>
             </a>
          </li>

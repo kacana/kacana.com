@@ -175,6 +175,7 @@ Route::group(['domain'=>KACANA_AUTH_ADMIN_NAME.'.{nameDomain}','middleware' => '
         Route::get('getNewMessage',                             array('as'=>'Chat.get.new.message',             'uses'=>'Admin\ChatController@getNewMessage'));
         Route::get('getOldThread',                              array('as'=>'Chat.get.old.thread',              'uses'=>'Admin\ChatController@getOldThread'));
         Route::post('updateLastRead',                           array('as'=>'Chat.update.last.read',            'uses'=>'Admin\ChatController@updateLastRead'));
+        Route::post('getUserMessage',                           array('as'=>'Chat.get.user.message',            'uses'=>'Admin\ChatController@getUserMessage'));
     });
 
 

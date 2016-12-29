@@ -1,6 +1,7 @@
 <?php namespace App\Http\Controllers\Client;
 
 use App\services\chatService;
+use App\services\mailService;
 use App\services\productService;
 use App\services\shipService;
 use App\services\tagService;
@@ -55,6 +56,7 @@ class ChatController extends BaseController {
     public function createNewThread(Request $request)
     {
         $chatService = new chatService();
+        $mailService = new mailService();
 
         $result['ok'] = 0;
         $message = $request->input('message', '');
@@ -72,6 +74,8 @@ class ChatController extends BaseController {
             $chatService->createNewMessage($chatThread->id, $userId, $chatType, $message);
             $chatService->updateLastRead($chatThread->id, $userId, 0);
             $pusher->createNewThread($chatThread->id, 'thread');
+
+            $mailService->sendEmailNewThread($chatThread->id, $message);
 
             $result['ok'] = 1;
             $result['threadId'] = $chatThread->id;

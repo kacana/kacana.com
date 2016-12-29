@@ -21,6 +21,14 @@ class mailService {
         return $this->send($email, $subject, $viewBlade, $orderData, $bcc);
     }
 
+    public function sendEmailNewThread($threadId, $message, $email = KACANA_EMAIL_ADMIN){
+
+        $subject = "[KACANA - New thread] ID:".$threadId;
+        $viewBlade = 'client.emails.send-email-new-thread';
+        $threadData = ['message_text'=>$message];
+        return $this->send($email, $subject, $viewBlade, $threadData);
+    }
+
 
     public function send($toEmail, $subject, $viewBlade, $dataView = array(), $bcc = false, $cc = false){
 

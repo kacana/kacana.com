@@ -46,9 +46,9 @@ class chatThreadModel extends Model {
             ->leftJoin('chat_participants', 'chat_participants.thread_id', '=', 'chat_threads.id')
             ->where('chat_participants.is_read' ,'=', 0)
             ->orWhereNull('chat_participants.id')
-            ->orderBy('chat_messages.created_at', 'asc')
+            ->orderBy('chat_participants.updated_at', 'asc')
             ->groupBy('chat_threads.id')
-            ->select(['chat_threads.*']);
+            ->select(['chat_threads.*', 'last_message_time'=>'chat_participants.updated_at']);
 
         return $threads->get();
     }
@@ -60,9 +60,9 @@ class chatThreadModel extends Model {
         $threads = $this->leftJoin('chat_messages', 'chat_messages.id', '=', 'chat_threads.id')
             ->leftJoin('chat_participants', 'chat_participants.thread_id', '=', 'chat_threads.id')
             ->whereNotIn('chat_threads.id', $newThreadIds)
-            ->orderBy('chat_messages.created_at', 'asc')
+            ->orderBy('chat_participants.updated_at', 'asc')
             ->groupBy('chat_threads.id')
-            ->select(['chat_threads.*']);
+            ->select(['chat_threads.*', 'last_message_time'=>'chat_participants.updated_at']);
 
         return $threads->get();
     }

@@ -65,6 +65,7 @@
             $(function() {
                 Kacana.utils.init();
                 Kacana.layout.init();
+                Kacana.chat.init();
                 @yield('javascript')
             });
         </script>

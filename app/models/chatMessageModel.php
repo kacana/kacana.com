@@ -55,4 +55,14 @@ class chatMessageModel extends Model {
         return $messages->get();
     }
 
+    public function getUserMessageByThreadId($threadId){
+        $messages = $this->join('chat_threads', 'chat_messages.thread_id', '=', 'chat_threads.id')
+            ->leftJoin('chat_participants', 'chat_participants.thread_id', '=', 'chat_threads.id')
+            ->where('chat_threads.id', $threadId)
+            ->orderBy('chat_threads.created_at', 'asc')
+            ->select(['chat_messages.*', 'isRead' => 'chat_participants.is_read']);
+
+        return $messages->get();
+    }
+
 }

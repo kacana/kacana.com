@@ -23,5 +23,5 @@
 @extends('admin.chat.template')
 
 @section('javascript')
-	Kacana.chat.init();
+	Kacana.chat.bindEvent();
 @stop

@@ -134,4 +134,28 @@ class ChatController extends BaseController {
 
         return response()->json($result);
     }
+
+    public function getUserMessage(Request $request){
+        $chatService = new chatService();
+
+        $result['ok'] = 0;
+        $threadId = $request->input('threadId', 0);
+
+        try{
+            $result['messages'] = $chatService->getUserMessageByThreadId($threadId);
+            $result['ok'] = 1;
+            $result['thread'] = $threadId;
+        }
+        catch (\Exception $e) {
+            if($request->ajax())
+            {
+                $result['error'] = $e->getMessage();
+                return $result;
+            }
+            else
+                return view('errors.404', ['error_message' => $e]);
+        }
+
+        return response()->json($result);
+    }
 }

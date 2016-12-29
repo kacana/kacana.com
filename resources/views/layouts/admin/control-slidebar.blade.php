@@ -29,3 +29,27 @@
         </div>
     </div>
 </div>
+
+<script id="template-chat-list-thread" type="template">
+    <li>
+        <a data-thread-id="${id}" href="/chat#${id}" class="create-thread-message new-thread">
+            <i class="menu-icon fa fa-paper-plane bg-green"></i>
+            <div class="menu-info">
+                <h4 class="control-sidebar-subheading">Chat ${id}</h4>
+                <p>${day}<small> ${time}</small></p>
+            </div>
+        </a>
+    </li>
+</script>
+
+<script id="template-chat-list-old-thread" type="template">
+    <li>
+        <a data-thread-id="${id}" href="/chat#${id}" class="create-thread-message">
+            <i class="menu-icon fa fa-check bg-aqua"></i>
+            <div class="menu-info">
+                <h4 class="control-sidebar-subheading">Chat ${id}</h4>
+                <p>${day}<small> ${time}</small></p>
+            </div>
+        </a>
+    </li>
+</script>

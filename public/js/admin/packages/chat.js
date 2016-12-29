@@ -10,7 +10,6 @@ var chatPackage = {
             Kacana.chat.page = $('#content-chat-page');
             Kacana.chat.sideChatList = $('#control-sidebar-chat-tab');
             Kacana.chat.listenNewMessage();
-            Kacana.chat.bindEvent();
             Kacana.chat.getNewMessage();
         },
         listenNewMessage: function () {
@@ -61,47 +60,102 @@ var chatPackage = {
             });
 
             Kacana.chat.sideChatList.on('click', '.create-thread-message', function () {
-                var threadTemplate = $('#template-chat-thread').html();
                 var id = $(this).data('thread-id');
-                var threadId = 'Kacana-Client-Thread-'+id;
+                Kacana.chat.openThreadMessage(id);
+            });
 
-                if($('#'+threadId).length)
-                {
-                    $('#'+threadId).find('.message_input').focus();
-                    // $('#'+threadId).find('.message_input').val('focus');
-                    return false;
-                }
-
-
-
-                Kacana.chat.updateLastRead(id);
-                var threadTemplateGenerate = $.tmpl(threadTemplate, {'id': id});
-
-                Kacana.chat.page.find('#chat-thread-list').append(threadTemplateGenerate);
-
+            Kacana.chat.page.on('click', '[data-widget="remove"]', function (e) {
+                var thread = $(this).parents('.Kacana-Client-Thread');
+                var threadId = thread.attr('id');
                 var channel = Kacana.chat.KPusher.subscribe('Kacana_Client');
-                var thread = $('#'+threadId);
 
-                var $messages =  thread.find('.direct-chat-messages');
-                var btnShowMessage = $('#btn-show-list-chat-right-side');
+                channel.unbind(threadId, function(data) {
+                   console.log('Unbind event from chat ID:' + threadId);
+                });
 
-                if($(this).hasClass('new-thread'))
+                thread.remove();
+            });
+
+            if(window.location.hash) {
+                var id = window.location.hash.substring(1); //Puts hash in variable, and removes the # character
+                Kacana.chat.openThreadMessage(id);
+            }
+        },
+        openThreadMessage: function (id) {
+            var threadTemplate = $('#template-chat-thread').html();
+
+            var threadId = 'Kacana-Client-Thread-'+id;
+
+            if($('#'+threadId).length)
+            {
+                $('#'+threadId).find('.message_input').focus();
+                return false;
+            }
+
+            Kacana.chat.updateLastRead(id);
+            var threadTemplateGenerate = $.tmpl(threadTemplate, {'id': id});
+
+            Kacana.chat.page.find('#chat-thread-list').append(threadTemplateGenerate);
+
+            var channel = Kacana.chat.KPusher.subscribe('Kacana_Client');
+            var thread = $('#'+threadId);
+
+            var $messages =  thread.find('.direct-chat-messages');
+            var btnShowMessage = $('#btn-show-list-chat-right-side');
+
+            if($(this).hasClass('new-thread'))
+            {
+                var numberNewMessage = parseInt(btnShowMessage.find('span').html());
+                btnShowMessage.find('span').html(numberNewMessage - 1);
+            }
+
+            channel.bind(threadId, function(data) {
+                if(data.type == 'ask')
                 {
-                    var numberNewMessage = parseInt(btnShowMessage.find('span').html());
-                    btnShowMessage.find('span').html(numberNewMessage - 1);
-                }
+                    var messageText = Kacana.chat.generateMessage(data.message, 'left', 'Just now');
 
-                channel.bind(threadId, function(data) {
-                    if(data.type == 'ask')
-                    {
-                        var messageText = Kacana.chat.generateMessage(data.message, 'left', '23 Jan 5:37 pm');
+                    thread.find('.direct-chat-messages').append(messageText);
+
+                    return $messages.animate({ scrollTop: $messages.prop('scrollHeight') }, 100);
+                }
+            });
+
+            var callBack = function(data){
+                if(data.ok){
+                    var messages = data.messages;
+                    var lastMessageReply = false;
+
+                    for (var i = 0; i < messages.length; i++){
+                        var message = messages[i];
+                        if(message.type == 'ask')
+                        {
+                            var messageText = Kacana.chat.generateMessage(message.body, 'left', message.created_at);
+                        }
+                        else
+                        {
+                            var messageText = Kacana.chat.generateMessage(message.body, 'right', message.created_at);
+                        }
 
                         thread.find('.direct-chat-messages').append(messageText);
-
-                        return $messages.animate({ scrollTop: $messages.prop('scrollHeight') }, 300);
+                        $messages.animate({ scrollTop: $messages.prop('scrollHeight') }, 0);
                     }
-                });
-            });
+                }
+                else
+                    Kacana.utils.showError('có cái gì sai sai ở đây! vui lòng gọi: 0906.054.206');
+            };
+
+            var errorCallBack = function(data){
+                Kacana.utils.showError('có cái gì sai sai ở đây! vui lòng gọi: 0906.054.206');
+                Kacana.utils.loading.closeLoading();
+            };
+
+            var data = {
+                threadId: id
+            };
+
+            Kacana.ajax.chat.getUserMessage(data, callBack, errorCallBack);
+
+            return false;
         },
         createNewMessage: function (textMessage, threadId) {
             var callBack = function(data){
@@ -136,10 +190,10 @@ var chatPackage = {
             $thread.find('.message_input').val('');
 
             $messages =  $thread.find('.direct-chat-messages');
-            message = Kacana.chat.generateMessage(text, message_side, '23 Jan 5:37 pm');
+            message = Kacana.chat.generateMessage(text, message_side, 'Just now');
             $thread.find('.direct-chat-messages').append(message);
 
-            return $messages.animate({ scrollTop: $messages.prop('scrollHeight') }, 300);
+            return $messages.animate({ scrollTop: $messages.prop('scrollHeight') }, 100);
         },
         generateMessage: function (text, message_side, message_date) {
 
