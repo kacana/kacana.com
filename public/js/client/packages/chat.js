@@ -250,8 +250,11 @@ var chatPackage = {
         },
         updateStorageClosePopup: function (val) {
             var dataStorage = Lockr.get(Kacana.chat.keyStorge);
-            dataStorage.is_close = val;
-            Lockr.set(Kacana.chat.keyStorge, dataStorage);
+            if(dataStorage !== undefined)
+            {
+                dataStorage.is_close = val;
+                Lockr.set(Kacana.chat.keyStorge, dataStorage);
+            }
         },
     }
 };
