@@ -91,7 +91,11 @@ class chatService {
             $pusher->createNewPush($message, $threadId, $chatType);
 
             $this->createNewMessage($id, '0', $chatType, $message);
+
+            return true;
         }
+
+        return false;
     }
 
 

@@ -76,7 +76,11 @@ class ChatController extends BaseController {
             $pusher->createNewThread($chatThread->id, 'thread');
 
             $mailService->sendEmailNewThread($chatThread->id, $message);
-            $chatService->checkTimeAutoReply($chatThread->id);
+
+            $result['reload'] = 0;
+            if($chatService->checkTimeAutoReply($chatThread->id))
+                $result['reload'] = 1;
+
             $result['ok'] = 1;
             $result['threadId'] = $chatThread->id;
             $result['keyRead'] = $chatThread->key_read;

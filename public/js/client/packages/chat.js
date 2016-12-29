@@ -36,14 +36,14 @@ var chatPackage = {
 
                         }
 
-                        if(lastMessageReply && lastMessageReply !=  dataStorage.lastReply)
+                        if(lastMessageReply && lastMessageReply !=  dataStorage.lastReply )
                         {
                             Kacana.chat.iconMessage.addClass('have-new-message');
                             Kacana.chat.iconMessage.data('last-reply', lastMessageReply);
                         }
 
                         var durationSession = ($.now() - dataStorage.time)/1000/60;
-                        if(durationSession < 30 && dataStorage.is_close == 0)
+                        if(durationSession < 30 && dataStorage.is_close == 0 && !$('#chat-window-wrap').hasClass('active'))
                         {
                             Kacana.chat.page.find('.top_menu').click();
                         }
@@ -101,6 +101,13 @@ var chatPackage = {
                     data.time = $.now();
                     data.is_close = 0;
                     Lockr.set(Kacana.chat.keyStorge, data);
+
+                    if(data.reload)
+                    {
+                        Kacana.chat.page.find('.messages').html('');
+                        Kacana.chat.sendMessage('Xin chào - Muốn hỗ trợ gì nè! :)', 'left');
+                        Kacana.chat.checkHistoryMessage();
+                    }
 
                 }
                 else
