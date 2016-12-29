@@ -36,7 +36,9 @@
                 {{--@include('client.product.sidebar')--}}
                 <div class="container taglist as-search-results-tiles background-white" id="content">
                     @forelse($products as $item)
-                        @include('client.product.product-item-temple')
+                        <div class="col-xxs-12 col-xs-6 col-sm-4 col-md-4 product-item" >
+                            @include('client.product.product-item-temple')
+                        </div>
                     @empty
                         <div style="margin: 50px 0" class="alert alert-warning">
                             <h1> Không tìm thấy sản phẩm nào với từ khoá - {{$search}}</h1>

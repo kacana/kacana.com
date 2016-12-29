@@ -43,7 +43,7 @@ var chatPackage = {
                         }
 
                         var durationSession = ($.now() - dataStorage.time)/1000/60;
-                        if(durationSession < 30)
+                        if(durationSession < 30 && dataStorage.is_close == 0)
                         {
                             Kacana.chat.page.find('.top_menu').click();
                         }
@@ -99,7 +99,7 @@ var chatPackage = {
                     Kacana.chat.threadId = data.threadId;
                     Kacana.chat.setUpSocketChat(Kacana.chat.threadId);
                     data.time = $.now();
-
+                    data.is_close = 0;
                     Lockr.set(Kacana.chat.keyStorge, data);
 
                 }
@@ -143,11 +143,14 @@ var chatPackage = {
         toggleChatWindow: function () {
             if(Kacana.chat.page.hasClass('active'))
             {
-                Kacana.chat.page.css('height', '37px');
+                Kacana.chat.page.css('height', '34px');
                 Kacana.chat.page.removeClass('active');
+                Kacana.chat.updateStorageClosePopup(1);
             }
             else
             {
+                Kacana.chat.updateStorageClosePopup(0);
+
                 Kacana.chat.page.css('height', '386px');
                 Kacana.chat.page.addClass('active');
 
@@ -243,6 +246,11 @@ var chatPackage = {
         updateStorageTime: function () {
             var dataStorage = Lockr.get(Kacana.chat.keyStorge);
             dataStorage.time = $.now();
+            Lockr.set(Kacana.chat.keyStorge, dataStorage);
+        },
+        updateStorageClosePopup: function (val) {
+            var dataStorage = Lockr.get(Kacana.chat.keyStorge);
+            dataStorage.is_close = val;
             Lockr.set(Kacana.chat.keyStorge, dataStorage);
         },
     }
