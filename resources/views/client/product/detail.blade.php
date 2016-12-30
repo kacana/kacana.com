@@ -19,7 +19,7 @@
     </section>
     <div class="container background-white vpadding-20">
         <div class="row">
-            <div class="col-xs-12 col-sm-5">
+            <div class="col-xs-12 col-sm-6">
                 <div class="summary entry-summary">
                     <h1 class="name-product">{{ucfirst($product->name)}}</h1>
                     <p class="price">
@@ -179,13 +179,11 @@
                         </div>
                     </div>
                     <div class="shop-rule row" >
-                        <div class="col-md-12">
                             @include('client.product.order-rule')
-                        </div>
                     </div>
                 </div>
             </div>
-            <div class="hidden-xs col-sm-5 col-sm-offset-2">
+            <div class="hidden-xs col-sm-5 col-sm-offset-1">
                 <div id="product-detail-gallery" class="royalSlider hidden rsDefault">
                     @if($productSlide && count($productSlide)>0)
                         @foreach($productSlide as $gallery)
@@ -201,7 +199,7 @@
         <div class="row" >
         </div>
         <div id="product-main-information" class="row product-information-detail">
-            <div class="col-xs-12 col-sm-8">
+            <div class="col-xs-12 col-sm-12">
                 @if($product->property)
                     <div class="toogle" data-plugin-toggle="">
                          <section class="toggle active">
@@ -226,21 +224,10 @@
                         </div>
                     </section>
                 </div>
-                 <div class="toogle" data-plugin-toggle="">
-                     <section class="toggle active">
-                         <label>
-                             <h2 class="center description-detail-title"><span>Đánh giá và bình luận</span></h2>
-                         </label>
-                         <div class="description-detail-title-footer"></div>
-                         <div class="toggle-content" style="display: none;">
-                             <div class="fb-comments" data-href="{{Request::url()}}" data-width="100%" data-numposts="5"></div>
-                         </div>
-                     </section>
-                 </div>
             </div>
-            <div id="list-product-related-wrap" class="col-xs-12 col-sm-4">
-                <div id="list-product-related">
-                    <section >
+            <div id="list-product-related-wrap" class="col-xs-12 col-sm-12">
+                <div class="toogle"  data-plugin-toggle="" id="list-product-related">
+                    <section class="toggle active" >
                         <label>
                             <h2 class="center description-detail-title"><span>Sản phẩm tương tự</span></h2>
                         </label>
@@ -250,10 +237,10 @@
                                 <div id="listProductPage">
                                     <div class="block-tag">
                                         <div class="block-tag-body as-accessories-results">
-                                            <div class="taglist as-search-results-tiles background-white" id="content">
+                                            <div style="z-index: 1" class="taglist as-search-results-tiles background-white">
                                                 @forelse($productRelated as $item)
                                                     @if($item->id != $product->id)
-                                                        <div class="col-xs-12 product-item" >
+                                                        <div class="col-xxs-12 col-xs-6 col-sm-4 col-md-3 product-item" >
                                                             @include('client.product.product-item-temple')
                                                         </div>
                                                     @endif
@@ -267,10 +254,8 @@
                     </section>
                 </div>
             </div>
-        </div>
-        <div class="row product-information-detail">
             <div class="col-xs-12">
-                <div class="toogle" data-plugin-toggle="">
+                <div class="toogle" id="list-tag-related-product" data-plugin-toggle="">
                     <section class="toggle active">
                         <label>
                             <h2 class="center description-detail-title"><span>Có thể bạn đang tìm kiếm</span></h2>
@@ -283,6 +268,19 @@
                                     <span class="tag-count">{{$productTag->countProduct}}<br>SP</span>
                                 </a>
                             @endforeach
+                        </div>
+                    </section>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-12">
+                <div class="toogle" data-plugin-toggle="">
+                    <section class="toggle active">
+                        <label>
+                            <h2 class="center description-detail-title"><span>Đánh giá và bình luận</span></h2>
+                        </label>
+                        <div class="description-detail-title-footer"></div>
+                        <div class="toggle-content" style="display: none;">
+                            <div class="fb-comments" data-href="{{Request::url()}}" data-width="100%" data-numposts="5"></div>
                         </div>
                     </section>
                 </div>

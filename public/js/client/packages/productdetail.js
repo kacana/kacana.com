@@ -14,7 +14,6 @@ var productdetailPackage = {
                 {
                     $('#product-detail-gallery').removeClass('hidden');
                     $('.list-color-product').removeClass('hidden');
-                    Kacana.productdetail.setHeightForRightMenu();
                 }
             });
 
@@ -60,6 +59,18 @@ var productdetailPackage = {
                 $('.list-color-product').slick('slickGoTo', colorIndex, true);
                 $('.list-color-product').find('.slick-track .slick-slide').eq(colorIndex).find('a').click();
             }
+
+            $('#list-product-related #listProductPage .taglist').slick({
+                dots: false,
+                infinite: true,
+                speed: 300,
+                slidesToShow: 4,
+                slidesToScroll: 2,
+                arrows: true,
+                lazyLoad: 'progressive',
+                autoplay: true,
+                autoplaySpeed: 3000
+            });
         },
         bindEvent: function(){
             var slideImageProduct = $('#slide-product-image-mobile, #slide-product-image');
@@ -143,66 +154,56 @@ var productdetailPackage = {
                 Kacana.ajax.product.trackUserProductView(data, callBack, errorCallBack);
             }, 3000);
 
-            $(window).scroll(function () {
-                var listProductRelated = $('#list-product-related');
-
-                if($(window).width() < 768)
-                {
-                    listProductRelated.removeClass('fix-list-product-right');
-                    listProductRelated.removeClass('absolute-list-product-right');
-                    listProductRelated.removeAttr('style');
-                    return true;
-                }
-
-
-                if(!Kacana.productdetail.offset)
-                {
-                    Kacana.productdetail.offset = $('#list-product-related').offset();
-                }
-
-                Kacana.productdetail.heightMainInfo = $('#product-main-information').height();
-
-                var scrollTop = $(window).scrollTop();
-
-                var offsetTop = Kacana.productdetail.offset.top;
-                var heightElement = listProductRelated.height();
-                var widthElement = listProductRelated.width();
-                var heightScreen = $(window).height();
-
-//                 console.log(heightScreen);
-//                 console.log(scrollTop);
-//                 console.log(heightElement);
-//                 console.log(offsetTop);
-// console.log('--------');
-//                 console.log(Kacana.productdetail.heightMainInfo);
-//                 console.log(scrollTop);
-//                 console.log(heightElement + offsetTop - heightScreen);
-//                 console.log(heightElement + offsetTop);
-
-                if(scrollTop >= (heightElement + offsetTop - heightScreen))
-                {
-                    if(scrollTop > Kacana.productdetail.heightMainInfo)
-                    {
-                        listProductRelated.removeClass('fix-list-product-right');
-                        listProductRelated.addClass('absolute-list-product-right');
-                        // console.log('absolute');
-                    }
-                    else{
-                        listProductRelated.addClass('fix-list-product-right');
-                        listProductRelated.removeClass('absolute-list-product-right');
-                        listProductRelated.css('width', widthElement);
-                        // console.log('fixed');
-                    }
-                }
-                else
-                {
-                    listProductRelated.removeClass('fix-list-product-right');
-                    listProductRelated.removeClass('absolute-list-product-right');
-                    // console.log('release');
-                }
-
-
-            });
+            // $(window).scroll(function () {
+            //     var listProductRelated = $('#list-product-related');
+            //
+            //     if($(window).width() < 768)
+            //     {
+            //         listProductRelated.removeClass('fix-list-product-right');
+            //         listProductRelated.removeClass('absolute-list-product-right');
+            //         listProductRelated.removeAttr('style');
+            //         return true;
+            //     }
+            //
+            //
+            //     if(!Kacana.productdetail.offset)
+            //     {
+            //         Kacana.productdetail.offset = $('#list-product-related').offset();
+            //     }
+            //
+            //     Kacana.productdetail.heightMainInfo = $('#product-main-information').height();
+            //
+            //     var scrollTop = $(window).scrollTop();
+            //
+            //     var offsetTop = Kacana.productdetail.offset.top;
+            //     var heightElement = listProductRelated.height();
+            //     var widthElement = listProductRelated.width();
+            //     var heightScreen = $(window).height();
+            //
+            //     if(scrollTop >= (heightElement + offsetTop - heightScreen))
+            //     {
+            //         if(scrollTop > Kacana.productdetail.heightMainInfo)
+            //         {
+            //             listProductRelated.removeClass('fix-list-product-right');
+            //             listProductRelated.addClass('absolute-list-product-right');
+            //             // console.log('absolute');
+            //         }
+            //         else{
+            //             listProductRelated.addClass('fix-list-product-right');
+            //             listProductRelated.removeClass('absolute-list-product-right');
+            //             listProductRelated.css('width', widthElement);
+            //             // console.log('fixed');
+            //         }
+            //     }
+            //     else
+            //     {
+            //         listProductRelated.removeClass('fix-list-product-right');
+            //         listProductRelated.removeClass('absolute-list-product-right');
+            //         // console.log('release');
+            //     }
+            //
+            //
+            // });
         },
         setHeightForRightMenu: function () {
             var listProductRelated = $('#list-product-related');

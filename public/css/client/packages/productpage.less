@@ -241,22 +241,33 @@
     }
   }
   .shop-rule{
+    font-size: 12px;
+    background: #f9f9f9;
+    margin-left: 0px;
+    padding: 5px 0;
     li{
-      padding: 10px 0 7px 35px;
+      padding: 3px 0 3px 22px;
       i{
         left: 0;
         position: absolute;
         top: 7px;
+        font-size: 17px;
+      }
+      .phone-buy-online{
+        color: @color-red;
+        font-weight: 500;
+        font-size: 16px
       }
     }
   }
   .product-information-detail{
     &#product-main-information{
       position: relative;
+      margin-top: 25px;
     }
     .product-description-detail{
       .toggle-content{
-        padding: 0 130px 0 10px;
+        padding: 0 10px 0 10px;
         img{
           display: block;
           height: auto;
@@ -326,6 +337,13 @@
         }
       }
     }
+    #list-tag-related-product{
+      .toggle-content{
+        max-height: 170px;
+        overflow: auto;
+        display: block;
+      }
+    }
   }
   #product-detail-gallery-mobile{
     margin-bottom: 15px;
@@ -338,19 +356,13 @@
     position: unset;
     margin-top: 10px;
     #list-product-related{
-
-      &.fix-list-product-right{
-        position: fixed;
-        bottom: 10px;
-      }
-      &.absolute-list-product-right{
-        position: absolute;
-        bottom: 10px;
-      }
-      section label{
-        width: 100%;
+      .product-title a{
+        font-size: 12px;
       }
     }
+  }
+  #homepage .block-tag .block-tag-body .taglist .product-item .product-short-description-like-wrap, #listProductPage .block-tag .block-tag-body .taglist .product-item .product-short-description-like-wrap{
+    display: none;
   }
 }
 #product-list-top-menu{

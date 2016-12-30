@@ -39,11 +39,11 @@ class ProductController extends BaseController {
                         array_push($productRelationIds, $productRelation->id);
                     }
 
-                    if(count($data['productRelated']) > 8)
+                    if(count($data['productRelated']) > 12)
                         break;
                 }
 
-                if(count($data['productRelated']) > 8)
+                if(count($data['productRelated']) > 12)
                     break;
             }
 
