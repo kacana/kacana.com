@@ -241,7 +241,7 @@
                                                 @forelse($productRelated as $item)
                                                     @if($item->id != $product->id)
                                                         <div class="col-xxs-12 col-xs-6 col-sm-4 col-md-3 product-item" >
-                                                            @include('client.product.product-item-temple')
+                                                            @include('client.product.product-item-related-temple')
                                                         </div>
                                                     @endif
                                                 @endforeach
