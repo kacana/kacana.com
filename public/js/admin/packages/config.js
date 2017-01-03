@@ -1,6 +1,6 @@
 var configPackage = {
     config:{
-        initSummerNote: function(){
+        initSummerNote: function(imageUploadCallback){
 
             $( "form" ).on( "submit", function() {
                 var form = $(this);
@@ -51,35 +51,7 @@ var configPackage = {
             });
 
             uploaderTextImage.bind('FileUploaded', function(up, file, info) {
-                var data = jQuery.parseJSON(info.response);
-
-                if(data.ok)
-                {
-                    var sendData = {
-                        name: data.name,
-                        productId: $('#productId').val(),
-                        type: 4
-                    };
-
-                    var callBack = function(data){
-                        if(data.ok){
-                            data = data.data;
-                            var nodeParent = document.createElement('p');
-                            var node = document.createElement('img');
-                            node.src = data.image;
-                            nodeParent.appendChild(node);
-                            $areaEditorImageUpload.summernote('insertNode', nodeParent);
-                        }
-
-                    };
-
-                    var errorCallBack = function(){
-
-                    };
-
-                    Kacana.ajax.product.addProductImage(sendData, callBack, errorCallBack);
-
-                }
+                imageUploadCallback(up, file, info, $areaEditorImageUpload);
             });
 
             uploaderTextImage.bind('UploadComplete', function(up, files) {

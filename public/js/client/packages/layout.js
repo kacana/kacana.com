@@ -182,7 +182,7 @@ var layoutPackage = {
                     Kacana.utils.loading.loading($('#ac-gn-searchresults'));
                     Kacana.ajax.homepage.suggestSearchProduct(search, callBack, errorCallback);
                 }
-            }, 500);
+            }, 1000);
 
         },
         showSearch: function () {

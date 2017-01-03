@@ -488,6 +488,17 @@ class tagService {
         return $tagModel->getSubTags($tagId, $typeId, TAG_RELATION_STATUS_ACTIVE);
     }
 
+    /**
+     * @return array|bool|static[]
+     */
+    public function getPostTag(){
+        $tagModel = new tagModel();
+        $tagId = 0;
+        $typeId = TAG_RELATION_TYPE_POST;
+
+        return $tagModel->getSubTags($tagId, $typeId, TAG_RELATION_STATUS_ACTIVE);
+    }
+
     public function searchTagProduct($name, $productId){
         $tagModel = new tagModel();
         $listTagAddedProduct = $tagModel->getlistTagAddedProduct($productId);
@@ -495,6 +506,18 @@ class tagService {
         foreach($listTagAddedProduct as $tagAddedProduct)
         {
             array_push($tagNotIn, $tagAddedProduct->tag_id);
+        }
+
+        return $tagModel->searchTagByName($name, $tagNotIn);
+    }
+
+    public function searchTagPost($name, $postId){
+        $tagModel = new tagModel();
+        $listTagAddedPost = $tagModel->getlistTagAddedPost($postId);
+        $tagNotIn = array();
+        foreach($listTagAddedPost as $tagAddedPost)
+        {
+            array_push($tagNotIn, $tagAddedPost->tag_id);
         }
 
         return $tagModel->searchTagByName($name, $tagNotIn);

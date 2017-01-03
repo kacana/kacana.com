@@ -458,6 +458,24 @@ var ajaxPackage = {
                 var options = [];
                 Kacana.ajax.init(url, dataType, type, dataPost, callBack, errorCallBack, options);
             }
+        },
+        blog: {
+            updatePostMainImage: function(data, callBack, errorCallBack){
+                var url = '/blog/updatePostMainImage';
+                var dataType = 'json';
+                var type = 'post';
+                var dataPost =data;
+                var options = [];
+                Kacana.ajax.init(url, dataType, type, dataPost, callBack, errorCallBack, options);
+            },
+            addPostImage: function(data, callBack, errorCallBack){
+                var url = '/blog/addPostImage';
+                var dataType = 'json';
+                var type = 'post';
+                var dataPost =data;
+                var options = [];
+                Kacana.ajax.init(url, dataType, type, dataPost, callBack, errorCallBack, options);
+            },
         }
      }
 };

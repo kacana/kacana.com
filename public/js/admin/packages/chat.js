@@ -221,7 +221,6 @@ var chatPackage = {
                     $('#list-chat-right-side-new').html('');
                     for(var i = 0; i< items.length; i++){
                         var item = items[i];
-                        console.log(item.id);
                         var date = item.updated_at;
                         date = date.split(' ');
                         Kacana.chat.createRowNewMessageZone(item.id, date[0], date[1]);

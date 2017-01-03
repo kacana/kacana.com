@@ -178,6 +178,17 @@ Route::group(['domain'=>KACANA_AUTH_ADMIN_NAME.'.{nameDomain}','middleware' => '
         Route::post('getUserMessage',                           array('as'=>'Chat.get.user.message',            'uses'=>'Admin\ChatController@getUserMessage'));
     });
 
+    Route::group(['prefix'=>'blog'], function(){
+        Route::any('/',                                         array('as'=>'Blog.list',                        'uses'=>'Admin\BlogController@index'));
+        Route::any('/relation/{typeId}',                        array('as'=>'Blog.relation.tag',                'uses'=>'Admin\BlogController@relation'));
+        Route::any('/generatePostTable',                        array('as'=>'Blog.generate.post.table',         'uses'=>'Admin\BlogController@generatePostTable'));
+        Route::any('/generateCommentTable/{postId}',            array('as'=>'Blog.generate.comment.table',      'uses'=>'Admin\BlogController@generateCommentTable'));
+        Route::any('/createNewPost',                            array('as'=>'Blog.create.new.post',             'uses'=>'Admin\BlogController@createNewPost'));
+        Route::any('/editPost/{postId}',                        array('as'=>'Blog.edit.post',                   'uses'=>'Admin\BlogController@editPost'));
+        Route::any('/searchTagPost',                            array('as'=>'Blog.search.tag.post',             'uses'=>'Admin\BlogController@searchTagPost'));
+        Route::any('/updatePostMainImage',                      array('as'=>'Blog.update.post.main.image',      'uses'=>'Admin\BlogController@updatePostMainImage'));
+        Route::any('/addPostImage',                             array('as'=>'Blog.add.image',                   'uses'=>'Admin\BlogController@addPostImage'));
+    });
 
 });
 

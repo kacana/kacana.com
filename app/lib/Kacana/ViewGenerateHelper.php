@@ -12,20 +12,20 @@ class ViewGenerateHelper {
         //Dropdown for status column
         $statusStr = '<div class="btn-group">
                             <a class="btn btn-default kacana-dropdown btn-xs dropdown-toggle" data-toggle="dropdown" href="#" id="'.$tableName.'-status-btn-'.$id.'">'.
-            self::getDropdownIcon($tableName.'_'.$field.'_'.$value).
-            '<span class="caret"></span>
+                                self::getDropdownIcon($tableName.'_'.$field.'_'.$value).
+                                '<span class="caret"></span>
                             </a>
-                    <ul class="dropdown-menu">';
+                            <ul class="dropdown-menu">';
 
-                        foreach($options as $key)
-                        {
-                            $statusStr.=    '<li>
-                                                <a href="#change-kacana-dropdown" data-field="'.$field.'" data-table-name="'.$tableName.'" data-id="'.$id.'" data-value="'.$key.'">'.
-                                                    self::getDropdownIcon($tableName.'_'.$field.'_'.$key).
-                                                '</a>
-                                            </li>';
-                        }
-                $statusStr .= '</ul><div>';
+                                foreach($options as $key)
+                                {
+                                    $statusStr.=    '<li>
+                                                        <a href="#change-kacana-dropdown" data-field="'.$field.'" data-table-name="'.$tableName.'" data-id="'.$id.'" data-value="'.$key.'">'.
+                                                            self::getDropdownIcon($tableName.'_'.$field.'_'.$key).
+                                                        '</a>
+                                                    </li>';
+                                }
+            $statusStr .=  '</ul><div>';
 
          return $statusStr;
     }
@@ -36,11 +36,15 @@ class ViewGenerateHelper {
             case 'products_status_'.KACANA_PRODUCT_STATUS_ACTIVE:
             case 'users_status_'.KACANA_USER_STATUS_ACTIVE:
             case 'tags_status_'.KACANA_TAG_STATUS_ACTIVE:
+            case 'blog_posts_status_'.KACANA_BLOG_POST_STATUS_ACTIVE:
+            case 'blog_comments_status_'.KACANA_BLOG_COMMENT_STATUS_ACTIVE:
                 $iconStatus = '<i class="fa fa-chevron-down"></i> Active ';
                 break;
             case 'products_status_'.KACANA_PRODUCT_STATUS_INACTIVE:
             case 'users_status_'.KACANA_USER_STATUS_INACTIVE:
             case 'tags_status_'.KACANA_TAG_STATUS_INACTIVE:
+            case 'blog_posts_status_'.KACANA_BLOG_POST_STATUS_INACTIVE:
+            case 'blog_comments_status_'.KACANA_BLOG_COMMENT_STATUS_INACTIVE:
                 $iconStatus = '<i class="fa fa-minus"></i> Inactive ';
                 break;
             case 'users_status_'.KACANA_USER_STATUS_BLOCK:

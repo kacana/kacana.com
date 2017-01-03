@@ -126,7 +126,7 @@ var productPackage = {
       },
       detail: {
             init: function(){
-                Kacana.config.initSummerNote();
+                Kacana.config.initSummerNote(Kacana.product.detail.simpleNoteUploadImageCallback);
                 var $page = $('#product-detail-page');
                 $('.select-size').select2();
                 $('.properties-color').select2({
@@ -168,41 +168,39 @@ var productPackage = {
                     Kacana.product.detail.limitColor();
                 });
 
-                $page.find('#tag_search_product').select2(
-                    {
-                        ajax: {
-                            url: "/tag/searchTagProduct",
-                            dataType: 'json',
-                            delay: 250,
-                            data: function (params) {
-                                return {
-                                    name: params.term, // search term
-                                    page: params.page,
-                                    productId: $('#productId').val()
-                                };
-                            },
-                            processResults: function (data, params) {
-                                // parse the results into the format expected by Select2
-                                // since we are using custom formatting functions we do not need to
-                                // alter the remote JSON data, except to indicate that infinite
-                                // scrolling can be used
-                                params.page = params.page || 1;
-
-                                return {
-                                    results: data.items,
-                                    pagination: {
-                                        more: (params.page * 30) < data.total_count
-                                    }
-                                };
-                            },
-                            cache: true
+                $page.find('#tag_search_product').select2({
+                    ajax: {
+                        url: "/tag/searchTagProduct",
+                        dataType: 'json',
+                        delay: 250,
+                        data: function (params) {
+                            return {
+                                name: params.term, // search term
+                                page: params.page,
+                                productId: $('#productId').val()
+                            };
                         },
-                        escapeMarkup: function (markup) { return markup; }, // let our custom formatter work
-                        minimumInputLength: 1,
-                        templateSelection: Kacana.product.detail.parseProductTagSelection,
-                        templateResult: Kacana.product.detail.parseProductTagTemplate,
-                    }
-                );
+                        processResults: function (data, params) {
+                            // parse the results into the format expected by Select2
+                            // since we are using custom formatting functions we do not need to
+                            // alter the remote JSON data, except to indicate that infinite
+                            // scrolling can be used
+                            params.page = params.page || 1;
+
+                            return {
+                                results: data.items,
+                                pagination: {
+                                    more: (params.page * 30) < data.total_count
+                                }
+                            };
+                        },
+                        cache: true
+                    },
+                    escapeMarkup: function (markup) { return markup; }, // let our custom formatter work
+                    minimumInputLength: 1,
+                    templateSelection: Kacana.product.detail.parseProductTagSelection,
+                    templateResult: Kacana.product.detail.parseProductTagTemplate,
+                });
 
                 Kacana.product.detail.limitColor();
 
@@ -278,6 +276,37 @@ var productPackage = {
                 $page.on('click','#add-group-tag-to-product-tag', Kacana.product.detail.addGroupTagToProductTag);
                 $page.on('click','#remove-group-tag-from-product-tag', Kacana.product.detail.removeGroupTagFromProductTag);
 
+            },
+            simpleNoteUploadImageCallback: function(up, file, info, $areaEditorImageUpload) {
+                var data = jQuery.parseJSON(info.response);
+
+                if(data.ok)
+                {
+                    var sendData = {
+                        name: data.name,
+                        productId: $('#productId').val(),
+                        type: 4
+                    };
+
+                    var callBack = function(data){
+                        if(data.ok){
+                            data = data.data;
+                            var nodeParent = document.createElement('p');
+                            var node = document.createElement('img');
+                            node.src = data.image;
+                            nodeParent.appendChild(node);
+                            $areaEditorImageUpload.summernote('insertNode', nodeParent);
+                        }
+
+                    };
+
+                    var errorCallBack = function(){
+
+                    };
+
+                    Kacana.ajax.product.addProductImage(sendData, callBack, errorCallBack);
+
+                }
             },
             addColorTag: function (e) {
                 var keyCode = e.keyCode || e.which;

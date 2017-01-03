@@ -30,6 +30,11 @@ class tagModel extends Model  {
         return $this->belongsToMany('App\models\productModel', 'product_tag', 'tag_id', 'product_id')->withPivot('type');
     }
 
+    public function postTag()
+    {
+        return $this->belongsToMany('App\models\blogPostModel', 'blog_tag', 'tag_id', 'post_id')->withPivot('type');
+    }
+
     /**
      * @return $this
      */
@@ -382,6 +387,17 @@ class tagModel extends Model  {
     public function getlistTagAddedProduct($productId){
         $tags = DB::table('product_tag');
         $tags->where('product_tag.product_id', '=', $productId);
+
+        return $tags->get();
+    }
+
+    /**
+     * @param $postId
+     * @return array|static[]
+     */
+    public function getlistTagAddedPost($postId){
+        $tags = DB::table('blog_post_tag');
+        $tags->where('blog_post_tag.post_id', '=', $postId);
 
         return $tags->get();
     }

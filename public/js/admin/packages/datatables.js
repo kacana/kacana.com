@@ -429,7 +429,52 @@ var datatablePackage = {
             };
 
             return Kacana.datatable.init(element, url, columns, defaultSearchColumns, addParamsCallBack, cacheParamsCallBack, rowCallBack, drawCallBack, cacheLoadedCallBack, options);
+        },
+        generatePostTable: function (element, columns, addParamsCallBack, cacheLoadedCallBack) {
+            var url = '/blog/generatePostTable/';
+            var options = {
+                'order': [0, "desc"],
+                displayLength: 10
+            };
+            var defaultSearchColumns = [];
+
+            var cacheParamsCallBack = function(oData){
+                //do something
+            };
+
+            var drawCallBack = function(e){
+
+            };
+
+            var rowCallBack = function(){
+                //do something
+            };
+
+            return Kacana.datatable.init(element, url, columns, defaultSearchColumns, addParamsCallBack, cacheParamsCallBack, rowCallBack, drawCallBack, cacheLoadedCallBack, options);
+        },
+        generateCommentTable: function (element, columns, postId,addParamsCallBack, cacheLoadedCallBack) {
+            var url = '/blog/generateCommentTable/'+postId;
+            var options = {
+                'order': [0, "desc"],
+                displayLength: 10
+            };
+            var defaultSearchColumns = [];
+
+            var cacheParamsCallBack = function(oData){
+                //do something
+            };
+
+            var drawCallBack = function(e){
+
+            };
+
+            var rowCallBack = function(){
+                //do something
+            };
+
+            return Kacana.datatable.init(element, url, columns, defaultSearchColumns, addParamsCallBack, cacheParamsCallBack, rowCallBack, drawCallBack, cacheLoadedCallBack, options);
         }
+
     }
 };
 $.extend(true, Kacana, datatablePackage);
