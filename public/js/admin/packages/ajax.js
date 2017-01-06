@@ -77,6 +77,19 @@ var ajaxPackage = {
                 var dataPost = data
                 var options = [];
                 Kacana.ajax.init(url, dataType, type, dataPost, callback, errorCallback, options);
+            },
+            updateField: function (id, content, field, table, callback, errorCallback) {
+                var url = '/base/updateField';
+                var dataType = 'json';
+                var type = 'post';
+                var dataPost = {
+                    'id': id,
+                    'content': content,
+                    'table': table,
+                    'field': field
+                };
+                var options = [];
+                Kacana.ajax.init(url, dataType, type, dataPost, callback, errorCallback, options);
             }
         },
         /*****************************************************************************

@@ -31,6 +31,11 @@ class baseService {
         return $baseModel->changefieldDropdown($id, $status, $field, $table);
     }
 
+    public function updateField($id, $content, $field, $table){
+        $baseModel = new baseModel();
+        return $baseModel->updateField($id, $content, $field, $table);
+    }
+
 }
 
 

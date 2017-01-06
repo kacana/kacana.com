@@ -20,6 +20,11 @@ class blogPostModel extends Model {
         return $this->belongsTo('App\models\User', 'user_id');
     }
 
+    public function tag()
+    {
+        return $this->belongsTo('App\models\tagModel', 'tag_id');
+    }
+
     /**
      * Get the tags associated with product
      */
@@ -107,6 +112,30 @@ class blogPostModel extends Model {
             return AWS_CDN_URL.$value;
 
         return false;
+    }
+
+    public function getListPost($limit, $offset, $tagId = false, $exclude = false){
+        $posts = $this->leftJoin('blog_comments', 'blog_posts.id', '=', 'blog_comments.post_id')
+            ->leftJoin('blog_post_views', 'blog_posts.id', '=', 'blog_post_views.post_id')
+            ->leftJoin('blog_post_tag', 'blog_posts.id', '=', 'blog_post_tag.post_id')
+            ->skip($offset)
+            ->take($limit)
+            ->select(['blog_posts.*', DB::raw('COUNT(kacana_blog_comments.id) as count_item_blog_comment'), DB::raw('COUNT(kacana_blog_post_views.id) as count_item_blog_post_view')]);
+
+        if($tagId)
+            $posts->where(function ($query) use ($tagId) {
+                $query->where('blog_posts.tag_id', $tagId)
+                    ->orWhere('blog_post_tag.tag_id', $tagId);
+            });
+
+        if($exclude)
+            $posts->whereNotIn('blog_posts.id', $exclude);
+
+        $posts->orderBy('blog_posts.updated_at', 'desc')
+            ->groupBy('blog_posts.id')
+        ->where('blog_posts.status', KACANA_BLOG_POST_STATUS_ACTIVE);
+
+        return $posts->paginate($limit);
     }
 
 }

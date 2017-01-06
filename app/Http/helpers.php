@@ -317,5 +317,68 @@ function isEmailAdress($email){
     }
 }
 
+function formatTimeAgo($date){
+    $date = \Carbon\Carbon::parse($date);
+
+    $humanTime = '';
+
+    if($date->isToday())
+    {
+        if($date->diffInHours() < 1)
+        {
+            $humanTime = $date->diffInMinutes().' phút trước';
+        }
+        else{
+            $humanTime = $date->format('H:i').' hôm nay';
+        }
+    }
+    else if($date->isYesterday())
+    {
+        $humanTime = $date->format('H:i').' hôm qua';
+    }
+    else{
+        $humanTime = $date->format('H:i'). ' ngày '.  $date->format('j/n/y');
+    }
+
+    return $humanTime;
+}
+
+function trim_text($input, $length, $ellipses = true, $strip_tag = true,$strip_style = true) {
+    //strip tags, if desired
+    if ($strip_tag) {
+        $input = strip_tags($input, '<br>');
+    }
+
+    //strip tags, if desired
+    if ($strip_style) {
+        $input = preg_replace('/(<[^>]+) style=".*?"/i', '$1',$input);
+    }
+
+    if($length=='full')
+    {
+
+        $trimmed_text=$input;
+
+    }
+    else
+    {
+        //no need to trim, already shorter than trim length
+        if (strlen($input) <= $length) {
+            return $input;
+        }
+
+        //find last space within length
+        $last_space = strrpos(substr($input, 0, $length), ' ');
+        $trimmed_text = substr($input, 0, $last_space);
+
+        //add ellipses (...)
+        if ($ellipses) {
+            $trimmed_text .= '...';
+        }
+    }
+
+    return $trimmed_text;
+}
+
 
 

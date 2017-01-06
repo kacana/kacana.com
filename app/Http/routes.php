@@ -163,11 +163,12 @@ Route::group(['domain'=>KACANA_AUTH_ADMIN_NAME.'.{nameDomain}','middleware' => '
     Route::any('/partner/generatePartnerPaymentTable',              array('as'=>'partnerGeneratePartnerPaymentTable',       'uses'=>'Admin\PartnerController@generatePartnerPaymentTable'));
     Route::any('/partner/detailTransfer/{id}',                      array('as'=>'partnerDetailTransfer',                    'uses'=>'Admin\PartnerController@detailTransfer'));
 
-    Route::any('/upload/chunk',                              array('as'=>'upload',     'uses'=>'Client\UploadController@chunk'));
+    Route::any('/upload/chunk',                                     array('as'=>'upload',     'uses'=>'Client\UploadController@chunk'));
 
     // General request
 
-    Route::any('/base/changeStatus',                         array('as'=>'changeStatus',     'uses'=>'Admin\BaseController@changeStatus'));
+    Route::any('/base/changeStatus',                                array('as'=>'Base.change.status',                       'uses'=>'Admin\BaseController@changeStatus'));
+    Route::any('/base/updateField',                                 array('as'=>'updateField',                              'uses'=>'Admin\BaseController@updateField'));
 
     Route::group(['prefix'=>'chat'], function(){
         Route::any('/',                                         array('as'=>'Chat.list',                        'uses'=>'Admin\ChatController@index'));
@@ -325,8 +326,21 @@ Route::group(['domain'=>'{nameDomain}', 'middleware' => 'client'], function () {
 
     Route::group(['prefix'=>'chat'], function(){
         Route::any('createNewMessage',                      array('as'=>'Chat.create.new.message',          'uses'=>'Client\ChatController@createNewMessage'));
-        Route::any('createNewThread',                       array('as'=>'Chat.create.new.thread',          'uses'=>'Client\ChatController@createNewThread'));
-        Route::any('getUserMessage',                        array('as'=>'Chat.get.user.message',          'uses'=>'Client\ChatController@getUserMessage'));
+        Route::any('createNewThread',                       array('as'=>'Chat.create.new.thread',           'uses'=>'Client\ChatController@createNewThread'));
+        Route::any('getUserMessage',                        array('as'=>'Chat.get.user.message',            'uses'=>'Client\ChatController@getUserMessage'));
+    });
+
+    Route::group(['prefix'=>'chat'], function(){
+        Route::any('createNewMessage',                      array('as'=>'Chat.create.new.message',          'uses'=>'Client\ChatController@createNewMessage'));
+        Route::any('createNewThread',                       array('as'=>'Chat.create.new.thread',           'uses'=>'Client\ChatController@createNewThread'));
+        Route::any('getUserMessage',                        array('as'=>'Chat.get.user.message',            'uses'=>'Client\ChatController@getUserMessage'));
+    });
+
+    Route::group(['prefix'=>'tin-tuc'], function(){
+        Route::any('/',                                     array('as'=>'Blog.index',                       'uses'=>'Client\BlogController@index'));
+        Route::any('/{slug}.{id}',                          array('as'=>'Blog.detail.post',                 'uses'=>'Client\BlogController@detailPost'));
+        Route::post('/trackUserPostView',                   array('as'=>'Blog.track.user.post.view',        'uses'=>'Client\BlogController@trackUserPostView'));
+        Route::any('/chuyen-muc/{slug}.{id}',               array('as'=>'Blog.cat.post',                    'uses'=>'Client\BlogController@catPost'));
     });
 
 });

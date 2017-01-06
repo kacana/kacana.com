@@ -245,6 +245,16 @@ var ajaxPackage = {
                 var options = [];
                 Kacana.ajax.init(url, dataType, type, dataPost, callBack, errorCallBack, options);
             }
+        },
+        blog:{
+            trackUserPostView: function (data, callBack, errorCallBack) {
+                var url = '/tin-tuc/trackUserPostView';
+                var dataType = 'json';
+                var type = 'post';
+                var dataPost = data;
+                var options = [];
+                Kacana.ajax.init(url, dataType, type, dataPost, callBack, errorCallBack, options);
+            }
         }
     }
 };

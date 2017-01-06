@@ -29,9 +29,18 @@ var configPackage = {
             var uploaderTextImage = Kacana.uploader.init(uploadHost,container,dropElement,browseButton,multiSelection,uploadLimit,filters);
             var $areaEditorImageUpload = null;
             var $containerEditor = null;
+            var changeCount = 0;
 
             $('.kacana-editor-content').summernote({
                 height: 300,
+                toolbar: [
+                    ['sfd', ['style']],
+                    ['style', ['bold', 'italic', 'underline', 'clear','fontsize', 'color']],
+                    ['asd', ['ul', 'paragraph']],
+                    ['height', ['height']],
+                    ['insert', ['picture', 'table', 'hr', 'video', 'link']],
+                    ['misc', ['undo', 'redo', 'fullscreen']]
+                ],
                 callbacks: {
                     onImageUpload: function(files) {
                         $areaEditorImageUpload = $(this);
@@ -46,6 +55,25 @@ var configPackage = {
                     },
                     onMediaDelete : function($target, editor, $editable) {
                         console.log($target.attr('src'));
+                    },
+                    onChange: function(contents, $editable) {
+                        if(changeCount >= 5){
+                            var callBack = function(data){
+                                console.log('auto save DONE !')
+                            };
+
+                            var errorCallBack = function(){
+                                // do something here if error
+                            };
+
+                            changeCount = 0;
+                            if($(this).data('id'))
+                            {
+                                Kacana.ajax.admin.updateField($(this).data('id'), contents, $(this).data('field'), $(this).data('table') , callBack, errorCallBack);
+                            }
+                        }
+
+                        changeCount++;
                     }
                 },
             });

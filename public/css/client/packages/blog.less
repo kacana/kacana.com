@@ -1,0 +1,381 @@
+#blog-page{
+  padding-top: 120px;
+  min-height: 300px;
+  background: #fff;
+  img {
+    background: none;
+    border: 0;
+    display: block;
+    margin: 0;
+    padding: 0
+  }
+  .thread-image img {
+    border-radius: 3px
+  }
+  .separator {
+    border-bottom: 1px solid #ebebeb;
+    height: 0;
+    margin-top: 40px !important
+  }
+  .width-narrow {
+    margin: 0 25px
+  }
+  .width-wide {
+    margin: 0
+  }
+  .post-controls {
+    color: inherit
+  }
+  .post-controls a.control:hover {
+    text-decoration: none
+  }
+  .post-controls {
+    zoom: 1
+  }
+  .post-controls:after {
+    content: '.';
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden
+  }
+  .controls>* {
+    display: block;
+    float: left
+  }
+  .controls>a.permalink {
+    margin-right: 0
+  }
+  .post-controls .control > span,
+  .post-controls .bdSocialShare .facebook a {
+    border: 0;
+    color: inherit;
+    display: block;
+    padding: 4px 0
+  }
+  .post-controls .control>span {
+    zoom: 1
+  }
+  .post-controls .control>span:after {
+    content: '.';
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden
+  }
+  .post-controls .bdSocialShare .facebook a {
+    zoom: 1
+  }
+  .post-controls .bdSocialShare .facebook a:after {
+    content: '.';
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden
+  }
+  .post-controls .fa {
+    display: block;
+    float: left;
+    font-size: inherit;
+    line-height: 1 !important
+  }
+  .post-controls .counter {
+    display: block;
+    float: left;
+    font-size: inherit;
+    line-height: 1 !important
+  }
+  .post-controls .sharing {
+    float: right;
+    margin-right: 0 !important
+  }
+  .post-controls .bdSocialShare {
+    margin: 0 !important
+  }
+  .post-controls .bdSocialShare .facebook {
+    margin: 0 7px 0 0
+  }
+  .post-controls .bdSocialShare .facebook a {
+    min-width: 0;
+    padding-left: 7px;
+    padding-right: 7px
+  }
+  .post-controls .bdSocialShare .facebook a .counter {
+    border: 0;
+    color: inherit;
+    margin-left: 0
+  }
+  .post-controls .bdSocialShare .facebook a .counter:before {
+    content: '/'
+  }
+  .post-controls .bdSocialShare .facebook a:hover {
+    background: none;
+    color: inherit
+  }
+  .post-controls .bdSocialShare .facebook a:hover .counter {
+    color: inherit
+  }
+  .promote .thread-info {
+    color: #bcc3c4;
+    font-size: 10pt;
+    margin-top: 40px
+  }
+  .promote .poster-avatar {
+    line-height: 0
+  }
+  .promote .poster-avatar img {
+    border-radius: 48px;
+    box-shadow: 0 0 3px #555;
+    height: 48px;
+    width: 48px
+  }
+  .promote .poster a{
+    color: @color-grey;
+    font-size: 16pt;
+    font-weight: 500;
+  }
+  .promote .forum a {
+    color: #098bf9;
+    font-weight: 400
+  }
+  .promote .thread-info {
+    height: 48px;
+    padding-left: 63px;
+    position: relative
+  }
+  .promote .poster-avatar {
+    left: 0;
+    position: absolute
+  }
+  .promote .poster {
+    display: block;
+    line-height: 25px
+  }
+  .promote .thread-image {
+    margin-top: 20px
+  }
+  .promote .thread-image a,
+  .promote .thread-image img {
+    display: block;
+    width: 100%
+  }
+  .promote .thread-title {
+    margin-top: 30px;
+    a{
+      color: #475b6f;
+      font-size: 18pt;
+      font-weight: 600;
+    }
+  }
+  .promote .post-body {
+    margin-top: 30px
+  }
+  .promote .messageText {
+    border: none;
+    padding: 0;
+    a{
+      color: #48494b;
+      font-family: inherit;
+      font-size: 12pt;
+      line-height: 1.9;
+      font-weight: 500;
+      &:hover{
+        text-decoration: none;
+      }
+    }
+  }
+  .promote .post-controls {
+    color: #3e4751;
+    font-size: 10pt;
+    margin-top: 30px
+  }
+  .promote .controls>* {
+    margin-right: 30px
+  }
+  .promote .post-controls .fa {
+    font-size: 12pt;
+    text-align: center;
+    width: 12pt
+  }
+  .promote .views .fa {
+    color: #3c70a2
+  }
+  .promote .replies .fa {
+    color: #f70961
+  }
+  .promote .permalink:hover .fa {
+    color: #f93609
+  }
+  .promote .post-controls .counter {
+    margin-left: 10px;
+    line-height: 13pt !important
+  }
+  .promote .bdSocialShare .facebook {
+    margin: 0 7px 0 0
+  }
+  .promote .bdSocialShare .facebook a {
+    color: #267ec8
+  }
+  .promote .bdSocialShare .facebook a .counter {
+    color: #4d5152
+  }
+  .promote .bdSocialShare .facebook a:hover {
+    color: #267ec8
+  }
+  .promote .bdSocialShare .facebook a:hover .counter {
+    color: #4d5152
+  }
+  .promote .process-time a{
+    color: #BBBBBB;
+    font-weight: 500;
+  }
+  @media screen and (min-width: 970px) {
+    .promote .thread-info{
+      line-height: 48px;
+    }
+    .promote
+    {
+      .messageText, .thread-info, .thread-title, .post-controls {
+        padding: 0 100px;
+      }
+    }
+    .promote .thread-info {
+      zoom: 1
+    }
+    .promote .thread-info:after {
+      content: '.';
+      display: block;
+      height: 0;
+      clear: both;
+      visibility: hidden
+    }
+    .promote .thread-info>span {
+      display: block;
+      float: left;
+      margin-right: 15px
+    }
+    .promote .poster-avatar {
+      margin-top: 0;
+      position: relative
+    }
+    .promote .poster {
+      line-height: inherit;
+      margin-top: 0
+    }
+    .promote .process-time,
+    .promote .forum {
+      margin-top: 2px
+    }
+    .promote .sharing {
+      float: left
+    }
+    .promote .permalink>span {
+      color: #778288;
+      padding-left: 15px;
+      padding-right: 15px
+    }
+    .next-link {
+      margin: 0 auto;
+      max-width: 960px
+    }
+  }
+}
+#blog-detail-page{
+  padding-top: 120px;
+  min-height: 300px;
+  .post-header{
+    position: relative;
+    .post-title{
+      position: absolute;
+      top: 0px;
+      padding: 10px 10px;
+      color: #fff;
+      background: rgba(0, 0 ,0, 0.5);
+      width: ~'calc(100% - 30px)';
+      font-size: 20px;
+    }
+    .post-author{
+      position: absolute;
+      bottom: 0;
+      padding: 7px 10px;
+      .post-author-image{
+        border-radius: 50px;
+        background: #fff;
+        width: 50px;
+        padding: 2px;
+        border: 2px solid @color-green-light;
+      }
+      .post-author-name{
+        color: #fff;
+        font-size: 20px;
+        text-shadow: 2px 2px 5px #000;
+        margin-left: 10px;
+      }
+    }
+  }
+  .left-side-block{
+    border: 1px solid @color-border;
+    padding: 0;
+    margin-bottom: 20px;
+    .block-header{
+      font-size: 15px;
+      color: @color-grey;
+      background-color: #F5F5F5;
+      padding: 10px 14px;
+      border-top-color: @color-border;
+      border-right-color: @color-border;
+      border-bottom: 1px solid @color-border;
+      font-weight: 500;
+    }
+    .block-body{
+      background: #FFF;
+      padding: 10px;
+    }
+  }
+  .list-post-related{
+    list-style-type: none;
+    padding: 0;
+    li{
+      margin: 0 0 10px;
+      overflow: hidden;
+      zoom: 1;
+      a.avatar{
+        margin-right: 5px;
+        float: left;
+        width: 70px;
+        height: 70px;
+        img{
+          object-fit: cover;
+          height: 70px;
+          width: 100%;
+        }
+      }
+      a.title{
+        display: block;
+        margin-left: 75px;
+        color: @color-grey-light;
+        font-weight: 500;
+        text-decoration: none;
+        &:hover{
+          text-decoration: none;
+          color: @color-grey;
+        }
+      }
+    }
+  }
+  #listProductPage{
+    .product-item{
+      padding-bottom: 10px;
+      border-bottom: 1px solid @color-border;
+      &:last-child{
+        border-bottom: none;
+      }
+    }
+  }
+  .blog-body{
+    img{
+      max-width: 100%;
+    }
+  }
+}
+

@@ -5,6 +5,7 @@ use App\models\blogCommentModel;
 use App\models\blogPostGalleryModel;
 use App\models\blogPostModel;
 use App\models\blogPostTagModel;
+use App\models\blogPostViewModel;
 use App\models\productModel;
 use App\models\productPropertiesModel;
 use App\models\productTagModel;
@@ -39,6 +40,8 @@ class blogService {
      */
     private $_blogPost;
 
+    private $_blogPostView;
+
     /**
      * blogService constructor.
      */
@@ -46,6 +49,7 @@ class blogService {
     {
         $this->_blogComment = new blogCommentModel();
         $this->_blogPost = new blogPostModel();
+        $this->_blogPostView = new blogPostViewModel();
     }
 
     public function createPost($title, $tagId, $userId){
@@ -116,7 +120,9 @@ class blogService {
     }
 
     public function getPostById($postId){
-        return $this->_blogPost->getItemById($postId);
+        $post = $this->_blogPost->getItemById($postId);
+
+        return $post;
     }
 
     public function updateBlogPost($id, $title, $tagId, $status, $body, $postTags)
@@ -213,6 +219,14 @@ class blogService {
         $productGalleryService->uploadToS3($imageName, $newImageName);
 
         return $return;
+    }
+
+    public function getListPost($limit, $offset, $tagId = false, $exclude = false){
+        return $this->_blogPost->getListPost($limit, $offset, $tagId, $exclude);
+    }
+
+    public function trackUserPostView($postId, $ip){
+        $this->_blogPostView->createItem(['post_id' => $postId, 'ip' => $ip]);
     }
 
 }

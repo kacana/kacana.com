@@ -39,7 +39,8 @@ class baseModel extends Model  {
 
     /**
      * @param $id
-     * @param $status
+     * @param $value
+     * @param $field
      * @param $table
      * @return int
      */
@@ -51,5 +52,24 @@ class baseModel extends Model  {
         return $tagRelations->where('id' , '=', $id)
             ->update([$field=>$value]);
     }
+
+
+    /**
+     * @param $id
+     * @param $content
+     * @param $field
+     * @param $table
+     * @return int
+     */
+    public function updateField($id, $content, $field, $table)
+    {
+
+        $tagRelations = DB::table($table);
+
+        return $tagRelations->where('id' , '=', $id)
+            ->update([$field=>$content]);
+    }
+
+
 
 }

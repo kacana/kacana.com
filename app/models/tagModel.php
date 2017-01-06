@@ -30,9 +30,16 @@ class tagModel extends Model  {
         return $this->belongsToMany('App\models\productModel', 'product_tag', 'tag_id', 'product_id')->withPivot('type');
     }
 
-    public function postTag()
+    public function postTags()
     {
         return $this->belongsToMany('App\models\blogPostModel', 'blog_tag', 'tag_id', 'post_id')->withPivot('type');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function postTag(){
+        return $this->hasMany('App\models\blogPostModel','tag_id', 'id');
     }
 
     /**

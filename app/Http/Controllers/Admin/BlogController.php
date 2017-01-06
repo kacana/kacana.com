@@ -172,7 +172,7 @@ class BlogController extends BaseController {
         $type = $request->input('type', BLOG_IMAGE_TYPE_DESC);
 
         try {
-            $return['data'] = $blogService->addPostImage($postId, $imageName, $type);
+            $return['data'] = $blogService->addPostImage($postId, $imageName);
             $return['ok'] = 1;
         } catch (\Exception $e) {
             // @codeCoverageIgnoreStart

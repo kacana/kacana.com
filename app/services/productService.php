@@ -404,12 +404,12 @@ class productService {
         }
 
 
-            foreach($products as &$product){
-                if($userId)
-                    $product->isLiked = ($userProductLike->getItem($userId, $product->id))?true:false;
+        foreach($products as &$product){
+            if($userId)
+                $product->isLiked = ($userProductLike->getItem($userId, $product->id))?true:false;
 
-                $this->formatProductProperties($product);
-            }
+            $this->formatProductProperties($product);
+        }
 
         return $products;
     }

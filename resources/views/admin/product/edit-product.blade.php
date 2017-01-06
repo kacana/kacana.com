@@ -355,7 +355,7 @@
                         <!-- description -->
                         <div class="form-group">
                             {!! Form::label('description', 'Mô tả chi tiết sản phẩm') !!}
-                            <div class="kacana-editor-content" contenteditable="true" name="description" id="description">
+                            <div class="kacana-editor-content" data-table="products" data-field="description" data-id="{{$product->id}}" contenteditable="true" name="description" id="description">
                                 @if($product->description)
                                     {!! $product->getOriginal('description') !!}
                                 @else
@@ -368,7 +368,7 @@
                         <!-- property-->
                         <div class="form-group">
                             {!! Form::label('property', 'Đặc tính sản phẩm') !!}
-                            <div class="kacana-editor-content" contenteditable="true" name="property" id="property">{!! $product->property !!}</div>
+                            <div class="kacana-editor-content" data-table="products" data-field="property" data-id="{{$product->id}}" contenteditable="true" name="property" id="property">{!! $product->property !!}</div>
                         </div>
 
                         <!-- meta -->
