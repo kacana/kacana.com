@@ -67,10 +67,10 @@
                                 <a href="{{urlTag($item)}}" class="menu__link__redirect">{{$item->name}}</a>
                             </li>
                         @endforeach
-                        <li class="menu__item">
-                            <a class="menu__link"></a>
-                            <a href="/tin-tuc" class="menu__link__redirect color-green">Tín đồ  túi xách</a>
-                        </li>
+                        {{--<li class="menu__item">--}}
+                            {{--<a class="menu__link"></a>--}}
+                            {{--<a href="/tin-tuc" class="menu__link__redirect color-green">Tín đồ  túi xách</a>--}}
+                        {{--</li>--}}
                     </ul>
                     @foreach($menu_items as $item)
                         @if(isset($item->childs) && sizeof($item->childs) > 0)
@@ -195,9 +195,9 @@
                                 </li>
                             @endif
                         @endforeach
-                        <li class="">
-                            <a class="dropdown-toggle color-green" href="/tin-tuc">Tín đồ  túi xách</a>
-                        </li>
+                        {{--<li class="">--}}
+                            {{--<a class="dropdown-toggle color-green" href="/tin-tuc">Tín đồ  túi xách</a>--}}
+                        {{--</li>--}}
                         <li class="mega-menu-item search-icon-header">
                             <a class="mobile-redirect" href="#show-search-in-header">
                                 <i class="pe-7s-search pe-2x pe-va"></i>

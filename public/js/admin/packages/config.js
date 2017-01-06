@@ -35,7 +35,7 @@ var configPackage = {
                 height: 300,
                 toolbar: [
                     ['sfd', ['style']],
-                    ['style', ['bold', 'italic', 'underline', 'clear','fontsize', 'color']],
+                    ['style', ['italic', 'bold','underline', 'clear','fontsize', 'color']],
                     ['asd', ['ul', 'paragraph']],
                     ['height', ['height']],
                     ['insert', ['picture', 'table', 'hr', 'video', 'link']],
