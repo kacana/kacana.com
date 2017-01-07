@@ -33,6 +33,7 @@ var configPackage = {
 
             $('.kacana-editor-content').summernote({
                 height: 300,
+                fontSizes: ['8', '9', '10', '11', '12', '14', '15', '18', '24', '36', '48' , '64', '82', '150'],
                 toolbar: [
                     ['sfd', ['style']],
                     ['style', ['italic', 'bold','underline', 'clear','fontsize', 'color']],
