@@ -50,7 +50,7 @@
                     <i href="#" class="pe-7s-angle-left-circle pe-3x" ></i>
                 </a>
                 <a href="/">
-                    <img alt="Porto" width="134" class="img-responsive" height="30" data-sticky-width="134" data-sticky-height="30" src="{{AWS_CDN_URL}}/images/client/christmas_logo.png">
+                    <img alt="Porto" width="134" class="img-responsive" height="30" data-sticky-width="134" data-sticky-height="30" src="{{AWS_CDN_URL}}/images/client/logo.png">
                 </a>
             </div>
             <div id="menu-mobile-product-left-nav" class="menu-side-bar-mobile">
@@ -94,7 +94,7 @@
                     <i href="#" class="pe-7s-angle-right-circle pe-3x" ></i>
                 </a>
                 <a href="/">
-                    <img alt="Porto" width="134" class="img-responsive" height="30" data-sticky-width="134" data-sticky-height="30" src="{{AWS_CDN_URL}}/images/client/christmas_logo.png">
+                    <img alt="Porto" width="134" class="img-responsive" height="30" data-sticky-width="134" data-sticky-height="30" src="{{AWS_CDN_URL}}/images/client/logo.png">
                 </a>
             </div>
             <div id="menu-mobile-account-right-nav" class="menu-side-bar-mobile">
@@ -164,7 +164,7 @@
     <div class="container">
         <div class="logo">
             <a href="/">
-                <img alt="Porto" width="134" height="30" data-sticky-width="134" data-sticky-height="30" src="{{AWS_CDN_URL}}/images/client/christmas_logo.png">
+                <img alt="Porto" width="134" height="30" data-sticky-width="134" data-sticky-height="30" src="{{AWS_CDN_URL}}/images/client/logo.png">
             </a>
         </div>
     </div>
