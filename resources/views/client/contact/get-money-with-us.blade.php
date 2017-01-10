@@ -43,6 +43,8 @@
             <p><img class="img-responsive" src="/images/partner/intro/ac_2.png"></p>
             <p><img class="img-responsive" src="/images/partner/intro/kh_3.png"></p>
             <p><img class="img-responsive" src="/images/partner/intro/dh_1.png"></p>
+            <p><img class="img-responsive" src="/images/partner/intro/ck_1.png"></p>
+            <p><img class="img-responsive" src="/images/partner/intro/hd_1.png"></p>
 
             <h5 class="color-grey">Mọi chi tiết Quý khách xin liên hệ về:</h5>
 
