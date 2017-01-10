@@ -161,9 +161,9 @@
                     </div>
                     <div class="row">
                         <span class="col-xs-12">
-                            <button type="submit" class="btn btn_kacana_main get-money-with-us-btn" >
+                            <a href="/contact/kiem-tiem-voi-chung-toi" type="submit" class="btn btn_kacana_main get-money-with-us-btn" >
                                 Kiếm tiền cùng KACANA
-                            </button>
+                            </a>
                         </span>
                     </div>
                     <div class="row vpadding-10" >

@@ -297,6 +297,7 @@ Route::group(['domain'=>'{nameDomain}', 'middleware' => 'client'], function () {
     Route::any('/contact/chinh-sach-bao-mat',               array('as'=>'CompanyPrivacyRule',               'uses'=>'Client\ContactController@privacyRule'));
     Route::any('/contact/chinh-sach-khach-hang',            array('as'=>'CompanyCustomerRule',              'uses'=>'Client\ContactController@customerRule'));
     Route::any('/contact/ban-hang-voi-chung-toi',           array('as'=>'CompanySaleWithUsRule',            'uses'=>'Client\ContactController@saleWithUs'));
+    Route::any('/contact/kiem-tiem-voi-chung-toi',           array('as'=>'CompanySaleWithUsRule',            'uses'=>'Client\ContactController@getMoneyWithUs'));
 
     //checkout
     Route::any('/checkout',                                 array('as'=>'checkout',                         'uses'=>'Client\CheckoutController@index'));

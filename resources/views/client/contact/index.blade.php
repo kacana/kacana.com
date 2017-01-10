@@ -39,6 +39,8 @@
                         @include('client.contact.customer-rule')
                     @elseif($page == 'sale-with-us')
                         @include('client.contact.sale-with-us')
+                    @elseif($page == 'get-money-with-us')
+                        @include('client.contact.get-money-with-us')
                     @endif
                 </div>
 
@@ -52,6 +54,7 @@
                             <li><a @if($page == 'privacy-rule') class="color-green" @endif href="/contact/chinh-sach-bao-mat">Chính sách bảo mật</a></li>
                             <li><a @if($page == 'customer-rule') class="color-green" @endif href="/contact/chinh-sach-khach-hang">Chính sách cho khách hàng</a></li>
                             <li><a @if($page == 'sale-with-us') class="color-green" @endif href="/contact/ban-hang-voi-chung-toi">Bán hàng cùng KACANA</a></li>
+                            <li><a @if($page == 'get-money-with-us') class="color-green" @endif href="/contact/kiem-tiem-voi-chung-toi"><b class="color-red">Kiếm tiền với KACANA</b></a></li>
                         </ul>
                     </aside>
                 </div>

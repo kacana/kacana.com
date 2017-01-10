@@ -31,4 +31,8 @@ class ContactController extends BaseController {
     public function saleWithUs(){
         return view('client.contact.index', array('page' =>'sale-with-us'));
     }
+
+    public function getMoneyWithUs(){
+        return view('client.contact.index', array('page' =>'get-money-with-us'));
+    }
 }
