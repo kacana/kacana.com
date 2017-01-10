@@ -138,24 +138,28 @@
                 </div>
                 <div class="form-group">
                     <label class="col-sm-2 control-label" for="phone">Đến</label>
-                    <div class="col-sm-10">
-                        <b>{{$user_address->name}}</b><br> {{$user_address->street}}, {{$user_address->district->name}}, @if($user_address->ward_id) {{$user_address->ward->name}} @endif {{$user_address->city->name}}
-                    </div>
+                    @if($user_address->district_id)
+                        <div class="col-sm-10">
+                            <b>{{$user_address->name}}</b><br> {{$user_address->street}}, {{$user_address->district->name}}, @if($user_address->ward_id) {{$user_address->ward->name}} @endif {{$user_address->city->name}}
+                        </div>
+                    @endif
                 </div>
                 <div class="form-group">
                     <button id="btn-check-fee-ship" type="button" class="col-sm-4 col-sm-offset-4 btn btn-primary">Kiểm tra phí ship</button>
                 </div>
                 <div id="list-shipping-fee" class="form-group">
                     <input id="origin-ship-fee" name="originShipFee" value="0" class="hidden"/>
-                    @foreach($shippingServiceInfos as $shippingServiceInfo)
-                        <div class="radio margin-bottom">
-                            <label class="col-xs-12" >
-                                <span class="col-xs-1 col-xs-offset-1" ><input data-value="{{$shippingServiceInfo->ServiceFee}}" id="shippingServiceTypeId" type="radio" checked="" value="{{$shippingServiceInfo->ServiceID}}" name="shippingServiceTypeId"></span>
-                                <span class="col-xs-5" >{{$shippingServiceInfo->ServiceName}}</span>
-                                <span class="col-xs-5" >Cước: <strong>{{formatMoney($shippingServiceInfo->ServiceFee)}}</strong></span>
-                            </label>
-                        </div>
-                    @endforeach
+                    @if(isset($shippingServiceInfos))
+                        @foreach($shippingServiceInfos as $shippingServiceInfo)
+                            <div class="radio margin-bottom">
+                                <label class="col-xs-12" >
+                                    <span class="col-xs-1 col-xs-offset-1" ><input data-value="{{$shippingServiceInfo->ServiceFee}}" id="shippingServiceTypeId" type="radio" checked="" value="{{$shippingServiceInfo->ServiceID}}" name="shippingServiceTypeId"></span>
+                                    <span class="col-xs-5" >{{$shippingServiceInfo->ServiceName}}</span>
+                                    <span class="col-xs-5" >Cước: <strong>{{formatMoney($shippingServiceInfo->ServiceFee)}}</strong></span>
+                                </label>
+                            </div>
+                        @endforeach
+                    @endif
                 </div>
             </div>
             <div class="modal-footer">

@@ -25,7 +25,7 @@
                 @{{each this.properties_js}}
                     @{{if this.product_gallery}}
                         <div>
-                            <a href="#choose-product-color">
+                            <a data-id="${this.color_id}" href="#choose-product-color">
                                 <img  data-original="${this.product_gallery.image}">
                             </a>
                         </div>
@@ -66,12 +66,12 @@
             @{{/if}}
         </div>
         <div class="product-short-description-like-wrap">
-            <div class="product-short-description-wrap" id="product-short-description-wrap- ${this.id}">
+            <div class="product-short-description-wrap text-center" id="product-short-description-wrap- ${this.id}">
                 <div class="product-short-description">
                     ${this.short_description}
                 </div>
                 @{{if this.isLiked}}
-                <span class="save-product-wrap active" >
+                <span class="save-product-wrap active pull-left" >
                             <a
                                     data-product-id="${this.id}"
                                     data-product-url="${this.urlProductDetail}"
@@ -89,7 +89,7 @@
                         </span>
                 @{{/if}}
                 @{{if !this.isLiked}}
-                <span class="save-product-wrap">
+                <span class="save-product-wrap pull-left">
                             @{{if this.is_login}}
                     <a
                             data-product-id="${this.id}"
@@ -124,12 +124,14 @@
                     @{{/if}}
                         </span>
                 @{{/if}}
-
+                <span data-id="${this.id}" class="quick-order-btn">
+                    mua ngay
+                </span>
                 <span class="pull-right viewless-wrap" >
                         <a href="#show-less-short-desc" class="viewless" >
                             <i class="fa fa-angle-double-up" ></i>
                         </a>
-                    </span>
+                </span>
                 <span class="pull-right viewmore-wrap" >
                         <a href="#show-more-short-desc" class="viewmore" >
                             <i class="fa fa-angle-double-down" ></i>

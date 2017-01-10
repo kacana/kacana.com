@@ -104,8 +104,11 @@
                 color: @color-grey-dark;
               }
             }
-            .product-item-box-footer, .product-short-description-wrap.show-short-desc{
-              border-color: @color-red!important;
+            .product-item-box-footer, .product-short-description-wrap.show-short-desc {
+              border-color: @color-red !important;
+            }
+            .quick-order-btn{
+              display: inline!important;
             }
           }
           .product-price-wrap{
@@ -221,11 +224,29 @@
                 .product-item-box-footer{
                   border-left: none;
                 }
+                .quick-order-btn{
+                  bottom: 5px;
+                }
+              }
+              .quick-order-btn{
+                padding: 3px 30px;
+                background: linear-gradient(#66bb6a, #4caf50);
+                color: #ffffff;
+                border-radius: 2px;
+                position: absolute;
+                bottom: 10px;
+                display: none;
+                left: ~'calc(50% - 60px)';
+                cursor: pointer;
+                &:hover{
+                  background: linear-gradient(#78ce7c, @color-green);
+                  color: #ffffff;
+                }
               }
               .product-item-box-footer{
                 height: 5px;
                 display: block;
-                margin: -5px -10px 0;
+                margin: 30px -10px 0;
                 border-bottom: 1px solid @color-border;
                 border-left: 1px solid @color-border;
               }

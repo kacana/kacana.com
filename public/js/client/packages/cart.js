@@ -6,6 +6,13 @@ var cartPackage = {
         init: function () {
             Kacana.cart.loadCart();
             Kacana.cart.initQuantity();
+            Kacana.productdetail.validateQuickOrder();
+            var form = $('#quick_order_form');
+            form.find('[name="phoneQuickOrderNumber"]').intlTelInput("setCountry", "vn");
+
+            if(form.data('phone') !== undefined)
+                form.find('[name="phoneQuickOrderNumber"]').intlTelInput("setNumber", form.data('phone'));
+
             Kacana.cart.page.on('click', 'a[href="#remove-cart-item"]', Kacana.cart.removeCart);
             // $('#header .nav-main.mega-menu').remove();
         },

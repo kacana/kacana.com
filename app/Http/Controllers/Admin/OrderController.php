@@ -56,11 +56,14 @@ class OrderController extends BaseController {
             $hubInfos = $shipService->getPickHubs();
 
             $mainHub = $shipService->getPickHubMain($hubInfos);
-            $serviceList = $shipService->getServiceList($user_address->district->code,  $mainHub->DistrictCode);
-            $shippingServiceInfos = $shipService->calculateServiceFee($user_address->district->code, $mainHub->DistrictCode, $serviceList);
+            if($user_address->district_id)
+            {
+                $serviceList = $shipService->getServiceList($user_address->district->code,  $mainHub->DistrictCode);
+                $shippingServiceInfos = $shipService->calculateServiceFee($user_address->district->code, $mainHub->DistrictCode, $serviceList);
+                $wards = $addressService->getListWardByDistrictId($user_address->district_id);
+            }
 
             $cities = $addressService->getListCity()->lists('name', 'id');
-            $wards = $addressService->getListWardByDistrictId($user_address->district_id);
             $districts = $addressService->getListDistrict();
             return view('admin.order.edit', compact('order', 'buyer', 'user_address', 'cities', 'districts', 'wards', 'shippingServiceInfos', 'hubInfos'));
         } catch (\Exception $e) {

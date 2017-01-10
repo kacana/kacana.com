@@ -38,7 +38,7 @@
             </tbody>
         </table>
         <div class="btn-go-to-cart">
-            <a href="/thanh-toan" class="btn btn-primary">Tới giỏ hàng</a>
+            <a href="/thanh-toan" class="btn btn_kacana_main">Tới giỏ hàng</a>
         </div>
 </script>
 

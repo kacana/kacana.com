@@ -81,7 +81,7 @@ class addressReceiveModel extends Model {
         }
 
         $this->where('id', $id)->update($options);
-        return addressReceiveModel::find($id);
+        return $this->find($id);
     }
 
     /**
@@ -101,6 +101,23 @@ class addressReceiveModel extends Model {
         $addReceive->city_id = $item['city_id'];
         $addReceive->district_id = $item['district_id'];
         $addReceive->ward_id = isset($item['ward_id'])?$item['ward_id']:'';
+        $addReceive->user_id = $userId;
+        if($default)
+            $addReceive->default = $default;
+
+        $addReceive->created = date('Y-m-d H:i:s');
+        $addReceive->updated = date('Y-m-d H:i:s');
+
+        $addReceive->save();
+
+        return $addReceive;
+    }
+
+    public function createItemForQuickOrder($userId, $phone, $default=0)
+    {
+        $addReceive = new addressReceiveModel();
+
+        $addReceive->phone = $phone;
         $addReceive->user_id = $userId;
         if($default)
             $addReceive->default = $default;
@@ -180,6 +197,14 @@ class addressReceiveModel extends Model {
         return $select->get();
     }
 
+    public function getAddressByPhone($phone, $userId = false){
+        $select = $this->where('phone', 'LIKE', '%'.$phone.'%');
+
+        if($userId)
+            $select->where('address_receive.user_id' , '=', $userId);
+
+        return $select->first();
+    }
 
     public function generateCustomerTable($request, $columns, $userId){
         $datatables = new DataTables();

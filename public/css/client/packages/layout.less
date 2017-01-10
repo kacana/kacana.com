@@ -496,7 +496,6 @@ body.modal-open{
     margin-top: 20px;
     a{
       width: 250px;
-      background: rgba(0, 0, 0, 0) linear-gradient(#42a1ec, #0070c9) repeat scroll 0 0;
       border-radius: 2px;
       color: #fff;
       font-size: 16px;
@@ -767,7 +766,7 @@ body{
     }
     .rsFullscreenIcn{
       background: none;
-      color: @color-grey-supper-light;
+      color: @color-grey;
       &:before{
         content: "\e658";
         font-family: "Pe-icon-7-stroke";
@@ -839,7 +838,7 @@ body{
     }
     .rsArrowIcn{
       background: none;
-      color: @color-grey-supper-light;
+      color: @color-grey-light;
       &:before{
         font-family: "Pe-icon-7-stroke";
         font-size: 60px;
@@ -1036,5 +1035,19 @@ iframe[name="google_conversion_frame"]{
         margin-bottom: 0;
       }
     }
+  }
+}
+
+.btn_kacana_main{
+  background: linear-gradient(@color-green-light, @color-green);
+  width: 100%;
+  font-size: 17px;
+  border: none;
+  color: #fff;
+  border-radius: 2px;
+  padding: 10px 5px;
+  &:hover{
+    background: linear-gradient(#78ce7c, @color-green);
+    color: #ffffff;
   }
 }

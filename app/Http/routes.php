@@ -287,7 +287,8 @@ Route::group(['domain'=>'{nameDomain}', 'middleware' => 'client'], function () {
     Route::post('cart/updateCart',                          array('as'=>'updateCart',                       'uses'=>'Client\CartController@updateCart'));
     Route::post('cart/processCart',                         array('as'=>'processCart',                      'uses'=>'Client\CartController@processCart'));
     Route::get('cart/don-dat-hang/{id}',                    array('as'=>'orderDetail',                      'uses'=>'Client\CartController@orderDetail'));
-    Route::get('/cart/getWardByDistrictId',                array('as'=>'cart_getWardByDistrictId',         'uses'=>'Client\CartController@getWardByDistrictId'));
+    Route::get('/cart/getWardByDistrictId',                 array('as'=>'cart_getWardByDistrictId',         'uses'=>'Client\CartController@getWardByDistrictId'));
+    Route::post('/cart/quickOrder',                          array('as'=>'cart.quick.order',                 'uses'=>'Client\CartController@quickOrder'));
 
     //Contact Controller
     Route::any('/contact/gioi-thieu',                       array('as'=>'CompanyIntroduction',              'uses'=>'Client\ContactController@introduction'));
@@ -299,6 +300,7 @@ Route::group(['domain'=>'{nameDomain}', 'middleware' => 'client'], function () {
 
     //checkout
     Route::any('/checkout',                                 array('as'=>'checkout',                         'uses'=>'Client\CheckoutController@index'));
+    Route::any('/checkout/processQuickOrder',               array('as'=>'checkout.process.quick.order',     'uses'=>'Client\CheckoutController@processQuickOrder'));
     Route::any('/checkout/success',                         array('as'=>'checkout',                         'uses'=>'Client\CheckoutController@processOrder'));
     Route::any('/upload/chunk',                             array('as'=>'upload',                           'uses'=>'Client\UploadController@chunk'));
 

@@ -160,118 +160,7 @@ class CartController extends BaseController {
      */
     public function showCart()
     {
-        $cartService = new cartService();
-        $cart = $cartService->cartInformation();
-        $total = Cart::total();
-        $cities = addressCityModel::lists('name','id');
-        $ward = new addressWardModel();
-        $wards = $ward->getItemsByCityId(CITY_ID_DEFAULT)->lists('name', 'id');
-
-        return view('client.cart.index', array('cart'=>$cart,'total'=>$total, 'cities'=>$cities, 'wards'=>$wards));
-    }
-
-    /*
-     * function name processCart
-     */
-    /**
-     * @param CartRequest $request
-     */
-    public function processCart(CartRequest $request)
-    {
-        $re = array();
-        if(Request::isMethod('post') && $request->all()){
-            //save user
-            $user = new User();
-            $uid = 0;
-            $username = "";
-            $email = "";
-            $existUser = $user->getUserByEmail($request->get('email'));
-
-            if(!empty($existUser)){
-                $uid = $existUser->id;
-                $username = $existUser->name;
-                $email = $existUser->email;
-            }else{
-                $item = array(
-                    'name'  => $request->get('name'),
-                    'email' => $request->get('email'),
-                    'phone' => $request->get('phone'),
-                    'role'  => BUYER
-                );
-                $createdUser = $user->createItem($item);
-                $uid = $createdUser->id;
-                $username = $createdUser->name;
-                $email = $createdUser->email;
-            }
-
-            //save address receive
-            $userReceive = new addressReceiveModel();
-            $item2 = array(
-                'name'      => $request->get('name_2'),
-                'phone'     => $request->get('phone_2'),
-                'street'    => $request->get('street'),
-                'city_id'   => $request->get('city_id'),
-                'ward_id'   => $request->get('ward_id')
-            );
-            $address = $userReceive->createItem($item2);
-
-            if($uid!=0 && $address){
-                //create user address
-                $userAddress = new UserAddress();
-                $option = array('user_id'=>$uid, 'address_id'=>$address->id);
-                $userAddress->createItem($option);
-
-                //create order and order detail
-                $order = new Order();
-                $orderAtt = array(
-                    'user_id'       => $uid,
-                    'address_id'    => $address->id,
-                    'total'         => Cart::total(),
-                    'ship'          => 0,
-                    'address'       => $address->street . ", " . addressWardModel::showName($address->ward_id) . ", " . addressCityModel::showName($address->city_id),
-                );
-                $createdOrder = $order->createItem($orderAtt);
-
-                $orderDetail = new OrderDetail();
-                if($orderDetail->createItems($createdOrder->id, Cart::content())){
-                    //send email
-                    $data = array(
-                        'username'      => $username,
-                        'linkWebsite'   => SITE_LINK,
-                        'receiveName'   => $address->name,
-                        'receiveAddress'=> $createdOrder->address,
-                        'receivePhone'  => $address->phone,
-                        'carts'         => Cart::content(),
-                        'total'         => Cart::total(),
-                    );
-                    Cart::destroy();
-                    if($this->sendEmailOrder($email, $username, $data)){
-                        $re = array('status'=>'ok', 'id'=>$createdOrder->id);
-                    }else{
-                        $re = array('status'=>'error', 'message' => 'Bị lỗi trong quá trình gửi mail');
-                    }
-                };
-            }
-            echo json_encode($re);
-        }
-    }
-
-    /*
-     *
-     */
-    /**
-     * @param $email
-     * @param $username
-     * @param $data
-     * @return bool
-     */
-    public function sendEmailOrder($email, $username, $data)
-    {
-        $subject = "Thông tin đặt hàng";
-        Mail::send('client.emails.send-email-order', $data, function($message) use($email, $username, $subject){
-            $message->to($email, $username)->bcc(ADMIN_EMAIL)->subject($subject);
-        });
-        return true;
+        return view('client.cart.index');
     }
 
     /**
@@ -321,6 +210,38 @@ class CartController extends BaseController {
 
         return response()->json($result);
 
+    }
+
+    public function quickOrder(Request $request){
+        $cartService = new cartService();
+
+        $productId = $request->get('productId', 0);
+        $tagId = $request->get('tagId', 1);
+        $colorId = $request->get('colorId', 0);
+        $sizeId = $request->get('sizeId', 0);
+        $quantity = $request->get('quantity', 1);
+        $phoneQuickOrderNumber = $request->input('phoneQuickOrderNumber');
+        $quickOrder = true;
+        $result['ok'] = 0;
+        try{
+            $cartService->addProductToCart($productId, $colorId, $sizeId, $quantity, $tagId, $quickOrder);
+            $result['ok'] = 1;
+            if($request->ajax())
+            {
+                return response()->json($result);
+            }
+            else
+                return view('client.cart.index', ['phoneQuickOrderNumber' => $phoneQuickOrderNumber]);
+        }
+        catch (\Exception $e) {
+            if($request->ajax())
+            {
+                $result['error'] = $e->getMessage();
+                return $result;
+            }
+            else
+                return view('errors.404', ['error_message' => $e]);
+        }
     }
 
 }

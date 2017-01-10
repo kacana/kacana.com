@@ -65,7 +65,10 @@ class orderService {
         $orderData->discount = $discount;
         $orderData->origin_total = $originTotal;
         $orderData->status = $status;
-        $orderData->address = $addressStr.', '.$address->district->name.', '.$address->city->name;
+        if($addressStr)
+            $orderData->address = $addressStr.', '.$address->district->name.', '.$address->city->name;
+        else
+            $orderData->address = '';
         $order = $this->_orderModel->createItem($orderData);
         $this->_orderModel->updateItem($order->id, ['order_code' => crc32($order->id)]);
         $order->order_code = crc32($order->id);
@@ -181,6 +184,8 @@ class orderService {
 
                 if($order->status == KACANA_ORDER_STATUS_NEW )
                     $order->status = '<span class="label label-info">mới tạo</span>';
+                elseif($order->status == KACANA_ORDER_STATUS_QUICK_ORDER )
+                    $order->status = '<span class="label label-info">>> đặt nhanh</span>';
                 elseif($order->status == KACANA_ORDER_STATUS_CANCEL)
                     $order->status = '<span class="label label-danger">KACANA huỷ</span>';
                 elseif($order->status == KACANA_ORDER_STATUS_PROCESSING)

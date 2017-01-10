@@ -21,7 +21,7 @@
         @foreach($item->properties as $property)
             @if($property->product_gallery)
                 <div>
-                    <a href="#choose-product-color">
+                    <a data-id="{{$property->color_id}}" href="#choose-product-color">
                         <img  data-original="{{$property->product_gallery->thumb}}">
                     </a>
                 </div>
@@ -57,26 +57,28 @@
     @endif
 </div>
 <div class="product-short-description-like-wrap">
-    <div class="product-short-description-wrap" id="product-short-description-wrap-{{$item->id}}">
+    <div class="product-short-description-wrap text-center" id="product-short-description-wrap-{{$item->id}}">
         <div class="product-short-description">
             {{fixHtml($item->short_description)}}
         </div>
 
-        <span class=@if($item->isLiked)"save-product-wrap active"@else"save-product-wrap"@endif >
-        <a
-                data-product-id="{{$item->id}}"
+        <span class=@if($item->isLiked)"save-product-wrap active pull-left"@else"save-product-wrap pull-left"@endif >
+            <a  data-product-id="{{$item->id}}"
                 data-product-url="{{urlProductDetail($item)}}"
                 href=@if(\Kacana\Util::isLoggedIn() && !$item->isLiked)"#save-product-like"@elseif(\Kacana\Util::isLoggedIn() && $item->isLiked)"#remove-product-like"@else"#login-header-popup"@endif
-        data-offset="-5"
-        data-distance-away="-7"
-        data-position="bottom left"
-        data-title=@if(\Kacana\Util::isLoggedIn() && !$item->isLiked)"Lưu sản phẩm này"@elseif(\Kacana\Util::isLoggedIn() && $item->isLiked)"Bỏ lưu sản phẩm này"@else"Đăng nhập để lưu sản phẩm"@endif
-        data-popup-kacana="title"
-        class="save-product" >
+                data-offset="-5"
+                data-distance-away="-7"
+                data-position="bottom left"
+                data-title=@if(\Kacana\Util::isLoggedIn() && !$item->isLiked)"Lưu sản phẩm này"@elseif(\Kacana\Util::isLoggedIn() && $item->isLiked)"Bỏ lưu sản phẩm này"@else"Đăng nhập để lưu sản phẩm"@endif
+                data-popup-kacana="title"
+                class="save-product" >
 
-        <i class="pe-7s-like" ></i>
-        <i class="fa fa-heart" ></i>
-        </a>
+                <i class="pe-7s-like" ></i>
+                <i class="fa fa-heart" ></i>
+            </a>
+        </span>
+        <span data-id="{{$item->id}}" class="quick-order-btn">
+            mua ngay
         </span>
         <span class="pull-right viewless-wrap" >
             <a href="#show-less-short-desc" class="viewless" >

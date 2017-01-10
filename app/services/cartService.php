@@ -18,7 +18,7 @@ class cartService {
      * @return \Gloudemans\Shoppingcart\Gloudemans\Shoppingcart\CartCollection
      * @throws \Exception
      */
-    public function addProductToCart($productId, $colorId, $sizeId, $quantity, $tagId){
+    public function addProductToCart($productId, $colorId, $sizeId, $quantity, $tagId, $quickOrder = false){
         $productService = new productService();
         $tagService = new tagService();
 
@@ -37,7 +37,7 @@ class cartService {
             $productDiscount = $product->discount;
             $productPrice = $product->sell_price - $product->discount;
         }
-        if(intval($product->mainDiscount))
+        else if(intval($product->mainDiscount))
         {
             $productDiscount = $product->mainDiscount;
             $productPrice = $product->sell_price - $product->mainDiscount;
@@ -60,7 +60,8 @@ class cartService {
         {
             if(!isset($properties[$colorId]))
             {
-                throw new \Exception('sản phẩm không tồn tại colorId: '.$colorId.'!');
+                if(!$quickOrder)
+                    throw new \Exception('sản phẩm không tồn tại colorId: '.$colorId.'!');
             }
             else{
                 $colorTag = $tagService->getTagById($colorId, TAG_RELATION_TYPE_COLOR);
@@ -85,7 +86,8 @@ class cartService {
 
                     if(count($sizeIds) && !in_array($sizeId, $sizeIds))
                     {
-                        throw new \Exception('sản phẩm không tồn tại colorId: '.$colorId.' với sizeId: '.$sizeId.'!');
+                        if(!$quickOrder)
+                            throw new \Exception('sản phẩm không tồn tại colorId: '.$colorId.' với sizeId: '.$sizeId.'!');
                     }
                     else if(count($sizeIds) && in_array($sizeId, $sizeIds))
                     {
@@ -96,12 +98,14 @@ class cartService {
                             $options['sizeName'] = $sizeTag->name;
                         }
                         else{
-                            throw new \Exception('sizeId: '.$sizeId.' không tồn tại trong hệ thống hoặc bị tắt!');
+                            if(!$quickOrder)
+                                throw new \Exception('sizeId: '.$sizeId.' không tồn tại trong hệ thống hoặc bị tắt!');
                         }
                     }
                 }
                 else{
-                    throw new \Exception('colorId: '.$colorId.' không tồn tại trong hệ thống hoặc bị tắt!');
+                    if(!$quickOrder)
+                        throw new \Exception('colorId: '.$colorId.' không tồn tại trong hệ thống hoặc bị tắt!');
                 }
             }
         }
@@ -285,7 +289,7 @@ class cartService {
         //send email for user
         $mailService = new mailService();
 
-        if($mailService->sendEmailOrder($user->email, $order->id))
+        if($mailService->sendEmailOrder($user->email, $order->id, $order->order_code))
             return $order;
         else
             throw new \Exception('Bị lỗi trong quá trình gửi mail');
@@ -334,12 +338,53 @@ class cartService {
         //send email for user
         $mailService = new mailService();
 
-        if($mailService->sendEmailOrder($user->email, $order->id))
+        if($mailService->sendEmailOrder($user->email, $order->id, $order->order_code))
             return $order;
         else
             throw new \Exception('Bị lỗi trong quá trình gửi mail');
 
         // send zalo message for user
+
+        return $order;
+    }
+
+    public function quickProcessCart($phone){
+        $addressService = new addressService();
+        $userService = new userService();
+        $orderService = new orderService();
+
+        $cart = $this->cartInformation();
+
+        if(!$cart)
+            throw new \Exception('bad Cart items');
+
+        $addressReceive = $addressService->getAddressReceiveByPhone($phone);
+
+        if(!$addressReceive)
+        {
+            $addressReceive = $addressService->createUserAddressForQuickOrder(KACANA_USER_SYSTEM_ORDER_ID, $phone);
+        }
+
+        // create new address for user
+        $order = $orderService->createOrder($addressReceive->user_id, $addressReceive->id, $cart->total, $cart->quantity, $cart->originTotal, $cart->discount, KACANA_ORDER_STATUS_QUICK_ORDER);
+
+        $items = $cart->items;
+        foreach($items as $item)
+        {
+            $orderService->createOrderDetail($order->id, $item);
+        }
+
+        // destroy CART
+
+        Cart::destroy();
+
+        //send email for user
+        $mailService = new mailService();
+
+        if($mailService->sendEmailQuickOrder($order->id))
+            return $order;
+        else
+            throw new \Exception('Bị lỗi trong quá trình gửi mail');
 
         return $order;
     }

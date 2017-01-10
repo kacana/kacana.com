@@ -25,13 +25,52 @@
                         <div class="color-grey-light" >Kacana với hơn 100.000 sản phẩm tuyệt vời đang chờ bạn <a href="/" >Shopping</a></div>
                     </div>
                 </div>
+                <div class="col-xs-12 alert-signup-user">
+                    Nếu muốn sử dụng điểm tích lũy, bạn bấm <a href="/checkout?step=login" ><span class="color-green">Thanh Toán</span></a> và ĐĂNG NHẬP vào hệ thống.<br>
+                    Bạn có thể sử dụng điểm tích lũy cho đợt mua sắm lần tới. 1 điểm = 500 VNĐ.
+                </div>
                 <div class="row">
                     <div id="list-cart-item" class="col-xs-12 col-sm-8" >
 
                     </div>
-                    <div id="cart-information" class="col-xs-12 col-sm-4 cart-information-basic" >
+                    <div class="col-xs-12 col-sm-4" >
+                        <div  id="cart-information" class="cart-information-basic">
 
+                        </div>
+                        <div>
+                            @if(isset($phoneQuickOrderNumber))
+                                <div class="col-xs-12 quick-order-block">
+                                    <form method="post" id="quick_order_form" data-phone="{{$phoneQuickOrderNumber}}" action="/checkout/processQuickOrder" >
+                                        <h5 class="product-information-head">
+                                            Đặt hàng ngay chỉ cần để lại SĐT
+                                        </h5>
+                                        <input id="phoneQuickOrderNumber" name="phoneQuickOrderNumber" placeholder="Nhập số điện thoại" type="text" >
+                                        <button type="submit" class="btn btn_kacana_main order-product-with-phone" id="order-product-with-phone">
+                                           Xác nhận đặt hàng
+                                        </button>
+                                    </form>
+                                </div>
+                            @else
+                                <div class="row" >
+                                    <div class="col-xs-12 margin-bottom">
+                                        <a class="btn btn_kacana_main" id="payment" href="/checkout?step=login">Thanh Toán</a>
+                                        <div class="col-xs-12 quick-order-block">
+                                            <form method="post" id="quick_order_form" action="/checkout/processQuickOrder" >
+                                                <h5 class="product-information-head">
+                                                    Đặt hàng ngay chỉ cần để lại SĐT
+                                                </h5>
+                                                <input id="phoneQuickOrderNumber" name="phoneQuickOrderNumber" placeholder="Nhập số điện thoại" type="text" >
+                                                <button type="submit" class="btn btn_kacana_main order-product-with-phone" id="order-product-with-phone">
+                                                   Xác nhận đặt hàng
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endif
+                        </div>
                     </div>
+
                 </div>
             </div>
         <div class="row" >

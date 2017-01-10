@@ -134,4 +134,29 @@ class CheckoutController extends BaseController {
         }
     }
 
+    public function processQuickOrder(Request $request){
+        $cartService = new cartService();
+
+        $cart = $cartService->cartInformation();
+        if(!$cart)
+            return view('client.cart.index');
+
+        $phone = $request->input('phoneQuickOrderNumber', false);
+
+        try{
+
+            $order = $cartService->quickProcessCart($phone);
+            return view('client.checkout.quick-order-success', ['order' => $order]);
+        }
+        catch (\Exception $e) {
+            if($request->ajax())
+            {
+                $result['error'] = $e->getMessage();
+                return $result;
+            }
+            else
+                return view('errors.404', ['error_message' => $e]);
+        }
+    }
+
 }

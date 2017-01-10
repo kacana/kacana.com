@@ -97,6 +97,8 @@
     <link rel="stylesheet" href="/lib/nivo-slider/nivo-slider.css" media="screen">
     <link rel="stylesheet" href="/lib/nivo-slider/default/default.css" media="screen">
 
+    <link rel="stylesheet" href="/lib/form-validation/intl-tel-input/build/css/intlTelInput.css" />
+
     <!-- Head Libs -->
     <script src="/lib/ml-menu/ml-menu-modernizr.js"></script>
 
@@ -215,6 +217,7 @@
 <script type="text/javascript" src="/lib/slick/slick.min.js"></script>
 <script src="/lib/pusher/pusher.min.js"></script>
 <script src="/lib/lockr/lockr.min.js"></script>
+<script src="/lib/form-validation/intl-tel-input/build/js/intlTelInput.js"></script>
 
 <!-- js owner -->
 <script src="/js/client/client.js"></script>

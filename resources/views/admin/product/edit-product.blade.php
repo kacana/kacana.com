@@ -348,20 +348,22 @@
                             </div>
                         -->
                         <div class="form-group">
-                            {!! Form::label('meta', 'Miêu tả sản phẩm') !!}<br/>
-                            {!! Form::textarea('short_description', $product['short_description'], array('class'=>'form-control', 'style'=>'height:80px')) !!}
+                            {!! Form::label('meta', 'Thông tin cơ bản') !!}<br/>
+                            <div class="kacana-editor-content" data-table="products" data-field="property_description" data-id="{{$product->id}}" contenteditable="true" name="property_description" id="property_description">
+                                @if($product->property_description)
+                                    {!! $product->getOriginal('property_description') !!}
+                                @else
+                                    {!! '<p>+ Màu sắc: </p><p>+ Chất liệu:</p><p>+ Kích thước:<br>   - Chiều ngang: <br>   - Chiều cao:<br>   - Đáy:</p>' !!}
+                                @endif
+                            </div>
                         </div>
-                        <button id="btn-upload-image-desc" class="" ></button>
                         <!-- description -->
                         <div class="form-group">
                             {!! Form::label('description', 'Mô tả chi tiết sản phẩm') !!}
                             <div class="kacana-editor-content" data-table="products" data-field="description" data-id="{{$product->id}}" contenteditable="true" name="description" id="description">
                                 @if($product->description)
                                     {!! $product->getOriginal('description') !!}
-                                @else
-                                    {!! ' <p style="mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;" text-align:justify;background:white"=""><b><span style="font-size:10.0pt;" font-family:arial;color:#333333"="">Mã số: </span></b><span style="font-size:10.0pt;">&nbsp;</span></p><p style="mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;" text-align:justify;background:white"=""><b><span style="font-size:10.0pt;" font-family:arial;color:#333333"="">Chất liệu: </span></b><span style="font-size:10.0pt;"> </span></p><p style="mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;" text-align:justify;background:white"=""><b><span style="font-size:10.0pt;" font-family:arial;color:#333333"="">Phong cách: </span></b><span style="font-size:10.0pt;"> </span></p><p style="mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;" text-align:justify;background:white"=""><b><span style="font-size:10.0pt;" font-family:arial;color:#333333"="">Kiểu túi: </span></b><span style="font-size:10.0pt;"> </span></p><p style="mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;" text-align:justify;background:white"=""><b><span style="font-size:10.0pt;" font-family:arial;color:#333333"="">Phụ kiện: </span></b><span style="font-size:10.0pt;"> </span></p><p style="mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;" text-align:justify;background:white"=""><b><span style="font-size:10.0pt;" font-family:arial;color:#333333"="">Kích thước: </span></b><span style="font-size:10.0pt;"> </span></p><p style="mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;" text-align:justify;background:white"=""><b><span style="font-size:10.0pt;" font-family:arial;color:#333333"="">Phom túi: </span></b><span style="font-size:10.0pt;"> </span></p><p style="mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;" text-align:justify;background:white"=""><b><span style="font-size:11.0pt;" font-family:arial;color:#333333"="">Bề mặt da: </span></b><span style="font-size:11.0pt;"> </span></p><p style="mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;" text-align:justify;background:white"=""><span style="font-size:;" 11.0pt;font-family:arial;color:#333333"=""><br></span></p>' !!}
                                 @endif
-
                             </div>
                         </div>
 
@@ -370,7 +372,11 @@
                             {!! Form::label('property', 'Đặc tính sản phẩm') !!}
                             <div class="kacana-editor-content" data-table="products" data-field="property" data-id="{{$product->id}}" contenteditable="true" name="property" id="property">{!! $product->property !!}</div>
                         </div>
-
+                        <div class="form-group">
+                            {!! Form::label('meta', 'Miêu tả sản phẩm') !!}<br/>
+                            {!! Form::textarea('short_description', $product['short_description'], array('class'=>'form-control', 'style'=>'height:80px')) !!}
+                        </div>
+                        <button id="btn-upload-image-desc" class="" ></button>
                         <!-- meta -->
                         <div class="form-group">
                             {!! Form::label('meta', 'Meta') !!}<br/>

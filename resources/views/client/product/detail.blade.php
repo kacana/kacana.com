@@ -19,37 +19,61 @@
     </section>
     <div class="container background-white vpadding-20">
         <div class="row">
-            <div class="col-xs-12 col-sm-6">
+            <div class="col-xs-12 col-sm-5 col-lg-6">
+                <div id="product-detail-gallery" class="royalSlider hidden rsDefault">
+                    @if($productSlide && count($productSlide)>0)
+                        @foreach($productSlide as $gallery)
+                            <a id="product-detail-gallery-id-{{$product->id}}" class="rsImg bugaga" data-rsbigimg="{{$gallery->image}}" href="{{$gallery->image}}">
+                                {{$product->name}}
+                                <img class="rsTmb" src="{{$gallery->thumb}}">
+                            </a>
+                        @endforeach
+                    @endif
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-4 col-lg-3">
+                <h1 class="name-product">{{ucfirst($product->name)}}</h1>
+                <p class="price">
+                    <span class="amount">
+                        @if($product->discount)
+                            {{formatMoney($product->sell_price - $product->discount)}}
+                        @elseif($product->main_discount)
+                            {{formatMoney($product->sell_price - $product->main_discount)}}
+                        @else
+                            {{formatMoney($product->sell_price)}}
+                        @endif
+                    </span>
+                </p>
+                <div class="row">
+                    <div class="col-xs-12 kacana-wysiwyg-block product-basic-information">
+                        <p >{{$product->short_description}}</p>
+                        @if(str_replace(' ','',strip_tags($product->property_description)))
+                            {!! $product->property_description !!}
+                        @endif
+                    </div>
+                </div>
+                <div class="shop-rule hidden-xs row" >
+                    @include('client.product.order-rule')
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-3">
                 <div class="summary entry-summary">
-                    <h1 class="name-product">{{ucfirst($product->name)}}</h1>
-                    <p class="price">
-                        <span class="amount">
-                            @if($product->discount)
-                                {{formatMoney($product->sell_price - $product->discount)}}
-                            @elseif($product->main_discount)
-                                {{formatMoney($product->sell_price - $product->main_discount)}}
-                            @else
-                                {{formatMoney($product->sell_price)}}
-                            @endif
-                        </span>
-                    </p>
-
                     @if($product->discount)
                         <div class="block-promotions table">
-                            <div class="block-promotions-title cell">ĐANG KHUYẾN MÃI</div>
-                            <div class="block-promotions-infos cell">
+                            <div class="block-promotions-title">ĐANG KHUYẾN MÃI</div>
+                            <div class="block-promotions-infos">
                                 <p>
-                                    ĐANG GIẢM GIÁ TỪ {{formatMoney($product->sell_price)}} XUỐNG CÒN
-                                    <span class="text-danger">
+                                    Giảm giá từ {{formatMoney($product->sell_price)}} còn
+                                 <span class="text-danger">
                                         <b>{{formatMoney($product->sell_price - $product->discount)}}</b>
                                     </span>
                                 </p>
                                 <p class="row">
-                                    <span class="col-lg-4 col-md-4 col-sm-6 col-xs-6">ÁP DỤNG TỪ:</span>
+                                    <span class="col-lg-4 col-md-4 col-sm-6 col-xs-6">Áp dụng từ:</span>
                                     <span class="col-lg-8 col-md-8 col-sm-6 col-xs-6"> {{date("d/m/Y")}} </span>
                                 </p>
                                 <p class="row">
-                                    <span class="col-lg-4 col-md-4 col-sm-6 col-xs-6">ĐẾN:</span>
+                                    <span class="col-lg-4 col-md-4 col-sm-6 col-xs-6">Đến:</span>
                                     <span class="col-lg-8 col-md-8 col-sm-6 col-xs-6"> Hết hàng </span>
                                 </p>
                             </div>
@@ -75,39 +99,18 @@
                             </div>
                         </div>
                     @endif
-
-                    <p >{{$product->short_description}}</p>
-                    <div class="row" >
-                        <div class="col-xxs-12 col-xxs-offset-0 col-xs-10 col-xs-offset-1 hidden-sm hidden-md hidden-lg">
-                            <div id="product-detail-gallery-mobile" class="royalSlider rsDefault">
-                                @if($productSlide && count($productSlide)>0)
-                                    @foreach($productSlide as $gallery)
-                                        @if($gallery->type == PRODUCT_IMAGE_TYPE_SLIDE)
-                                            <a id="" class="rsImg bugaga" data-rsbigimg="{{$gallery->image}}" href="{{$gallery->image}}">
-                                                {{$product->name}}
-                                                <img class="rsTmb" src="{{$gallery->thumb}}">
-                                            </a>
-                                        @endif
-                                    @endforeach
-                                @endif
-                            </div>
-                        </div>
-                    </div>
-
                     @if(count($product->properties))
-                        <h4>
+                        <h4 class="product-information-head" >
                             Màu sắc
                         </h4>
-                        <div class="list-color-product hidden multiple-items nav">
+                        <div class="product-colors current-product-colors multiple-items nav">
                             @foreach($product->properties as $property)
                                 @if($productSlide && count($productSlide)>0)
                                     @foreach($productSlide as $galleryIndex => $gallery)
                                         @if($gallery->id == $property->product_gallery_id)
-                                            <div>
                                                 <a href="#choose-product-color" data-index="{{$galleryIndex}}" data-offset="25" data-popup-kacana="title" data-image-id="{{$property->product_gallery_id}}" data-size="{{json_encode($property->sizeIds)}}" data-title="{{$property->color_name}}" data-id="{{$property->color_id}}" >
                                                     <img src="{{$gallery->thumb}}" >
                                                 </a>
-                                            </div>
                                         @endif
                                     @endforeach
                                 @else
@@ -123,7 +126,7 @@
                     @endif
 
                     @if(isset($product->propertiesSize))
-                        <h4>
+                        <h4 class="product-information-head">
                             Kích thước
                         </h4>
                         <ul class="list-size-product nav">
@@ -135,14 +138,36 @@
                         </ul>
                     @endif
                     <div class="row">
-                        <span class="col-xs-8">
-                            <button type="submit" class="btn btn-primary add-to-cart" id="add-cart-btn">
-                                Đặt Mua
+                        <span class="col-xs-12">
+                            <button type="submit" class="btn btn_kacana_main add-to-cart" id="add-cart-btn">
+                                Mua ngay
+                            </button>
+                   </span>
+                    </div>
+                    <div class="col-xs-12 quick-order-block">
+                        <form method="post" id="quick_order_form" action="/cart/quickOrder" >
+                            <h4 class="product-information-head">
+                                Đặt hàng ngay chỉ cần để lại SĐT
+                            </h4>
+                            <input class="hidden" name="sizeId"  value="0" type="text" >
+                            <input class="hidden" name="colorId"  value="0" type="text" >
+                            <input class="hidden" name="tagId"  value="{{$tag->id}}" type="text" >
+                            <input class="hidden" name="productId"  value="{{$product->id}}" type="text" >
+                            <input id="phoneQuickOrderNumber" name="phoneQuickOrderNumber" placeholder="Nhập số điện thoại" type="text" >
+                            <button type="submit" class="btn btn_kacana_main order-product-with-phone" id="order-product-with-phone">
+                               Gọi lại cho tôi
+                            </button>
+                        </form>
+                    </div>
+                    <div class="row">
+                        <span class="col-xs-12">
+                            <button type="submit" class="btn btn_kacana_main get-money-with-us-btn" >
+                                Kiếm tiền cùng KACANA
                             </button>
                         </span>
                     </div>
                     <div class="row vpadding-10" >
-                        <div class="col-xs-4">
+                        <div class="col-xs-6">
                             <span class=@if($product->isLiked)"save-product-wrap active"@else"save-product-wrap"@endif >
                                 <a  data-product-id="{{$product->id}}"
                                     data-product-url="{{urlProductDetail($product)}}"
@@ -162,7 +187,7 @@
                                 </a>
                             </span>
                         </div>
-                        <div class="col-xs-6">
+                        <div class="col-xs-6 text-right">
                             <span>
                                 <a @if(!\Kacana\Util::isLoggedIn())
                                         data-popup-kacana="title"
@@ -173,26 +198,11 @@
                                    @endif
                                    class="btn-post-to-facebook"
                                    href="#post-to-facebook" >
-                                    <i class="fa fa-facebook" ></i> Đăng lên Facebook
+                                    <i class="fa fa-facebook" ></i> Facebook
                                 </a>
                             </span>
                         </div>
                     </div>
-                    <div class="shop-rule row" >
-                            @include('client.product.order-rule')
-                    </div>
-                </div>
-            </div>
-            <div class="hidden-xs col-sm-5 col-sm-offset-1">
-                <div id="product-detail-gallery" class="royalSlider hidden rsDefault">
-                    @if($productSlide && count($productSlide)>0)
-                        @foreach($productSlide as $gallery)
-                            <a id="product-detail-gallery-id-{{$product->id}}" class="rsImg bugaga" data-rsbigimg="{{$gallery->image}}" href="{{$gallery->image}}">
-                                {{$product->name}}
-                                <img class="rsTmb" src="{{$gallery->thumb}}">
-                            </a>
-                        @endforeach
-                    @endif
                 </div>
             </div>
         </div>
@@ -200,7 +210,7 @@
         </div>
         <div id="product-main-information" class="row product-information-detail">
             <div class="col-xs-12 col-sm-12">
-                @if($product->property)
+                @if(str_replace(' ','',strip_tags($product->property)))
                     <div class="toogle" data-plugin-toggle="">
                          <section class="toggle active">
                              <label>

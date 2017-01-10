@@ -19,10 +19,10 @@ var productdetailPackage = {
 
             Kacana.homepage.applySlideImage();
 
-            $('#product-detail-gallery, #product-detail-gallery-mobile').royalSlider({
+            $('#product-detail-gallery').royalSlider({
                 fullscreen: {
                     enabled: true,
-                    nativeFS: false
+                    nativeFS: true
                 },
                 controlNavigation: 'thumbnails',
                 autoScaleSlider: true,
@@ -33,20 +33,19 @@ var productdetailPackage = {
                 navigateByClick: true,
                 numImagesToPreload: 0,
                 arrowsNav: true,
-                arrowsNavAutoHide: false,
+                arrowsNavAutoHide: true,
                 arrowsNavHideOnTouch: false,
                 keyboardNavEnabled: true,
                 fadeinLoadedSlide: true,
                 globalCaption: false,
                 globalCaptionInside: false,
-                transitionType: 'fade',
+                transitionType: 'move',
                 thumbs: {
                     appendSpan: true,
                     firstMargin: true,
                     paddingBottom: 4,
                     thumbArrow: true,
                     spacing: 20
-
                 },
                 imgHeight: 695
             });
@@ -56,8 +55,11 @@ var productdetailPackage = {
             if(window.location.hash) {
                 var colorIndex = window.location.hash.substring(1); //Puts hash in variable, and removes the # character
                 colorIndex--;
-                $('.list-color-product').slick('slickGoTo', colorIndex, true);
-                $('.list-color-product').find('.slick-track .slick-slide').eq(colorIndex).find('a').click();
+                console.log(colorIndex);
+                if($.isNumeric(colorIndex))
+                {
+                    $('.product-colors').find('a[href="#choose-product-color"]').eq(colorIndex).click();
+                }
             }
 
             $('#list-product-related #listProductPage .taglist').slick({
@@ -104,7 +106,7 @@ var productdetailPackage = {
                 animateOut: 'fadeOut'
             });
 
-            $('#product-detail').on('mousedown','img.rsMainSlideImage, .product-title a', function (e) {
+            $('#product-detail #list-product-related').on('mousedown','img.rsMainSlideImage, .product-title a', function (e) {
                 switch(e.which)
                 {
                     case 1:
@@ -146,8 +148,13 @@ var productdetailPackage = {
                 $("#product-detail-gallery").royalSlider('goTo', imageIndex);
                 $("#product-detail-gallery-mobile").royalSlider('goTo', imageIndex);
 
+                $('#quick_order_form').find('input[name="colorId"]').val($(this).data('id'));
+
             });
             Kacana.productdetail.page.on('click', 'a[href="#choose-product-size"]', function () {
+
+                $('#quick_order_form').find('input[name="sizeId"]').val($(this).data('id'));
+
                 if($(this).hasClass('disable'))
                     return false;
 
@@ -156,7 +163,7 @@ var productdetailPackage = {
             });
 
             Kacana.productdetail.page.find('a[href="#choose-product-color"]').hover(function(){
-                Kacana.productdetail.page.find('.list-color-product').popup('destroy');
+                Kacana.productdetail.page.find('.product-colors').popup('destroy');
             });
             Kacana.productdetail.page.find('a[href="#choose-product-size"]').hover(function(){
                 Kacana.productdetail.page.find('.list-size-product').popup('destroy');
@@ -166,6 +173,7 @@ var productdetailPackage = {
             Kacana.productdetail.page.on('click', 'a[href="#post-to-facebook"]', Kacana.productdetail.postToFacebook);
             Kacana.productdetail.checkColorAvailable();
             Kacana.productdetail.bindEventPostToFacebook();
+            Kacana.productdetail.validateQuickOrder();
 
             setTimeout(function() {
                 var callBack = function(data) {
@@ -229,6 +237,57 @@ var productdetailPackage = {
             //
             //
             // });
+        },
+        validateQuickOrder: function () {
+            var form = $('#quick_order_form');
+
+
+            form.find('[name="phoneQuickOrderNumber"]')
+                .intlTelInput({
+                    utilsScript: '/lib/form-validation/intl-tel-input/build/js/utils.js',
+                    autoPlaceholder: true,
+                    preferredCountries: ['vn'],
+                    allowDropdown: false,
+                    formatOnDisplay: false
+            });
+
+            form.formValidation({
+                framework: 'bootstrap',
+                icon: {
+                    valid: 'glyphicon glyphicon-ok',
+                    invalid: 'glyphicon glyphicon-remove',
+                    validating: 'glyphicon glyphicon-refresh'
+                },
+                fields: {
+                    phoneQuickOrderNumber: {
+                        validators: {
+                            notEmpty: {
+                                message: 'Vui lòng nhập số điện thoại!'
+                            },
+                            callback: {
+                                message: 'Số điện thoại không chính xác!',
+                                callback: function(value, validator, $field) {
+                                    console.log(value);
+                                    console.log(value === '');
+                                    console.log($field.intlTelInput('isValidNumber'));
+                                    return value === '' || $field.intlTelInput('isValidNumber');
+                                }
+                            }
+                        }
+                    }
+                }
+            })
+            .on('err.field.fv', function(e, data) {
+                data.fv.disableSubmitButtons(false);
+            })
+            .on('success.field.fv', function(e, data) {
+                data.fv.disableSubmitButtons(false);
+            });
+
+            form.find('[name="phoneQuickOrderNumber"]').intlTelInput("setNumber", '');
+            form.find('[name="phoneQuickOrderNumber"]').intlTelInput("setCountry", "vn");
+
+            form.find('#order-product-with-phone').removeAttr('disabled');
         },
         setHeightForRightMenu: function () {
             var listProductRelated = $('#list-product-related');
@@ -354,7 +413,7 @@ var productdetailPackage = {
             }
         },
         checkout: function(){
-            var $listColor = Kacana.productdetail.page.find('.list-color-product');
+            var $listColor = Kacana.productdetail.page.find('.product-colors');
             var $listSize = Kacana.productdetail.page.find('.list-size-product');
             var productId = Kacana.productdetail.page.data('id');
             var tagId = Kacana.productdetail.page.data('tag-id');
@@ -400,6 +459,8 @@ var productdetailPackage = {
             var callBack = function(data){
                 if(data.ok)
                 {
+                    window.location.href = "/thanh-toan";
+                    return true;
                     console.log(data);
                     var item = data.item;
                     var cart = data.cart;

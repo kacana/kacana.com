@@ -58,6 +58,9 @@ class addressService {
         $this->_userAddressModel = new userAddressModel();
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Collection|static[]
+     */
     public function getListCountry(){
         return $this->_countryModel->getAll();
     }
@@ -144,6 +147,12 @@ class addressService {
 
     }
 
+    public function createUserAddressForQuickOrder($userId, $phone, $default = 0){
+        $addressReceive = $this->_receiveModel->createItemForQuickOrder($userId, $phone, $default);
+        return $addressReceive;
+
+    }
+
     /**
      * @param $data
      * @return true
@@ -204,6 +213,12 @@ class addressService {
         return $this->_receiveModel->deleteMyAddress($userId, $id);
     }
 
+    /**
+     * @param $search
+     * @param $type
+     * @param bool $userId
+     * @return bool
+     */
     public function searchAddressDelivery($search, $type, $userId = false){
         $items = false;
 
@@ -221,14 +236,29 @@ class addressService {
         return $items;
     }
 
+    /**
+     * @param $code
+     * @param $typeService
+     * @return mixed
+     */
     public function getDistrictByCode($code, $typeService){
         return $this->_districtModel->getDistrictByCode($code, $typeService);
     }
 
+    /**
+     * @param $code
+     * @param $typeService
+     * @return mixed
+     */
     public function getCityByCode($code, $typeService){
         return $this->_cityModel->getCityByCode($code, $typeService);
     }
 
+    /**
+     * @param $request
+     * @param $userId
+     * @return array
+     */
     public function generateCustomerTable($request, $userId){
 
         $datatables = new DataTables();
@@ -250,6 +280,11 @@ class addressService {
         return $return;
     }
 
+    /**
+     * @param $request
+     * @param $userId
+     * @return array
+     */
     public function generateAddressReceiveByUserId($request, $userId){
 
         $datatables = new DataTables();
@@ -271,5 +306,13 @@ class addressService {
         $return['data'] = $datatables::data_output( $columns, $return['data'] );
 
         return $return;
+    }
+
+    /**
+     * @param $phone
+     * @param bool $userId
+     */
+    public function getAddressReceiveByPhone($phone, $userId = false){
+        return $this->_receiveModel->getAddressByPhone($phone, $userId);
     }
 }

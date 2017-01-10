@@ -11,14 +11,25 @@ use App\services\userService;
  */
 class mailService {
 
-    public function sendEmailOrder($email, $orderId)
+    public function sendEmailOrder($email, $orderId, $orderCode)
     {
         $orderService = new orderService();
-        $subject = "Kacana đã nhận đơn hàng ". $orderId;
+        $subject = "Kacana đã nhận đơn hàng ". $orderCode;
         $viewBlade = 'client.emails.send-email-order';
         $bcc = KACANA_EMAIL_DON_HANG;
         $orderData = ['order'=>$orderService->getOrderById($orderId)];
         return $this->send($email, $subject, $viewBlade, $orderData, $bcc);
+    }
+
+    public function sendEmailQuickOrder($orderId)
+    {
+        $orderService = new orderService();
+        $order = $orderService->getOrderById($orderId);
+        $subject = "[ĐẶT NHANH][".$order->addressReceive->phone."] Kacana đã nhận đơn hàng". $orderId;
+        $viewBlade = 'client.emails.send-email-quick-order';
+        $bcc = KACANA_EMAIL_DON_HANG;
+        $orderData = ['order'=>$order];
+        return $this->send(KACANA_EMAIL_DON_HANG, $subject, $viewBlade, $orderData);
     }
 
     public function sendEmailNewThread($threadId, $message, $email = KACANA_EMAIL_ADMIN){

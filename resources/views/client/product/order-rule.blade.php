@@ -1,4 +1,4 @@
-<div class="col-md-6">
+<div class="col-md-12">
     <ul class="nav" >
         <li class="phone">
             <i class="pe-7s-plane pe-2x"></i>
@@ -14,7 +14,7 @@
         </li>
     </ul>
 </div>
-<div class="col-md-6">
+<div class="col-md-12">
     <ul class="nav" >
         <li class="phone">
             <i class="pe-7s-phone pe-2x"></i>

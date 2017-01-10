@@ -330,15 +330,7 @@
     text-align: center;
   }
   #payment{
-    background: rgba(0, 0, 0, 0) linear-gradient(#42a1ec, #0070c9) repeat scroll 0 0;
-    border-radius: 2px;
-    color: #fff;
-    font-size: 15px;
-    font-weight: 400;
-    margin-bottom: 10px;
-    text-shadow: 0 0 0 #000;
-    text-transform: none;
-    width: 100%;
+
   }
   #list-cart-item{
     min-height: 200px;
@@ -364,6 +356,24 @@
       font-size: 20px;
     }
   }
+  .alert-signup-user{
+    text-align: center;
+    padding: 10px 10px;
+    background: #f1f1f1;
+    margin-bottom: 40px;
+    font-weight: 500;
+    color: @color-grey-light;
+    border: 1px solid #ddd;
+  }
+  .score-save{
+    background: #f1f1f1;
+    padding: 10px;
+    h5{
+      margin: 0;
+      color: @color-grey-light!important;
+      font-size: 14px!important;
+    }
+  }
 }
 #cart-page, #checkout-page {
   .cart-information-basic{
@@ -382,6 +392,41 @@
         font-size: 12px;
         font-weight: 400;
       }
+    }
+  }
+  .quick-order-block{
+    border: 1px solid #ccc;
+    padding: 10px 10px;
+    margin-top: 40px;
+    margin-bottom: 30px;
+    h5{
+      color: @color-grey;
+      font-size: 16px;
+      font-weight: 500;
+      text-transform: none;
+    }
+    .intl-tel-input{
+      width: 100%;
+      #phoneQuickOrderNumber{
+        width: 100%;
+        padding: 7px 30px 7px 5px;
+      }
+      .selected-flag{
+        display: none;
+      }
+      .glyphicon-remove{
+        color: @color-red-light;
+      }
+      .glyphicon-ok{
+        color: @color-green-light;
+      }
+    }
+    .help-block{
+      color: @color-red-light;
+    }
+    #order-product-with-phone{
+      margin: 10px 0 0;
+      background: linear-gradient(#FB8C00, #F57C00);
     }
   }
 }

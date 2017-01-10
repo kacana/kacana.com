@@ -46,6 +46,24 @@ var homepagePackage = {
                 return true;
 
             });
+
+            Kacana.homepage.homePageId.on('click','.quick-order-btn', Kacana.homepage.quickOrder);
+        },
+        quickOrder: function () {
+            var productId = $(this).data('id');
+            var token = $('meta[name="csrf-token"]').attr('content');
+            var listColor = $(this).parents('.product-item').find('.list-color-product');
+            var colorId = 0;
+            if(listColor.find('.slick-slide a.active').length)
+                colorId = listColor.find('.slick-slide a.active').data('id');
+
+            var dataPost = { 'productId': productId, '_token': token, 'colorId': colorId };
+            $.post( "/cart/quickOrder", dataPost).done(function( data ) {
+                if(data.ok)
+                    window.location.href = '/thanh-toan';
+                else
+                    Kacana.utils.showError('có cái gì sai sai ở đây! vui lòng gọi: 0906.054.206!');
+            });
         },
         goToDetailPage: function (obj, typeClick) {
             var productItem = obj.parents('.product-item');
@@ -167,6 +185,8 @@ var homepagePackage = {
             }).on('click', 'a[href="#choose-product-color"]', function () {
                 var idSlide = $(this).parents().index() + 1;
                 console.log(idSlide);
+                $(this).parents('.list-color-product').find('a[href="#choose-product-color"]').removeClass('active');
+                $(this).addClass('active');
                 $(this).parents('.product-item').find('.product-image-inside').royalSlider('goTo', idSlide);
             });
         },

@@ -132,18 +132,21 @@
         </div>
     </div>
     <div class="row" >
-        <div class="col-xs-12  margin-bottom">
+        <div class="col-xs-12">
             <span class="pull-left" >
-                <h5>Thành tiền</h5> (Đã bao gồm VAT)
+                <h5>Thành tiền<small>(Đã bao gồm VAT)</small></h5>
             </span>
             <span class="pull-right" >
                 <h5 class="cart-totals" >${cart.totalShow}</h5>
             </span>
         </div>
     </div>
-    <div class="row" >
-        <div class="col-xs-12 margin-bottom">
-            <a class="btn btn-primary" id="payment" href="/checkout?step=login">TIẾN HÀNH THANH TOÁN</a>
-        </div>
+    <div class="col-xs-12 score-save margin-bottom">
+            <span class="pull-left" >
+                <h5>Điểm tích luỹ</h5>
+            </span>
+        <span class="pull-right" >
+                <h5 class="cart-totals" >${parseInt(cart.total/10000)} điểm <small>(${Kacana.utils.formatCurrency(parseInt(cart.total*0.05))})</small></h5>
+            </span>
     </div>
 </script>

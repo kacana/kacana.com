@@ -10,11 +10,17 @@
             <div class="box-header">
                 <h3 class="box-title">Đơn Hàng: #{{$order->order_code}} Của [{{$order->user->name}}] Tổng {{formatMoney($order->total)}}</h3>
                 <div class="box-tools pull-left ">
-                    <button data-toggle="modal" data-target="#modal-shipping-order" class="btn @if($order->status != KACANA_ORDER_STATUS_PROCESSING) hidden @endif btn-primary btn-sm">
-                        <i class="fa fa-plane"></i> Ship cho khách
-                    </button>
+                    @if(isset($shippingServiceInfos))
+                        <button data-toggle="modal" data-target="#modal-shipping-order" class="btn @if($order->status != KACANA_ORDER_STATUS_PROCESSING) hidden @endif btn-primary btn-sm">
+                            <i class="fa fa-plane"></i> Ship cho khách
+                        </button>
+                    @else
+                        <button class="btn btn-danger btn-sm">
+                            <i class="fa fa-ban"></i> Vui lòng cập nhật địa chỉ khách hàng
+                        </button>
+                    @endif
 
-                    @if($order->status == KACANA_ORDER_STATUS_NEW)
+                    @if($order->status == KACANA_ORDER_STATUS_NEW || $order->status == KACANA_ORDER_STATUS_QUICK_ORDER)
                         <a href="#cancel-order" data-order-id="{{$order->id}}" class="btn btn-danger">
                             Huỷ đơn hàng
                         </a>
@@ -115,7 +121,7 @@
                                     <input type="hidden" name="id" value="{{$user_address->id}}" />
                                     {!! Form::label('name', 'Họ và tên', array('class'=>'col-sm-3 control-label')) !!}
                                     <div class="col-sm-9">
-                                      {!! Form::text('name', $user_address->name, array('required', 'class' => 'form-control', 'placeholder' => 'Họ và tên')) !!}
+                                      {!! Form::text('name', ($user_address)?$user_address->name:'', array('required', 'class' => 'form-control', 'placeholder' => 'Họ và tên')) !!}
                                     </div>
                                 </div>
                                 <!-- phone number -->
@@ -140,30 +146,44 @@
                                 <div class="form-group">
                                     {!! Form::label('city_id', 'Thành phố', array('class'=>'col-sm-3 control-label'))!!}
                                     <div class="col-sm-9">
-                                    {!! Form::select('city_id', $cities, $user_address->city_id, array('required', 'class'=>'form-control')) !!}
+                                    {!! Form::select('city_id', $cities, ($user_address)?$user_address->city_id:'', array('required', 'class'=>'form-control')) !!}
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     {!! Form::label('district_id', 'Quận', array('class'=>'col-sm-3 control-label'))!!}
                                     <div class="col-sm-9">
-                                        <select required data-district="{{$districts}}" id="district" class="form-control" name="district_id">
-                                            @foreach($districts as $district)
-                                                @if(($user_address->city_id == $district->city_id))
-                                                    <option @if(($user_address->district_id == $district->id)) selected="selected" @endif data-city-id="{{$district->city_id}}" value="{{$district->id}}">{{$district->name}}</option>
-                                                @endif
-                                            @endforeach
-                                        </select>
+                                        @if($user_address->district_id)
+                                            <select required data-district="{{$districts}}" id="district" class="form-control" name="district_id">
+                                                @foreach($districts as $district)
+                                                    @if(($user_address->city_id == $district->city_id))
+                                                        <option @if(($user_address->district_id == $district->id)) selected="selected" @endif data-city-id="{{$district->city_id}}" value="{{$district->id}}">{{$district->name}}</option>
+                                                    @endif
+                                                @endforeach
+                                            </select>
+                                        @else
+                                            <select disabled required data-district="{{$districts}}" id="district" class="form-control" name="district_id">
+                                                @foreach($districts as $district)
+                                                        <option data-city-id="{{$district->city_id}}" value="{{$district->id}}">{{$district->name}}</option>
+                                                @endforeach
+                                            </select>
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     {!! Form::label('district_id', 'Quận', array('class'=>'col-sm-3 control-label'))!!}
                                     <div class="col-sm-9">
-                                        <select required id="wardId" class="form-control" name="ward_id">
-                                            <option value="">Chọn phường/xã</option>
-                                            @foreach($wards as $ward)
-                                                <option @if(($user_address->ward_id == $ward->id)) selected="selected" @endif value="{{$ward->id}}">{{$ward->name}}</option>
-                                            @endforeach
-                                        </select>
+                                        @if($user_address->district_id)
+                                            <select required id="wardId" class="form-control" name="ward_id">
+                                                <option value="">Chọn phường/xã</option>
+                                                @foreach($wards as $ward)
+                                                    <option @if(($user_address->ward_id == $ward->id)) selected="selected" @endif value="{{$ward->id}}">{{$ward->name}}</option>
+                                                @endforeach
+                                            </select>
+                                        @else
+                                            <select required id="wardId" class="form-control" disabled name="ward_id">
+                                                <option value="">Chọn phường/xã</option>
+                                            </select>
+                                        @endif
                                     </div>
                                 </div>
                             </div>
