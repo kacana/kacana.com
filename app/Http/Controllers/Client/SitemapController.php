@@ -127,7 +127,7 @@ class SitemapController extends BaseController {
                     array_push($images, $image);
                 }
 
-            $sitemap_posts->add('/tin-tuc/'.str_slug($post->title).'.'.$post->id, $post->updated_at, '0.9', 'daily', $images);
+            $sitemap_posts->add(\URL::to('/tin-tuc/'.str_slug($post->title).'.'.$post->id), $post->updated_at, '0.9', 'daily', $images);
         }
 
         return $sitemap_posts->render('xml');
