@@ -33,6 +33,14 @@ class blogPostModel extends Model {
         return $this->belongsToMany('App\models\tagModel', 'blog_post_tag', 'post_id', 'tag_id')->withPivot('type');
     }
 
+    /**
+     * Get the galleries associated with product
+     */
+    public function galleries()
+    {
+        return $this->hasMany('App\models\blogPostGalleryModel', 'post_id', 'id');
+    }
+
     public function createItem($title, $tagId, $userId){
         $post = new blogPostModel();
         $post->title = $title;
@@ -103,7 +111,7 @@ class blogPostModel extends Model {
     }
 
     public function getItemById($id){
-        return $this->find($id);
+        return $this->where('blog_posts.status', KACANA_BLOG_POST_STATUS_ACTIVE)->find($id);
     }
 
     public function getImageAttribute($value)
@@ -136,6 +144,10 @@ class blogPostModel extends Model {
         ->where('blog_posts.status', KACANA_BLOG_POST_STATUS_ACTIVE);
 
         return $posts->paginate($limit);
+    }
+
+    public function getALlPostAvailable(){
+        return $this->where('blog_posts.status', KACANA_BLOG_POST_STATUS_ACTIVE)->get();
     }
 
 }

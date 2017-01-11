@@ -1,5 +1,6 @@
 <?php namespace App\Http\Controllers\Client;
 
+use App\services\blogService;
 use App\services\productService;
 use App\services\tagService;
 use App\services\trackingService;
@@ -23,6 +24,7 @@ class SitemapController extends BaseController {
         $sitemap->addSitemap(\URL::to('sitemap-pages.xml'), date("F j, Y, g:i a"));
         $sitemap->addSitemap(\URL::to('sitemap-tags.xml'), date("F j, Y, g:i a"));
         $sitemap->addSitemap(\URL::to('sitemap-products.xml'), date("F j, Y, g:i a"));
+        $sitemap->addSitemap(\URL::to('sitemap-posts.xml'), date("F j, Y, g:i a"));
 
         // show sitemap
         return $sitemap->render('sitemapindex');
@@ -102,4 +104,34 @@ class SitemapController extends BaseController {
 
         return $sitemap_products->render('xml');
     }
+
+    public function sitemapPosts(){
+        $blogService = new blogService();
+
+        $post = $blogService->getALlPostAvailable();
+
+        $sitemap_posts = \App::make("sitemap");
+
+//        set cache
+        $sitemap_posts->setCache('__sitemap_posts__', 3600);
+
+        foreach ($post as $post)
+        {
+            $images = [
+                ['url' => 'http:'.$post->image, 'title' => $post->title, 'caption' => $post->title],
+            ];
+            if(count($post->galleries))
+                foreach ($post->galleries as $gallery)
+                {
+                    $image = ['url' => 'http:'.$gallery->image, 'title' => $post->title, 'caption' => $post->title];
+                    array_push($images, $image);
+                }
+
+            $sitemap_posts->add('/tin-tuc/'.str_slug($post->title).'.'.$post->id, $post->updated_at, '0.9', 'daily', $images);
+        }
+
+        return $sitemap_posts->render('xml');
+
+    }
+
 }

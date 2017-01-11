@@ -225,6 +225,10 @@ class blogService {
         return $this->_blogPost->getListPost($limit, $offset, $tagId, $exclude);
     }
 
+    public function getALlPostAvailable(){
+        return $this->_blogPost->getALlPostAvailable();
+    }
+
     public function trackUserPostView($postId, $ip){
         $this->_blogPostView->createItem(['post_id' => $postId, 'ip' => $ip]);
     }

@@ -16,6 +16,14 @@ class blogPostGalleryModel extends Model  {
     protected $table = 'blog_post_gallery';
     public $timestamps = false;
 
+    /**
+     * Get the tags associated with product
+     */
+    public function post()
+    {
+        return $this->belongsTo('App\models\blogPostModel');
+    }
+
     public function getImagesPostByPostId($pid, $type = false)
     {
         $images =  $this->where('post_id',$pid)->orderBy('id','desc');

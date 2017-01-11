@@ -35,7 +35,8 @@ Route::group(['prefix' => 'auth/'], function(){
 Route::any('/sitemap.xml',                                      array('as'=>'sitemap',                   'uses'=>'Client\SitemapController@index'));
 Route::any('/sitemap-tags.xml',                                 array('as'=>'sitemap-tags.xml',          'uses'=>'Client\SitemapController@sitemapTags'));
 Route::any('/sitemap-products.xml',                             array('as'=>'sitemap-products.xml',      'uses'=>'Client\SitemapController@sitemapProducts'));
-Route::any('/sitemap-pages.xml',                               array('as'=>'sitemap-pages.xml',        'uses'=>'Client\SitemapController@sitemapPages'));
+Route::any('/sitemap-pages.xml',                                array('as'=>'sitemap-pages.xml',        'uses'=>'Client\SitemapController@sitemapPages'));
+Route::any('/sitemap-posts.xml',                                array('as'=>'sitemap-posts.xml',        'uses'=>'Client\SitemapController@sitemapPosts'));
 
 /*********************************************************
  *

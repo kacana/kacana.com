@@ -731,7 +731,8 @@ class productModel extends Model  {
         return $products->get();
     }
 
-    public function getProductValid($productId){
+    public function getProductValid($productId)
+    {
         $products = $this->join('product_tag', 'products.id', '=', 'product_tag.product_id')
             ->leftJoin('tag_relations', 'product_tag.tag_id', '=', 'tag_relations.child_id')
             ->where('tag_relations.status', '=', TAG_RELATION_STATUS_ACTIVE)
@@ -740,9 +741,7 @@ class productModel extends Model  {
             ->where('products.id', '=', $productId)
             ->select(['products.*', 'product_tag.*']);
 
-            return $products->first();
+        return $products->first();
     }
-
-
 
 }
