@@ -778,7 +778,9 @@ class productService {
         foreach ($products as $product)
         {
             $link = 'http://kacana.vn/san-pham/' . str_slug($product->name) . '--' . $product->id . '--' . $product->tag_id;
-            fputcsv($fp, [$product->id, $product->tag_id, $product->name, $link, 'http:'.$product->image, $product->name, $product->short_description, '', formatMoney($product->sell_price, ' VND')]);
+            $image = 'http:'.AWS_CDN_URL.str_replace(' ', '%20',$product->getOriginal('image'));
+
+            fputcsv($fp, [$product->id, $product->tag_id, $product->name, $link, $image, $product->name, $product->short_description, '', formatMoney($product->sell_price, ' VND')]);
         }
 
         fclose($fp);
