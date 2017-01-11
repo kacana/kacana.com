@@ -431,6 +431,7 @@ class tagModel extends Model  {
         $query = $this->where('tags.name', 'LIKE', "%".$searchString."%")
             ->join('product_tag', 'tags.id', '=', 'product_tag.tag_id')
             ->join('tag_relations', 'product_tag.tag_id', '=', 'tag_relations.child_id')
+            ->join('products', 'products.id', '=', 'product_tag.product_id')
             ->where('tag_relations.status', '=', TAG_RELATION_STATUS_ACTIVE)
             ->where('products.status', '=', KACANA_PRODUCT_STATUS_ACTIVE)
             ->groupBy('tags.id')
