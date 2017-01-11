@@ -104,8 +104,8 @@ class blogPostModel extends Model {
          */
         return array(
             "draw"            => intval( $request['draw'] ),
-            "recordsTotal"    => intval( $selectLength->count() ),
-            "recordsFiltered" => intval( $recordsFiltered->count() ),
+            "recordsTotal"    => count( $selectLength->get() ),
+            "recordsFiltered" => count( $recordsFiltered->get() ),
             "data"            => $selectData->get()
         );
     }
