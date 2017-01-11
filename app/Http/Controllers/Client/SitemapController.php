@@ -50,6 +50,7 @@ class SitemapController extends BaseController {
         $sitemap_tags = \App::make("sitemap");
 
         $mainTags = $tagService->getRootTag();
+        $allTags = $tagService->getAllTagHaveProduct();
 
 
         $tagIdCheck = [];
@@ -60,14 +61,14 @@ class SitemapController extends BaseController {
 
             $tagChilds = $tagService->getAllChildTagHaveProduct($tag->id);
             array_push($tagIdCheck , $tag->id);
+        }
 
-            foreach ($tagChilds as $tagChild)
+        foreach ($allTags as $tagChild)
+        {
+            if(!in_array($tagChild->id, $tagIdCheck))
             {
-                if(!in_array($tagChild->id, $tagIdCheck))
-                {
-                    array_push($tagIdCheck , $tagChild->id);
-                    $sitemap_tags->add(urlTag($tagChild), $tagChild->updated, '0.8', 'weekly');
-                }
+                array_push($tagIdCheck , $tagChild->id);
+                $sitemap_tags->add(urlTag($tagChild), $tagChild->updated, '0.8', 'weekly');
             }
         }
 

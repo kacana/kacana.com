@@ -423,7 +423,7 @@ class orderService {
     public function cancelOrder($orderId, $userId, $status){
         $order = $this->_orderModel->getById($orderId);
 
-        if(($order->status == KACANA_ORDER_STATUS_NEW || $order->status == KACANA_ORDER_PARTNER_STATUS_NEW))
+        if(($order->status == KACANA_ORDER_STATUS_NEW || $order->status == KACANA_ORDER_PARTNER_STATUS_NEW || $order->status == KACANA_ORDER_STATUS_QUICK_ORDER))
         {
             if($status == KACANA_ORDER_PARTNER_STATUS_CANCEL && $order->user_id == $userId)
                 $order->updateItem($orderId, ['status' => $status]);
