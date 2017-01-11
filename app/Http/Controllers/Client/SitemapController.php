@@ -44,8 +44,8 @@ class SitemapController extends BaseController {
 
 	public function sitemapTags(Request $request)
     {
-        set_time_limit(300);
         $tagService = new tagService();
+        $productService = new productService();
 
         // create sitemap
         $sitemap_tags = \App::make("sitemap");
@@ -59,10 +59,9 @@ class SitemapController extends BaseController {
         foreach ($mainTags as $tag)
         {
             $sitemap_tags->add(urlTag($tag), $tag->updated, '0.9', 'weekly');
-
-            $tagChilds = $tagService->getAllChildTagHaveProduct($tag->id);
             array_push($tagIdCheck , $tag->id);
         }
+
 
         foreach ($allTags as $tagChild)
         {
