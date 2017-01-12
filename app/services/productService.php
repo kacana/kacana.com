@@ -600,7 +600,7 @@ class productService {
     public function getNewestProduct($userId = 0, $offset = 0, $limit = KACANA_HOMEPAGE_ITEM_PER_TAG ){
         $productModel = new productModel();
         $userProductLike = new userProductLikeModel();
-        $products = $productModel->getNewestProduct($offset, $limit);
+        $products = $productModel->getNewestProduct($offset, 6);
 
 
             foreach($products as &$product){
@@ -843,6 +843,18 @@ class productService {
         }
         return $products;
 
+    }
+
+    public function sortProductGallery($imageIds){
+        $productGalleryModel = new productGalleryModel();
+
+        for($i = 0; $i < count($imageIds); $i++)
+        {
+            $order = $i+1;
+            $productGalleryModel->updateOrder($imageIds[$i], $order);
+        }
+
+        return true;
     }
 
     public function fixProductPrice(){

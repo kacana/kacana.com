@@ -42,7 +42,7 @@ class productGalleryModel extends Model  {
 
     public function getImagesProductByProductId($pid, $type = false)
     {
-        $images =  $this->where('product_id',$pid)->orderBy('id','desc');
+        $images =  $this->where('product_id',$pid)->orderBy('order','asc');
 
         if($type)
         {
@@ -107,6 +107,12 @@ class productGalleryModel extends Model  {
 
     public function updateImage($id, $image){
         $item['image'] = $image;
+
+        return $this->where('id', $id)->update($item);
+    }
+
+    public function updateOrder($id, $order = 0){
+        $item['order'] = $order;
 
         return $this->where('id', $id)->update($item);
     }

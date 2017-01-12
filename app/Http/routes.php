@@ -76,6 +76,7 @@ Route::group(['domain'=>KACANA_AUTH_ADMIN_NAME.'.{nameDomain}','middleware' => '
     Route::post('/product/createBaseProduct',               array('as'=>'CreateBaseProduct',        'uses'=>'Admin\ProductController@createBaseProduct'));
     Route::post('/product/countSearchProductByTagId',       array('as'=>'countSearchProductByTagId','uses'=>'Admin\ProductController@countSearchProductByTagId'));
     Route::post('/product/createCSVForRemarketing',         array('as'=>'createCSVForRemarketing','uses'=>'Admin\ProductController@createCSVForRemarketing'));
+    Route::post('/product/sortProductGallery',              array('as'=>'product.sort.product.gallery','uses'=>'Admin\ProductController@sortProductGallery'));
 
     //branch
     Route::any('/product/branch',                           array('as'=>'listBranches',             'uses'=>'Admin\BranchController@index'));

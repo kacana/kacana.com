@@ -204,8 +204,8 @@
                                                 <div class="product-image-item" data-id="{{$image->id}}" data-type="{{$image->type}}" >
                                                     <img src="{{$image->image}}" class="product-image">
                                                     <div class="product-image-tool" >
-                                                        <a title="chọn làm hình slide" class="{{($image->type==PRODUCT_IMAGE_TYPE_SLIDE)?'active':''}}" href="#setSlideImage" ><i class="fa fa-star" ></i></a>
-                                                        <a href="#deleteImage" ><i class="fa fa-trash" ></i></a>
+                                                        <a title="chọn làm hình slide" class="{{($image->type==PRODUCT_IMAGE_TYPE_SLIDE)?'active':''}} pull-left" href="#setSlideImage" ><i class="ion-ios-circle-filled" ></i></a>
+                                                        <a class="pull-right" href="#deleteImage" ><i class="ion-trash-b" ></i></a>
                                                     </div>
                                                 </div>
                                             @endif

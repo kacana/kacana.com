@@ -247,4 +247,22 @@ class ProductController extends BaseController {
         }
         return response()->json($return);
     }
+
+    public function sortProductGallery(Request $request){
+        $productService = new productService();
+
+        $imageIds = $request->input('imageIds');
+        $productId =  $request->input('productId');
+
+        try {
+            $return['data'] = $productService->sortProductGallery($imageIds, $productId);
+            $return['ok'] = 1;
+        } catch (\Exception $e) {
+            // @codeCoverageIgnoreStart
+            $return['error'] = $e->getMessage();
+            $return['errorMsg'] = $e->getMessage();
+            // @codeCoverageIgnoreEnd
+        }
+        return response()->json($return);
+    }
 }

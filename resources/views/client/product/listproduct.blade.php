@@ -68,7 +68,7 @@
             <div class="container background-white vpadding-10 margin-top-10px">
                 <div class="row">
                     <div class="col-md-12">
-                        <h3 class="color-grey">Sản phẩm nổi bật</h3>
+                        <h3 class="color-grey">Có thể bạn quan tâm</h3>
                         @foreach($tag->allChilds as $subTag)
                             <a class="color-grey-light tag-relation-suggestion" href="{{urlTag($subTag)}}" >
                                 <span class="tag-name">{{$subTag->name}}</span>

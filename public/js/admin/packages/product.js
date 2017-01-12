@@ -275,7 +275,31 @@ var productPackage = {
 
                 $page.on('click','#add-group-tag-to-product-tag', Kacana.product.detail.addGroupTagToProductTag);
                 $page.on('click','#remove-group-tag-from-product-tag', Kacana.product.detail.removeGroupTagFromProductTag);
+                $('#product-image-detail .list-product-image').sortable({
+                    placeholder: "product-image-item-holder",
+                    stop: function( ) {
+                        Kacana.product.detail.sortProductGallery();
+                    }
+                });
+            },
+            sortProductGallery: function () {
+                var listImage = $('#product-image-detail .list-product-image');
+                var imageIds = [];
+                listImage.find('.product-image-item').each(function () {
+                    imageIds.push($(this).data('id'));
+                });
 
+                var callback = function(data){
+                    if(data.ok)
+                    {
+                        console.log('Done sort');
+                    }
+                };
+                var errorCallback = function(){
+                    // do something here if error
+                };
+
+                Kacana.ajax.product.sortProductGallery(imageIds, $('#productId').val(), callback, errorCallback);
             },
             simpleNoteUploadImageCallback: function(up, file, info, $areaEditorImageUpload) {
                 var data = jQuery.parseJSON(info.response);
@@ -498,6 +522,7 @@ var productPackage = {
                         {
                             $('.product-image-item[data-id="'+imageId+'"]').remove();
                             Kacana.product.detail.removeImageFromProperties(imageId);
+                            Kacana.product.detail.sortProductGallery();
                         }
                     }
                 }
@@ -705,8 +730,8 @@ var productPackage = {
                                     var $image = '<div id="add_new_image_'+file.id+'" class="product-image-item" data-type="3" data-id="0">';
                                     $image +=       '<img class="product-image" src="'+e.target.result+'">';
                                     $image +=       '<div class="product-image-tool">';
-                                    $image +=           '<a class="active" href="#setSlideImage"><i class="fa fa-star"></i></a>';
-                                    $image +=           '<a href="#deleteImage"><i class="fa fa-trash"></i></a>';
+                                    $image +=           '<a class="active pull-left" href="#setSlideImage"><i class="ion-ios-circle-filled"></i></a>';
+                                    $image +=           '<a class="pull-right" href="#deleteImage"><i class="ion-trash-b"></i></a>';
                                     $image +=       '</div>';
                                     $image +=       '<div class="product-image-uploading">';
                                     $image +=           '<div class="overlay-iploading" >';
@@ -746,6 +771,7 @@ var productPackage = {
                                 $imageWrap.attr('data-id',data.data.id);
                                 $imageWrap.find('.product-image-uploading').remove();
                                 Kacana.product.detail.addImageToProperties(data.data);
+                                Kacana.product.detail.sortProductGallery();
                             }
                             else{
                                 $imageWrap.remove();

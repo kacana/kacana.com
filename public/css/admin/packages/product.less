@@ -6,25 +6,31 @@
       max-height: 1000px;
       overflow: auto;
       .product-image-item{
-        display: inline-block;
+        float: left;
         margin: 10px 10px 0 0;
         position: relative;
         border: 1px solid #ccc;
         border-radius: 2px;
         .product-image{
           border-radius: 2px;
-          height: 200px;
+          height: 150px;
+          width: 150px;
+          object-fit: cover;
         }
         .product-image-tool{
           position: absolute;
-          top: 5px;
-          right: 10px;
+          bottom: 0px;
+          right: 0;
+          width: 100%;
+          background: rgba(0, 0, 0, 0.5);
+          padding: 3px 12px;
           a{
-            margin-left: 10px;
-            font-size: 20px;
+            font-size: 15px;
+            color: #fff;
+            text-shadow: unset;
             &.active{
               i{
-                color: #f60;
+                color: @color-green;
               }
             }
           }
@@ -51,6 +57,13 @@
             top: 0;
           }
         }
+      }
+      .product-image-item-holder{
+        float: left;
+        height: 152px;
+        width: 152px;
+        margin: 10px 10px 0 0;
+        border: 2px dashed @color-green-light;
       }
     }
   }

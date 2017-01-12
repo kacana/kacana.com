@@ -186,6 +186,17 @@ var ajaxPackage = {
                 var dataPost ={};
                 var options = [];
                 Kacana.ajax.init(url, dataType, type, dataPost, callBack, errorCallBack, options);
+            },
+            sortProductGallery: function (imageIds, productId, callBack, errorCallBack) {
+                var url = '/product/sortProductGallery';
+                var dataType = 'json';
+                var type = 'post';
+                var dataPost ={
+                    imageIds: imageIds,
+                    productId: productId
+                };
+                var options = [];
+                Kacana.ajax.init(url, dataType, type, dataPost, callBack, errorCallBack, options);
             }
         },
         /*****************************************************************************
