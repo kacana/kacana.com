@@ -231,8 +231,6 @@ class productService {
         if($userId)
             $product->isLiked = ($userProductLike->getItem($userId, $product->id))?true:false;
 
-        $this->formatProductProperties($product);
-
         return $product;
     }
 

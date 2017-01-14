@@ -206,7 +206,7 @@ class blogService {
         $blogPostGallery = new blogPostGalleryModel();
         $productGalleryService = new productGalleryService();
         $prefixPath = '/images/blog/';
-        $post = $this->_blogPost->getItemById($id);
+        $post = $this->_blogPost->getItemById($id, false);
 
         $thumbPath = '';
         $newThumbPath = '';

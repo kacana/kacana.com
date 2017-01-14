@@ -298,20 +298,20 @@
                                             <label>Chọn màu</label>
                                             <select name="color[]" class="form-control properties-color">
                                                 @foreach($tagColor as $item)
-                                                    <option {{($property->color_id==$item->child_id)?'selected':''}} value="{{$item->child_id}}" >{{$item->name}}</option>
+                                                    <option {{($property->pivot->tag_color_id==$item->child_id)?'selected':''}} value="{{$item->child_id}}" >{{$item->name}}</option>
                                                 @endforeach
                                             </select>
                                         </div>
                                     </div>
                                     <div class="col-lg-2" >
                                         <label>chọn size</label>
-                                        <select name="size" class="form-control select-size" multiple size="3">
+                                        <select name="size" class="form-control select-size">
                                             @if($tagSize)
                                                 @foreach($tagSize as $item)
                                                     @if($item->childs)
                                                         <optgroup label="{{$item->name}}">
                                                             @foreach($item->childs as $child)
-                                                                <option {{(in_array($child->child_id, $property->sizeIds))?'selected':''}} value="{{$child->child_id}}" >{{$child->name}}</option>
+                                                                <option {{($child->child_id == $property->pivot->tag_size_id)?'selected':''}} value="{{$child->child_id}}" >{{$child->name}}</option>
                                                             @endforeach
                                                         </optgroup>
                                                     @endif
