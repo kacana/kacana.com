@@ -250,89 +250,105 @@
                                         </div>
                                     @endif
                                 </div>
-
                             </div>
                         </div>
                     </div>
                     <div class="col-xs-12">
                         <div class="box box-primary"> <!-- Search results -->
                             <div class="box-header with-border">
-                                <h3 class="box-title">Thuộc tính sản phẩm</h3>
-                                <div class="box-tools pull-left">
-                                    <button class="btn btn-primary btn-sm" data-target="#add-product-property" data-toggle="modal">
-                                        <i class="fa fa-plus"></i> thêm thuộc tính
-                                    </button>
-                                </div>
+                                <h3 class="box-title">Thông tin sản phẩm</h3>
                             </div><!-- /.box-header -->
 
-                            <div class="modal-body list-product-property">
-                                <!-- property -->
-                                @if($product->properties)
-                                    @foreach($product->properties as $property)
-                                        <div class="row" >
-                                            <div class="col-xs-5" >
-                                                <div class="form-group">
-                                                    <label>Chọn màu</label>
-                                                    <select name="color[]" class="form-control properties-color">
-                                                        @foreach($tagColor as $item)
-                                                            <option {{($property->color_id==$item->child_id)?'selected':''}} value="{{$item->child_id}}" >{{$item->name}}</option>
-                                                        @endforeach
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-4" >
-                                                <label>chọn size</label>
-                                                <select name="size" class="form-control select-size" multiple size="3">
-                                                    @if($tagSize)
-                                                        @foreach($tagSize as $item)
-                                                            @if($item->childs)
-                                                                <optgroup label="{{$item->name}}">
-                                                                    @foreach($item->childs as $child)
-                                                                        <option {{(in_array($child->child_id, $property->sizeIds))?'selected':''}} value="{{$child->child_id}}" >{{$child->name}}</option>
-                                                                    @endforeach
-                                                                </optgroup>
-                                                            @endif
-                                                        @endforeach
-                                                    @endif
-                                                </select>
-                                            </div>
-                                            <div class="col-xs-2" >
-                                                <div class="form-group wrapper-properties-image">
-                                                    <label>Chọn hình</label>
-                                                    @if($property->product_gallery_id)
-                                                        <button class="btn btn-success btn-sm" data-target="#modal-add-image-product-properties" data-toggle="modal">
-                                                            <i class="fa fa-pencil"></i> chọn lại
-                                                        </button>
-                                                    @else
-                                                        <button class="btn btn-primary btn-sm" data-target="#modal-add-image-product-properties" data-toggle="modal">
-                                                            <i class="fa fa-plus"></i> hình ảnh
-                                                        </button>
-                                                    @endif
-                                                    <input name="productGalleryId[]" type="text" class="hide" value="{{$property->product_gallery_id}}" >
-                                                </div>
-                                            </div>
-                                            <div class="col-xs-1" >
-                                                <div class="form-group">
-                                                    <label>xoá</label>
-                                                    <button class="btn btn-danger btn-sm" href="#remove-product-property" data-toggle="modal">
-                                                        <i class="fa fa-remove"></i>
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    @endforeach
-                                @endif
-                            </div>
-                            <div class="modal-footer">
-                                <a class="btn btn-default" href="/product">Huỷ</a>
-                                <button type="submit" id="btn-update"class="btn btn-primary">Cập nhật</button>
+                            <div class="modal-body">
+                                {!! Form::label('property_description', 'Miêu tả đặc tính sản phẩm') !!}
+                                <div class="form-group">
+                                    <div class="kacana-editor-content" data-table="products" data-field="property_description" data-id="{{$product->id}}" contenteditable="true" name="property_description" id="property_description">
+                                        @if($product->property_description)
+                                            {!! $product->getOriginal('property_description') !!}
+                                        @else
+                                            {!! '<p>+ Màu sắc: </p><p>+ Chất liệu:</p><p>+ Kích thước:<br>   - Chiều ngang: <br>   - Chiều cao:<br>   - Đáy:</p>' !!}
+                                        @endif
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="box box-primary"> <!-- Search results -->
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Thuộc tính sản phẩm</h3>
+                        <div class="box-tools pull-left">
+                            <button class="btn btn-primary btn-sm" data-target="#add-product-property" data-toggle="modal">
+                                <i class="fa fa-plus"></i> thêm thuộc tính
+                            </button>
+                        </div>
+                    </div><!-- /.box-header -->
 
+                    <div class="modal-body list-product-property">
+                        <!-- property -->
+                        @if($product->properties)
+                            @foreach($product->properties as $property)
+                                <div class="row" >
+                                    <div class="col-xs-3" >
+                                        <div class="form-group">
+                                            <label>Chọn màu</label>
+                                            <select name="color[]" class="form-control properties-color">
+                                                @foreach($tagColor as $item)
+                                                    <option {{($property->color_id==$item->child_id)?'selected':''}} value="{{$item->child_id}}" >{{$item->name}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-2" >
+                                        <label>chọn size</label>
+                                        <select name="size" class="form-control select-size" multiple size="3">
+                                            @if($tagSize)
+                                                @foreach($tagSize as $item)
+                                                    @if($item->childs)
+                                                        <optgroup label="{{$item->name}}">
+                                                            @foreach($item->childs as $child)
+                                                                <option {{(in_array($child->child_id, $property->sizeIds))?'selected':''}} value="{{$child->child_id}}" >{{$child->name}}</option>
+                                                            @endforeach
+                                                        </optgroup>
+                                                    @endif
+                                                @endforeach
+                                            @endif
+                                        </select>
+                                    </div>
+                                    <div class="col-xs-1" >
+                                        <div class="form-group wrapper-properties-image">
+                                            <label>Chọn hình</label><br>
+                                            @if($property->product_gallery_id)
+                                                <button class="btn btn-success btn-sm" data-target="#modal-add-image-product-properties" data-toggle="modal">
+                                                    <i class="fa fa-pencil"></i> chọn lại
+                                                </button>
+                                            @else
+                                                <button class="btn btn-primary btn-sm" data-target="#modal-add-image-product-properties" data-toggle="modal">
+                                                    <i class="fa fa-plus"></i> hình ảnh
+                                                </button>
+                                            @endif
+                                            <input name="productGalleryId[]" type="text" class="hide" value="{{$property->product_gallery_id}}" >
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-1" >
+                                        <div class="form-group">
+                                            <label>xoá</label><br>
+                                            <button class="btn btn-danger btn-sm" href="#remove-product-property" data-toggle="modal">
+                                                <i class="fa fa-remove"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endforeach
+                        @endif
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="row">
             <div class="col-xs-12">
                 <div class="box box-primary"> <!-- Search results -->
@@ -341,22 +357,6 @@
                     </div><!-- /.box-header -->
 
                     <div class="modal-body">
-                            <!-- property description
-                            <div class="form-group">
-                                {!! Form::label('property_description', 'Miêu tả đặc tính sản phẩm') !!}
-                                <div class="kacana-editor-content" contenteditable="true" name="property_description" id="property_description"><?php echo $product['property_description'];?></div>
-                            </div>
-                        -->
-                        <div class="form-group">
-                            {!! Form::label('meta', 'Thông tin cơ bản') !!}<br/>
-                            <div class="kacana-editor-content" data-table="products" data-field="property_description" data-id="{{$product->id}}" contenteditable="true" name="property_description" id="property_description">
-                                @if($product->property_description)
-                                    {!! $product->getOriginal('property_description') !!}
-                                @else
-                                    {!! '<p>+ Màu sắc: </p><p>+ Chất liệu:</p><p>+ Kích thước:<br>   - Chiều ngang: <br>   - Chiều cao:<br>   - Đáy:</p>' !!}
-                                @endif
-                            </div>
-                        </div>
                         <!-- description -->
                         <div class="form-group">
                             {!! Form::label('description', 'Mô tả chi tiết sản phẩm') !!}

@@ -110,8 +110,11 @@ class blogPostModel extends Model {
         );
     }
 
-    public function getItemById($id){
-        return $this->where('blog_posts.status', KACANA_BLOG_POST_STATUS_ACTIVE)->find($id);
+    public function getItemById($id, $status = KACANA_BLOG_POST_STATUS_ACTIVE){
+        if($status === false)
+            return $this->find($id);
+        else
+            return $this->where('blog_posts.status', $status)->find($id);
     }
 
     public function getImageAttribute($value)

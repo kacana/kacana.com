@@ -109,7 +109,8 @@ class BlogController extends BaseController {
                 $body =  $request->input('post_body', '');
                 $blogService->updateBlogPost($id, $title, $tagId, $status, $body, $postTags);
             }
-            $post = $blogService->getPostById($postId);
+            $post = $blogService->getPostById($postId, false);
+
             $tags = $tagService->getPostTag();
             $groupTag = $tagService->getTagGroup();
             return view('admin.blog.edit-post', array('post'=>$post, 'tags' => $tags, 'groupTag' => $groupTag));

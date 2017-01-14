@@ -119,8 +119,8 @@ class blogService {
         return $return;
     }
 
-    public function getPostById($postId){
-        $post = $this->_blogPost->getItemById($postId);
+    public function getPostById($postId, $status = KACANA_BLOG_POST_STATUS_ACTIVE){
+        $post = $this->_blogPost->getItemById($postId, $status);
 
         return $post;
     }
