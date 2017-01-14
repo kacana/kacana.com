@@ -452,50 +452,6 @@ var productPackage = {
                 });
             },
             limitColor: function(){
-                var $page = $('#product-detail-page');
-                var colorChoose = [];
-                $page.find('.properties-color').each(function(){
-                    if(!$(this).hasClass('new-property'))
-                        colorChoose.push($(this).val());
-                });
-
-                $page.find('.properties-color').each(function(){
-                    var colorId = $(this).val();
-                    var checkAvailableColor = false;
-                    var checkNew = $(this).hasClass('new-property');
-                    $(this).find('option').each(function(){
-                       var value = $(this).attr('value');
-                        if((value != colorId || checkNew) && jQuery.inArray(value, colorChoose) >= 0)
-                            $(this).hide()
-                        else
-                        {
-                            $(this).show();
-                            if(checkNew)
-                                $(this).attr('selected', true);
-                            checkAvailableColor = true;
-                        }
-                    });
-
-                    if(!checkAvailableColor)
-                    {
-                        swal({
-                            title: 'Lỗi rồi!',
-                            text: 'Opp! vui lòng thêm tag color tại quản lý tag color',
-                            type: 'error',
-                            confirmButtonText: 'Cool'
-                        });
-                        $(this).closest('.row').remove();
-                        return false;
-                    }
-                    else
-                        $(this).removeClass('new-property');
-                });
-                var sizeNumber = 0;
-                $page.find('.select-size').each(function(){
-                   $(this).attr('name', 'size['+sizeNumber+'][]');
-                    sizeNumber++;
-                });
-
             },
             updateProductImageType: function(){
                 var data = {};

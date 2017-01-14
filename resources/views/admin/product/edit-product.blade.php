@@ -3,16 +3,27 @@
 @section('title', 'Edit product: '.$product['name'])
 
 @section('content')
-    <section id="product-detail-page" class="content">
-        <div class="row">
-            <div class="col-xs-12">
-                <div class="box">
-                    <div class="box-header">
-                        <h3 class="box-title">{{$product['name']}}</h3>
-                    </div><!-- /.box-header -->
+    <section>
+        <div class="custom-box">
+            <div class="box-header">
+                <h3 class="box-title">Sản phẩm: {{$product['name']}}</h3>
+                <div class="box-tools pull-left ">
+                    <button class="btn btn-success btn-sm" type="button">
+                        Còn 4 sản phẩm trong kho
+                    </button>
+                    <button id="create-post-btn" class="btn btn-primary btn-sm create-post-btn" type="button">
+                        <i class="fa fa-exchange"></i>
+                        Nhập hàng
+                    </button>
+                    <button  class="btn btn-primary btn-sm" type="button">
+                        <i class="fa fa-exchange"></i>
+                        Chi tiết Nhập xuất
+                    </button>
                 </div>
             </div>
         </div>
+    </section>
+    <section id="product-detail-page" class="content">
         {!! Form::open(array('method'=>'post', 'id' =>'form-edit-product', 'onsubmit'=>true, 'enctype'=>"multipart/form-data")) !!}
         <div class="row" >
             <div class="col-xs-5">
@@ -290,34 +301,48 @@
 
                     <div class="modal-body list-product-property">
                         <!-- property -->
-                        @if($product->properties)
-                            @foreach($product->properties as $property)
+                        @if($product->productProperties)
+                            @foreach($product->productProperties as $property)
                                 <div class="row" >
                                     <div class="col-xs-3" >
                                         <div class="form-group">
                                             <label>Chọn màu</label>
                                             <select name="color[]" class="form-control properties-color">
+                                                <option value="0" >Chọn màu sắc sản phẩm</option>
                                                 @foreach($tagColor as $item)
-                                                    <option {{($property->pivot->tag_color_id==$item->child_id)?'selected':''}} value="{{$item->child_id}}" >{{$item->name}}</option>
+                                                    <option {{($property->tag_color_id==$item->child_id)?'selected':''}} value="{{$item->child_id}}" >{{$item->name}}</option>
                                                 @endforeach
                                             </select>
                                         </div>
                                     </div>
                                     <div class="col-lg-2" >
                                         <label>chọn size</label>
-                                        <select name="size" class="form-control select-size">
+                                        <select name="size[]" class="form-control select-size">
+                                            <option value="0" >Chọn kích thước sản phẩm</option>
                                             @if($tagSize)
                                                 @foreach($tagSize as $item)
                                                     @if($item->childs)
                                                         <optgroup label="{{$item->name}}">
                                                             @foreach($item->childs as $child)
-                                                                <option {{($child->child_id == $property->pivot->tag_size_id)?'selected':''}} value="{{$child->child_id}}" >{{$child->name}}</option>
+                                                                <option {{($child->child_id == $property->tag_size_id)?'selected':''}} value="{{$child->child_id}}" >{{$child->name}}</option>
                                                             @endforeach
                                                         </optgroup>
                                                     @endif
                                                 @endforeach
                                             @endif
                                         </select>
+                                    </div>
+                                    <div class="col-xs-2" >
+                                        <div class="form-group wrapper-properties-image">
+                                            <label>Giá bán | {{formatMoney($property->price )}}</label><br>
+                                            <input name="property_price[]" class="form-control" type="text" value="{{$property->price}}" >
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-1" >
+                                        <div class="form-group wrapper-properties-image">
+                                            <label>Số lượng</label><br>
+                                            <input disabled class="form-control" type="text" value="2" >
+                                        </div>
                                     </div>
                                     <div class="col-xs-1" >
                                         <div class="form-group wrapper-properties-image">

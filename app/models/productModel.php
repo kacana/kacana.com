@@ -69,7 +69,7 @@ class productModel extends Model  {
      */
     public function properties()
     {
-        return $this->belongsToMany('App\models\tagModel', 'product_properties', 'product_id', 'tag_color_id')->withPivot('product_gallery_id', 'tag_size_id');
+        return $this->belongsToMany('App\models\tagModel', 'product_properties', 'product_id', 'tag_color_id')->withPivot('product_gallery_id', 'tag_size_id', 'price');
     }
 
     /**
@@ -504,15 +504,15 @@ class productModel extends Model  {
      * @param $productGalleryId
      * @return bool
      */
-    public function addProductProperties($productId, $tagColorId, $tagSizeId, $productGalleryId){
+    public function addProductProperties($productId, $tagColorId, $tagSizeId, $productGalleryId, $price){
         $productProperties = DB::table('product_properties');
 
         $data = array(
             'product_id' => $productId,
             'tag_color_id' => $tagColorId,
             'tag_size_id' => $tagSizeId,
-            'product_gallery_id' => $productGalleryId
-
+            'product_gallery_id' => $productGalleryId,
+            'price' => $price
         );
 
         return $productProperties->insert($data);
@@ -743,5 +743,7 @@ class productModel extends Model  {
 
         return $products->first();
     }
+
+
 
 }

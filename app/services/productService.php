@@ -478,18 +478,10 @@ class productService {
         $productModel = new productModel();
         $productModel->removeProductProperties($id);
 
-        if(isset($data['color']) && count($data['color'])){
-            for($i= 0; $i < count($data['color']); $i++){
-                if(isset($data['size'][$i]) && count($data['size'][$i])){
-                    for($j = 0; $j< count($data['size'][$i]); $j++){
-                        $productModel->addProductProperties($id, $data['color'][$i], $data['size'][$i][$j], $data['productGalleryId'][$i]);
-                    }
-                }
-                else{
-                    $productModel->addProductProperties($id, $data['color'][$i], 0, $data['productGalleryId'][$i]);
-                }
-            }
+        for($i= 0; $i < count($data['color']); $i++){
+            $productModel->addProductProperties($id, $data['color'][$i], $data['size'][$i], $data['productGalleryId'][$i], $data['property_price'][$i]);
         }
+
     }
 
     /**
