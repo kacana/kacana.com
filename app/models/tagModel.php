@@ -434,6 +434,7 @@ class tagModel extends Model  {
             ->join('products', 'products.id', '=', 'product_tag.product_id')
             ->where('tag_relations.status', '=', TAG_RELATION_STATUS_ACTIVE)
             ->where('products.status', '=', KACANA_PRODUCT_STATUS_ACTIVE)
+            ->select(['tags.*'])
             ->groupBy('tags.id')
             ->take(10);
 
