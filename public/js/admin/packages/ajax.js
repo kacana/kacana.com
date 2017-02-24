@@ -197,6 +197,61 @@ var ajaxPackage = {
                 };
                 var options = [];
                 Kacana.ajax.init(url, dataType, type, dataPost, callBack, errorCallBack, options);
+            },
+            deleteProductProperty: function (propertyId, callBack, errorCallBack) {
+                var url = '/product/deleteProductProperty';
+                var dataType = 'json';
+                var type = 'post';
+                var dataPost ={
+                    propertyId: propertyId
+                };
+                var options = [];
+                Kacana.ajax.init(url, dataType, type, dataPost, callBack, errorCallBack, options);
+            },
+            getProductInfoByPropertyId: function (propertyId, callBack, errorCallBack) {
+                var url = '/product/getProductInfoByPropertyId';
+                var dataType = 'json';
+                var type = 'post';
+                var dataPost ={
+                    propertyId: propertyId
+                };
+                var options = [];
+                Kacana.ajax.init(url, dataType, type, dataPost, callBack, errorCallBack, options);
+            },
+            importProduct: function (propertyId, quantity, price, callBack, errorCallBack) {
+                var url = '/product/importProduct';
+                var dataType = 'json';
+                var type = 'post';
+                var dataPost ={
+                    propertyId: propertyId,
+                    price: price,
+                    quantity: quantity
+                };
+                var options = [];
+                Kacana.ajax.init(url, dataType, type, dataPost, callBack, errorCallBack, options);
+            },
+            deleteImportProduct: function (propertyId) {
+                var url = '/product/deleteImportProduct';
+                var dataType = 'json';
+                var type = 'post';
+                var dataPost ={
+                    propertyId: propertyId
+                };
+                var options = [];
+                Kacana.ajax.init(url, dataType, type, dataPost, callBack, errorCallBack, options);
+            },
+            updateImport: function (id, currentQuantity, quantity, price, callBack, errorCallBack) {
+                var url = '/product/updateImportProduct';
+                var dataType = 'json';
+                var type = 'post';
+                var dataPost ={
+                    importId: id,
+                    currentQuantity: currentQuantity,
+                    quantity: quantity,
+                    price: price
+                };
+                var options = [];
+                Kacana.ajax.init(url, dataType, type, dataPost, callBack, errorCallBack, options);
             }
         },
         /*****************************************************************************

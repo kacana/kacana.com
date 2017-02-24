@@ -107,7 +107,8 @@ class productModel extends Model  {
         $product->status = KACANA_PRODUCT_STATUS_INACTIVE;
         $product->created = date('Y-m-d H:i:s');
         $product->updated = date('Y-m-d H:i:s');
-        return $product->save();
+        $product->save();
+        return $product;
     }
 
     /**
@@ -233,6 +234,47 @@ class productModel extends Model  {
         );
     }
 
+    public function generateImportProductTable($request, $columns){
+
+        $datatables = new DataTables();
+
+        $limit = $datatables::limit( $request, $columns );
+        $order = $datatables::order( $request, $columns );
+        $where = $datatables::filter( $request, $columns );
+
+        // Main query to actually get the data
+        $selectData = DB::table('product_import')
+            ->leftJoin('product_properties', 'product_properties.id', '=', 'product_import.property_id')
+            ->leftJoin('products', 'products.id', '=', 'product_properties.product_id')
+            ->leftJoin('users', 'users.id', '=', 'product_import.user_id')
+            ->leftJoin('product_gallery', 'product_gallery.id', '=', 'product_properties.product_gallery_id')
+            ->select($datatables::pluck($columns, 'db'))
+            ->orderBy($order['field'], $order['dir'])
+            ->skip($limit['offset'])
+            ->take($limit['limit']);
+
+        // Data set length
+        $recordsFiltered = $selectLength = DB::table('product_import')
+            ->leftJoin('product_properties', 'product_properties.id', '=', 'product_import.property_id')
+            ->leftJoin('products', 'products.id', '=', 'product_properties.product_id')
+            ->leftJoin('users', 'users.id', '=', 'product_import.user_id')
+            ->select($datatables::pluck($columns, 'db'));
+
+        if($where){
+            $selectData->whereRaw($where);
+            $recordsFiltered->whereRaw($where);
+        }
+
+        /*
+         * Output
+         */
+        return array(
+            "draw"            => intval( $request['draw'] ),
+            "recordsTotal"    => intval( $selectLength->count() ),
+            "recordsFiltered" => intval( $recordsFiltered->count() ),
+            "data"            => $selectData->get()
+        );
+    }
     /*
      * generate product table boot model
      *

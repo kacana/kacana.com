@@ -11,14 +11,10 @@
                     <button class="btn btn-success btn-sm" type="button">
                         Còn 4 sản phẩm trong kho
                     </button>
-                    <button id="create-post-btn" class="btn btn-primary btn-sm create-post-btn" type="button">
-                        <i class="fa fa-exchange"></i>
-                        Nhập hàng
-                    </button>
-                    <button  class="btn btn-primary btn-sm" type="button">
+                    <a href="/product/exProduct/{{$product->id}}" target="_blank" class="btn btn-warning btn-sm" type="button">
                         <i class="fa fa-exchange"></i>
                         Chi tiết Nhập xuất
-                    </button>
+                    </a>
                 </div>
             </div>
         </div>
@@ -109,9 +105,7 @@
                                         </span>
                                         {!! Form::text('price_discount', $product['discount'], array('class' => 'form-control currency', 'placeholder' => 'Số tiền giảm giá')) !!}
                                     </div>
-                                    <!-- /input-group -->
                                 </div>
-                                <!-- /.col-lg-6 -->
                                 <div class="col-lg-6">
                                     <div class="input-group">
                                         <span class="input-group-addon">
@@ -119,9 +113,7 @@
                                         </span>
                                         <input id="format-price_discount" type="text" disabled="true" class="form-control">
                                     </div>
-                                    <!-- /input-group -->
                                 </div>
-                                <!-- /.col-lg-6 -->
                             </div>
                         </div>
 
@@ -307,17 +299,22 @@
                                     <div class="col-xs-3" >
                                         <div class="form-group">
                                             <label>Chọn màu</label>
-                                            <select name="color[]" class="form-control properties-color">
+                                            <select {{($property->quantity)?'disabled':''}} name="color[]" class="form-control properties-color">
                                                 <option value="0" >Chọn màu sắc sản phẩm</option>
                                                 @foreach($tagColor as $item)
                                                     <option {{($property->tag_color_id==$item->child_id)?'selected':''}} value="{{$item->child_id}}" >{{$item->name}}</option>
                                                 @endforeach
                                             </select>
+                                            @if($property->quantity > 0)
+                                                <input class="hidden" value="{{$property->tag_color_id}}" name="color[]" >
+                                                <input class="hidden" value="{{$property->tag_size_id}}" name="size[]" >
+                                            @endif
+                                            <input class="hidden" value="{{$property->id}}" name="productPropertyId[]" >
                                         </div>
                                     </div>
                                     <div class="col-lg-2" >
                                         <label>chọn size</label>
-                                        <select name="size[]" class="form-control select-size">
+                                        <select {{($property->quantity)?'disabled':''}} name="size[]" class="form-control select-size">
                                             <option value="0" >Chọn kích thước sản phẩm</option>
                                             @if($tagSize)
                                                 @foreach($tagSize as $item)
@@ -341,7 +338,7 @@
                                     <div class="col-xs-1" >
                                         <div class="form-group wrapper-properties-image">
                                             <label>Số lượng</label><br>
-                                            <input disabled class="form-control" type="text" value="2" >
+                                            <input disabled class="form-control" type="text" value="{{$property->quantity}}" >
                                         </div>
                                     </div>
                                     <div class="col-xs-1" >
@@ -361,15 +358,27 @@
                                     </div>
                                     <div class="col-xs-1" >
                                         <div class="form-group">
-                                            <label>xoá</label><br>
-                                            <button class="btn btn-danger btn-sm" href="#remove-product-property" data-toggle="modal">
-                                                <i class="fa fa-remove"></i>
-                                            </button>
+                                            <label>action</label><br>
+                                            @if(count($property->import))
+                                                <button title="sản phẩm đã phát đinh giao dich, không thể xoá" disabled class="btn btn-warning btn-sm">
+                                                    <i class="fa fa-download"></i>
+                                                </button>
+                                            @else
+                                                <a href="#remove-product-property" data-id="{{$property->id}}" class="btn btn-danger btn-sm">
+                                                    <i class="fa fa-trash"></i>
+                                                </a>
+                                            @endif
+                                            <a data-href="/product/printBarcode/{{$product->id}}/{{$property->id}}" href="#print-barcode" data-id="{{$property->id}}" class="btn btn-success btn-sm">
+                                                <i class="fa fa-barcode"></i>
+                                            </a>
                                         </div>
                                     </div>
                                 </div>
                             @endforeach
                         @endif
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" id="btn-update"class="btn btn-primary">Cập nhật thuộc tính</button>
                     </div>
                 </div>
             </div>

@@ -1,6 +1,7 @@
 <?php namespace App\services;
 
 use App\Http\Requests\Request;
+use App\models\productImportModel;
 use App\models\productModel;
 use App\models\productPropertiesModel;
 use App\models\productTagModel;
@@ -33,14 +34,16 @@ class productService {
     public function createBaseProduct($productName, $productPriceIm, $productPriceEx){
 
         $productModel = new productModel();
+        $productPropertiesModel = new productPropertiesModel();
 
         $item = array(
             'name' => $productName,
             'price' => $productPriceIm,
             'sell_price' => $productPriceEx
         );
-
-        return $productModel->createBaseProduct($item);
+        $product = $productModel->createBaseProduct($item);
+        $productPropertiesModel->createItem($product->id, 0, 0, 0, $product->sell_price);
+        return $product;
     }
 
     /**
@@ -93,6 +96,35 @@ class productService {
         return $return;
     }
 
+    public function  generateImportProductTable($request){
+        $productModel = new productModel();
+        $datatables = new DataTables();
+        $viewHelper = new ViewGenerateHelper();
+
+        $columns = array(
+            array( 'db' => 'product_import.id AS productImportId', 'dt' => 0 ),
+            array( 'db' => 'products.name AS productName', 'dt' => 1 ),
+            array( 'db' => 'product_gallery.image AS productImage', 'dt' => 2 ),
+            array( 'db' => 'product_import.price', 'dt' => 3 ),
+            array( 'db' => 'product_import.quantity', 'dt' => 4 ),
+            array( 'db' => 'users.name AS userName', 'dt' => 5 ),
+            array( 'db' => 'products.id', 'dt' => 6 ),
+            array( 'db' => 'product_import.property_id', 'dt' => 7 ),
+            array( 'db' => 'product_import.created_at AS product_import_created_at', 'dt' => 8 ),
+            array( 'db' => 'product_import.updated_at AS product_import_updated_at', 'dt' => 9 )
+        );
+
+        $return = $productModel->generateImportProductTable($request, $columns);
+
+        $return['data'] = $datatables::data_output( $columns, $return['data'] );
+
+        return $return;
+    }
+
+    /**
+     * @param $request
+     * @return array
+     */
     public function generateProductBootTable($request){
         $productModel = new productModel();
         $datatables = new DataTables();
@@ -112,7 +144,11 @@ class productService {
 
         return $return;
     }
-    
+
+    /**
+     * @param $request
+     * @return array
+     */
     public function reportDetailTableProductLike($request){
         $userProductLikeModel = new userProductLikeModel();
         $datatables = new DataTables();
@@ -132,6 +168,10 @@ class productService {
         return $return;
     }
 
+    /**
+     * @param $request
+     * @return array
+     */
     public function reportDetailTableProductView($request){
         $productViewModel = new productViewModel();
         $datatables = new DataTables();
@@ -200,6 +240,10 @@ class productService {
         return $count;
     }
 
+    /**
+     * @param $tagId
+     * @return int
+     */
     public function countProductByTagId($tagId){
         $tagCache = '__count_product_by_tag_id__';
         $productModel = new productModel();
@@ -230,6 +274,8 @@ class productService {
 
         if($userId)
             $product->isLiked = ($userProductLike->getItem($userId, $product->id))?true:false;
+
+        $this->formatProductProperties($product);
 
         return $product;
     }
@@ -304,6 +350,10 @@ class productService {
         return $product;
     }
 
+    /**
+     * @param $product
+     * @return mixed
+     */
     public function formatProductPropertiesWhenSearch(&$product){
         $tagService = new tagService();
         $product->image = AWS_CDN_URL.$product->image;
@@ -472,16 +522,47 @@ class productService {
 
     /**
      * @param $data
-     * @param $id
+     * @param $productId
+     * @return bool
      */
-    public function updateProductProperties($data, $id){
+    public function updateProductProperties($data, $productId){
         $productModel = new productModel();
-        $productModel->removeProductProperties($id);
+        $productPropertiesModel = new productPropertiesModel();
 
-        for($i= 0; $i < count($data['color']); $i++){
-            $productModel->addProductProperties($id, $data['color'][$i], $data['size'][$i], $data['productGalleryId'][$i], $data['property_price'][$i]);
+        for($i= 0; $i < count($data['productPropertyId']); $i++){
+            $propertyId = $data['productPropertyId'][$i];
+            if($propertyId)
+            {
+                $property = $productPropertiesModel->getItemById($propertyId);
+                $updateData = [];
+                if($property->quantity > 0)
+                {
+                    $updateData =[
+                        'product_gallery_id' => $data['productGalleryId'][$i],
+                        'price' => $data['property_price'][$i]
+                    ];
+                }
+                else
+                {
+                    $updateData =[
+                        'tag_color_id' => $data['color'][$i],
+                        'tag_size_id' => $data['size'][$i],
+                        'product_gallery_id' => $data['productGalleryId'][$i],
+                        'price' => $data['property_price'][$i]
+                    ];
+                }
+                $productPropertiesModel->updateItem($propertyId, $updateData);
+            }
+            else{
+                $productPropertiesModel->createItem($productId, $data['color'][$i], $data['size'][$i], $data['productGalleryId'][$i], $data['property_price'][$i]);
+            }
         }
+        return true;
+    }
 
+    public function deleteProductProperty($propertyId){
+        $productPropertiesModel = new productPropertiesModel();
+        return $productPropertiesModel->deleteItem($propertyId);
     }
 
     /**
@@ -728,16 +809,30 @@ class productService {
         return $results->toArray();
     }
 
+    /**
+     * @param $productId
+     * @param $userId
+     * @param $ip
+     */
     public function trackUserProductView($productId, $userId, $ip){
         $productViewModel = new productViewModel();
         $productViewModel->createItem(['product_id' => $productId, 'user_id' => $userId, 'ip' => $ip]);
     }
 
+    /**
+     * @param bool $duration
+     * @return mixed
+     */
     public function getCountProductView($duration = false){
         $productViewModel = new productViewModel();
         return $productViewModel->countProductView($duration);
     }
 
+    /**
+     * @param $dateRange
+     * @param $type
+     * @return mixed
+     */
     public function getProductViewReport($dateRange, $type){
         $productViewModel = new productViewModel();
         if(!$dateRange)
@@ -755,6 +850,9 @@ class productService {
         return $productViewModel->reportProductView($startTime, $endTime, $type);
     }
 
+    /**
+     * @return bool
+     */
     public function createCsvBD(){
         $productModel = new productModel();
         $products = $productModel->getProductToCreateCsv();
@@ -778,16 +876,31 @@ class productService {
         return true;
     }
 
+    /**
+     * @param $name
+     * @return bool
+     */
     public function searchProductByName($name){
         $productModel = new productModel();
         return $productModel->suggestSearchProduct($name);
     }
 
+    /**
+     * @return mixed
+     */
     public function getAllProductAvailable(){
         $productModel = new productModel();
         return $productModel->getProductToCreateCsv();
     }
 
+    /**
+     * @param $productId
+     * @param $descPost
+     * @param $images
+     * @param $userId
+     * @return array
+     * @throws \Exception
+     */
     public function postProductToFacebook($productId, $descPost, $images, $userId){
         $productModel = new productModel();
         $userSocialModel = new userSocialModel();
@@ -814,6 +927,12 @@ class productService {
         return $facebook->postFeed($arrayFbMedia, $descPost);
     }
 
+    /**
+     * @param $productIds
+     * @param $userId
+     * @return mixed
+     * @throws \Exception
+     */
     public function getProductsToBoot($productIds, $userId){
         $productModel = new productModel();
         $util = new Util();
@@ -835,6 +954,10 @@ class productService {
 
     }
 
+    /**
+     * @param $imageIds
+     * @return bool
+     */
     public function sortProductGallery($imageIds){
         $productGalleryModel = new productGalleryModel();
 
@@ -847,6 +970,60 @@ class productService {
         return true;
     }
 
+    public function getProductProperty($id){
+        $productPropertiesModel = new productPropertiesModel();
+        $property = $productPropertiesModel->getItemById($id);
+
+        if($property)
+        {
+            $property->colorObject = $property->color;
+            $property->sizeObject = $property->size;
+            $property->galleryObject = $property->gallery;
+            $property->productObject = $property->product;
+        }
+
+        return $property;
+    }
+
+    public function createImportProduct($propertyId, $quantity, $price, $userId){
+        $productImportModel = new productImportModel();
+        $this->incrementQuantityProductProperty($propertyId, $quantity);
+        return $productImportModel->createItem($propertyId, $quantity, $price, $userId);
+    }
+
+    public function updateImportProduct($importId, $quantity, $price, $userId){
+        $productImportModel = new productImportModel();
+        $productPropertiesModel = new productPropertiesModel();
+
+        $import = $productImportModel->getItem($importId);
+        $property = $productPropertiesModel->getItemById($import->property_id);
+
+        $quantityChange = $quantity - $import->quantity;
+        $totalQuantity = $property->quantity;
+
+        if($totalQuantity + $quantityChange < 0)
+            return false;
+
+        $dataImport = ['quantity'=> $quantity, 'price' => $price];
+        $productImportModel->updateItem($importId, $dataImport);
+        $this->incrementQuantityProductProperty($property->id, $quantityChange);
+
+        return true;
+    }
+
+    public function incrementQuantityProductProperty($propertyId, $value){
+        $productPropertyModal = new productPropertiesModel();
+        return $productPropertyModal->incrementQuantityProductProperty($propertyId, $value);
+    }
+
+    public function decrementQuantityProductProperty($propertyId, $value){
+        $productPropertyModal = new productPropertiesModel();
+        return $productPropertyModal->decrementQuantityProductProperty($propertyId, $value);
+    }
+
+    /**
+     *
+     */
     public function fixProductPrice(){
 //        $productModel = new productModel();
 //        $productGalleryModel = new productGalleryModel();

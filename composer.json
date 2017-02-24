@@ -22,7 +22,8 @@
 		"roumen/sitemap": "2.6.*",
 		"vinelab/url-shortener": "*",
 		"pda/pheanstalk": "~3.0",
-		"pusher/pusher-php-server": "^2.2"
+		"pusher/pusher-php-server": "^2.2",
+		"milon/barcode": "^5.1"
 	},
 
 	"require-dev": {

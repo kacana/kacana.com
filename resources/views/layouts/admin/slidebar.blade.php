@@ -19,7 +19,13 @@ $action = getActionName(class_basename(Route::currentRouteAction()));
                 <i class="fa fa-angle-left pull-right"></i>
             </a>
             <ul class="treeview-menu">
-                <li class="{{($controller == 'ProductController') ? 'active':''}}"><a href="{{URL::to('/product')}}"><i class="fa fa-circle-o"></i> Sản Phẩm</a></li>
+                <li class="{{($controller == 'ProductController' && ($action == 'index' || $action == 'editProduct' )) ? 'active':''}}"><a href="{{URL::to('/product')}}"><i class="fa fa-circle-o"></i> Sản Phẩm</a></li>
+            </ul>
+            <ul class="treeview-menu">
+                <li class="{{($controller == 'ProductController' && $action == 'imProduct') ? 'active':''}}"><a href="{{URL::to('/product/imProduct')}}"><i class="fa fa-download"></i> Nhập hàng</a></li>
+            </ul>
+            <ul class="treeview-menu">
+                <li class="{{($controller == 'ProductController' && $action == 'exProduct') ? 'active':''}}"><a href="{{URL::to('/product/exProduct')}}"><i class="fa fa-upload"></i> Bán hàng</a></li>
             </ul>
         </li>
 

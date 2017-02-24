@@ -59,24 +59,32 @@ Route::group(['domain'=>KACANA_AUTH_ADMIN_NAME.'.{nameDomain}','middleware' => '
     Route::any('/index/reportDetailTableTrackingSearch',    array('as'=>'reportDetailTableTrackingSearch',      'uses'=>'Admin\IndexController@reportDetailTableTrackingSearch'));
 
     //product
-    Route::any('/product',                                  array('as'=>'listProducts',             'uses'=>'Admin\ProductController@index'));
-    Route::any('/product/generateProductTable',             array('as'=>'generateProductTable',     'uses'=>'Admin\ProductController@generateProductTable'));
-    Route::any('/product/generateProductTagTable',          array('as'=>'generateProductTagTable',  'uses'=>'Admin\ProductController@generateProductTagTable'));
-    Route::any('/product/getProductTreeMenu',               array('as'=>'getProductTreeMenu',       'uses'=>'Admin\ProductController@getProductTreeMenu'));
-    Route::any('/product/getProduct',                       array('as'=>'getProducts',              'uses'=>'Admin\ProductController@getProduct'));
-    Route::any('/product/createProduct',                    array('as'=>'createProduct',            'uses'=>'Admin\ProductController@createProduct'));
-    Route::any('/product/editProduct/{id}',                 array('as'=>'editProduct',              'uses'=>'Admin\ProductController@editProduct'));
-    Route::get('/product/removeProduct/{id}',               array('as'=>'removeProduct',            'uses'=>'Admin\ProductController@removeProduct'));
-    Route::any('/product/uploadImageDescription',           array('as'=>'uploadImageDescription',   'uses'=>'Admin\ProductController@uploadImageDescription'));
-    Route::any('/product/listTags/',                        array('as'=>'ProductTags',              'uses'=>'Admin\ProductController@listTags'));
-    Route::get('/product/setStatus/{id}/{status}',          array('as'=>'setStatusProduct',         'uses'=>'Admin\ProductController@setStatus'));
-    Route::post('/product/addProductImage',                 array('as'=>'addProductImage',          'uses'=>'Admin\ProductController@addProductImage'));
-    Route::post('/product/updateProductImageType',          array('as'=>'updateProductImageType',   'uses'=>'Admin\ProductController@updateProductImageType'));
-    Route::post('/product/updateImage',                     array('as'=>'updateImage',              'uses'=>'Admin\ProductController@updateImage'));
-    Route::post('/product/createBaseProduct',               array('as'=>'CreateBaseProduct',        'uses'=>'Admin\ProductController@createBaseProduct'));
-    Route::post('/product/countSearchProductByTagId',       array('as'=>'countSearchProductByTagId','uses'=>'Admin\ProductController@countSearchProductByTagId'));
-    Route::post('/product/createCSVForRemarketing',         array('as'=>'createCSVForRemarketing','uses'=>'Admin\ProductController@createCSVForRemarketing'));
-    Route::post('/product/sortProductGallery',              array('as'=>'product.sort.product.gallery','uses'=>'Admin\ProductController@sortProductGallery'));
+    Route::any('/product',                                  array('as'=>'listProducts',                         'uses'=>'Admin\ProductController@index'));
+    Route::any('/product/generateProductTable',             array('as'=>'generateProductTable',                 'uses'=>'Admin\ProductController@generateProductTable'));
+    Route::any('/product/generateImportProductTable',       array('as'=>'generate.import.product.table',        'uses'=>'Admin\ProductController@generateImportProductTable'));
+    Route::any('/product/generateProductTagTable',          array('as'=>'generateProductTagTable',              'uses'=>'Admin\ProductController@generateProductTagTable'));
+    Route::any('/product/getProductTreeMenu',               array('as'=>'getProductTreeMenu',                   'uses'=>'Admin\ProductController@getProductTreeMenu'));
+    Route::any('/product/getProduct',                       array('as'=>'getProducts',                          'uses'=>'Admin\ProductController@getProduct'));
+    Route::any('/product/createProduct',                    array('as'=>'createProduct',                        'uses'=>'Admin\ProductController@createProduct'));
+    Route::any('/product/editProduct/{id}',                 array('as'=>'editProduct',                          'uses'=>'Admin\ProductController@editProduct'));
+    Route::any('/product/exProduct',                        array('as'=>'exProduct',                            'uses'=>'Admin\ProductController@exProduct'));
+    Route::any('/product/imProduct',                        array('as'=>'imProduct',                            'uses'=>'Admin\ProductController@imProduct'));
+    Route::any('/product/importProduct',                    array('as'=>'importProduct',                        'uses'=>'Admin\ProductController@importProduct'));
+    Route::any('/product/getProductInfoByPropertyId',       array('as'=>'getProductInfoByPropertyId',           'uses'=>'Admin\ProductController@getProductInfoByPropertyId'));
+    Route::get('/product/removeProduct/{id}',               array('as'=>'removeProduct',                        'uses'=>'Admin\ProductController@removeProduct'));
+    Route::any('/product/uploadImageDescription',           array('as'=>'uploadImageDescription',               'uses'=>'Admin\ProductController@uploadImageDescription'));
+    Route::any('/product/listTags/',                        array('as'=>'ProductTags',                          'uses'=>'Admin\ProductController@listTags'));
+    Route::get('/product/setStatus/{id}/{status}',          array('as'=>'setStatusProduct',                     'uses'=>'Admin\ProductController@setStatus'));
+    Route::post('/product/addProductImage',                 array('as'=>'addProductImage',                      'uses'=>'Admin\ProductController@addProductImage'));
+    Route::post('/product/updateProductImageType',          array('as'=>'updateProductImageType',               'uses'=>'Admin\ProductController@updateProductImageType'));
+    Route::post('/product/updateImage',                     array('as'=>'updateImage',                          'uses'=>'Admin\ProductController@updateImage'));
+    Route::post('/product/createBaseProduct',               array('as'=>'CreateBaseProduct',                    'uses'=>'Admin\ProductController@createBaseProduct'));
+    Route::post('/product/countSearchProductByTagId',       array('as'=>'countSearchProductByTagId',            'uses'=>'Admin\ProductController@countSearchProductByTagId'));
+    Route::post('/product/createCSVForRemarketing',         array('as'=>'createCSVForRemarketing',              'uses'=>'Admin\ProductController@createCSVForRemarketing'));
+    Route::post('/product/sortProductGallery',              array('as'=>'product.sort.product.gallery',         'uses'=>'Admin\ProductController@sortProductGallery'));
+    Route::post('/product/deleteProductProperty',           array('as'=>'product.delete.product.property',      'uses'=>'Admin\ProductController@deleteProductProperty'));
+    Route::post('/product/updateImportProduct',             array('as'=>'product.update.import.product',        'uses'=>'Admin\ProductController@updateImportProduct'));
+    Route::get('/product/printBarcode/{productId}/{propertyId}',           array('as'=>'product.print.barcode', 'uses'=>'Admin\ProductController@printBarcode'));
 
     //branch
     Route::any('/product/branch',                           array('as'=>'listBranches',             'uses'=>'Admin\BranchController@index'));

@@ -139,6 +139,28 @@ var datatablePackage = {
 
             return Kacana.datatable.init(element, url, columns, defaultSearchColumns, addParamsCallBack, cacheParamsCallBack, rowCallBack, drawCallBack, cacheLoadedCallBack, options);
         },
+        importProduct: function(element, columns, addParamsCallBack, cacheLoadedCallBack){
+            var url = '/product/generateImportProductTable';
+            var options = {
+                'order': [0, "desc"],
+                displayLength: 50
+            };
+            var defaultSearchColumns = [];
+
+            var cacheParamsCallBack = function(oData){
+                //do something
+            };
+
+            var drawCallBack = function(e){
+
+            };
+
+            var rowCallBack = function(){
+                //do something
+            };
+
+            return Kacana.datatable.init(element, url, columns, defaultSearchColumns, addParamsCallBack, cacheParamsCallBack, rowCallBack, drawCallBack, cacheLoadedCallBack, options);
+        },
         user: function(element, columns, addParamsCallBack, cacheLoadedCallBack){
             var url = '/user/generateUserTable';
             var options = {

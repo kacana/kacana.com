@@ -139,11 +139,8 @@ var productPackage = {
 
                 $('body').on('keyup', '.select2-search__field', Kacana.product.detail.addColorTag);
 
-                $page.on('click', 'button[href="#remove-product-property"]', function(){
-                    $(this).closest('.row').remove();
-                    Kacana.product.detail.limitColor();
-                    return false;
-                });
+                $page.on('click', 'a[href="#remove-product-property"]',  Kacana.product.detail.removeProductProperty);
+                $page.on('click', 'a[href="#print-barcode"]',  Kacana.product.detail.printBarcode);
 
                 $page.on('click', 'button[data-target="#modal-add-image-product-properties"]', function(){
                     var $modal = $('#modal-add-image-product-properties');
@@ -281,6 +278,47 @@ var productPackage = {
                         Kacana.product.detail.sortProductGallery();
                     }
                 });
+            },
+            printBarcode: function () {
+                var href = $(this).data('href');
+                window.open(href, 'Print Barcode', 'height=300,width=400');
+                return true;
+            },
+            removeProductProperty: function () {
+                var that = $(this);
+                swal({
+                    title: 'Xoá thuộc tính!',
+                    text: "Bạn có chắc xoá thuộc tính sản phẩm này!",
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Xoá!'
+                }).then(function () {
+                    Kacana.utils.loading();
+                    var callback = function(data){
+                        if(data.ok)
+                        {
+                            Kacana.utils.closeLoading();
+
+                            that.closest('.row').remove();
+                            swal(
+                                'Deleted!',
+                                'Your file has been deleted.',
+                                'success'
+                            )
+
+                            console.log('Removed');
+                        }
+                    };
+                    var errorCallback = function(){
+                        // do something here if error
+                    };
+
+                    Kacana.ajax.product.deleteProductProperty(that.data('id'), callback, errorCallback);
+                });
+
+                return false;
             },
             sortProductGallery: function () {
                 var listImage = $('#product-image-detail .list-product-image');
@@ -743,93 +781,234 @@ var productPackage = {
                     }
                 });
             }
-          },
-          branch:{
-              init: function(){
-                  Kacana.product.branch.listBranch();
-                  Kacana.product.branch.showEditBranchForm();
-                  Kacana.product.branch.editBranch();
-                  Kacana.product.branch.showEditBranchForm();
-                  Kacana.product.branch.setStatusBranch();
-              },
-              listBranch: function(){
-                  var columns = ['id', 'name', 'image', 'status', 'created', 'updated', 'action']
-                  var btable = Kacana.datatable.init('table', columns, '/branch/getBranch');
+        },
+        imProduct:{
+            init: function () {
+                Kacana.product.imProduct.setupDataTableForImportProduct();
+                Kacana.product.imProduct.bindEvent();
+            },
+            bindEvent: function () {
+                Kacana.product.imProduct.barcodeScanner();
+                $('body').on('click', 'a[href="#edit-import-product"]', Kacana.product.imProduct.editImportProduct)
+            },
+            editImportProduct: function () {
+                if($(this).find('i').hasClass('fa-check'))
+                {
+                    Kacana.product.imProduct.updateImportRow($(this));
+                }
+                else
+                {
+                    var row = $(this).parents('tr');
+                    row.find('input').removeClass('hidden');
+                    row.find('.label-product-quantity, .label-product-price').addClass('hidden');
+                    $(this).find('i').removeClass('fa-pencil').addClass('fa-check');
+                }
+            },
+            updateImportRow: function (button) {
+                var id = button.data('id');
+                var row = button.parents('tr');
 
-                    $("#search-form").on('submit', function(e){
-                        btable.search($("#search-name").val()).draw() ;
+                var quantity = row.find('input[name="quantity-import"]').val();
+                var currentQuantity = row.find('input[name="quantity-import"]').data('value');
+                var price = row.find('input[name="price-import"]').val();
+
+                row.find('input').addClass('hidden');
+                row.find('.label-product-quantity, .label-product-price').removeClass('hidden');
+                row.find('.label-product-quantity').html(quantity);
+                row.find('.label-product-price').html(Kacana.utils.formatCurrency(price));
+                button.find('i').removeClass('fa-check').addClass('fa-pencil');
+
+                var callBack = function(data){
+                    if(data.ok){
+                        console.log('đã cập nhật dữ liệu!')
+                    }
+                    else{
+                        swal(
+                            'Lỗi!',
+                            'detect product quantity, Please check product quantity!',
+                            'error'
+                        );
+                    }
+                };
+
+                var errorCallBack = function(){
+
+                };
+
+                Kacana.ajax.product.updateImport(id, currentQuantity, quantity, price, callBack, errorCallBack);
+            },
+            barcodeScanner: function () {
+
+                $(document).scannerDetection({
+                    timeBeforeScanTest: 200, // wait for the next character for upto 200ms
+                    avgTimeByChar: 40, // it's not a barcode if a character takes longer than 100ms
+                    preventDefault: false,
+                    endChar: [13],
+                    onComplete: function(barcode, qty){
+                        var propertyId = barcode.substring(0, 11);
+
+                        var modal = $('#modal-import-product-by-barcode');
+
+                        Kacana.product.imProduct.importProductBarcode(propertyId);
+
+                        console.log(barcode);
+                    }
+                });
+            },
+            importProductBarcode: function (barcode) {
+
+                var propertyId = barcode;
+                var quantity = 1;
+                var price = 0;
+
+                var callBack = function(data){
+                    if(data.ok){
+                        console.log('đã nhập sản phẩm!');
+                        var table = $('#importProductTable').DataTable();
+
+                        var rowNode = table.row.add( [ data.data.id, data.property.product.name, data.property.galleryObject.image, 0, 1, data.user.name, data.property.product.id, data.property.id, data.data.created_at, data.data.updated_at ] ).draw().node();
+                    }
+                };
+
+                var errorCallBack = function(){
+
+                };
+
+                Kacana.ajax.product.importProduct(propertyId, quantity, price, callBack, errorCallBack);
+
+            },
+            getProductInfoByPropertyId:function (propertyId) {
+                var modal = $('#modal-import-product-by-barcode');
+                var template = $('#template-import-product-by-barcode');
+
+                var callBack = function(data){
+                    if(data.ok){
+                        var item = data.data;
+                        var imageProduct = '';
+                        if(item.product_gallery_id){
+                            imageProduct = item.galleryObject.image;
+                        }
+                        else
+                        {
+                            imageProduct = item.productObject.image;
+                        }
+
+                        item.imageProduct = imageProduct;
+                        var templateGenerate = $.tmpl(template, {'item': item});
+                        modal.find('.modal-body').empty().append(templateGenerate);
+                        modal.modal();
+
+                    }
+                };
+
+                var errorCallBack = function(){
+
+                };
+
+                Kacana.ajax.product.getProductInfoByPropertyId(propertyId, callBack, errorCallBack);
+            },
+            setupDataTableForImportProduct: function(){
+                var $formInline = $('.form-inline');
+                var element = '#importProductTable';
+                $(element).parents('.box').css('overflow', 'auto');
+                var columns = [
+                    {
+                        'title': 'id',
+                        'visible': false
+                    },
+                    {
+                        'title': 'sản phẩm'
+                    },
+                    {
+                        'title': 'hình',
+                        'sortable':false,
+                        'render': function ( data, type, full, meta ) {
+                            return '<img style="width: 50px" class="img-responsive" src="//image.kacana.vn'+data+'" />';
+                        }
+                    },
+                    {
+                        'title': 'giá nhập',
+                        'render': function ( data, type, full, meta ) {
+                            return '<p class="label-product-price" >'+ Kacana.utils.formatCurrency(data) + '</p><input style="width: 80px;" type="text" value="'+data+'" name="price-import" class="hidden" >';
+                        }
+                    },
+                    {
+                        'title': 'số lượng',
+                        'render': function ( data, type, full, meta ) {
+
+                            return '<p class="label-product-quantity">'+ data + '</p><input data-value="'+data+'" style="width: 80px;" type="number" value="'+data+'" name="quantity-import" class="hidden" >';
+                        }
+                    },
+                    {
+                        'title': 'người nhập'
+                    },
+                    {
+                        'title': 'product_id',
+                        'visible': false
+                    },
+                    {
+                        'title': 'property_id',
+                        'visible': false
+                    },
+                    {
+                        'title': 'created',
+                        'width':'12%',
+                        'render': function ( data, type, full, meta ) {
+                            return data ? data.slice(0, -8) +'<br><b>' + data.slice(11, 19)+'</b>' : '';
+                        }
+                    },
+                    {
+                        'title': 'updated',
+                        'width':'12%',
+                        'render': function ( data, type, full, meta ) {
+                            return data ? data.slice(0, -8) +'<br><b>' + data.slice(11, 19)+'</b>' : '';
+                        }
+                    },
+                    {
+                        'width':'4%',
+                        'class':'center',
+                        'sortable':false,
+                        'render': function ( data, type, full, meta ) {
+                            return '<a data-id="'+full[0]+'" href="#edit-import-product" class="btn btn-default btn-xs"><i class="fa fa-pencil"></i></a>';
+                        }
+                    }
+                ];
+
+                var addParamsCallBack = function(oData){
+                    //search name or email
+                    //oData.columns[2].search.orWhere = true;
+                    //oData.columns[3].search.orWhere = true;
+                };
+
+                var cacheLoadedCallBack = function(oData){
+                    $formInline.find('input[name="name"]').val(oData.columns[0].search.search);
+                    $formInline.find('select[name="user"]').val(oData.columns[1].search.search);
+                    $formInline.find('select[name="productId"]').val(oData.columns[2].search.search);
+                    $formInline.find('select[name="propertyId"]').val(oData.columns[3].search.search);
+                };
+
+                var datatable = Kacana.datatable.importProduct(element, columns, addParamsCallBack, cacheLoadedCallBack);
+
+                $formInline.off('submit')
+                    .on('submit', function (e) {
                         e.preventDefault();
-                    })
-              },
-              createBranch: function(){
-                  $("#btn-create").attr('disabled', true);
-                  var form_data = new FormData();
-                  var file_image = $('#image').prop("files")[0];
-                  var other_data = $("#form-create-branch").serialize();
-                  form_data.append('image', file_image);
-                  var callBack = function(data){
-                      window.location.reload();
-                  }
-                  var errorCallBack = function(data){
-                      json_result = JSON.parse(data.responseText);
-                      if(typeof(json_result['image'])!=''){
-                          $("#error-image").html(json_result['image']);
-                      }
 
-                      if(typeof(json_result['name'])!=''){
-                          $("#error-name").html(json_result['name']);
-                      }
-                      $("#btn-create").attr('disabled', false);
-                  };
-                   Kacana.ajax.branch.createBranch(other_data, form_data, callBack, errorCallBack);
-              },
-              showEditBranchForm: function(idBranch){
-                  var callBack = function(data){
-                      $("#editModal").html(data);
-                      $("#editModal").modal('show');
-                  };
-                  var errorCallBack = function(){};
-                  Kacana.ajax.branch.showEditBranchForm(idBranch, callBack, errorCallBack);
-              },
-              editBranch: function(){
-                  var form_data = new FormData();
-                  var file_image = $('#image').prop("files")[0];
-                  var other_data = $("#form-create-branch").serialize();
-                  form_data.append('image', file_image);
-                  var callBack = function(data){
-                      window.location.reload();
-                  }
-                  var errorCallBack = function(data){
-                      json_result = JSON.parse(data.responseText);
-                      if(typeof(json_result['image'])!=''){
-                          $("#error-image").html(json_result['image']);
-                      }
+                        var api = datatable.api(true);
 
-                      if(typeof(json_result['name'])!=''){
-                          $("#error-name").html(json_result['name']);
-                      }
-                      $("#btn-create").attr('disabled', false);
-                  };
-                  Kacana.ajax.branch.editBranch(other_data, form_data, callBack, errorCallBack);
-              },
-              setStatusBranch: function(id, status){
-                  var callBack = function(data){
-                      window.location.reload();
-                  };
-                  var errorCallBack = function(){};
-                  Kacana.ajax.branch.setStatusBranch(id, status, callBack, errorCallBack);
-              },
-              removeBranch: function(idBranch){
-                  $('#confirm').modal('show');
-                  var callBack = function(data){
-                      window.location.reload();
-                  };
-                  var errorCallBack = function(){};
-                  $('#delete').click(function (e) {
-                      Kacana.ajax.branch.removeBranch(idBranch, callBack, errorCallBack);
-                  });
-              }
-      }
+                        var name = $formInline.find('select[name="name"]').val();
+                        var user = $formInline.find('select[name="user"]').val();
+                        var productId = $formInline.find('select[name="productId"]').val();
+                        var propertyId = $formInline.find('input[name="propertyId"]').val();
+
+                        api.column(0).search(name)
+                            .column(1).search(user)
+                            .column(2).search(productId, true)
+                            .column(3).search(propertyId, true);
+
+                        api.draw();
+                    });
+            },
+        }
   }
 };
 

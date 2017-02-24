@@ -35,6 +35,7 @@
                             <option value="{{$item->child_id}}" >{{$item->name}}</option>
                         @endforeach
                     </select>
+                    <input class="hidden" value="0" name="productPropertyId[]" >
                 </div>
             </div>
             <div class="col-lg-2" >
@@ -78,9 +79,9 @@
             <div class="col-xs-1" >
                 <div class="form-group">
                     <label>xoá</label><br>
-                    <button class="btn btn-danger btn-sm" href="#remove-product-property" data-toggle="modal">
-                        <i class="fa fa-remove"></i>
-                    </button>
+                    <a class="btn btn-danger btn-sm" data-id="0" href="#remove-product-property" data-toggle="modal">
+                        <i class="fa fa-trash"></i>
+                    </a>
                 </div>
             </div>
         </div>
