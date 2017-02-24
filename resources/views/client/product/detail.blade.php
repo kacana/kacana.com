@@ -99,7 +99,6 @@
                             </div>
                         </div>
                     @endif
-                    {{print_r($product->properties)}}
                     @if(count($product->properties))
                         <h4 class="product-information-head" >
                             Màu sắc
