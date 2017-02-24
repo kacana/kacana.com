@@ -31,6 +31,8 @@ Class HtmlFixer {
     }
 
     public function getFixedHtml($dirtyhtml) {
+        if(!trim($dirtyhtml))
+            return "";
         $c = 0;
         $this->dirtyhtml = $dirtyhtml;
         $this->fixedhtml = "";
