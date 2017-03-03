@@ -72,35 +72,19 @@
                                     <th>Đơn vị tính</th>
                                     <th>Số Lượng</th>
                                     <th>Đơn giá</th>
+                                    <th>Giảm giá</th>
                                     <th>Thành tiền</th>
+                                    <th></th>
                                 </tr>
                                 <tr>
                                     <td>183</td>
-                                    <td>John Doe</td>
-                                    <td>11-7-2014</td>
-                                    <td><span class="label label-success">Approved</span></td>
-                                    <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-                                </tr>
-                                <tr>
-                                    <td>219</td>
-                                    <td>Alexander Pierce</td>
-                                    <td>11-7-2014</td>
-                                    <td><span class="label label-warning">Pending</span></td>
-                                    <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-                                </tr>
-                                <tr>
-                                    <td>657</td>
-                                    <td>Bob Doe</td>
-                                    <td>11-7-2014</td>
-                                    <td><span class="label label-primary">Approved</span></td>
-                                    <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-                                </tr>
-                                <tr>
-                                    <td>175</td>
-                                    <td>Mike Doe</td>
-                                    <td>11-7-2014</td>
-                                    <td><span class="label label-danger">Denied</span></td>
-                                    <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
+                                    <td>VÍ NAM CẦM TAY JUNLAN W1920</td>
+                                    <td>Cái</td>
+                                    <td><input type="number" min="1" value="1" ></td>
+                                    <td>320.000 đ</td>
+                                    <td>0 đ</td>
+                                    <td>320.000 đ</td>
+                                    <td><a href="#remove-product-order"><i class="text-red fa fa-times" ></i></a></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -160,5 +144,5 @@
 @extends('admin.product.modal-ex')
 
 @section('javascript')
-    Kacana.product.detail.init();
+    Kacana.sale.init();
 @stop
