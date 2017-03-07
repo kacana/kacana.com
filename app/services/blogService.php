@@ -183,7 +183,7 @@ class blogService {
 
         $productGalleryService = new productGalleryService();
         $prefixPath = '/images/blog/';
-        $post = $this->_blogPost->getItemById($postId);
+        $post = $this->_blogPost->getItemById($postId, false);
         $newImageName = $imageName;
 
         if($post->getOriginal('image'))
