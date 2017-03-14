@@ -80,21 +80,21 @@
                         </div>
                     @elseif($product->main_discount)
                         <div class="block-promotions table">
-                            <div class="block-promotions-title cell">ĐANG KHUYẾN MÃI</div>
-                            <div class="block-promotions-infos cell">
+                            <div class="block-promotions-title">ĐANG KHUYẾN MÃI</div>
+                            <div class="block-promotions-infos">
                                 <p>
-                                    ĐANG GIẢM GIÁ TỪ {{formatMoney($product->sell_price)}} XUỐNG CÒN
+                                    Giảm giá từ {{formatMoney($product->sell_price)}} còn
                                     <span class="text-danger">
                                         <b>{{formatMoney($product->sell_price - $product->main_discount)}}</b>
                                     </span>
                                 </p>
                                 <p class="row">
-                                    <span class="col-lg-4 col-md-4 col-sm-6 col-xs-6">ÁP DỤNG TỪ:</span>
-                                    <span class="col-lg-8 col-md-8 col-sm-6 col-xs-6"> 29/10/2016 </span>
+                                    <span class="col-lg-4 col-md-4 col-sm-6 col-xs-6">Áp dụng từ:</span>
+                                    <span class="col-lg-8 col-md-8 col-sm-6 col-xs-6"> 14/03/2017 </span>
                                 </p>
                                 <p class="row">
-                                    <span class="col-lg-4 col-md-4 col-sm-6 col-xs-6">ĐẾN:</span>
-                                    <span class="col-lg-8 col-md-8 col-sm-6 col-xs-6"> 02/11/2016 </span>
+                                    <span class="col-lg-4 col-md-4 col-sm-6 col-xs-6">Đến:</span>
+                                    <span class="col-lg-8 col-md-8 col-sm-6 col-xs-6"> 21/03/2017 </span>
                                 </p>
                             </div>
                         </div>
