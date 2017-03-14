@@ -52,7 +52,7 @@
             </p>
             <h5 class="color-grey">Mọi chi tiết Quý khách xin liên hệ về:</h5>
 
-            <p >Trụ sở : 43 Tản Đà, Phường 10, Quận 5, Hồ Chí Minh</p>
+            <p >Trụ sở : 60/36 Trần Hưng Đạo, phường 7, Quận 5, Hồ Chí Minh</p>
             <p >- Điện thoại: 0906.054.206 - 01695.393.076</p>
             <p >- Email: hotro@kacana.com</p>
             <p >- Website: http://kacana.com</p>

@@ -200,7 +200,7 @@
 
                     <div class="col-md-4 single-contact-info">
                         <i class="fa fa-map-marker"></i>
-                        <h5> <a href="">43 Tản Đà, phường 10, quận 5, Hồ Chí Minh</a> </h5>
+                        <h5> <a href="">60/36 Trần Hưng Đạo, phường 7, quận 5, Hồ Chí Minh</a> </h5>
                     </div>                        
 
                     <div class="col-md-4 single-contact-info">

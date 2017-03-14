@@ -69,6 +69,7 @@ class orderService {
             $orderData->address = $addressStr.', '.$address->district->name.', '.$address->city->name;
         else
             $orderData->address = '';
+
         $order = $this->_orderModel->createItem($orderData);
         $this->_orderModel->updateItem($order->id, ['order_code' => crc32($order->id)]);
         $order->order_code = crc32($order->id);

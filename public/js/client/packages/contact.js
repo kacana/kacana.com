@@ -15,8 +15,8 @@ var contactPackage = {
             console.log('aaaaa');
             // Map Markers
             var mapMarkers = [{
-                address: "43 tản đà phường 10 quận 5 hồ chí minh việt nam",
-                html: "<strong>văn phòng</strong><br>43 Tản đà, phường 10, quận 5, Hồ Chí Mính",
+                address: "60/36 Trần Hưng Đạo phường 7 quận 5 hồ chí minh việt nam",
+                html: "<strong>Cửa Hàng</strong><br>60/36 Trần Hưng Đạo, phường 7, quận 5, Hồ Chí Mính",
                 icon: {
                     image: "/../../img/pin.png",
                     iconsize: [26, 46],

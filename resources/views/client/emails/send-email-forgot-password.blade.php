@@ -78,7 +78,7 @@
                             </div>
                             <div style="display:inline-block">
                                 <p style="color:#3d3d66;font-family:'Helvetica Neue',Helvetica,Arial,'Liberation Sans',FreeSans,sans-serif;font-size:12px;line-height:16px;margin:0px;vertical-align:middle">
-                                    43 Tản đà, Phường 10, Quận 5, Hồ Chí Minh ·
+                                    60/36 Trần Hưng Đạo, phường 7, Quận 5, Hồ Chí Minh ·
                                 </p>
                             </div>
                             <div style="display:inline-block">

@@ -21,7 +21,7 @@
                             </div>
                             <div class="form-group col-xs-6">
                                 <label class="control-label" for="">Tỉnh/Thành phố</label>
-                                <select required name="cityId" class="form-control">
+                                <select name="cityId" class="form-control">
                                     <option value="">Chọn tỉnh/thành phố</option>
                                     @foreach($listCity as $item)
                                         <option value="{{$item->id}}">{{$item->name}}</option>
@@ -30,19 +30,26 @@
                             </div>
                             <div class="form-group col-xs-6">
                                 <label class="control-label" for="">Quận/huyện</label>
-                                <select required data-district="{{$listDistrict}}" disabled="true" name="districtId" class="form-control">
+                                <select data-district="{{$listDistrict}}" disabled="true" name="districtId" class="form-control">
                                     <option value="">Chọn quận/huyện</option>
                                 </select>
                             </div>
                             <div class="form-group col-xs-6">
                                 <label class="control-label" for="">Phường, xã</label>
-                                <select required disabled="true" name="wardId" class="form-control">
+                                <select disabled="true" name="wardId" class="form-control">
                                     <option value="">Chọn phường/xã</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-xs-6">
+                                <label class="control-label" for="">Loại đơn hàng</label>
+                                <select disabled="true" name="status" class="form-control">
+                                    <option value="{{}}">Đơn hàng tại kho</option>
+                                    <option value="">Đơn hàng online</option>
                                 </select>
                             </div>
                             <div class="form-group col-xs-12">
                                 <label for="deliveryStreet">Địa chỉ - lầu, số nhà, đường, phường</label>
-                                <textarea required id="deliveryStreet" class="deliveryStreet form-control" rows="3" size="50" placeholder="Địa chỉ - lầu, số nhà, đường, phường" name="deliveryStreet"></textarea>
+                                <textarea id="deliveryStreet" class="deliveryStreet form-control" rows="3" size="50" placeholder="Địa chỉ - lầu, số nhà, đường, phường" name="deliveryStreet"></textarea>
                             </div>
 
                             <div class="form-group col-xs-12">
