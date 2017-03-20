@@ -42,9 +42,10 @@
                             </div>
                             <div class="form-group col-xs-6">
                                 <label class="control-label" for="">Loại đơn hàng</label>
-                                <select disabled="true" name="status" class="form-control">
-                                    <option value="{{}}">Đơn hàng tại kho</option>
-                                    <option value="">Đơn hàng online</option>
+                                <select name="orderType" class="form-control">
+                                    @foreach($listOrderType as $item)
+                                        <option value="{{$item->id}}">{{$item->name}}</option>
+                                    @endforeach
                                 </select>
                             </div>
                             <div class="form-group col-xs-12">
@@ -60,7 +61,7 @@
                     </div><!-- /.box-body -->
                 </div>
                 <div class="modal-footer">
-                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                    <input type="hidden" name="_token" value="{{csrf_token()}}">
                     <input type="button" id="create-new-address-delivery" class="btn btn-warning" value="tạo đại chỉ mới"/>
                     <input type="submit" class="btn btn-primary" value="Tạo đơn hàng"/>
                     <button type="button" data-dismiss="modal" class="btn">Cancel</button>

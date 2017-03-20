@@ -10,19 +10,30 @@
             <div class="box-header">
                 <h3 class="box-title">Đơn Hàng: #{{$order->order_code}} Của [{{$order->user->name}}] Tổng {{formatMoney($order->total)}}</h3>
                 <div class="box-tools pull-left ">
-                    @if(isset($shippingServiceInfos))
-                        <button data-toggle="modal" data-target="#modal-shipping-order" class="btn @if($order->status != KACANA_ORDER_STATUS_PROCESSING) hidden @endif btn-primary btn-sm">
-                            <i class="fa fa-plane"></i> Ship cho khách
-                        </button>
+                    @if($order->order_type == KACANA_ORDER_TYPE_ONLINE)
+                        @if(isset($shippingServiceInfos))
+                            <button data-toggle="modal" data-target="#modal-shipping-order" class="btn @if($order->status != KACANA_ORDER_STATUS_PROCESSING) hidden @endif btn-primary btn-sm">
+                                <i class="fa fa-plane"></i> Ship cho khách
+                            </button>
+                        @else
+                            <button class="btn btn-danger btn-sm">
+                                <i class="fa fa-ban"></i> Vui lòng cập nhật địa chỉ khách hàng
+                            </button>
+                        @endif
                     @else
-                        <button class="btn btn-danger btn-sm">
-                            <i class="fa fa-ban"></i> Vui lòng cập nhật địa chỉ khách hàng
-                        </button>
+                        @if(!isset($shippingServiceInfos))
+                            <button class="btn btn-warning btn-sm">
+                                <i class="ion-alert-circled"></i> Vui lòng cập nhật địa chỉ khách hàng
+                            </button>
+                        @endif
+                        <a href="#export-product-store" data-toggle="modal" data-order-id="{{$order->id}}" class="btn btn-primary btn-sm">
+                            <i class="ion-android-plane"></i> xem hoá đơn
+                        </a>
                     @endif
 
                     @if($order->status == KACANA_ORDER_STATUS_NEW || $order->status == KACANA_ORDER_STATUS_QUICK_ORDER)
                         <a href="#cancel-order" data-order-id="{{$order->id}}" class="btn btn-danger">
-                            Huỷ đơn hàng
+                            <i class="ion-android-exit"></i> Huỷ đơn hàng
                         </a>
                     @endif
 
@@ -71,7 +82,8 @@
                                         <th>Tổng</th>
                                         <td class="color-red">{{formatMoney($order->total + $order->shipping_fee)}}</td>
                                     </tr>
-                                    </tbody></table>
+                                    </tbody>n
+                                </table>
                             </div>
                         </div>
                         <div class="col-xs-12">
@@ -342,6 +354,8 @@
             </div>
         </div>
         <input type="hidden" id="order-id" value="{{$order->id}}" />
+        <input type="hidden" id="order-quantity" value="{{$order->quantity}}" />
+        <input type="hidden" id="order-total" value="{{formatMoney($order->total + $order->shipping_fee)}}" />
     </section>
 @stop
 

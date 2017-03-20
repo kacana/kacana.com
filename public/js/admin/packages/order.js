@@ -203,13 +203,13 @@ var orderPackage = {
                     'title': 'code'
                 },
                 {
-                    'title': 'order by'
+                    'title': 'by'
                 },
                 {
-                    'title': 'delivery name'
+                    'title': 'name'
                 },
                 {
-                    'title': 'delivery phone'
+                    'title': 'phone'
                 },
                 {
                     'title': 'total'
@@ -221,17 +221,20 @@ var orderPackage = {
                     'title': 'status',
                 },
                 {
+                    'title': 'type',
+                },
+                {
                     'title': 'created',
                     'width':'12%',
                     'render': function ( data, type, full, meta ) {
-                        return data ? data.slice(0, -8) : '';
+                        return data ? data.slice(0, -8) +'<br><b>' + data.slice(11, 19)+'</b>' : '';
                     }
                 },
                 {
                     'title': 'Updated',
                     'width':'12%',
                     'render': function ( data, type, full, meta ) {
-                        return data ? data.slice(0, -8) : '';
+                        return data ? data.slice(0, -8) +'<br><b>' + data.slice(11, 19)+'</b>' : '';
                     }
                 },
                 {
@@ -307,6 +310,21 @@ var orderPackage = {
                     }).then(function () {
                         window.location.href = "/order/cancelOrder?orderId="+orderId;
                     })
+                });
+
+                Kacana.order.detail.page.on('click','a[href="#export-product-store"]', function () {
+                    var orderQuantity = $('#order-quantity').val();
+                    var orderTotal = $('#ordr-total').val();
+                    swal({
+                        title: 'Xuất Hàng',
+                        text: "Đơn hàng gồm "+orderQuantity+" sản phẩm và tổng giá trị đơn hàng là: "+orderTotal,
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Xuất hàng!'
+                    }).then(function () {
+                        Kacana.order.exportProductAtStore();
+                    });
                 });
 
                 Kacana.order.detail.page.on('click', 'a[href="#cancel-edit-detail-item"]', function () {
@@ -426,6 +444,24 @@ var orderPackage = {
                 $('#modal-shipping-order').on('click', 'input[name="shippingServiceTypeId"]', Kacana.order.detail.checkOriginShipFee);
 
                 Kacana.order.detail.addProductModal();
+            },
+            exportProductAtStore: function () {
+                var callBack = function(data){
+                    if(data.ok){
+                        $('a[href="#export-product-store"]').attr('disabled', true).html('đã xuất hàng');
+                        var orderId = $('#order-id').val();
+                        window.open('/shipping/printOrderStore/?id='+orderId, 'Receipt Information', 'height=900,width=940');
+                        return true;
+                    }
+                    else
+                        Kacana.utils.showError('có cái gì sai sai ở đây! vui lòng gọi: 0906.054.206');
+                };
+                var errorCallBack = function(data){
+                    Kacana.utils.showError('có cái gì sai sai ở đây! vui lòng gọi: 0906.054.206');
+                    Kacana.utils.closeLoading();
+                };
+
+                Kacana.ajax.order.getWardByDistrictId(districtId, callBack, errorCallBack);
             },
             addProductModal: function () {
                 var modal = $('#modal-add-product-order');

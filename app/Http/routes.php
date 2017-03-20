@@ -158,6 +158,7 @@ Route::group(['domain'=>KACANA_AUTH_ADMIN_NAME.'.{nameDomain}','middleware' => '
     Route::any('/shipping/generateShippingTable',            array('as'=>'generateShippingTable',               'uses'=>'Admin\ShippingController@generateShippingTable'));
     Route::get('/shipping/detail/',                          array('as'=>'detailShipping',                      'uses'=>'Admin\ShippingController@detail'));
     Route::get('/shipping/printOrder/',                      array('as'=>'ShippingPrintOrder',                  'uses'=>'Admin\ShippingController@printOrder'));
+    Route::get('/shipping/printOrderStore/',                 array('as'=>'ShippingPrintOrderStore',             'uses'=>'Admin\ShippingController@printOrderStore'));
 
     //Partner Controller
     Route::any('/partner',                                          array('as'=>'listPartner',                              'uses'=>'Admin\PartnerController@index'));

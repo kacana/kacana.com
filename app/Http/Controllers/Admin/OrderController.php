@@ -10,10 +10,13 @@ class OrderController extends BaseController {
 
     public function index($domain){
         $addressService = new addressService();
+        $orderService = new orderService();
         $data = array();
 
         $data['listCity'] = $addressService->getListCity();
         $data['listDistrict'] = $addressService->getListDistrict();
+        $data['listDistrict'] = $addressService->getListDistrict();
+        $data['listOrderType'] = $orderService->getListOrderType();
 
         return view('admin.order.index', $data);
     }
@@ -209,6 +212,7 @@ class OrderController extends BaseController {
         $wardId = $request->input('wardId','');
         $deliveryStreet = $request->input('deliveryStreet','');
         $deliveryEmail = $request->input('deliveryEmail','');
+        $orderType = $request->input('orderType', KACANA_ORDER_TYPE_ONLINE);
 
         try{
             if(!intval($deliveryId))
@@ -226,7 +230,7 @@ class OrderController extends BaseController {
                 $deliveryId = $addressReceive->id;
             }
 
-            $order = $orderService->createOrder(KACANA_USER_SYSTEM_ORDER_ID, $deliveryId, 0, 0);
+            $order = $orderService->createOrder(KACANA_USER_SYSTEM_ORDER_ID, $deliveryId, 0, 0, 0, 0, KACANA_ORDER_STATUS_NEW, $orderType);
 
             return redirect('/order/edit/'.$order->id);
         } catch (\Exception $e) {
@@ -266,30 +270,10 @@ class OrderController extends BaseController {
                         'subtotal' => $orderDetail->price * $orderDetailQuantity - $orderDetailDiscount
                     ];
                     $orderService->updateOrderDetail($orderDetailId, $dataOrderDetail);
-
-                    $originTotal += $orderDetail->price * $orderDetailQuantity;
-                    $total += $orderDetail->price * $orderDetailQuantity - $orderDetailDiscount;
-                    $discount += $orderDetailDiscount;
-                    $quantity += $orderDetailQuantity;
-
-                }
-                else
-                {
-                    $originTotal += $orderDetail->price * $orderDetail->quantity;
-                    $total += $orderDetail->subtotal;
-                    $discount += $orderDetail->discount;
-                    $quantity += $orderDetail->quantity;
                 }
             }
 
-            $dataOrder = [
-                'total' => $total,
-                'origin_total' => $originTotal,
-                'quantity' => $quantity,
-                'discount' => $discount
-            ];
-
-            $orderService->updateOrder($orderId, $dataOrder);
+            $orderService->calculateOrderCurrent($orderId);
 
             return redirect('/order/edit/'.$orderId);
 
@@ -353,7 +337,7 @@ class OrderController extends BaseController {
             $orderDetailData->order_id =  $orderId;
             $orderDetailData->name = $product->name;
             $orderDetailData->price = $product->sell_price;
-            $orderDetailData->discount = $product->discount;
+            $orderDetailData->discount = $productDiscount;
             $orderDetailData->quantity = 1;
             $orderDetailData->product_id = $product->id;;
             $orderDetailData->product_url = urlProductDetail($product);
@@ -361,20 +345,7 @@ class OrderController extends BaseController {
             $orderDetailData->subtotal = $product->sell_price - $productDiscount;
             $orderService->createOrderDetailAdmin($orderDetailData);
 
-            $total += $product->sell_price - $productDiscount;
-            $discount += $productDiscount;
-            $originTotal += $product->sell_price;
-            $quantity +=1;
-
-            $dataOrder = [
-                'total' => $total,
-                'origin_total' => $originTotal,
-                'quantity' => $quantity,
-                'discount' => $discount
-            ];
-
-            $orderService->updateOrder($orderId, $dataOrder);
-
+            $orderService->calculateOrderCurrent($orderId);
             return redirect('/order/edit/'.$orderId);
 
         } catch (\Exception $e) {
@@ -397,6 +368,7 @@ class OrderController extends BaseController {
 
         try{
             $orderService->deleteOrderDetail($orderId, $orderDetailId);
+            $orderService->calculateOrderCurrent($orderId);
 
             return redirect('/order/edit/'.$orderId);
 

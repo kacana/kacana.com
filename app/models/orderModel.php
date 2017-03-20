@@ -48,6 +48,11 @@ class orderModel extends Model  {
         return $this->belongsTo('App\models\addressReceiveModel', 'address_id');
     }
 
+    public function orderType()
+    {
+        return $this->belongsTo('App\models\orderTypeModel', 'order_type');
+    }
+
 
     /**
      * @param $item
@@ -131,6 +136,7 @@ class orderModel extends Model  {
             ->select($datatables::pluck($columns, 'db'))
             ->leftJoin('users', 'orders.user_id', '=', 'users.id')
             ->leftJoin('address_receive', 'address_receive.id', '=', 'orders.address_id')
+            ->leftJoin('order_types', 'order_types.id', '=', 'orders.order_type')
             ->orderBy($order['field'], $order['dir'])
             ->whereNotIn('orders.status', [KACANA_ORDER_PARTNER_STATUS_CANCEL, KACANA_ORDER_PARTNER_STATUS_NEW])
             ->skip($limit['offset'])

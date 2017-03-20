@@ -2,6 +2,7 @@
 
 use App\models\orderModel;
 use App\models\orderDetailModel;
+use App\models\orderTypeModel;
 use App\services\addressService;
 use \Kacana\Util;
 use Kacana\DataTables;
@@ -29,6 +30,11 @@ class orderService {
     private $_addressService;
 
     /**
+     * @var orderTypeModel
+     */
+    private $_orderTypeModel;
+
+    /**
      * orderService constructor.
      */
     public function __construct()
@@ -36,6 +42,7 @@ class orderService {
         $this->_orderDetailModel = new orderDetailModel();
         $this->_orderModel = new orderModel();
         $this->_addressService = new addressService();
+        $this->_orderTypeModel = new orderTypeModel();
     }
 
 
@@ -49,10 +56,11 @@ class orderService {
      * @param $discount
      * @param $originTotal
      * @param $quantity
+     * @param $type
      * @param int $status
      * @return orderModel
      */
-    public function createOrder($userId, $addressId, $total = 0, $quantity = 0, $originTotal = 0, $discount = 0, $status = KACANA_ORDER_STATUS_NEW){
+    public function createOrder($userId, $addressId, $total = 0, $quantity = 0, $originTotal = 0, $discount = 0, $status = KACANA_ORDER_STATUS_NEW, $type = KACANA_ORDER_TYPE_ONLINE){
         $address = $this->_addressService->getAddressReceiveById($addressId);
 
         $addressStr = $address->street;
@@ -65,6 +73,8 @@ class orderService {
         $orderData->discount = $discount;
         $orderData->origin_total = $originTotal;
         $orderData->status = $status;
+        $orderData->order_type = $type;
+
         if($addressStr)
             $orderData->address = $addressStr.', '.$address->district->name.', '.$address->city->name;
         else
@@ -110,6 +120,10 @@ class orderService {
         return $this->_orderDetailModel->createItem($orderDetailData);
     }
 
+    /**
+     * @param $item
+     * @return orderDetailModel
+     */
     public function createOrderDetailAdmin($item){
         return $this->_orderDetailModel->createItem($item);
     }
@@ -124,6 +138,10 @@ class orderService {
         return $order;
     }
 
+    /**
+     * @param $code
+     * @return mixed
+     */
     public function getOrderByOrderCode($code){
         $orderModel = new orderModel();
         $order = $orderModel->getOrderByOrderCode($code);
@@ -172,8 +190,9 @@ class orderService {
             array( 'db' => 'orders.total', 'dt' => 5 ),
             array( 'db' => 'orders.quantity', 'dt' => 6 ),
             array( 'db' => 'orders.status', 'dt' => 7 ),
-            array( 'db' => 'orders.created', 'dt' => 8 ),
-            array( 'db' => 'orders.updated', 'dt' => 9 )
+            array( 'db' => 'order_types.name AS order_type_name', 'dt' => 8 ),
+            array( 'db' => 'orders.created', 'dt' => 9 ),
+            array( 'db' => 'orders.updated', 'dt' => 10 )
         );
 
         $return = $orderModel->generateOrderTable($request, $columns);
@@ -257,6 +276,10 @@ class orderService {
         return $return;
     }
 
+    /**
+     * @param $request
+     * @return array
+     */
     public function reportDetailTableOrder($request){
         $orderModel = new orderModel();
         $datatables = new DataTables();
@@ -325,6 +348,10 @@ class orderService {
         return $orderDetailModel->updateOrderDetail($id, $data);
     }
 
+    /**
+     * @param $id
+     * @param $data
+     */
     public function updateOrder($id, $data)
     {
         return $this->_orderModel->updateItem($id, $data);
@@ -397,10 +424,19 @@ class orderService {
 
     }
 
+    /**
+     * @param bool $duration
+     * @return mixed
+     */
     public function getCountOrder($duration = false){
         return $this->_orderModel->getCountOrder($duration);
     }
 
+    /**
+     * @param $dateRange
+     * @param $type
+     * @return mixed
+     */
     public function getOrderReport($dateRange, $type){
         if(!$dateRange)
         {
@@ -417,10 +453,20 @@ class orderService {
         return $this->_orderModel->reportOrder($startTime, $endTime, $type);
     }
 
+    /**
+     * @param $orderId
+     * @param $orderDetailId
+     */
     public function deleteOrderDetail($orderId, $orderDetailId){
         return $this->_orderDetailModel->deleteOrderDetail($orderId, $orderDetailId);
     }
 
+    /**
+     * @param $orderId
+     * @param $userId
+     * @param $status
+     * @return bool
+     */
     public function cancelOrder($orderId, $userId, $status){
         $order = $this->_orderModel->getById($orderId);
 
@@ -438,6 +484,11 @@ class orderService {
 
     }
 
+    /**
+     * @param $orderId
+     * @param $userId
+     * @return bool
+     */
     public function sendOrder($orderId, $userId)
     {
         $order = $this->_orderModel->getById($orderId);
@@ -491,6 +542,38 @@ class orderService {
         $return['data'] = $datatables::data_output( $columns, $return['data'] );
 
         return $return;
+    }
+
+    public function getListOrderType(){
+        return $this->_orderTypeModel->getAll();
+    }
+
+    public function calculateOrderCurrent($orderId){
+        $orderService = new orderService();
+
+        $order = $orderService->getOrderById($orderId);
+        $orderDetails = $order->orderDetail;
+
+        $total = 0;
+        $discount = 0;
+        $originTotal = 0;
+        $quantity = 0;
+
+        foreach ($orderDetails as $orderDetail){
+                $originTotal += $orderDetail->price * $orderDetail->quantity;
+                $total += $orderDetail->subtotal;
+                $discount += $orderDetail->discount;
+                $quantity += $orderDetail->quantity;
+        }
+
+         $dataOrder = [
+            'total' => $total,
+            'origin_total' => $originTotal,
+            'quantity' => $quantity,
+            'discount' => $discount
+        ];
+
+        return $this->updateOrder($orderId, $dataOrder);
     }
 }
 

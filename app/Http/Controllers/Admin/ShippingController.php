@@ -117,4 +117,35 @@ class ShippingController extends BaseController {
             // @codeCoverageIgnoreEnd
         }
     }
+
+    public function printOrderStore(Request $request){
+        $orderService = new orderService();
+        $addressService = new addressService();
+        $shipService = new shipService();
+
+        $orderId =  $request->input('id');
+
+        try {
+            $order =  $orderService->getOrderById($orderId);
+
+            $user_address = $order->addressReceive;
+            $user = $this->_user;
+            $origin_total = 0;
+            $discount = 0;
+
+            foreach ($order->orderDetail as $orderDetail){
+                $origin_total += $orderDetail->price * $orderDetail->quantity;
+                $discount += $orderDetail->discount;
+            }
+            $order->origin_total = $origin_total;
+            $order->discount = $discount;
+
+            return view('admin.shipping.print_order_store', compact('order', 'user', 'user_address'));
+        } catch (\Exception $e) {
+            // @codeCoverageIgnoreStart
+            $return['error'] = $e->getMessage();
+            $return['errorMsg'] = $e->getMessage();
+            // @codeCoverageIgnoreEnd
+        }
+    }
 }
