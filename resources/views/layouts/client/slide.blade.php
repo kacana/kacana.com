@@ -4,9 +4,6 @@
             <div  class="nivo-slider">
                 <div class="slider-wrapper theme-default">
                     <div id="homepage-main-slider" class="nivoSlider">
-                        <a href="/tin-tuc/ktag-moc-khoa-dinh-vi-thong-minh-kacana-smart-stick.50">
-                            <img src="{{AWS_CDN_URL}}/images/client/baner-opening.jpg" data-thumb="{{AWS_CDN_URL}}/images/client/baner-opening.jpg" alt="" />
-                        </a>
                         <a href="/san-pham/balo-laptop-nam-mixi-thiet-ke-chong-trom-hoan-hao-bm0601-m5510--1891--442">
                             <img src="{{AWS_CDN_URL}}/images/client/balochongtrom.jpg" data-thumb="{{AWS_CDN_URL}}/images/client/balochongtrom.jpg" alt="" />
                         </a>
