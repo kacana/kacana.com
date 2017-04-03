@@ -244,13 +244,13 @@ function formatMoney($number, $symbol=' đ')
 
 }
 
-function generateBarcode($code, $width = 4, $height = 100){
+function generateBarcode($code, $width = 2, $height = 40){
     $codeEan = str_pad($code, 12, '0', STR_PAD_LEFT);
     $barcodeService = new DNS1D();
     return $barcodeService->getBarcodePNG($codeEan, "EAN13", $width, $height);
 }
 
-function generateQrcode($string, $width = 3.5, $height = 3.5){
+function generateQrcode($string, $width = 2.5, $height = 2.5){
     $barcodeService = new DNS2D();
     return $barcodeService->getBarcodePNG($string, "QRCODE", $width, $height);
 }

@@ -11,11 +11,11 @@
                 font-family:'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
             }
             .barcode-label{
-                margin-top: 17px;
+                margin-top: 0px;
             }
             .basic-info{
-                height: 100px;
-                width: 260px;
+                height: 50px;
+                width: 210px;
                 display: block;
                 float: left;
             }
@@ -25,29 +25,29 @@
                 display: block;
             }
             .basic-info .price{
-                font-size: 40px;
+                font-size: 19px;
                 text-align: center;
                 font-weight: 500;
             }
             .basic-info .logo img{
-                max-width: 60%;
-                padding: 10px;
+                max-width: 45%;
+                padding: 10px 30px 0;
             }
             .barcode{
                 clear: both;
             }
             .barcode .property-code{
-                width: 380px;
+                width: 190px;
                 display: block;
                 overflow: hidden;
-                height: 125px;
+                height: 63px;
                 padding: 10px;
                 float: left;
             }
             .barcode .bardcode-number
             {
                 text-align: center;
-                font-size: 25px;
+                font-size: 17px;
             }
             .product-link{
                 float: left;
@@ -71,9 +71,9 @@
                     {{formatMoney($product->sell_price)}}
                 </div>
             </div>
-            <div class="product-link">
-                <img src="data:image/png;base64,{{generateQrcode(urlProductDetail($product))}}">
-            </div>
+            {{--<div class="product-link">--}}
+                {{--<img src="data:image/png;base64,{{generateQrcode(urlProductDetail($product))}}">--}}
+            {{--</div>--}}
             <div class="barcode">
                 <div class="property-code" >
                     <img src="data:image/png;base64,{{generateBarcode($property->id)}}">
@@ -84,7 +84,7 @@
             </div>
         </div>
         <script>
-            window.print();
+//            window.print();
         </script>
     </body>
 </html>

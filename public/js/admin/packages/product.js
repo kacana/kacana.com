@@ -281,7 +281,7 @@ var productPackage = {
             },
             printBarcode: function () {
                 var href = $(this).data('href');
-                window.open(href, 'Print Barcode', 'height=300,width=400');
+                window.open(href, 'Print Barcode', 'height=135,width=210');
                 return true;
             },
             removeProductProperty: function () {
