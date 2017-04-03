@@ -31,7 +31,7 @@
             }
             .basic-info .logo img{
                 max-width: 45%;
-                padding: 10px 30px 0;
+                padding: 7px 30px 0;
             }
             .barcode{
                 clear: both;
@@ -40,8 +40,8 @@
                 width: 190px;
                 display: block;
                 overflow: hidden;
-                height: 63px;
-                padding: 10px;
+                height: 60px;
+                padding: 5px 10px;
                 float: left;
             }
             .barcode .bardcode-number
@@ -65,7 +65,7 @@
         <div class="barcode-label">
             <div class="basic-info" >
                 <div class="logo">
-                    <img src="//image.kacana.vn/images/client/logo_print.jpg">
+                    <img src="//image.kacana.vn/images/client/logo-print-label.jpg">
                 </div>
                 <div class="price" >
                     {{formatMoney($product->sell_price)}}
