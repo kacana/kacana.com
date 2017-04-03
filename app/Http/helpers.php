@@ -5,7 +5,8 @@
  * Date: 9/24/15
  * Time: 6:32 AM
  */
-
+use Milon\Barcode\DNS1D;
+use Milon\Barcode\DNS2D;
 /*
  * show Image
  */
@@ -245,12 +246,13 @@ function formatMoney($number, $symbol=' đ')
 
 function generateBarcode($code, $width = 4, $height = 100){
     $codeEan = str_pad($code, 12, '0', STR_PAD_LEFT);
-
-    return \DNS1D::getBarcodePNG($codeEan, "EAN13", $width, $height);
+    $barcodeService = new DNS1D();
+    return $barcodeService->getBarcodePNG($codeEan, "EAN13", $width, $height);
 }
 
 function generateQrcode($string, $width = 3.5, $height = 3.5){
-    return \DNS2D::getBarcodePNG($string, "QRCODE", $width, $height);
+    $barcodeService = new DNS2D();
+    return $barcodeService->getBarcodePNG($string, "QRCODE", $width, $height);
 }
 
 function getProductIds($products){
