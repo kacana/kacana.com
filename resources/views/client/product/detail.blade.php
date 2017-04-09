@@ -136,28 +136,39 @@
                             @endforeach
                         </ul>
                     @endif
-                    <div class="row">
-                        <span class="col-xs-12">
-                            <button type="submit" class="btn btn_kacana_main add-to-cart" id="add-cart-btn">
-                                Mua ngay
-                            </button>
-                   </span>
-                    </div>
-                    <div class="col-xs-12 quick-order-block">
-                        <form method="post" id="quick_order_form" action="/cart/quickOrder" >
-                            <h4 class="product-information-head">
-                                Đặt hàng ngay chỉ cần để lại SĐT
-                            </h4>
-                            <input class="hidden" name="sizeId"  value="0" type="text" >
-                            <input class="hidden" name="colorId"  value="0" type="text" >
-                            <input class="hidden" name="tagId"  value="{{$tag->id}}" type="text" >
-                            <input class="hidden" name="productId"  value="{{$product->id}}" type="text" >
-                            <input id="phoneQuickOrderNumber" name="phoneQuickOrderNumber" placeholder="Nhập số điện thoại" type="text" >
-                            <button type="submit" class="btn btn_kacana_main order-product-with-phone" id="order-product-with-phone">
-                               Gọi lại cho tôi
-                            </button>
-                        </form>
-                    </div>
+                    @if($product->status == KACANA_PRODUCT_STATUS_ACTIVE)
+                        <div class="row">
+                            <span class="col-xs-12">
+                                <button type="submit" class="btn btn_kacana_main add-to-cart" id="add-cart-btn">
+                                    Mua ngay
+                                </button>
+                            </span>
+                        </div>
+                        <div class="col-xs-12 quick-order-block">
+                            <form method="post" id="quick_order_form" action="/cart/quickOrder" >
+                                <h4 class="product-information-head">
+                                    Đặt hàng ngay chỉ cần để lại SĐT
+                                </h4>
+                                <input class="hidden" name="sizeId"  value="0" type="text" >
+                                <input class="hidden" name="colorId"  value="0" type="text" >
+                                <input class="hidden" name="tagId"  value="{{$tag->id}}" type="text" >
+                                <input class="hidden" name="productId"  value="{{$product->id}}" type="text" >
+                                <input id="phoneQuickOrderNumber" name="phoneQuickOrderNumber" placeholder="Nhập số điện thoại" type="text" >
+                                <button type="submit" class="btn btn_kacana_main order-product-with-phone" id="order-product-with-phone">
+                                   Gọi lại cho tôi
+                                </button>
+                            </form>
+                        </div>
+                    @elseif($product->status == KACANA_PRODUCT_STATUS_SOLD_OUT)
+                        <div class="row">
+                            <span class="col-xs-12">
+                                <button type="submit" class="btn btn_kacana_main margin-top-10px">
+                                   sản phẩm tạm hết hàng
+                                </button>
+                                <label class="margin-top-10px text-red">Gọi 0906.054.206 để liên hệ với chúng tôi nếu bạn muốn mua sản phẩm này!</label>
+                            </span>
+                        </div>
+                    @endif
                     <div class="row">
                         <span class="col-xs-12">
                             <a target="_blank" href="/contact/kiem-tiem-voi-chung-toi" type="submit" class="btn btn_kacana_main get-money-with-us-btn" >

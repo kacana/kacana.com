@@ -415,9 +415,9 @@ class productModel extends Model  {
      * @param $status
      * @return \Illuminate\Support\Collection|null|static
      */
-    public function getProductById($id, $status = KACANA_PRODUCT_STATUS_ACTIVE){
+    public function getProductById($id, $status = [KACANA_PRODUCT_STATUS_ACTIVE, KACANA_PRODUCT_STATUS_SOLD_OUT]){
         if($status)
-            return $this->where('status', $status)->find($id);
+            return $this->whereIn('status', $status)->find($id);
         else
             return $this->find($id);
     }
@@ -433,7 +433,7 @@ class productModel extends Model  {
     public function getProductByTagId($tagIds, $limit, $offset = 0, $page = 1, $options = false){
         $select = $this->leftJoin('product_tag', 'products.id', '=', 'product_tag.product_id')
             ->whereIn('product_tag.tag_id', $tagIds)
-            ->where('products.status', '=', KACANA_PRODUCT_STATUS_ACTIVE);
+            ->whereIn('products.status', [KACANA_PRODUCT_STATUS_ACTIVE, KACANA_PRODUCT_STATUS_SOLD_OUT]);
 
         if(!$page)
         {
@@ -576,7 +576,7 @@ class productModel extends Model  {
         $products->where('product_tag.type', '=', TAG_RELATION_TYPE_MENU);
         $products->where('tag_relations.tag_type_id', '=', TAG_RELATION_TYPE_MENU);
         $products->where('tag_relations.status', '=', TAG_RELATION_STATUS_ACTIVE);
-        $products->where('products.status', '=', KACANA_PRODUCT_STATUS_ACTIVE);
+        $products->whereIn('products.status', [KACANA_PRODUCT_STATUS_ACTIVE, KACANA_PRODUCT_STATUS_SOLD_OUT]);
         $products->groupBy('products.id');
         $products->select(['products.*', 'product_tag.*']);
         $results = $products->get();
@@ -602,7 +602,7 @@ class productModel extends Model  {
         $products->where('product_tag.type', '=', TAG_RELATION_TYPE_MENU);
         $products->where('tag_relations.tag_type_id', '=', TAG_RELATION_TYPE_MENU);
         $products->where('tag_relations.status', '=', TAG_RELATION_STATUS_ACTIVE);
-        $products->where('products.status', '=', KACANA_PRODUCT_STATUS_ACTIVE);
+        $products->whereIn('products.status', [KACANA_PRODUCT_STATUS_ACTIVE, KACANA_PRODUCT_STATUS_SOLD_OUT]);
         $products->groupBy('products.id');
         $products->select(['products.*', 'product_tag.*']);
 
@@ -755,7 +755,7 @@ class productModel extends Model  {
             ->leftJoin('tag_relations', 'product_tag.tag_id', '=', 'tag_relations.child_id')
             ->where('tag_relations.status', '=', TAG_RELATION_STATUS_ACTIVE)
             ->where('tag_relations.tag_type_id', '=', TAG_RELATION_TYPE_MENU)
-            ->where('products.status', '=', KACANA_PRODUCT_STATUS_ACTIVE)->groupBy('products.id')
+            ->whereIn('products.status', [KACANA_PRODUCT_STATUS_ACTIVE, KACANA_PRODUCT_STATUS_SOLD_OUT])->groupBy('products.id')
             ->select(['products.*', 'product_tag.*']);
 
 
@@ -780,7 +780,7 @@ class productModel extends Model  {
             ->leftJoin('tag_relations', 'product_tag.tag_id', '=', 'tag_relations.child_id')
             ->where('tag_relations.status', '=', TAG_RELATION_STATUS_ACTIVE)
             ->where('tag_relations.tag_type_id', '=', TAG_RELATION_TYPE_MENU)
-            ->where('products.status', '=', KACANA_PRODUCT_STATUS_ACTIVE)
+            ->whereIn('products.status', [KACANA_PRODUCT_STATUS_ACTIVE, KACANA_PRODUCT_STATUS_SOLD_OUT])
             ->where('products.id', '=', $productId)
             ->select(['products.*', 'product_tag.*']);
 

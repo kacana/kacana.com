@@ -83,7 +83,7 @@ var productPackage = {
 
               var cacheLoadedCallBack = function(oData){
                   $formInline.find('input[name="search"]').val(oData.columns[1].search.search);
-                  $formInline.find('select[name="searchStatus"]').val(oData.columns[2].search.search);
+                  $formInline.find('select[name="searchStatus"]').val(oData.columns[5].search.search);
               };
 
               var datatable = Kacana.datatable.product(element, columns, addParamsCallBack, cacheLoadedCallBack);
@@ -100,7 +100,7 @@ var productPackage = {
                       var text = $formInline.find('input[name="search"]').val();
                       //
                       api.column(1).search(text)
-                          .column(2).search(status, true);
+                          .column(5).search(status, true);
 
                       api.draw();
                   });

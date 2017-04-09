@@ -31,7 +31,8 @@
                             <select class="form-control" name="searchStatus">
                                 <option value="">All Status</option>
                                 <option value="1">Active</option>
-                                <option value="0">Inactive</option>
+                                <option value="2">Inactive</option>
+                                <option class="text-red" value="3">SOLD OUT</option>
                             </select>
                             <button type="submit" class="btn btn-primary">Find</button>
                             <button type="reset" class="btn btn-default">Reset</button>

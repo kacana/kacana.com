@@ -95,6 +95,9 @@ class ViewGenerateHelper {
             case 'products_boot_priority_'.KACANA_PRODUCT_BOOT_PRIORITY_LEVEL_5:
                 $iconStatus = '<i class="fa fa-rocket"></i> priority 5';
                 break;
+            case 'products_status_'.KACANA_PRODUCT_STATUS_SOLD_OUT:
+                $iconStatus = '<span class="text-red" ><i class="fa fa-circle-o"></i> SOLD OUT </span>';
+                break;
             default:
                 $iconStatus = '<i class="fa fa-ban-circle"></i> Disabled ';
                 break;

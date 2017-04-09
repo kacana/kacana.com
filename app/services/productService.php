@@ -76,7 +76,7 @@ class productService {
         );
 
         $return = $productModel->generateProductTable($request, $columns);
-        $statusOptions = [KACANA_PRODUCT_STATUS_ACTIVE, KACANA_PRODUCT_STATUS_INACTIVE];
+        $statusOptions = [KACANA_PRODUCT_STATUS_ACTIVE, KACANA_PRODUCT_STATUS_INACTIVE, KACANA_PRODUCT_STATUS_SOLD_OUT];
         $bootPriorityOptions = [KACANA_PRODUCT_BOOT_PRIORITY_LEVEL_0,
                                 KACANA_PRODUCT_BOOT_PRIORITY_LEVEL_1,
                                 KACANA_PRODUCT_BOOT_PRIORITY_LEVEL_2,
@@ -260,7 +260,7 @@ class productService {
      * @param $status
      * @return \Illuminate\Support\Collection|null|static
      */
-    public function getProductById($id, $userId = 0, $status = KACANA_PRODUCT_STATUS_ACTIVE){
+    public function getProductById($id, $userId = 0, $status = [KACANA_PRODUCT_STATUS_ACTIVE, KACANA_PRODUCT_STATUS_SOLD_OUT]){
         $productModel = new productModel();
         $userProductLike = new userProductLikeModel();
         $htmlFixer = new HtmlFixer();
