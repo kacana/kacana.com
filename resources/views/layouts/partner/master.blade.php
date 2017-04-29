@@ -77,6 +77,11 @@
         <script src="/lib/plupload/js/plupload.full.min.js" type="text/javascript"></script>
         <script src="/lib/cropper/cropper.min.js" type="text/javascript"></script>
 
+        <!-- Head Libs -->
+        <script src="/lib/multiple-level/js/main.js"></script>
+        <script src="/lib/multiple-level/js/modernizr.js"></script>
+        <link href="/lib/multiple-level/css/style.css" rel="stylesheet">
+
         <script type="application/javascript">
             $(function() {
                 Kacana.layout.init();

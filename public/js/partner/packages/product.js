@@ -16,7 +16,8 @@ var productPackage = {
               });
 
               Kacana.product.listProductBoot.page.on('click','.product-supper-boot', Kacana.product.listProductBoot.productSupperBoot);
-              Kacana.product.listProductBoot.page.on('click','a[href="#product-boot"]', Kacana.product.listProductBoot.productBoot);
+              Kacana.product.listProductBoot.page.on('click','a[href="#facebook-product-boot"]', Kacana.product.listProductBoot.productBootFacebook);
+              Kacana.product.listProductBoot.page.on('click','a[href="#lazada-product-boot"]', Kacana.product.listProductBoot.productBootLazada);
 
               var modal = $('#modal-supper-boot-product');
 
@@ -40,6 +41,13 @@ var productPackage = {
               });
 
               modal.on('click', 'a[href="#btn-post-to-social"]', Kacana.product.listProductBoot.postToSocial)
+
+              var lazadaModal = $('#modal-boot-product-lazada');
+
+              lazadaModal.on('click', 'a[href="#choose-lazada-category"]', function () {
+                  lazadaModal.find('.lazada-cat-choose').html($(this).data('name'));
+                  lazadaModal.find('.lazada-cat-choose').data('id', $(this).data('id'));
+              });
 
           },
           postToSocial: function () {
@@ -96,9 +104,29 @@ var productPackage = {
               Kacana.utils.loading.loading(Kacana.product.listProductBoot.page);
               Kacana.ajax.product.postToSocial(data, callBack, errorCallBack);
           },
-          productBoot: function () {
+          productBootFacebook: function () {
               var productId = $(this).data('id');
               Kacana.product.listProductBoot.bootProduct([productId]);
+          },
+          productBootLazada: function () {
+              var productId = $(this).data('id');
+
+              var callBack = function(data){
+                  if(data.ok)
+                  {
+                      $('#modal-boot-product-lazada').modal();
+                  }
+                  else
+                  {
+                      Kacana.utils.showError(data.error_message);
+                  }
+                  Kacana.utils.loading.closeLoading();
+              };
+
+              var errorCallBack = function(){};
+
+              Kacana.utils.loading.loading(Kacana.product.listProductBoot.page);
+              Kacana.ajax.product.productSupperBoot([productId], callBack, errorCallBack);
           },
           productSupperBoot: function () {
               var productIds = [];
@@ -195,11 +223,11 @@ var productPackage = {
                       }
                   },
                   {
-                      'width':'4%',
+                      'width':'10%',
                       'class':'center',
                       'sortable':false,
                       'render': function ( data, type, full, meta ) {
-                          return '<a href="#product-boot" data-id="'+full[0]+'" class="btn btn-default btn-xs"><i class="fa fa-rocket"></i></a>';
+                          return '<a href="#facebook-product-boot" data-id="'+full[0]+'" class="btn btn-default btn-xs"><i class="fa fa-facebook"></i></a> <a href="#lazada-product-boot" data-id="'+full[0]+'" class="btn btn-default btn-xs">lzd</a>';
                       }
                   }
               ];

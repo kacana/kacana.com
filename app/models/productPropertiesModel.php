@@ -17,6 +17,9 @@ class productPropertiesModel extends Model  {
 
     public $timestamps = false;
 
+    //Make it available in the json response
+    protected $appends = ['nameProperty'];
+
     /**
      * Get the tags associated with product
      */
@@ -87,6 +90,12 @@ class productPropertiesModel extends Model  {
 
     public function decrementQuantityProductProperty($id, $value = 1){
         return $this->where('id', $id)->decrement('quantity', $value);
+    }
+
+    public function getNamePropertyAttribute(){
+        if(isset($this->size))
+            return ($this->color->name . ' ' . $this->size);
+        return ($this->color->name);
     }
 
 }

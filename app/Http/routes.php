@@ -151,6 +151,7 @@ Route::group(['domain'=>KACANA_AUTH_ADMIN_NAME.'.{nameDomain}','middleware' => '
     Route::get('/order/deleteOrderDetail',                   array('as'=>'OrderDeleteOrderDetail',           'uses'=>'Admin\OrderController@deleteOrderDetail'));
     Route::get('/order/getWardByDistrictId',                 array('as'=>'OrderGetWardByDistrictId',         'uses'=>'Admin\OrderController@getWardByDistrictId'));
     Route::get('/order/cancelOrder',                         array('as'=>'OrderCancelOrder',                 'uses'=>'Admin\OrderController@cancelOrder'));
+    Route::get('/order/exportProductAtStore',                array('as'=>'OrderExportProductAtStore',        'uses'=>'Admin\OrderController@exportProductAtStore'));
 
     //Shipping Controller
     Route::any('/shipping',                                  array('as'=>'listShipping',                        'uses'=>'Admin\ShippingController@index'));

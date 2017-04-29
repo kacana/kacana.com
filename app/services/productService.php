@@ -943,9 +943,11 @@ class productService {
             throw new \Exception('BAD Product ID');
 
         $products = $productModel->getProductsToBoot($productIds);
+
         foreach ($products as &$product)
         {
             $product->list_gallery = $product->galleries;
+            $product->list_properties = $product->productProperties->toArray();
             $product->price = 0;
             $product->caption = '👝👜👛'.ucfirst($product->name).'<br>🤑Giá: '.formatMoney($product->sell_price - $product->discount).'<br>🎒👝💼'.$product->short_description;
             $product->sell_price = formatMoney($product->sell_price);

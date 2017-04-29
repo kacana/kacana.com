@@ -314,7 +314,7 @@ var orderPackage = {
 
                 Kacana.order.detail.page.on('click','a[href="#export-product-store"]', function () {
                     var orderQuantity = $('#order-quantity').val();
-                    var orderTotal = $('#ordr-total').val();
+                    var orderTotal = $('#order-total').val();
                     swal({
                         title: 'Xuất Hàng',
                         text: "Đơn hàng gồm "+orderQuantity+" sản phẩm và tổng giá trị đơn hàng là: "+orderTotal,
@@ -323,9 +323,11 @@ var orderPackage = {
                         cancelButtonColor: '#d33',
                         confirmButtonText: 'Xuất hàng!'
                     }).then(function () {
-                        Kacana.order.exportProductAtStore();
+                        Kacana.order.detail.exportProductAtStore();
                     });
                 });
+
+                Kacana.order.detail.page.on('click','a[href="#show-invoice-at-store"]', Kacana.order.detail.showInvoiceWithOrderStore);
 
                 Kacana.order.detail.page.on('click', 'a[href="#cancel-edit-detail-item"]', function () {
                     var form = $(this).parents('form');
@@ -446,22 +448,34 @@ var orderPackage = {
                 Kacana.order.detail.addProductModal();
             },
             exportProductAtStore: function () {
+                var orderId = $('#order-id').val();
+
                 var callBack = function(data){
+                    Kacana.utils.closeLoading();
                     if(data.ok){
-                        $('a[href="#export-product-store"]').attr('disabled', true).html('đã xuất hàng');
-                        var orderId = $('#order-id').val();
+                        $('a[href="#export-product-store"]').attr('disabled', true).html('Đơn hàng đã hoàn thành!');
+                        $('a[href="#export-product-store"]').attr('class', 'btn btn-success btn-sm');
+                        $('a[href="#export-product-store"]').after(' <a href="#show-invoice-at-store" data-toggle="modal" data-order-id="50" class="btn btn-primary btn-sm"> <i class="fa fa-eye"></i> xem hoá đơn </a>')
+                        $('a[href="#cancel-order"]').remove();
                         window.open('/shipping/printOrderStore/?id='+orderId, 'Receipt Information', 'height=900,width=940');
+
                         return true;
                     }
                     else
                         Kacana.utils.showError('có cái gì sai sai ở đây! vui lòng gọi: 0906.054.206');
                 };
+
                 var errorCallBack = function(data){
                     Kacana.utils.showError('có cái gì sai sai ở đây! vui lòng gọi: 0906.054.206');
                     Kacana.utils.closeLoading();
                 };
-
-                Kacana.ajax.order.getWardByDistrictId(districtId, callBack, errorCallBack);
+                Kacana.utils.loading();
+                Kacana.ajax.order.exportProductAtStore(orderId, callBack, errorCallBack);
+            },
+            showInvoiceWithOrderStore: function () {
+                var orderId = $('#order-id').val();
+                window.open('/shipping/printOrderStore/?id='+orderId, 'Receipt Information', 'height=900,width=940');
+                return true;
             },
             addProductModal: function () {
                 var modal = $('#modal-add-product-order');

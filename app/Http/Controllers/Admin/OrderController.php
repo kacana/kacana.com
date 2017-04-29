@@ -424,4 +424,11 @@ class OrderController extends BaseController {
 
         return redirect('/order');
     }
+
+    public function exportProductAtStore(Request $request){
+        $orderService = new orderService;
+        $orderId = $request->input('orderId', 0);
+        if($orderService->exportProductAtStore($orderId))
+            return response()->json(['ok' => 1]);
+    }
 }

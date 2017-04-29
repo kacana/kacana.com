@@ -22,13 +22,22 @@
                         @endif
                     @else
                         @if(!isset($shippingServiceInfos))
-                            <button class="btn btn-warning btn-sm">
+                            <a href="#cus-address-info-block" class="btn btn-warning btn-sm">
                                 <i class="ion-alert-circled"></i> Vui lòng cập nhật địa chỉ khách hàng
-                            </button>
+                            </a>
                         @endif
-                        <a href="#export-product-store" data-toggle="modal" data-order-id="{{$order->id}}" class="btn btn-primary btn-sm">
-                            <i class="ion-android-plane"></i> xem hoá đơn
-                        </a>
+                        @if($order->status == KACANA_ORDER_STATUS_NEW || $order->status == KACANA_ORDER_STATUS_PROCESSING)
+                            <a href="#export-product-store" data-toggle="modal" data-order-id="{{$order->id}}" class="btn btn-primary btn-sm">
+                                <i class="ion-android-plane"></i> kiểm tra và xuất sản phẩm
+                            </a>
+                        @elseif($order->status == KACANA_ORDER_STATUS_COMPLETE)
+                            <a href="#" disabled="true" data-toggle="modal" data-order-id="{{$order->id}}" class="btn btn-success btn-sm">
+                                Đơn hàng đã hoàn thành!
+                            </a>
+                            <a href="#show-invoice-at-store" data-toggle="modal" data-order-id="{{$order->id}}" class="btn btn-primary btn-sm">
+                                <i class="fa fa-eye"></i> xem hoá đơn
+                            </a>
+                        @endif
                     @endif
 
                     @if($order->status == KACANA_ORDER_STATUS_NEW || $order->status == KACANA_ORDER_STATUS_QUICK_ORDER)
@@ -124,7 +133,7 @@
                                 </div>
                             </form>
                         </div>
-                        <div class="col-xs-12">
+                        <div id="cus-address-info-block" class="col-xs-12">
                             <p class="lead">Thông tin nhận hàng</p>
                             {!! Form::open(array('method'=>'put', 'id' =>'form-edit-order', 'class'=>"form-horizontal")) !!}
                             <div class="box-body">

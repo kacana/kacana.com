@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use App\services\orderService;
 use Kacana\Util;
 use Auth;
+use App\services\thirdPartyTrade\lazada;
 
 /**
  * Class SocialController
@@ -20,10 +21,13 @@ class ProductController extends BaseController {
     public function index(Request $request)
     {
         $userService = new userService();
+        $lazada = new lazada();
+
         $user = Auth::user();
         $facebookAccountBusiness = $userService->getUserAccountBusinessSocial($user->id, KACANA_SOCIAL_TYPE_FACEBOOK);
 
-        return view('partner.product.index', ['facebookAccountBusiness' => $facebookAccountBusiness, 'user'=> $user]);
+        $lazadaCat = $lazada->getCategoryTree();
+        return view('partner.product.index', ['facebookAccountBusiness' => $facebookAccountBusiness, 'user'=> $user, 'lazadaCat' => $lazadaCat]);
     }
 
     /**

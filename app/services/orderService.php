@@ -484,6 +484,19 @@ class orderService {
 
     }
 
+    public function exportProductAtStore($orderId){
+        $order = $this->_orderModel->getById($orderId);
+
+        if(($order->status == KACANA_ORDER_STATUS_NEW || $order->status == KACANA_ORDER_STATUS_PROCESSING) && $order->order_type == KACANA_ORDER_TYPE_STORE_THD)
+        {
+            $order->updateItem($orderId, ['status' => KACANA_ORDER_STATUS_COMPLETE]);
+        }
+        else
+            return false;
+
+        return true;
+    }
+
     /**
      * @param $orderId
      * @param $userId

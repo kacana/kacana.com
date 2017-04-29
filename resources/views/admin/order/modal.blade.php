@@ -80,13 +80,7 @@
                         <input id="extra_discount" class="form-control" type="text" value="0" name="extraDiscount" placeholder="Giảm thêm" required="required">
                     </div>
                 </div>
-                <div class="form-group col-xs-6 ">
-                    <label class="control-label text-green" for="phone">Diễn giải giảm thêm</label>
-                    <div >
-                        <textarea class="form-control" rows="1" size="50" placeholder="Mô tả cho việc giảm thêm để in vận đơn" name="extraDiscountDesc"></textarea>
-                    </div>
-                </div>
-                <div  style="margin-right: 10px" class="form-group  col-xs-6 ">
+                <div class="form-group  col-xs-6 ">
                     <label class="control-label text-red" for="phone">Ghi chú đơn hàng(bắt buộc)</label>
                     <div >
                         <select class="form-control" name="OrderClientNote" >
@@ -94,6 +88,12 @@
                             <option value="" >Không cho xem hàng</option>
                             <option value="Cho thử hàng" >Cho thử hàng</option>
                         </select>
+                    </div>
+                </div>
+                <div style="margin-right: 10px" class="form-group col-xs-6 ">
+                    <label class="control-label text-green" for="phone">Diễn giải giảm thêm</label>
+                    <div >
+                        <textarea class="form-control" rows="1" size="50" placeholder="Mô tả cho việc giảm thêm để in vận đơn" name="extraDiscountDesc"></textarea>
                     </div>
                 </div>
                 <div class="form-group col-xs-6 ">

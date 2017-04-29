@@ -7,18 +7,6 @@
                         <li class=""><a class="text-red" href="#tab_1-1" data-toggle="tab" aria-expanded="false">Chọn tài khoản cần đăng</a></li>
                         <li class=""><a class="text-red" href="#tab_2-2" data-toggle="tab" aria-expanded="false">Mô tả bài đăng</a></li>
                         <li class="active"><a class="text-red" href="#tab_3-2" data-toggle="tab" aria-expanded="true">Chọn hình sản phẩm</a></li>
-                        {{--<li class="dropdown">--}}
-                            {{--<a class="dropdown-toggle" data-toggle="dropdown" href="#">--}}
-                                {{--Dropdown <span class="caret"></span>--}}
-                            {{--</a>--}}
-                            {{--<ul class="dropdown-menu">--}}
-                                {{--<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Action</a></li>--}}
-                                {{--<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Another action</a></li>--}}
-                                {{--<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Something else here</a></li>--}}
-                                {{--<li role="presentation" class="divider"></li>--}}
-                                {{--<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Separated link</a></li>--}}
-                            {{--</ul>--}}
-                        {{--</li>--}}
                         <li class="pull-left header"><i class="fa fa-rocket"></i> Super boot sản</li>
                     </ul>
                     <div class="tab-content">
@@ -65,8 +53,54 @@
         </div>
     </div>
 </div>
-<div>
 
+<div id="modal-boot-product-lazada" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="nav-tabs-custom">
+                    <ul class="nav nav-tabs pull-right">
+                        <li class=""><a class="text-red" href="#tab_lazada_2" data-toggle="tab" aria-expanded="false">Chọn hình sản phẩm</a></li>
+                            <li class="active"><a class="text-red" href="#tab_lazada_3" data-toggle="tab" aria-expanded="true">Chọn category sản phẩm</a></li>
+                        <li class="pull-left header"><i class="fa fa-rocket"></i> LAZADA Super boot sản phẩm</li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane" id="tab_lazada_1">
+                            <div class="list-social-post">
+
+                            </div>
+                        </div>
+
+                        <!-- /.tab-pane -->
+                        <div class="tab-pane" id="tab_lazada_2">
+                            <div contenteditable="true" class="desc-post-to-social" >
+                            </div>
+                        </div>
+                        <!-- /.tab-pane -->
+                        <div class="tab-pane active" id="tab_lazada_3">
+                            <div class="list-cat-lazada" >
+                                <ul class="cd-accordion-menu animated">
+                                    @foreach($lazadaCat as $cat)
+                                        @include('partner.product.categories', ['item' => $cat])
+                                    @endforeach
+                                </ul>
+                            </div>
+                            <div class="lazada-cat-choose">
+                                BAG
+                            </div>
+                        </div>
+                        <!-- /.tab-pane -->
+                    </div>
+                    <!-- /.tab-content -->
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <a type="button" href="#btn-post-to-social" class="btn btn-primary"><i class="fa fa-rocket"></i> Đăng bài</a>
+                <button type="button" class="btn btn-warning" data-dismiss="modal" class="btn">Huỷ</button>
+            </div>
+        </div>
+    </div>
 </div>
 
 <script id="template-desc-super-post-to-social" type="template">

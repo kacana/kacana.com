@@ -486,6 +486,14 @@ var ajaxPackage = {
                 var dataPost = {};
                 var options = [];
                 Kacana.ajax.init(url, dataType, type, dataPost, callBack, errorCallBack, options);
+            },
+            exportProductAtStore: function (orderId, callBack, errorCallBack) {
+                var url = '/order/exportProductAtStore?orderId='+orderId;
+                var dataType = 'json';
+                var type = 'get';
+                var dataPost = {};
+                var options = [];
+                Kacana.ajax.init(url, dataType, type, dataPost, callBack, errorCallBack, options);
             }
         },
         chat: {
