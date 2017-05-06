@@ -73,7 +73,7 @@
 
                         <!-- /.tab-pane -->
                         <div class="tab-pane" id="tab_lazada_2">
-                            <div contenteditable="true" class="desc-post-to-social" >
+                            <div class="list-product-super-boot-item">
                             </div>
                         </div>
                         <!-- /.tab-pane -->
@@ -96,7 +96,7 @@
 
             </div>
             <div class="modal-footer">
-                <a type="button" href="#btn-post-to-social" class="btn btn-primary"><i class="fa fa-rocket"></i> Đăng bài</a>
+                <a type="button" href="#btn-post-to-lazada" class="btn btn-primary"><i class="fa fa-rocket"></i> Đăng bài</a>
                 <button type="button" class="btn btn-warning" data-dismiss="modal" class="btn">Huỷ</button>
             </div>
         </div>
@@ -124,6 +124,23 @@
                 </div>
             </div>
             <div contenteditable="true" placeholder="mô tả sản phẩm" id="caption-image-${this.id}" class="caption-image"></div>
+        </div>
+    @{{/each}}
+</script>
+
+<script id="template-lazada-product-super-boot-item" type="template">
+    @{{each  properties}}
+        <div class="product-boot-item" data-properties-id="${this.id}">
+            <label class="name-product-boot-item">${this.nameProperty}</label>
+            <div class="wrap-list-image-post-to-facebook">
+                <div class="list-image-post-to-facebook">
+                    @{{each galleries}}
+                        <span data-id="${this.id}" class="item-image-post-to-facebook">
+                            <img src="${this.image}">
+                        </span>
+                    @{{/each}}
+                </div>
+            </div>
         </div>
     @{{/each}}
 </script>

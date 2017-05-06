@@ -20,6 +20,7 @@ var productPackage = {
               Kacana.product.listProductBoot.page.on('click','a[href="#lazada-product-boot"]', Kacana.product.listProductBoot.productBootLazada);
 
               var modal = $('#modal-supper-boot-product');
+              var modalLazada = $('#modal-boot-product-lazada');
 
               modal.on('click', '.item-image-post-to-facebook img', function () {
                   var listItem = $(this).parents('.list-image-post-to-facebook');
@@ -41,13 +42,77 @@ var productPackage = {
               });
 
               modal.on('click', 'a[href="#btn-post-to-social"]', Kacana.product.listProductBoot.postToSocial)
+              modalLazada.on('click', 'a[href="#btn-post-to-lazada"]', Kacana.product.listProductBoot.postToLazada)
 
-              var lazadaModal = $('#modal-boot-product-lazada');
-
-              lazadaModal.on('click', 'a[href="#choose-lazada-category"]', function () {
-                  lazadaModal.find('.lazada-cat-choose').html($(this).data('name'));
-                  lazadaModal.find('.lazada-cat-choose').data('id', $(this).data('id'));
+              modalLazada.on('click', 'a[href="#choose-lazada-category"]', function () {
+                  modalLazada.find('.lazada-cat-choose').html($(this).data('name'));
+                  modalLazada.find('.lazada-cat-choose').data('id', $(this).data('id'));
               });
+
+              modalLazada.on('click', '.item-image-post-to-facebook img', function () {
+                  var listItem = $(this).parents('.list-image-post-to-facebook');
+                  var numberProduct = modalLazada.find('.product-boot-item').length;
+                  if(listItem.find('.item-image-post-to-facebook.active').length == 6 && !$(this).parents('.item-image-post-to-facebook').hasClass('active') && numberProduct > 1)
+                      Kacana.utils.showError('Bạn chỉ được chọn tối đa 6 hình ảnh cho một thuộc tính!');
+                  else if((listItem.find('.item-image-post-to-facebook.active').length == 1 && $(this).parents('.item-image-post-to-facebook').hasClass('active')))
+                      Kacana.utils.showError('Thuộc tính phải có ít nhất một hình được chọn!');
+                  else
+                      $(this).parents('.item-image-post-to-facebook').toggleClass('active');
+              });
+
+          },
+          postToLazada: function () {
+              var modal = $('#modal-boot-product-lazada');
+              var properties = [];
+
+              modal.find('.list-product-super-boot-item .product-boot-item').each(function () {
+                  var images = [];
+                  $(this).find('.item-image-post-to-facebook.active').each(function () {
+                      images.push($(this).data('id'));
+                  });
+
+                  if(!images.length)
+                      return Kacana.utils.showError('Vui lòng chọn hình ảnh cho thuộc tính của sản phẩm!');
+
+                  properties.push({
+                      propertiesId: $(this).data('property-id'),
+                      images: images
+                  });
+              });
+
+              var catId = modal.find('.lazada-cat-choose').data('id');
+
+              if(!catId)
+                  return Kacana.utils.showError('Vui lòng chọn category của sản phẩm!');
+
+              var productId = modal.data('productId');
+
+              var callBack = function(data){
+                  modal.modal('hide');
+                  if(data.ok)
+                  {
+                      sweetAlert(
+                          'Hoàn thành!',
+                          'Đang post sản phẩm lên tài khoản của bạn! ( thời giạn dự kiến hoàn thành trong 10 phút )',
+                          'success'
+                      )
+                  }
+                  else
+                  {
+                      Kacana.utils.showError(data.error_message);
+                  }
+
+                  Kacana.utils.loading.closeLoading();
+              };
+
+              var errorCallBack = function(){};
+              var data = {
+                  properties: properties,
+                  catId: catId,
+                  productId: productId
+              };
+              Kacana.utils.loading.loading(Kacana.product.listProductBoot.page);
+              Kacana.ajax.product.postToSocial(data, callBack, errorCallBack);
 
           },
           postToSocial: function () {
@@ -114,7 +179,14 @@ var productPackage = {
               var callBack = function(data){
                   if(data.ok)
                   {
-                      $('#modal-boot-product-lazada').modal();
+                      var product = data.data[0];
+                      console.log(product);
+                      var modal = $('#modal-boot-product-lazada');
+                      modal.data('productId', product.id);
+                      var productSuperBootItem = $('#template-lazada-product-super-boot-item');
+                      var productSuperBootItemGenerate = $.tmpl(productSuperBootItem, {'properties': product.list_properties, 'galleries': product.galleries, 'product': product});
+                      modal.find('.list-product-super-boot-item').empty().append(productSuperBootItemGenerate);
+                      modal.modal();
                   }
                   else
                   {

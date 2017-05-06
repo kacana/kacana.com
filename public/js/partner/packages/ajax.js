@@ -119,6 +119,15 @@ var ajaxPackage = {
                 var options = [];
 
                 Kacana.ajax.init(url, dataType, type, dataPost, callBack, errorCallBack, options);
+            },
+            postToLazada: function (data, callBack, errorCallBack) {
+                var url = '/product/postToLazada';
+                var dataType = 'json';
+                var type = 'post';
+                var dataPost = data;
+                var options = [];
+
+                Kacana.ajax.init(url, dataType, type, dataPost, callBack, errorCallBack, options);
             }
         },
         order:{
