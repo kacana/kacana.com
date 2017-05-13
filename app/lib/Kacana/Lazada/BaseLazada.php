@@ -1,6 +1,6 @@
 <?php
 namespace Kacana\Lazada;
-use Httpful\Request as Client;
+use GuzzleHttp\Client;
 
 class BaseLazada {
 
@@ -11,7 +11,7 @@ class BaseLazada {
 
     }
 
-    private function generateSignature($action){
+    public function generateSignature($action){
         date_default_timezone_set("UTC");
 
         $parameters = $this->createBaseParameter($action);
@@ -57,10 +57,11 @@ class BaseLazada {
     private function makeRequest($parameters, $type = 'post'){
         $queryString = http_build_query($parameters, '', '&', PHP_QUERY_RFC3986);
         $url = KACANA_LAZADA_API_URL.'?'.$queryString;
-        $this->_client = Client::$type($url);
-        $results = $this->_client->send();
+        $client = new Client();
+        $results = $client->request($type, $url);
+        $body = \GuzzleHttp\json_decode($results->getBody());
 
-        return $results->body->SuccessResponse->Body;
+        return $body->SuccessResponse->Body;
 
     }
 

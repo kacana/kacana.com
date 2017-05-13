@@ -9,6 +9,9 @@ use Kacana\Util;
 use App\models\productGalleryModel;
 use App\models\socialPostModel;
 use Queue;
+use App\services\createProductLazadaService;
+use App\services\thirdPartyTrade\lazada;
+use App\models\tradePostModel;
 /**
  * Class productService
  * @package App\services
@@ -104,6 +107,21 @@ class socialService {
         $socialPostModel->updateItem($socialPostId, ['ref' => $socialPost['id']]);
 
         return $socialPost;
+    }
+
+    public function postToLazada($userId, $productId, $properties, $catId){
+
+        $createProductLazadaService = new createProductLazadaService($productId, $properties, $catId);
+        $xlmFile = $createProductLazadaService->createProductAttributes()
+            ->createProductProperties()
+            ->generateXmlFile();
+
+        $tradePostModel = new tradePostModel();
+
+        $tradePostModel->createItem($productId, $xlmFile, $properties, $userId);
+
+        $lazada = new lazada();
+        return $lazada->createProduct($xlmFile);
     }
 
     /**

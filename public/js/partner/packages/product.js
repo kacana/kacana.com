@@ -52,7 +52,7 @@ var productPackage = {
               modalLazada.on('click', '.item-image-post-to-facebook img', function () {
                   var listItem = $(this).parents('.list-image-post-to-facebook');
                   var numberProduct = modalLazada.find('.product-boot-item').length;
-                  if(listItem.find('.item-image-post-to-facebook.active').length == 6 && !$(this).parents('.item-image-post-to-facebook').hasClass('active') && numberProduct > 1)
+                  if(listItem.find('.item-image-post-to-facebook.active').length == 6 && !$(this).parents('.item-image-post-to-facebook').hasClass('active') && numberProduct >= 1)
                       Kacana.utils.showError('Bạn chỉ được chọn tối đa 6 hình ảnh cho một thuộc tính!');
                   else if((listItem.find('.item-image-post-to-facebook.active').length == 1 && $(this).parents('.item-image-post-to-facebook').hasClass('active')))
                       Kacana.utils.showError('Thuộc tính phải có ít nhất một hình được chọn!');
@@ -64,6 +64,11 @@ var productPackage = {
           postToLazada: function () {
               var modal = $('#modal-boot-product-lazada');
               var properties = [];
+              var selectPropertiesImage = true;
+              var catId = modal.find('.lazada-cat-choose').data('id');
+
+              if(!catId)
+                  return Kacana.utils.showError('Vui lòng chọn category của sản phẩm!');
 
               modal.find('.list-product-super-boot-item .product-boot-item').each(function () {
                   var images = [];
@@ -72,30 +77,30 @@ var productPackage = {
                   });
 
                   if(!images.length)
-                      return Kacana.utils.showError('Vui lòng chọn hình ảnh cho thuộc tính của sản phẩm!');
+                      selectPropertiesImage = false;
 
                   properties.push({
-                      propertiesId: $(this).data('property-id'),
+                      propertiesId: $(this).data('properties-id'),
                       images: images
                   });
               });
 
-              var catId = modal.find('.lazada-cat-choose').data('id');
-
-              if(!catId)
-                  return Kacana.utils.showError('Vui lòng chọn category của sản phẩm!');
+              if(!selectPropertiesImage)
+                  return Kacana.utils.showError('Vui lòng chọn hình ảnh cho thuộc tính của sản phẩm!');
 
               var productId = modal.data('productId');
-
+              // Kacana.utils.loading.loading($('#modal-boot-product-lazada .modal-dialog'));
               var callBack = function(data){
                   modal.modal('hide');
                   if(data.ok)
                   {
                       sweetAlert(
                           'Hoàn thành!',
-                          'Đang post sản phẩm lên tài khoản của bạn! ( thời giạn dự kiến hoàn thành trong 10 phút )',
+                          'Đã post sản phẩm lên LAZADA!',
                           'success'
-                      )
+                      );
+
+                      $('#btn-lazada-product-boot-'+productId).removeClass('btn-default').addClass('btn-success');
                   }
                   else
                   {
@@ -111,8 +116,8 @@ var productPackage = {
                   catId: catId,
                   productId: productId
               };
-              Kacana.utils.loading.loading(Kacana.product.listProductBoot.page);
-              Kacana.ajax.product.postToSocial(data, callBack, errorCallBack);
+
+              Kacana.ajax.product.postToLazada(data, callBack, errorCallBack);
 
           },
           postToSocial: function () {
@@ -299,7 +304,16 @@ var productPackage = {
                       'class':'center',
                       'sortable':false,
                       'render': function ( data, type, full, meta ) {
-                          return '<a href="#facebook-product-boot" data-id="'+full[0]+'" class="btn btn-default btn-xs"><i class="fa fa-facebook"></i></a> <a href="#lazada-product-boot" data-id="'+full[0]+'" class="btn btn-default btn-xs">lzd</a>';
+                            var actionStr =  '<a href="#facebook-product-boot" data-id="'+full[0]+'" class="btn btn-default btn-xs"><i class="fa fa-facebook"></i></a> ';
+                            var classButtonLZD = 'btn-default';
+                            var currentUserId = $('#current-user-logged-in').val();
+                            if(full[6])
+                                classButtonLZD = 'btn-success';
+
+                            if(currentUserId == 34)
+                                actionStr += '<a id="btn-lazada-product-boot-'+full[0]+'" href="#lazada-product-boot" data-id="'+full[0]+'" class="btn '+classButtonLZD+' btn-xs">lzd</a>';
+
+                          return actionStr;
                       }
                   }
               ];

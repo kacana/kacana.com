@@ -297,8 +297,10 @@ class productModel extends Model  {
         // Main query to actually get the data
         $selectData = DB::table('products')
             ->select($datatables::pluck($columns, 'db'))
+            ->leftJoin('trade_post', 'products.id', '=', 'trade_post.product_id')
             ->orderBy($order['field'], $order['dir'])
             ->where('products.boot_priority', '>', 0)
+            ->where('products.status', '=', KACANA_PRODUCT_STATUS_ACTIVE)
             ->skip($limit['offset'])
             ->take($limit['limit']);
 

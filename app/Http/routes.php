@@ -221,6 +221,7 @@ Route::group(['domain'=>KACANA_AUTH_PARTNER_NAME.'.{nameDomain}','middleware' =>
     Route::get('/product/generateProductBootTable',         array('as'=>'partner_product_generate_product_boot_table',          'uses'=>'Partner\ProductController@generateProductBootTable'));
     Route::post('/product/productSupperBoot',               array('as'=>'partner_product_supper_boot',                          'uses'=>'Partner\ProductController@productSupperBoot'));
     Route::post('/product/postToSocial',                    array('as'=>'partner_product_post_to_social',                       'uses'=>'Partner\ProductController@postToSocial'));
+    Route::post('/product/postToLazada',                    array('as'=>'partner_product_post_to_lazada',                       'uses'=>'Partner\ProductController@postToLazada'));
 
 
     //upload function

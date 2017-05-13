@@ -96,4 +96,30 @@ class ProductController extends BaseController {
 
         return response()->json($return);
     }
+
+    public function postToLazada(Request $request){
+        $socialService = new socialService();
+        $productId = $request->input('productId', 0);
+        $properties = $request->input('properties', '');
+        $catId = $request->input('catId', 0);
+
+        if($this->_user->id != 34)
+            return false;
+
+        try {
+            $return['data'] = $socialService->postToLazada($this->_user->id, $productId, $properties, $catId);
+            $return['ok'] = 1;
+
+        } catch (\Exception $e) {
+            if($request->ajax())
+            {
+                $result['error'] = $e->getMessage();
+                return $result;
+            }
+            else
+                return view('errors.404', ['error_message' => $e->getMessage()]);
+        }
+
+        return response()->json($return);
+    }
 }

@@ -137,6 +137,7 @@ class productService {
             array( 'db' => 'products.sell_price', 'dt' => 3 ),
             array( 'db' => 'products.discount', 'dt' => 4 ),
             array( 'db' => 'products.updated', 'dt' => 5 ),
+            array( 'db' => 'trade_post.id AS trade_post_id', 'dt' => 6 ),
         );
 
         $return = $productModel->generateProductBootTable($request, $columns);

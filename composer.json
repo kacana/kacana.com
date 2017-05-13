@@ -23,7 +23,8 @@
 		"vinelab/url-shortener": "*",
 		"pda/pheanstalk": "~3.0",
 		"pusher/pusher-php-server": "^2.2",
-		"milon/barcode": "^5.1"
+		"milon/barcode": "^5.1",
+		"soapbox/laravel-formatter": "2.x"
 	},
 
 	"require-dev": {
