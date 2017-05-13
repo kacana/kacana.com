@@ -89,7 +89,7 @@ var productPackage = {
                   return Kacana.utils.showError('Vui lòng chọn hình ảnh cho thuộc tính của sản phẩm!');
 
               var productId = modal.data('productId');
-              // Kacana.utils.loading.loading($('#modal-boot-product-lazada .modal-dialog'));
+              Kacana.utils.loading.loading($('#modal-boot-product-lazada .modal-dialog'));
               var callBack = function(data){
                   modal.modal('hide');
                   if(data.ok)
