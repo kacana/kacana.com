@@ -77,9 +77,15 @@
                 <i class="fa fa-heart" ></i>
             </a>
         </span>
-        <span data-id="{{$item->id}}" class="quick-order-btn">
-            mua ngay
-        </span>
+        @if($item->status == KACANA_PRODUCT_STATUS_SOLD_OUT)
+            <span data-id="{{$item->id}}" class="btn btn-danger sold-out-btn">
+                hết hàng
+            </span>
+        @else
+            <span data-id="{{$item->id}}" class="quick-order-btn">
+                mua ngay
+            </span>
+        @endif
         <span class="pull-right viewless-wrap" >
             <a href="#show-less-short-desc" class="viewless" >
                 <i class="fa fa-angle-double-up" ></i>

@@ -145,7 +145,7 @@ class ProductController extends BaseController {
             {
                 $result['ok'] = 1;
                 $result['data'] = $data;
-                if(count($data) < KACANA_HOMEPAGE_ITEM_PER_TAG || ($type == PRODUCT_HOMEPAGE_TYPE_NEWEST && $page == 100))
+                if(count($data) < KACANA_HOMEPAGE_ITEM_PER_TAG || ($type == PRODUCT_HOMEPAGE_TYPE_NEWEST && $page == 10))
                     $result['stop_load'] = 1;
             }
         } catch (\Exception $e) {

@@ -124,9 +124,16 @@
                     @{{/if}}
                         </span>
                 @{{/if}}
-                <span data-id="${this.id}" class="quick-order-btn">
-                    mua ngay
-                </span>
+                @{{if this.status == 3}}
+                    <span data-id="{{$item->id}}" class="btn btn-danger sold-out-btn">
+                        hết hàng
+                    </span>
+                @{{/if}}
+                @{{if this.status == 1}}
+                    <span data-id="${this.id}" class="quick-order-btn">
+                        mua ngay
+                    </span>
+                @{{/if}}
                 <span class="pull-right viewless-wrap" >
                         <a href="#show-less-short-desc" class="viewless" >
                             <i class="fa fa-angle-double-up" ></i>

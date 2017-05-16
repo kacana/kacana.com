@@ -672,14 +672,12 @@ class productService {
     public function getNewestProduct($userId = 0, $offset = 0, $limit = KACANA_HOMEPAGE_ITEM_PER_TAG ){
         $productModel = new productModel();
         $userProductLike = new userProductLikeModel();
-        $products = $productModel->getNewestProduct($offset, 6);
-
-
-            foreach($products as &$product){
-                if($userId)
-                    $product->isLiked = ($userProductLike->getItem($userId, $product->id))?true:false;
-                $this->formatProductProperties($product);
-            }
+        $products = $productModel->getNewestProduct($offset, $limit);
+        foreach($products as &$product){
+            if($userId)
+                $product->isLiked = ($userProductLike->getItem($userId, $product->id))?true:false;
+            $this->formatProductProperties($product);
+        }
         return $products;
     }
 
