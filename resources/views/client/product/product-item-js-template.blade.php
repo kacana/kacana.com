@@ -125,7 +125,7 @@
                         </span>
                 @{{/if}}
                 @{{if this.status == 3}}
-                    <span data-id="{{$item->id}}" class="btn btn-danger sold-out-btn">
+                    <span class="btn btn-danger sold-out-btn">
                         hết hàng
                     </span>
                 @{{/if}}
