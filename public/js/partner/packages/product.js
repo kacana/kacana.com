@@ -191,6 +191,9 @@ var productPackage = {
                       var productSuperBootItem = $('#template-lazada-product-super-boot-item');
                       var productSuperBootItemGenerate = $.tmpl(productSuperBootItem, {'properties': product.list_properties, 'galleries': product.galleries, 'product': product});
                       modal.find('.list-product-super-boot-item').empty().append(productSuperBootItemGenerate);
+                      modal.find('.list-image-post-to-facebook').sortable({
+                          placeholder: "image-post-to-facebook-holder"
+                      });
                       modal.modal();
                   }
                   else
