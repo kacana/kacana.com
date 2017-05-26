@@ -51,6 +51,8 @@ class OrderController extends BaseController {
         try {
             if($request->isMethod('PUT')){
                 $addressService->updateAddressReceive($request->all());
+                $newAddressOrder = $request->input('street', '');
+                $orderService->updateOrder($id, ['address' => $newAddressOrder]);
             }
             $order = $orderService->getOrderById($id);
             $buyer = $order->user;
