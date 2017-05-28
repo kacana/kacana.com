@@ -4,15 +4,30 @@
             <nav class="pull-right">
                 <ul class="nav nav-pills nav-top">
                     <li>
-                        <a href="/contact/ban-hang-voi-chung-toi"><i class="fa fa-angle-right"></i>Bán hàng cùng Kacana</a>
+                        <a href="tel:0906054206"><i class="fa fa-phone"></i> 0906.054.206</a>
                     </li>
                     <li>
-                        <a href="/contact/thong-tin-lien-he"><i class="fa fa-angle-right"></i>Chăm sóc khách hàng</a>
+                        <a target="_blank" href="/contact/thong-tin-lien-he"><i class="fa fa-map-marker"></i> Cửa hàng</a>
+                    </li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" id="btn-header-policy-info-shop" data-toggle="dropdown" href="#">Hỗ trợ<i class="fa fa-angle-down"></i></a>
+                        <ul class="dropdown-menu" id="dropdown-header-policy-info-shop" aria-labelledby="btn-header-policy-info-shop">
+                            <li><a title="Giới thiệu" href="/contact/gioi-thieu">Giới thiệu</a></li>
+                            <li><a title="Thông tin liên hệ" href="/contact/thong-tin-lien-he">Thông tin liên hệ</a></li>
+                            <li><a title="Chế độ bảo hành" href="/contact/che-do-bao-hanh">Chính sách đổi/trả hàng và hoàn tiền</a></li>
+                            <li><a title="Hướng dẫn mua hàng" href="/contact/huong-dan-mua-hang">Hướng dẫn mua hàng</a></li>
+                            <li><a title="Chính sách & Quy định chung" href="/contact/quy-dinh-chung">Chính sách & Quy định chung</a></li>
+                            <li><a title="Quy định và hình thức thanh toán" href="/contact/hinh-thuc-thanh-toan">Quy định và hình thức thanh toán</a></li>
+                            <li><a title="Chính sách vận chuyển/giao nhận/cài đặt" href="/contact/chinh-sach-van-chuyen">Chính sách vận chuyển/giao nhận/cài đặt</a></li>
+                            <li><a title="Chính sách bảo mật thông tin" href="/contact/chinh-sach-bao-mat">Chính sách bảo mật thông tin</a></li>
+                            <li><a title="Chính sách tích luỹ cho thành viên" href="/contact/chinh-sach-khach-hang">Chính sách tích luỹ cho thành viên</a></li>
+                            <li><a title="Kiếm tiền với chúng tôi" href="/contact/kiem-tiem-voi-chung-toi">Kiếm tiền với chúng tôi</a></li>
+                        </ul>
                     </li>
 
                     @if(Auth::check())
                         <li>
-                            <a href="/khach-hang/kiem-tra-don-hang"><i class="fa fa-angle-right"></i>Kiểm tra đơn hàng</a>
+                            <a href="/khach-hang/kiem-tra-don-hang">Kiểm tra đơn hàng</a>
                         </li>
                         <li class="ui menu">
                             <a class="item" href="#my-account-header">
@@ -29,14 +44,10 @@
                         </li>
                     @else
                         <li>
-                            <a href="/khach-hang/kiem-tra-don-hang"><i class="fa fa-angle-right"></i>Kiểm tra đơn hàng</a>
+                            <a href="/khach-hang/kiem-tra-don-hang">Kiểm tra đơn hàng</a>
                         </li>
-                        <li>
-
-                            <a href="#login-header-popup"><i class="fa fa-angle-right"></i>Đăng nhập</a>
-                        </li>
-                        <li>
-                            <a href="#signup-header-popup"><i class="fa fa-angle-right"></i>Đăng ký</a>
+                        <li class="color-white auth-menu-block">
+                            <a href="#login-header-popup">Đăng nhập</a> | <a href="#signup-header-popup">Đăng ký</a>
                         </li>
                     @endif
                 </ul>

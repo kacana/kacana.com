@@ -306,11 +306,16 @@ Route::group(['domain'=>'{nameDomain}', 'middleware' => 'client'], function () {
     //Contact Controller
     Route::any('/contact/gioi-thieu',                       array('as'=>'CompanyIntroduction',              'uses'=>'Client\ContactController@introduction'));
     Route::any('/contact/thong-tin-lien-he',                array('as'=>'CompanyContactInformation',        'uses'=>'Client\ContactController@contactInformation'));
-    Route::any('/contact/chinh-sach-doi-hang',              array('as'=>'CompanyReturnRule',                'uses'=>'Client\ContactController@returnRule'));
+    Route::any('/contact/che-do-bao-hanh',                  array('as'=>'CompanyReturnRule',                'uses'=>'Client\ContactController@returnRule'));
+    Route::any('/contact/huong-dan-mua-hang',               array('as'=>'CompanyReturnRule',                'uses'=>'Client\ContactController@buyGuide'));
+    Route::any('/contact/quy-dinh-chung',                   array('as'=>'CompanyRule',                      'uses'=>'Client\ContactController@companyRule'));
+    Route::any('/contact/hinh-thuc-thanh-toan',             array('as'=>'paymentRule',                      'uses'=>'Client\ContactController@paymentRule'));
+    Route::any('/contact/chinh-sach-van-chuyen',            array('as'=>'ShippingRule',                     'uses'=>'Client\ContactController@ShippingRule'));
     Route::any('/contact/chinh-sach-bao-mat',               array('as'=>'CompanyPrivacyRule',               'uses'=>'Client\ContactController@privacyRule'));
     Route::any('/contact/chinh-sach-khach-hang',            array('as'=>'CompanyCustomerRule',              'uses'=>'Client\ContactController@customerRule'));
+    Route::any('/contact/lien-he',                          array('as'=>'contactUs',                        'uses'=>'Client\ContactController@contactUs'));
     Route::any('/contact/ban-hang-voi-chung-toi',           array('as'=>'CompanySaleWithUsRule',            'uses'=>'Client\ContactController@saleWithUs'));
-    Route::any('/contact/kiem-tiem-voi-chung-toi',           array('as'=>'CompanySaleWithUsRule',            'uses'=>'Client\ContactController@getMoneyWithUs'));
+    Route::any('/contact/kiem-tiem-voi-chung-toi',          array('as'=>'CompanySaleWithUsRule',            'uses'=>'Client\ContactController@getMoneyWithUs'));
 
     //checkout
     Route::any('/checkout',                                 array('as'=>'checkout',                         'uses'=>'Client\CheckoutController@index'));

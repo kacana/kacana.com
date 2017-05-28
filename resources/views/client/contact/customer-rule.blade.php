@@ -1,4 +1,4 @@
-<h3 class="text-center color-grey">Chính sách cho khách hàng</h3>
+<h3 class="text-center color-grey">Chính sách tích luỹ cho thành viên</h3>
 @section('meta-title', 'Chính sách khách hàng')
 <div class="row">
     <div class="col-md-12 text-center">

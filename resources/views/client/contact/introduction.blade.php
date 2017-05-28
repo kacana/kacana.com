@@ -11,7 +11,7 @@
 <div class="row">
     <div class="col-md-12">
         <div>
-            <div >Chào mừng và rất cám ơn các bạn đã ghé thăm trang web của Công ty TNHH MTV KACANA - <b>Kacana.com</b>
+            <div >Chào mừng và rất cám ơn các bạn đã ghé thăm trang web của Túi xách - <b>Kacana.com</b>
             </div>
             <div class="vpadding-10" >Lời đầu tiên,<b> Kacana</b> chân thành cảm ơn Quý khách đã quan tâm, yêu
                 thích đến sản phẩm của công ty.

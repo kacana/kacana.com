@@ -20,6 +20,26 @@ class ContactController extends BaseController {
         return view('client.contact.index', array('page' =>'return-rule'));
     }
 
+    public function buyGuide(){
+        return view('client.contact.index', array('page' =>'buy-guide'));
+    }
+
+    public function companyRule(){
+        return view('client.contact.index', array('page' =>'company-rule'));
+    }
+
+    public function paymentRule(){
+        return view('client.contact.index', array('page' =>'payment-rule'));
+    }
+
+    public function shippingRule(){
+        return view('client.contact.index', array('page' =>'shipping-rule'));
+    }
+
+    public function contactUs(){
+        return view('client.contact.index', array('page' =>'contact-us'));
+    }
+
     public function privacyRule(){
         return view('client.contact.index', array('page' =>'privacy-rule'));
     }

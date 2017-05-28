@@ -12,6 +12,10 @@
     <div class="col-md-12">
         <div>
             <div >KACANA là cửa hàng túi xách, ba lô, ví nam & nữ lớn nhất, giá tốt nhất, chất lượng nhất!</div>
+            <br>
+            <div>
+                <b>KACANA quận 5:</b> 60/36 Trần Hưng Đạo, Phường 7 Quận 5 ( Gần ngã tư Trần Hưng Đạo - Nguyễn Tri Phương)
+            </div>
 
             <div id="googlemaps" class="google-map"></div>
 

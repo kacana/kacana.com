@@ -210,13 +210,10 @@
       li
       {
         a{
+          font-weight: 500;
           padding: 1px 20px;
           color: #dddddd;
           background: none!important;
-          i{
-            top: 0;
-            display: none;
-          }
           &:hover{
             background: none;
             color: #ffffff;
@@ -225,6 +222,29 @@
         &:last-child{
           a{
             padding-right: 0;
+          }
+        }
+        #dropdown-header-policy-info-shop{
+          background: rgba(25, 25, 25, 1) none repeat scroll 0 0;
+          border-radius: 0;
+          margin-top: 0;
+          border: none;
+          width: 300px;
+          li{
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            &:last-child{
+              border: none;
+            }
+          }
+        }
+        &.auth-menu-block{
+          color: #fff;
+          a{
+            display: inline-block;
+            &:last-child{
+              padding-left: 0px;
+            }
           }
         }
       }
@@ -429,8 +449,6 @@
       opacity: 0;
     }
   }
-
-
 }
 
 body.sticky-menu-active #header.transparent.semi-transparent

@@ -2,11 +2,9 @@
     <div class="container">
         <div class="row">
 
-            <div class="hidden-xs col-sm-4">
+            <div class="hidden-xs col-sm-5">
                 <div class="newsletter">
                     <h4>ĐĂNG KÝ NHẬN TIN</h4>
-                    <p>Đăng ký nhận tin mới và chương trình khuyến mãi của Kacana</p>
-
                     <div class="alert alert-success hidden" id="newsletterSuccess">
                         <strong>Success!</strong> You've been added to our email list.
                     </div>
@@ -21,10 +19,25 @@
 										</span>
                         </div>
                     </form>
+
+                    <ul class="contact margin-top-10px">
+                        <li>
+                            Hộ Kinh Doanh: TÚI XÁCH KACANA
+                        </li>
+                        <li>
+                            Giấy CNĐKDN: 41E8 033230 - Ngày cấp: 05/04/2017 - Cấp lần đầu
+                        </li>
+                        <li>
+                            Cơ quan cấp: Uỷ ban nhân dân quận 5, Hồ Chí Minh
+                        </li>
+                        <li>
+                            Địa chỉ đăng ký kinh doanh: Số 60/36 Trần Hưng Đạo, Phường 7, Quận 5, Hồ Chí Minh
+                        </li>
+                    </ul>
                 </div>
             </div>
 
-            <div class="col-sm-4">
+            <div class="col-sm-5">
                 <div class="contact-details">
                     <h4>Liên Hệ</h4>
                     <ul class="contact">
@@ -36,7 +49,7 @@
                 </div>
             </div>
 
-            <div class="hidden-xs col-sm-3 col-sm-offset-1">
+            <div class="hidden-xs col-sm-2">
                 <div class="contact-details">
                     <h4>Sản phẩm</h4>
                     <ul class="contact">
@@ -50,19 +63,19 @@
             </div>
         </div>
     </div>
-    <div class="footer-copyright">
-        <div class="container">
-            <div class="row">
-                <div class="col-xs-12 text-center">
-                    <nav id="sub-menu">
-                        <ul>
-                            <li><a href="/contact/cau-hoi">FAQ's</a></li>
-                            <li><a href="/sitemap.xml">Sitemap</a></li>
-                            <li><a href="/contact/thong-tin-lien-he">Liên Hệ</a></li>
-                        </ul>
-                    </nav>
-                </div>
-            </div>
-        </div>
-    </div>
+    {{--<div class="footer-copyright">--}}
+        {{--<div class="container">--}}
+            {{--<div class="row">--}}
+                {{--<div class="col-xs-12 text-center">--}}
+                    {{--<nav id="sub-menu">--}}
+                        {{--<ul>--}}
+                            {{--<li><a href="/contact/cau-hoi">FAQ's</a></li>--}}
+                            {{--<li><a href="/sitemap.xml">Sitemap</a></li>--}}
+                            {{--<li><a href="/contact/thong-tin-lien-he">Liên Hệ</a></li>--}}
+                        {{--</ul>--}}
+                    {{--</nav>--}}
+                {{--</div>--}}
+            {{--</div>--}}
+        {{--</div>--}}
+    {{--</div>--}}
 </footer>

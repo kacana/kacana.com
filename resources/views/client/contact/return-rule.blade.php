@@ -1,5 +1,5 @@
-<h3 class="text-center color-grey">Chính sách đổi hàng</h3>
-@section('meta-title', 'Chính sách đổi trả hàng')
+<h3 class="text-center color-grey">Chính sách đổi/trả hàng và hoàn tiền</h3>
+@section('meta-title', 'Chế độ bảo hành')
 <div class="row">
     <div class="col-md-12 text-center">
         <img class="img-responsive" style="display: unset;" src="/images/client/homepage/logo.png">
