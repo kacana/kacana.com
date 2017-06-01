@@ -55,6 +55,7 @@
         <script src="/lib/daterangepicker/daterangepicker.js"></script>
         <script src="/lib/pusher/pusher.min.js"></script>
         <script src="/lib/scannerdetection/scannerdetection.js"></script>
+        <script src="/lib/ua-parser/ua-parser.js"></script>
 
         <!--[if lt IE 9]>
         <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>

@@ -28,7 +28,7 @@ use Carbon\Carbon;
  * Class blogService
  * @package App\services
  */
-class blogService {
+class blogService extends baseService {
 
     /**
      * @var blogCommentModel

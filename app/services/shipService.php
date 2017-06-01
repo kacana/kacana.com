@@ -11,7 +11,7 @@ use Cache;
  * Class shipService
  * @package App\services
  */
-class shipService {
+class shipService extends baseService {
     /**
      * @var Client
      */

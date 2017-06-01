@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Hash;
  * Class authService
  * @package App\services
  */
-class authService {
+class authService extends baseService {
 
     /**
      * @var \App\User|null

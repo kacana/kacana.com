@@ -13,7 +13,7 @@ use Kacana\ViewGenerateHelper;
  * Class shipService
  * @package App\services
  */
-class addressService {
+class addressService extends baseService {
 
     /**
      * @var addressCountryModel

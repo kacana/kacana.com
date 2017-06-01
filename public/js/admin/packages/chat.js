@@ -40,6 +40,8 @@ var chatPackage = {
         bindEvent: function () {
             Kacana.chat.page.on('click', '.Kacana-Client-Thread .send_message', function(e) {
                 var textMessage = $(this).val();
+                if(Kacana.chat.isURL(textMessage))
+                    textMessage = '<a class="color-grey-light" target="_blank" href="'+textMessage+'">'+textMessage+'</a>';
                 var thread = $(this).parents('.Kacana-Client-Thread');
 
                 return Kacana.chat.sendMessage(textMessage, 'right', thread);
@@ -48,6 +50,10 @@ var chatPackage = {
             Kacana.chat.page.on('keyup', '.Kacana-Client-Thread .message_input', function (e) {
                 if (e.which === 13) {
                     var textMessage = $(this).val();
+
+                    if(Kacana.chat.isURL(textMessage))
+                        textMessage = '<a class="color-grey-light" target="_blank" href="'+textMessage+'">'+textMessage+'</a>';
+
                     var thread = $(this).parents('.Kacana-Client-Thread');
 
                     return Kacana.chat.sendMessage(textMessage, 'right', thread);
@@ -76,10 +82,36 @@ var chatPackage = {
                 thread.remove();
             });
 
+            Kacana.chat.page.on('click', 'a[href="#show-information-client-message"]', Kacana.chat.showClientMessageInfo);
+
             if(window.location.hash) {
                 var id = window.location.hash.substring(1); //Puts hash in variable, and removes the # character
                 Kacana.chat.openThreadMessage(id);
             }
+        },
+        showClientMessageInfo: function () {
+            var idTracking = $(this).data('id');
+            Kacana.utils.loading();
+            var callBack = function(data){
+                if(data.ok){
+                    Kacana.utils.closeLoading();
+                    $('#modal-tracking-info-client-message').modal();
+                }
+                else
+                    Kacana.utils.showError('có cái gì sai sai ở đây! vui lòng gọi: 0906.054.206');
+            };
+
+            var errorCallBack = function(data){
+                Kacana.utils.showError('có cái gì sai sai ở đây! vui lòng gọi: 0906.054.206');
+                Kacana.utils.loading.closeLoading();
+            };
+
+            var data = {
+                idTracking: idTracking
+            };
+
+            Kacana.ajax.user.getTrackingMessageInfo(data, callBack, errorCallBack);
+
         },
         openThreadMessage: function (id) {
             var threadTemplate = $('#template-chat-thread').html();
@@ -112,7 +144,7 @@ var chatPackage = {
             channel.bind(threadId, function(data) {
                 if(data.type == 'ask')
                 {
-                    var messageText = Kacana.chat.generateMessage(data.message, 'left', 'Just now');
+                    var messageText = Kacana.chat.generateMessage(data.message, 'left', 'Just now', data.userTrackingHistoryId);
 
                     thread.find('.direct-chat-messages').append(messageText);
 
@@ -129,11 +161,11 @@ var chatPackage = {
                         var message = messages[i];
                         if(message.type == 'ask')
                         {
-                            var messageText = Kacana.chat.generateMessage(message.body, 'left', message.created_at);
+                            var messageText = Kacana.chat.generateMessage(message.body, 'left', message.created_at, message.user_tracking_history_id);
                         }
                         else
                         {
-                            var messageText = Kacana.chat.generateMessage(message.body, 'right', message.created_at);
+                            var messageText = Kacana.chat.generateMessage(message.body, 'right', message.created_at, message.user_tracking_history_id);
                         }
 
                         thread.find('.direct-chat-messages').append(messageText);
@@ -190,12 +222,12 @@ var chatPackage = {
             $thread.find('.message_input').val('');
 
             $messages =  $thread.find('.direct-chat-messages');
-            message = Kacana.chat.generateMessage(text, message_side, 'Just now');
+            message = Kacana.chat.generateMessage(text, message_side, 'Just now', 0);
             $thread.find('.direct-chat-messages').append(message);
 
             return $messages.animate({ scrollTop: $messages.prop('scrollHeight') }, 100);
         },
-        generateMessage: function (text, message_side, message_date) {
+        generateMessage: function (text, message_side, message_date, userTrackingHistoryId) {
 
             var messageTemplate = $('#template-direct-chat-msg-left').html();
 
@@ -204,7 +236,7 @@ var chatPackage = {
                 messageTemplate = $('#template-direct-chat-msg-right').html();
             }
 
-            return $.tmpl(messageTemplate, {'text': text, 'message_date': message_date});
+            return $.tmpl(messageTemplate, {'text': text, 'message_date': message_date, 'user_tracking_history_id': userTrackingHistoryId});
         },
         getMessageTextClient: function () {
             var $message_input;
@@ -285,6 +317,14 @@ var chatPackage = {
             };
 
             Kacana.ajax.chat.updateLastRead(data, callBack, errorCallBack);
+        },
+        isURL: function (testString) {
+
+            var regex = new RegExp("^((https{0,1}|ftp|rtsp|mms){0,1}://){0,1}(([0-9a-z_!~\\*'\\(\\)\\.&=\\+\\$%\\-]{1,}:\\ ){0,1}[0-9a-z_!~\\*'\\(\\)\\.&=\\+\\$%\\-]{1,}@){0,1}(([0-9]{1,3}\\.){3,3}[0-9]{1,3}|([0-9a-z_!~\\*'\\(\\)\\-]{1,}\\.){0,}([0-9a-z][0-9a-z\\-]{0,61}){0,1}[0-9a-z]\\.[a-z]{2,6}|localhost)(:[0-9]{1,4}){0,1}((/{0,1})|(/[0-9a-z_!~\\*'\\(\\)\\.;\\?:@&=\\+\\$,%#\\-]{1,}){1,}/{0,1})$", "gi");
+
+            if(regex.exec(testString) !=  null)
+                return true;
+            else return false;
         }
     }
 };

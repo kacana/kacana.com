@@ -1,6 +1,7 @@
 <?php namespace App\services;
 
 use App\models\baseModel;
+use UAParser\Parser;
 
 /**
  * Class baseService
@@ -34,6 +35,18 @@ class baseService {
     public function updateField($id, $content, $field, $table){
         $baseModel = new baseModel();
         return $baseModel->updateField($id, $content, $field, $table);
+    }
+
+    public function getIpInformation($ip)
+    {
+        return json_decode(file_get_contents('http://freegeoip.net/json/'.$ip));;
+    }
+
+    public function parserUserAgent($userAgent){
+        $parser = Parser::create();
+        $result = $parser->parse($userAgent);
+
+        return $result;
     }
 
 }

@@ -22,7 +22,8 @@ class ChatController extends BaseController {
 
         $result['ok'] = 0;
         $message = $request->input('message', '');
-        $threadId = $request->input('threadId', 15);
+        $threadId = $request->input('threadId', 0);
+        $userTrackingHistoryId = $request->input('userTrackingHistoryId', 0);
 
         try{
             $pusher = new KPusher();
@@ -32,8 +33,8 @@ class ChatController extends BaseController {
             $chatType = KACANA_CHAT_TYPE_ASK;
 
 
-            $pusher->createNewPush($message, KACANA_CHAT_THREAD_PREFIX.$threadId, $chatType);
-            $chatService->createNewMessage($threadId, $userId, $chatType, $message);
+            $pusher->createNewPush($message, KACANA_CHAT_THREAD_PREFIX.$threadId, $chatType, $userTrackingHistoryId);
+            $chatService->createNewMessage($userTrackingHistoryId, $threadId, $userId, $chatType, $message);
             $chatService->updateLastRead($threadId, $userId, 0);
             $pusher->createNewThread($threadId, 'message');
             $chatService->checkTimeAutoReply($threadId);
@@ -60,6 +61,7 @@ class ChatController extends BaseController {
 
         $result['ok'] = 0;
         $message = $request->input('message', '');
+        $userTrackingHistoryId = $request->input('userTrackingHistoryId', 0);
 
         try{
             $pusher = new KPusher();
@@ -71,7 +73,7 @@ class ChatController extends BaseController {
             $threadId = KACANA_CHAT_THREAD_PREFIX.$chatThread->id;
 
             $pusher->createNewPush($message, $threadId, $chatType);
-            $chatService->createNewMessage($chatThread->id, $userId, $chatType, $message);
+            $chatService->createNewMessage($userTrackingHistoryId, $chatThread->id, $userId, $chatType, $message);
             $chatService->updateLastRead($chatThread->id, $userId, 0);
             $pusher->createNewThread($chatThread->id, 'thread');
 

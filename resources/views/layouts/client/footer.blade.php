@@ -63,6 +63,7 @@
             </div>
         </div>
     </div>
+    <div id="{{KACANA_USER_TRACKING_HISTORY_ID}}" data-id="{{\Session::get(KACANA_USER_TRACKING_HISTORY_ID)}}" ></div>
     {{--<div class="footer-copyright">--}}
         {{--<div class="container">--}}
             {{--<div class="row">--}}

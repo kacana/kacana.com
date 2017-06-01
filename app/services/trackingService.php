@@ -8,7 +8,7 @@ use Kacana\DataTables;
  * Class baseService
  * @package App\services
  */
-class trackingService {
+class trackingService extends baseService {
 
 
     public $_trackingSeachModel;

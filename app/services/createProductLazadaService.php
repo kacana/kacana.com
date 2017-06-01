@@ -7,7 +7,7 @@ use App\services\thirdPartyTrade\lazada;
  * Class productService
  * @package App\services
  */
-class createProductLazadaService {
+class createProductLazadaService extends baseService {
 
     private $_product;
 

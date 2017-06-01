@@ -129,6 +129,7 @@ Route::group(['domain'=>KACANA_AUTH_ADMIN_NAME.'.{nameDomain}','middleware' => '
     Route::get('/user/showFormEditUserAddress/{id}',        array('as'=>'showFormEditUserAddress',   'uses'=>'Admin\UserController@showFormEditUserAddress'));
     Route::post('/user/editUserAddress',                    array('as'=>'editUserAddress',           'uses'=>'Admin\UserController@editUserAddress'));
     Route::get('/user/showListWards/{id}',                  array('as'=>'showListWards',             'uses'=>'Admin\UserController@showListWards'));
+    Route::get('/user/get-tracking-message-info',           array('as'=>'getTrackingMessageInfo',    'uses'=>'Admin\UserController@getTrackingMessageInfo'));
 
     //Info request
     Route::any('/advisory',                                  array('as'=>'index',                           'uses'=>'Admin\AdvisoryController@index'));

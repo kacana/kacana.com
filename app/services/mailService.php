@@ -9,7 +9,7 @@ use App\services\userService;
  * Class mailService
  * @package App\services
  */
-class mailService {
+class mailService extends baseService {
 
     public function sendEmailOrder($email, $orderId, $orderCode)
     {

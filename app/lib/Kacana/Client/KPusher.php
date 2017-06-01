@@ -16,11 +16,12 @@ class KPusher extends Pusher
         parent::__construct(KACANA_REAL_PUSHER_KEY, KACANA_REAL_PUSHER_SECRET, KACANA_REAL_PUSHER_ID, $options);
     }
 
-    public function createNewPush($message, $threadId, $type)
+    public function createNewPush($message, $threadId, $type, $userTrackingHistoryId = 0)
     {
         $data['message'] = $message;
         $data['type'] = $type;
         $data['date'] =  date('Y-m-d H:i:s');
+        $data['userTrackingHistoryId'] =  $userTrackingHistoryId;
         $this->trigger($this->_chanelName, $threadId, $data);
     }
 

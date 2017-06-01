@@ -23,7 +23,7 @@ use Shorten;
  * Class productService
  * @package App\services
  */
-class productService {
+class productService extends baseService {
 
     /**
      * @param $productName

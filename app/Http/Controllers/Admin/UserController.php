@@ -6,6 +6,7 @@ use App\models\UserAddress;
 use App\models\UserType;
 use App\models\addressReceiveModel;
 use App\services\addressService;
+use App\services\userTrackingService;
 use App\services\orderService;
 use GuzzleHttp\Psr7\Response;
 use Image;
@@ -184,6 +185,27 @@ class UserController extends BaseController {
         }
 
         return response()->json($return);
+    }
+
+    public function getTrackingMessageInfo(Request $request){
+        $idTracking = $request->input('idTracking', 0);
+
+        $userTrackingService = new userTrackingService();
+        $return['ok'] = 0;
+
+        try {
+
+            $return['data'] = $userTrackingService->getTrackingHistoryInformation($idTracking);
+            $return['ok'] = 1;
+        } catch (\Exception $e) {
+            // @codeCoverageIgnoreStart
+            $return['error'] = $e->getMessage();
+            $return['errorMsg'] = $e->getMessage();
+            // @codeCoverageIgnoreEnd
+        }
+
+        return response()->json($return);
+
     }
 
 }

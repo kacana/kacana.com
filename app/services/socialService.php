@@ -16,7 +16,7 @@ use App\models\tradePostModel;
  * Class productService
  * @package App\services
  */
-class socialService {
+class socialService extends baseService {
 
     public function superPostToSocial($userId, $socials, $products, $desc){
         $productModel = new productModel();

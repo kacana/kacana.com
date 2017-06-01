@@ -21,15 +21,17 @@ class chatMessageModel extends Model {
     public $timestamps = true;
 
     /**
+     * @param $userTrackingHistoryId
      * @param $threadId
      * @param $userId
      * @param $type
      * @param $body
      * @return chatMessageModel
      */
-    public function createNewMessage($threadId, $userId, $type, $body){
+    public function createNewMessage($userTrackingHistoryId, $threadId, $userId, $type, $body){
         $message = new chatMessageModel();
 
+        $message->user_tracking_history_id = $userTrackingHistoryId;
         $message->thread_id = $threadId;
         $message->user_id = $userId;
         $message->type = $type;

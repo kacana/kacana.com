@@ -13,7 +13,7 @@ use Carbon\Carbon;
  * Class shipService
  * @package App\services
  */
-class commissionService {
+class commissionService extends baseService {
 
 
     /**

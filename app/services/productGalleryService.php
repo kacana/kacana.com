@@ -15,7 +15,7 @@ use \Storage;
  * Class productGalleryService
  * @package App\services
  */
-class productGalleryService {
+class productGalleryService extends baseService {
 
 
     /**

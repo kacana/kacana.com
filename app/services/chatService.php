@@ -23,7 +23,7 @@ use \Storage;
 use Carbon\Carbon;
 use Shorten;
 
-class chatService {
+class chatService extends baseService {
 
     private $_chatThreadModel;
 
@@ -44,8 +44,8 @@ class chatService {
         return $this->_chatThreadModel->createNewThread($subject, $ref);
     }
 
-    public function createNewMessage($threadId, $userId, $type, $body){
-        return $this->_chatMessageModel->createNewMessage($threadId, $userId, $type, $body);
+    public function createNewMessage($userTrackingHistoryId, $threadId, $userId, $type, $body){
+        return $this->_chatMessageModel->createNewMessage($userTrackingHistoryId, $threadId, $userId, $type, $body);
     }
 
     public function getNewMesaage(){
@@ -90,7 +90,7 @@ class chatService {
 
             $pusher->createNewPush($message, $threadId, $chatType);
 
-            $this->createNewMessage($id, '0', $chatType, $message);
+            $this->createNewMessage(0, $id, '0', $chatType, $message);
 
             return true;
         }

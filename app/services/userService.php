@@ -17,7 +17,7 @@ use Carbon\Carbon;
  * Class userService
  * @package App\services
  */
-class userService {
+class userService extends baseService {
 
     /**
      * @var User

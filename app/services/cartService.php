@@ -7,7 +7,7 @@ use App\services\orderService;
  * Class shipService
  * @package App\services
  */
-class cartService {
+class cartService extends baseService {
 
     /**
      * @param $productId

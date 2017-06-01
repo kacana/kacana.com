@@ -12,7 +12,7 @@ use Carbon\Carbon;
  * Class shipService
  * @package App\services
  */
-class orderService {
+class orderService extends baseService {
 
     /**
      * @var orderModel

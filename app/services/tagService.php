@@ -10,7 +10,7 @@ use Cache;
  * Class productService
  * @package App\services
  */
-class tagService {
+class tagService extends baseService {
 
     /**
      * @param $id

@@ -72,6 +72,10 @@ var chatPackage = {
 
             Kacana.chat.page.on('click', '.send_message', function(e) {
                 var textMessage = Kacana.chat.getMessageTextClient();
+
+                if(Kacana.chat.isURL(textMessage))
+                    textMessage = '<a class="color-white" target="_blank" href="'+textMessage+'">'+textMessage+'</a>';
+
                 Kacana.chat.processChat(textMessage);
                 return Kacana.chat.sendMessage(textMessage, 'right');
             });
@@ -79,6 +83,10 @@ var chatPackage = {
             Kacana.chat.page.on('keyup', '.message_input', function (e) {
                 if (e.which === 13) {
                     var textMessage = Kacana.chat.getMessageTextClient();
+
+                    if(Kacana.chat.isURL(textMessage))
+                        textMessage = '<a class="color-white" target="_blank" href="'+textMessage+'">'+textMessage+'</a>';
+
                     Kacana.chat.processChat(textMessage);
                     return Kacana.chat.sendMessage(textMessage, 'right');
                 }
@@ -120,7 +128,8 @@ var chatPackage = {
             };
 
             var data = {
-                message: textMessage
+                message: textMessage,
+                userTrackingHistoryId: $('#__kacana_user_tracking_history_id__').data('id')
             };
 
             Kacana.ajax.chat.createNewThread(data, callBack, errorCallBack);
@@ -142,7 +151,8 @@ var chatPackage = {
 
             var data = {
                 message: textMessage,
-                threadId: Kacana.chat.threadId
+                threadId: Kacana.chat.threadId,
+                userTrackingHistoryId: $('#__kacana_user_tracking_history_id__').data('id')
             };
 
             Kacana.ajax.chat.createNewMessage(data, callBack, errorCallBack);
@@ -263,6 +273,14 @@ var chatPackage = {
                 Lockr.set(Kacana.chat.keyStorge, dataStorage);
             }
         },
+        isURL: function (testString) {
+
+            var regex = new RegExp("^((https{0,1}|ftp|rtsp|mms){0,1}://){0,1}(([0-9a-z_!~\\*'\\(\\)\\.&=\\+\\$%\\-]{1,}:\\ ){0,1}[0-9a-z_!~\\*'\\(\\)\\.&=\\+\\$%\\-]{1,}@){0,1}(([0-9]{1,3}\\.){3,3}[0-9]{1,3}|([0-9a-z_!~\\*'\\(\\)\\-]{1,}\\.){0,}([0-9a-z][0-9a-z\\-]{0,61}){0,1}[0-9a-z]\\.[a-z]{2,6}|localhost)(:[0-9]{1,4}){0,1}((/{0,1})|(/[0-9a-z_!~\\*'\\(\\)\\.;\\?:@&=\\+\\$,%#\\-]{1,}){1,}/{0,1})$", "gi");
+
+            if(regex.exec(testString) !=  null)
+                return true;
+            else return false;
+        }
     }
 };
 

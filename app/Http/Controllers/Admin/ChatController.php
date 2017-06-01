@@ -42,7 +42,7 @@ class ChatController extends BaseController {
             $chatType = KACANA_CHAT_TYPE_REPLY;
 
             $pusher->createNewPush($message, KACANA_CHAT_THREAD_PREFIX.$threadId, $chatType);
-            $chatService->createNewMessage($threadId, $userId, $chatType, $message);
+            $chatService->createNewMessage(0, $threadId, $userId, $chatType, $message);
 
             $result['ok'] = 1;
             $result['thread'] = $threadId;

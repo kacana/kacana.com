@@ -1,7 +1,10 @@
 <?php namespace App\Http\Middleware;
 
+use App\Http\Requests\Request;
+use App\models\userTrackingHistory;
 use Closure;
 use Illuminate\Contracts\Auth\Guard;
+use App\services\userTrackingService;
 
 class Client {
 
@@ -32,6 +35,8 @@ class Client {
 	 */
 	public function handle($request, Closure $next)
 	{
+        $this->trackingUser($request);
+
 		$env = \App::environment();
 		$pass = $request->input('pass-wait-to-release', false);
 
@@ -58,5 +63,35 @@ class Client {
 
 		return $next($request);
 	}
+
+	public function trackingUser($request){
+        $userTrackingService = new userTrackingService();
+
+	    $userTrackingSessionId = \Session::get(KACANA_USER_TRACKING_SESSION);
+
+        $referer = $request->headers->get('referer');
+        $userAgent = $request->headers->get('user-agent');
+        $url = \Request::fullUrl();
+        $ip = \Request::ip();
+        $dataTracking = ['ip'=>$ip, 'url'=>$url, 'referer'=>$referer, 'user_agent'=>$userAgent];
+
+        if(!$userTrackingSessionId)
+        {
+            $sessionCode = \Session::getId();
+            $dataTracking['code'] = $sessionCode;
+            $userTracking = $userTrackingService->createUserTracking($dataTracking);
+            \Session::set(KACANA_USER_TRACKING_SESSION, $userTracking->id);
+            $userTrackingSessionId = $userTracking->id;
+        }
+        unset($dataTracking['code']);
+        $dataTracking['type_call'] = 'normal';
+
+        if($request->ajax())
+            $dataTracking['type_call'] = 'ajax';
+
+        $dataTracking['session_id'] = $userTrackingSessionId;
+        $userTrackingHistory = $userTrackingService->createUserTrackingHistory($dataTracking);
+        \Session::set(KACANA_USER_TRACKING_HISTORY_ID, $userTrackingHistory->id);
+    }
 
 }

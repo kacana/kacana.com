@@ -109,6 +109,14 @@ var ajaxPackage = {
             },
             setStatus: function(id, status, callBack, errorCallBack){
                 Kacana.ajax.init('/user/setStatus/'+id+'/'+status, '', 'get', '', callBack, errorCallBack, []);
+            },
+            getTrackingMessageInfo: function (data, callBack, errorCallBack) {
+                var url = '/user/get-tracking-message-info';
+                var dataType = 'json';
+                var type = 'get';
+                var dataPost = data;
+                var options = [];
+                Kacana.ajax.init(url, dataType, type, dataPost, callBack, errorCallBack, options);
             }
         },
         /*****************************************************************************
