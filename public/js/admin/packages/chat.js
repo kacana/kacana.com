@@ -95,7 +95,13 @@ var chatPackage = {
             var callBack = function(data){
                 if(data.ok){
                     Kacana.utils.closeLoading();
-                    $('#modal-tracking-info-client-message').modal();
+
+                    var trackingInfoTemplate = $('#template-tracking-info-user').html();
+
+                    var trackingInfoGenerate = $.tmpl(trackingInfoTemplate, {'data': data.data});
+                    var modal = $('#modal-tracking-info-client-message')
+                    modal.find('.modal-body').html(trackingInfoGenerate);
+                    modal.modal();
                 }
                 else
                     Kacana.utils.showError('có cái gì sai sai ở đây! vui lòng gọi: 0906.054.206');
