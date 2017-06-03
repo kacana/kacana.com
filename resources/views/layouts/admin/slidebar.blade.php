@@ -57,6 +57,15 @@ $action = getActionName(class_basename(Route::currentRouteAction()));
             </a>
          </li>
 
+        <li class="{{($controller == 'UserController' && $action == 'trackingUser')?'active':''}}">
+            <a href="{{URL::to('/user/trackingUser')}}">
+                <i class="fa fa-eye"></i>
+                <span>Theo dõi người dùng</span>
+                <span class="pull-right-container">
+                </span>
+            </a>
+        </li>
+
         <li class="header">Quản Lý Đơn Hàng</li>
         <li class="treeview {{($controller == 'OrderController')?'active':''}}">
             <a href="{{URL::to('/order')}}">
