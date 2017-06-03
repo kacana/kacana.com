@@ -75,23 +75,27 @@ class Client {
         $ip = \Request::ip();
         $dataTracking = ['ip'=>$ip, 'url'=>$url, 'referer'=>$referer, 'user_agent'=>$userAgent];
 
-        if(!$userTrackingSessionId)
+        // check user agent is real user - ignore auto boot search service
+        if(!strpos('bot', $userAgent))
         {
-            $sessionCode = \Session::getId();
-            $dataTracking['code'] = $sessionCode;
-            $userTracking = $userTrackingService->createUserTracking($dataTracking);
-            \Session::set(KACANA_USER_TRACKING_SESSION, $userTracking->id);
-            $userTrackingSessionId = $userTracking->id;
+            if(!$userTrackingSessionId)
+            {
+                $sessionCode = \Session::getId();
+                $dataTracking['code'] = $sessionCode;
+                $userTracking = $userTrackingService->createUserTracking($dataTracking);
+                \Session::set(KACANA_USER_TRACKING_SESSION, $userTracking->id);
+                $userTrackingSessionId = $userTracking->id;
+            }
+            unset($dataTracking['code']);
+            $dataTracking['type_call'] = 'normal';
+
+            if($request->ajax())
+                $dataTracking['type_call'] = 'ajax';
+
+            $dataTracking['session_id'] = $userTrackingSessionId;
+            $userTrackingHistory = $userTrackingService->createUserTrackingHistory($dataTracking);
+            \Session::set(KACANA_USER_TRACKING_HISTORY_ID, $userTrackingHistory->id);
         }
-        unset($dataTracking['code']);
-        $dataTracking['type_call'] = 'normal';
-
-        if($request->ajax())
-            $dataTracking['type_call'] = 'ajax';
-
-        $dataTracking['session_id'] = $userTrackingSessionId;
-        $userTrackingHistory = $userTrackingService->createUserTrackingHistory($dataTracking);
-        \Session::set(KACANA_USER_TRACKING_HISTORY_ID, $userTrackingHistory->id);
     }
 
 }
