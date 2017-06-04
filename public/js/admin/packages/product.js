@@ -66,12 +66,7 @@ var productPackage = {
                       }
                   },
                   {
-                      'width':'4%',
-                      'class':'center',
-                      'sortable':false,
-                      'render': function ( data, type, full, meta ) {
-                          return '<a href="/product/editProduct/'+full[0]+'" class="btn btn-default btn-xs"><i class="fa fa-pencil"></i></a>';
-                      }
+
                   }
               ];
 

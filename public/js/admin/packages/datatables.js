@@ -183,6 +183,29 @@ var datatablePackage = {
 
             return Kacana.datatable.init(element, url, columns, defaultSearchColumns, addParamsCallBack, cacheParamsCallBack, rowCallBack, drawCallBack, cacheLoadedCallBack, options);
         },
+        userTracking: function (trackingId, element, columns, addParamsCallBack, cacheLoadedCallBack) {
+            var url = '/user/generateUserTrackingHistoryTable/?trackingId='+trackingId;
+
+            var options = {
+                'order': [0, "desc"],
+                displayLength: 50
+            };
+            var defaultSearchColumns = [];
+
+            var cacheParamsCallBack = function(oData){
+                //do something
+            };
+
+            var drawCallBack = function(e){
+
+            };
+
+            var rowCallBack = function(){
+                //do something
+            };
+
+            return Kacana.datatable.init(element, url, columns, defaultSearchColumns, addParamsCallBack, cacheParamsCallBack, rowCallBack, drawCallBack, cacheLoadedCallBack, options);
+        },
         detailTable: function(element, columns,typeReport, orderBy, addParamsCallBack, cacheLoadedCallBack){
             // var controller = typeReport.toLowerCase();
             var url = '/index/reportDetailTable'+typeReport;

@@ -115,6 +115,19 @@
 									  </span>
 								</div><!-- /.info-box-content -->
 							</div>
+							<div data-url="/index/reportChartUserTracking" data-color="39cccc" data-type-report="UserTracking" data-xkey="created" data-ykey="count" class="info-box item-report bg-teal">
+								<span class="info-box-icon"><i class="ion ion-ios-search"></i></span>
+								<div class="info-box-content">
+									<span class="info-box-text">Phiên người dùng</span>
+									<span class="info-box-number">{{$user_session}}</span>
+									<div class="progress">
+										<div class="progress-bar" style="width: 0%"></div>
+									</div>
+									<span class="progress-description">
+										{{$user_session_duration}} Phiên người dùng trong hôm nay
+									  </span>
+								</div><!-- /.info-box-content -->
+							</div>
 						</div>
 						</div>
 					</div><!-- /.row -->
@@ -176,7 +189,7 @@
 					</div>
 					<div class="row">
 						<div class="col-xs-12">
-							<div class="chart tab-pane active" id="revenue-chart" style="position: relative; height: 451px;"></div>
+							<div class="chart tab-pane active" id="revenue-chart" style="position: relative; height: 556px;"></div>
 						</div>
 					</div>
 				</div><!-- /.row -->

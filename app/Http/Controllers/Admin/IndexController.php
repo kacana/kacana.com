@@ -4,6 +4,7 @@ use App\services\orderService;
 use App\services\productService;
 use App\services\trackingService;
 use App\services\userService;
+use App\services\userTrackingService;
 use Illuminate\Http\Request;
 
 /**
@@ -24,6 +25,8 @@ class IndexController extends BaseController {
         $orderService = new orderService();
         $productService = new productService();
         $trackingService = new trackingService();
+        $userTrackingService = new userTrackingService();
+
         $data = array();
         try{
             $data['duration'] = $duration;
@@ -42,6 +45,9 @@ class IndexController extends BaseController {
 
             $data['search_count_duration'] = $trackingService->getCountTrackingSearch($duration);
             $data['search_count'] = $trackingService->getCountTrackingSearch();
+
+            $data['user_session_duration'] = $userTrackingService->getCountTracking(1);
+            $data['user_session'] = $userTrackingService->getCountTracking();
 
             return view('admin.index.index', $data);
         } catch (\Exception $e) {
@@ -242,6 +248,48 @@ class IndexController extends BaseController {
 
         try {
             $return = $trackingService->reportDetailTableTrackingSearch($params);
+
+        } catch (\Exception $e) {
+            // @codeCoverageIgnoreStart
+            $return['error'] = $e->getMessage();
+            $return['errorMsg'] = $e->getMessage();
+            // @codeCoverageIgnoreEnd
+        }
+
+        return response()->json($return);
+    }
+
+    public function reportChartUserTracking(Request $request)
+    {
+        $userTrackingService = new userTrackingService();
+
+        $dateRange = $request->input('dateRange', false);
+        $type = $request->input('type', 'day');
+
+        $return = array();
+        $return['ok'] = 0;
+
+        try {
+            $return['data'] = $userTrackingService->reportChartUserTracking($dateRange, $type);
+            $return['ok'] = 1;
+
+        } catch (\Exception $e) {
+            // @codeCoverageIgnoreStart
+            $return['error'] = $e->getMessage();
+            $return['errorMsg'] = $e->getMessage();
+            // @codeCoverageIgnoreEnd
+        }
+
+        return response()->json($return);
+    }
+
+    public function reportDetailTableUserTracking(Request $request)
+    {
+        $params = $request->all();
+        $userTrackingService = new userTrackingService();
+
+        try {
+            $return = $userTrackingService->reportDetailTableUserTracking($params);
 
         } catch (\Exception $e) {
             // @codeCoverageIgnoreStart

@@ -57,6 +57,8 @@ Route::group(['domain'=>KACANA_AUTH_ADMIN_NAME.'.{nameDomain}','middleware' => '
     Route::any('/index/reportDetailTableProductLike',       array('as'=>'reportDetailTableProductLike',         'uses'=>'Admin\IndexController@reportDetailTableProductLike'));
     Route::any('/index/reportDetailTableProductView',       array('as'=>'reportDetailTableProductView',         'uses'=>'Admin\IndexController@reportDetailTableProductView'));
     Route::any('/index/reportDetailTableTrackingSearch',    array('as'=>'reportDetailTableTrackingSearch',      'uses'=>'Admin\IndexController@reportDetailTableTrackingSearch'));
+    Route::any('/index/reportChartUserTracking',            array('as'=>'reportChartUserTracking',              'uses'=>'Admin\IndexController@reportChartUserTracking'));
+    Route::any('/index/reportDetailTableUserTracking',      array('as'=>'reportDetailTableUserTracking',        'uses'=>'Admin\IndexController@reportDetailTableUserTracking'));
 
     //product
     Route::any('/product',                                  array('as'=>'listProducts',                         'uses'=>'Admin\ProductController@index'));
@@ -130,6 +132,8 @@ Route::group(['domain'=>KACANA_AUTH_ADMIN_NAME.'.{nameDomain}','middleware' => '
     Route::post('/user/editUserAddress',                    array('as'=>'editUserAddress',           'uses'=>'Admin\UserController@editUserAddress'));
     Route::get('/user/showListWards/{id}',                  array('as'=>'showListWards',             'uses'=>'Admin\UserController@showListWards'));
     Route::get('/user/get-tracking-message-info',           array('as'=>'getTrackingMessageInfo',    'uses'=>'Admin\UserController@getTrackingMessageInfo'));
+    Route::get('/user/generateUserTrackingHistoryTable',    array('as'=>'generateUserTrackingHistoryTable',        'uses'=>'Admin\UserController@generateUserTrackingHistoryTable'));
+    Route::get('/user/detailUserTracking',                  array('as'=>'detailUserTracking',        'uses'=>'Admin\UserController@detailUserTracking'));
 
     //Info request
     Route::any('/advisory',                                  array('as'=>'index',                           'uses'=>'Admin\AdvisoryController@index'));

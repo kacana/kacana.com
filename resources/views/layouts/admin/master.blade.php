@@ -107,5 +107,6 @@
             <div class='control-sidebar-bg'></div>
 
         </div><!-- ./wrapper -->
+        @include('admin.index.template')
     </body>
 </html>

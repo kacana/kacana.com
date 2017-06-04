@@ -100,6 +100,63 @@ var userPackage = {
               api.draw();
           });
       },
+      setupDatatableForUserTracking: function () {
+          $('#content-list-user').on('click', 'a[href="#show-information-client-message"]', Kacana.chat.showClientMessageInfo);
+          var $formInline = $('.form-inline');
+          var element = '#userTrackingTable';
+          $(element).parents('.box').css('overflow', 'auto');
+          var columns = [
+              {
+                  'title': 'ID',
+                  'width':'5%'
+              },
+              {
+                  'title': 'url'
+              },
+              {
+                  'title': 'referer'
+              },
+              {
+                  'title': 'ip'
+              },
+              {
+                  'title': 'type_call',
+              },
+              {
+                  'title': 'created',
+                  'width':'12%',
+                  'render': function ( data, type, full, meta ) {
+                      return data ? data.slice(0, -8) : '';
+                  }
+              },
+              {
+                  'width':'80px',
+                  'class':'center',
+                  'sortable':false,
+                  'render': function ( data, type, full, meta ) {
+                      return '<a href="#show-information-client-message" data-id="'+full[0]+'" class="btn btn-default btn-xs"><i class="fa fa-info-circle"></i></a> ';
+                  }
+              }
+          ];
+
+          var addParamsCallBack = function(oData){
+
+          };
+
+          var cacheLoadedCallBack = function(oData){
+
+          };
+            var trackingId = $('#user-tracking-id').data('id');
+          var datatable = Kacana.datatable.userTracking(trackingId, element, columns, addParamsCallBack, cacheLoadedCallBack);
+
+          $formInline.off('submit').on('submit', function (e) {
+              e.preventDefault();
+
+              var api = datatable.api(true);
+
+              api.draw();
+          });
+      },
       detailUser:{
           init: function () {
                 Kacana.user.detailUser.generateAddressReceiveByUserId();

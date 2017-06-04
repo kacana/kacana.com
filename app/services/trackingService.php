@@ -58,7 +58,6 @@ class trackingService extends baseService {
     public function reportDetailTableTrackingSearch($request){
         $trackingSearchModel = new trackingSearchModel();
         $datatables = new DataTables();
-//        $viewHelper = new ViewGenerateHelper();
 
         $columns = array(
             array( 'db' => 'tracking_search.id AS tracking_search_id', 'dt' => 0 ),

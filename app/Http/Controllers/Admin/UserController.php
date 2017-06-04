@@ -205,7 +205,32 @@ class UserController extends BaseController {
         }
 
         return response()->json($return);
+    }
 
+    public function detailUserTracking(Request $request){
+        $idTracking = $request->input('idTracking', 0);
+        $userTrackingService = new userTrackingService();
+        $userTracking = $userTrackingService->getUserTracking($idTracking);
+        return view("admin.user.user-tracking", array('userTracking'=>$userTracking));
+
+    }
+
+    public function generateUserTrackingHistoryTable(Request $request)
+    {
+        $params = $request->all();
+        $userTrackingService = new userTrackingService();
+        $trackingId = $request->input('trackingId', 0);
+        try {
+            $return = $userTrackingService->generateUserTrackingHistoryTable($params, $trackingId);
+
+        } catch (\Exception $e) {
+            // @codeCoverageIgnoreStart
+            $return['error'] = $e->getMessage();
+            $return['errorMsg'] = $e->getMessage();
+            // @codeCoverageIgnoreEnd
+        }
+
+        return response()->json($return);
     }
 
 }

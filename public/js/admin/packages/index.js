@@ -3,6 +3,7 @@ var check = false;
 var indexPackage = {
     index:{
         page: false,
+        checkLoadTable: false,
         init: function(){
             Kacana.index.page = $('#content-dashboard-page');
             Kacana.index.bindEvent();
@@ -77,15 +78,16 @@ var indexPackage = {
                 var $formInline = $('.form-inline');
                 var element = '#detailTable';
                 $(element).parents('.box').css('overflow', 'auto');
-                if (check==true) {
-                    detailTable = $('#detailTable').DataTable({
+
+                if (Kacana.index.checkLoadTable == true) {
+                    var detailTable = $(element).DataTable({
                         paging: false,
                         retrieve: true
                     });
                     detailTable.destroy();
                     $('#detailTable').html('');
                 }
-                else check=true;
+                else Kacana.index.checkLoadTable=true;
 
                 var orderBy = 0;
                 if (typeReport == 'User') {
@@ -301,6 +303,45 @@ var indexPackage = {
                                 return data ? data.slice(0, -8) +'<br><b>' + data.slice(11, 19)+'</b>' : '';
                             }
                         }
+                    ];
+
+                    var cacheLoadedCallBack = function(oData){
+
+                    };
+                }
+                else if(typeReport == 'UserTracking')
+                {
+                    $('.table-title-report').html('Detail Table User Tracking');
+
+                    var columns = [
+                        {
+                            'title': 'ID',
+                            'width':'5%'
+                        },
+                        {
+                            'title': 'url'
+                        },
+                        {
+                            'title': 'referer'
+                        },
+                        {
+                            'title': "User's IP"
+                        },
+                        {
+                            'title': 'created',
+                            'width':'12%',
+                            'render': function ( data, type, full, meta ) {
+                                return data ? data.slice(0, -8) +'<br><b>' + data.slice(11, 19)+'</b>' : '';
+                            }
+                        },
+                        {
+                            'width':'4%',
+                            'class':'center',
+                            'sortable':false,
+                            'render': function ( data, type, full, meta ) {
+                                return '<a target="_blank" href="/user/detailUserTracking/?idTracking='+full[0]+'" class="btn btn-default btn-xs"><i class="fa fa-eye"></i></a>';
+                            }
+                        },
                     ];
 
                     var cacheLoadedCallBack = function(oData){
