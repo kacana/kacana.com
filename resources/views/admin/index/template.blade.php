@@ -16,7 +16,7 @@
     <label class="text-aqua">Thông tin chung</label>
     <p><b>Địa chỉ URL:</b> <a target="_blank" href="${data.url}">${data.url}</a></p>
     <p><b>Đến từ:</b> <a target="_blank" href="${data.referer}">${data.referer}</a></p>
-    <p><b>Session ID:</b> ${data.session_id}</p>
+    <p><b>Session ID:</b> ${data.session_id} - <a target="_blank" href="/user/detailUserTracking?idTracking=${data.session_id}">Chi tiết</a> </p>
     <p><b>Loại Kết Nối:</b> ${data.type_call}</p>
     <p><b>Ngày:</b> ${data.created_at}</p>
 
