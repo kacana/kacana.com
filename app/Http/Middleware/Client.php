@@ -76,7 +76,7 @@ class Client {
         $dataTracking = ['ip'=>$ip, 'url'=>$url, 'referer'=>$referer, 'user_agent'=>$userAgent];
 
         // check user agent is real user - ignore auto boot search service
-        if(!(strpos($userAgent, 'Bot') || strpos($userAgent, 'bot')))
+        if(!(strpos($userAgent, 'Bot') || strpos($userAgent, 'bot') || strpos($userAgent, 'facebookexternalhit')))
         {
             if(!$userTrackingSessionId)
             {
