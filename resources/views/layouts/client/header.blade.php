@@ -10,7 +10,7 @@
                         <a target="_blank" href="/contact/thong-tin-lien-he"><i class="fa fa-map-marker"></i> Cửa hàng</a>
                     </li>
                     <li class="dropdown">
-                        <a class="dropdown-toggle" id="btn-header-policy-info-shop" data-toggle="dropdown" href="#">Hỗ trợ<i class="fa fa-angle-down"></i></a>
+                        <a class="dropdown-toggle" id="btn-header-policy-info-shop" data-toggle="dropdown" href="#">Chính sách & quy định<i class="fa fa-angle-down"></i></a>
                         <ul class="dropdown-menu" id="dropdown-header-policy-info-shop" aria-labelledby="btn-header-policy-info-shop">
                             <li><a title="Giới thiệu" href="/contact/gioi-thieu">Giới thiệu</a></li>
                             <li><a title="Thông tin liên hệ" href="/contact/thong-tin-lien-he">Thông tin liên hệ</a></li>
