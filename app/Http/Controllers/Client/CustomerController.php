@@ -19,15 +19,15 @@ class CustomerController extends BaseController {
     public function trackingOrder(Request $request){
         $orderService = new orderService();
         try{
-            $email = $request->input('email', false);
+//            $email = $request->input('email', false);
             $orderCode = $request->input('orderCode', false);
 
-            if($email && $orderCode)
+            if($orderCode)
             {
-                $email = $request->input('email');
+//                $email = $request->input('email');
                 $orderCode = $request->input('orderCode');
 
-                $result = $orderService->checkTrackingOrderCode($email, $orderCode);
+                $result = $orderService->checkTrackingOrderCode('',$orderCode);
                 if(!$result['ok']){
                     return view('client.customer.tracking-order', $result);
                 }

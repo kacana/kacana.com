@@ -6,6 +6,7 @@ use App\models\shippingModel;
 use Kacana\DataTables;
 use Kacana\ViewGenerateHelper;
 use Cache;
+use Kacana\Client\SpeedSms;
 
 /**
  * Class shipService
@@ -258,6 +259,7 @@ class shipService extends baseService {
     public function createShippingOrder($orderDetailIds, $orderId, $shippingServiceTypeId, $pickHubId, $weight, $length, $width, $height, $originShipFee, $shipFee, $extraDiscount, $extraDiscountDesc, $OrderClientNote, $OrderContentNote, $paid){
 
         $orderService = new orderService();
+        $speedSms = new SpeedSms();
         $params = array();
 
         $order = $orderService->getOrderById($orderId);
@@ -290,6 +292,10 @@ class shipService extends baseService {
         $results = $this->makeRequest('CreateShippingOrder', $params);
 
         $this->createShippingRow($results->body, $orderDetailIds, $order, $subtotal,$shipFee, $extraDiscount, $extraDiscountDesc, $paid);
+
+        $contentSMS = str_replace('%order_id%', $order->order_code,KACANA_SPEED_SMS_CONTENT_ORDER_PROCESS);
+        $contentSMS = str_replace('%user_name%', $order->addressReceive->name,$contentSMS);
+        $speedSms->sendSMS([$order->addressReceive->phone], $contentSMS);
 
         return $results->body;
     }

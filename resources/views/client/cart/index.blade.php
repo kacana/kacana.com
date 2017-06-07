@@ -25,7 +25,7 @@
                         <div class="color-grey-light" >Kacana với hơn 100.000 sản phẩm tuyệt vời đang chờ bạn <a href="/" >Shopping</a></div>
                     </div>
                 </div>
-                <div class="col-xs-12 alert-signup-user">
+                <div class="hide" id="block-information-payment-cart" class="col-xs-12 alert-signup-user">
                     Nếu muốn sử dụng điểm tích lũy, bạn bấm <a href="/checkout?step=login" ><span class="color-green">Thanh Toán</span></a> và ĐĂNG NHẬP vào hệ thống.<br>
                     Bạn có thể sử dụng điểm tích lũy cho đợt mua sắm lần tới. 1 điểm = 500 VNĐ.
                 </div>
@@ -34,10 +34,10 @@
 
                     </div>
                     <div class="col-xs-12 col-sm-4" >
-                        <div  id="cart-information" class="cart-information-basic">
+                        <div id="cart-information" class="cart-information-basic">
 
                         </div>
-                        <div>
+                        <div class="hide" id="block-action-cart-button" >
                             @if(isset($phoneQuickOrderNumber))
                                 <div class="col-xs-12 quick-order-block">
                                     <form method="post" id="quick_order_form" data-phone="{{$phoneQuickOrderNumber}}" action="/checkout/processQuickOrder" >

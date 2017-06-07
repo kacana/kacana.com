@@ -379,12 +379,12 @@ class cartService extends baseService {
         Cart::destroy();
 
         //send email for user
-        $mailService = new mailService();
-
-        if($mailService->sendEmailQuickOrder($order->id))
-            return $order;
-        else
-            throw new \Exception('Bị lỗi trong quá trình gửi mail');
+//        $mailService = new mailService();
+//
+//        if($mailService->sendEmailQuickOrder($order->id))
+//            return $order;
+//        else
+//            throw new \Exception('Bị lỗi trong quá trình gửi mail');
 
         return $order;
     }

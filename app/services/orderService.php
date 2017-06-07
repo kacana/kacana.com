@@ -8,6 +8,7 @@ use \Kacana\Util;
 use Kacana\DataTables;
 use Kacana\ViewGenerateHelper;
 use Carbon\Carbon;
+use Kacana\Client\SpeedSms;
 /**
  * Class shipService
  * @package App\services
@@ -392,15 +393,15 @@ class orderService extends baseService {
      * @param $orderCode
      * @return mixed
      */
-    public function checkTrackingOrderCode($email, $orderCode){
+    public function checkTrackingOrderCode($email = '', $orderCode){
         $orderModel = new orderModel();
         $result['ok'] = false;
 
-        if(!$email)
-        {
-            $result['error_message'] = 'Vui lòng nhập email!';
-            return $result;
-        }
+//        if(!$email)
+//        {
+//            $result['error_message'] = 'Vui lòng nhập email!';
+//            return $result;
+//        }
         if(!$orderCode)
         {
             $result['error_message'] = 'Vui lòng nhập mã đơn hàng!';
@@ -411,11 +412,11 @@ class orderService extends baseService {
         $result['orderCode'] = $orderCode;
         $order = $orderModel->getByOrderCode($orderCode);
 
-        if(!$order || $order->user->email != $email)
-        {
-            $result['error_message'] = 'Không tồn tại mã đơn hàng: <b>'.$orderCode.'</b> của email:<b>'.$email.'</b>';
-            return $result;
-        }
+//        if(!$order || $order->user->email != $email)
+//        {
+//            $result['error_message'] = 'Không tồn tại mã đơn hàng: <b>'.$orderCode.'</b> của email:<b>'.$email.'</b>';
+//            return $result;
+//        }
 
         $result['order'] = $order;
         $result['ok'] = true;
@@ -485,11 +486,17 @@ class orderService extends baseService {
     }
 
     public function exportProductAtStore($orderId){
+        $speedSms = new SpeedSms();
+
         $order = $this->_orderModel->getById($orderId);
 
         if(($order->status == KACANA_ORDER_STATUS_NEW || $order->status == KACANA_ORDER_STATUS_PROCESSING) && $order->order_type == KACANA_ORDER_TYPE_STORE_THD)
         {
             $order->updateItem($orderId, ['status' => KACANA_ORDER_STATUS_COMPLETE]);
+            $contentSMS = str_replace('%order_id%', $order->order_code,KACANA_SPEED_SMS_CONTENT_ORDER_PROCESS);
+            $contentSMS = str_replace('%user_name%', $order->addressReceive->name,$contentSMS);
+
+            $speedSms->sendSMS([$order->addressReceive->phone], $contentSMS);
         }
         else
             return false;

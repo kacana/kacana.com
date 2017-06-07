@@ -52,12 +52,12 @@
                             </div>
                         </div>
 
-                        <div class="form-group">
-                            <label for="inputDisabled" class="col-md-2 control-label">Email đăng ký đặt hàng</label>
-                            <div class="col-md-4">
-                                <input type="text"  @if(isset($email) && $email) value="{{$email}}" @endif  placeholder="Email" name="email" class="form-control">
-                            </div>
-                        </div>
+                        {{--<div class="form-group">--}}
+                            {{--<label for="inputDisabled" class="col-md-2 control-label">Email đăng ký đặt hàng</label>--}}
+                            {{--<div class="col-md-4">--}}
+                                {{--<input type="text"  @if(isset($email) && $email) value="{{$email}}" @endif  placeholder="Email" name="email" class="form-control">--}}
+                            {{--</div>--}}
+                        {{--</div>--}}
 
                         <div class="form-group">
                             <div class="col-md-2 col-md-offset-4">

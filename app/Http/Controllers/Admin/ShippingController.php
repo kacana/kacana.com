@@ -34,6 +34,7 @@ class ShippingController extends BaseController {
 
         try{
             $ship = $shipService->createShippingOrder($orderDetailIds, $orderId, $shippingServiceTypeId, $pickHubId, $weight, $length, $width, $height, $originShipFee, $shipFee, $extraDiscount, $extraDiscountDesc, $OrderClientNote, $OrderContentNote, $paid);
+
             return redirect('/shipping/detail?id='.$ship->OrderCode);
         } catch (\Exception $e) {
             // @codeCoverageIgnoreStart

@@ -206,10 +206,12 @@ var cartPackage = {
 
                 var cartInformationTemplateGenerate = $.tmpl(cartInformationTemplate, {'items': items, 'cart': cart});
                 Kacana.cart.page.find('#cart-information').empty().append(cartInformationTemplateGenerate);
+                Kacana.cart.page.find('#block-action-cart-button, #block-information-payment-cart').removeClass('hide');
             }
             else
             {
-                Kacana.cart.page.find('#list-cart-item, #cart-information').hide();
+                Kacana.cart.page.find('#list-cart-item, #cart-information, #block-action-cart-button').hide();
+                Kacana.cart.page.find('#block-action-cart-button, #block-information-payment-cart').addClass('hide');
                 Kacana.cart.page.find('#cart-empty-error').show();
             }
             Kacana.cart.checkButtonQuantity();

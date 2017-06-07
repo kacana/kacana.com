@@ -6,7 +6,7 @@ use App\services\orderService;
 use App\services\userService;
 use Illuminate\Http\Request;
 use League\Flysystem\Exception;
-
+use Kacana\Client\SpeedSms;
 
 /**
  * Class CheckoutController
@@ -136,16 +136,18 @@ class CheckoutController extends BaseController {
 
     public function processQuickOrder(Request $request){
         $cartService = new cartService();
+        $speedSms = new SpeedSms();
 
         $cart = $cartService->cartInformation();
         if(!$cart)
             return view('client.cart.index');
 
         $phone = $request->input('phoneQuickOrderNumber', false);
-
         try{
 
             $order = $cartService->quickProcessCart($phone);
+            $contentSMS = str_replace('%order_id%', $order->order_code,KACANA_SPEED_SMS_CONTENT_NEW_ORDER);
+            $speedSms->sendSMS([$phone], $contentSMS);
             return view('client.checkout.quick-order-success', ['order' => $order]);
         }
         catch (\Exception $e) {
