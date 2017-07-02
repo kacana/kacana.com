@@ -98,6 +98,12 @@ class ViewGenerateHelper {
             case 'products_status_'.KACANA_PRODUCT_STATUS_SOLD_OUT:
                 $iconStatus = '<span class="text-red" ><i class="fa fa-circle-o"></i> SOLD OUT </span>';
                 break;
+            case 'orders_order_type_'.KACANA_ORDER_TYPE_ONLINE:
+                $iconStatus = '<span class="text-red" ><i class="fa fa-circle-o"></i> Đơn hàng online </span>';
+                break;
+            case 'orders_order_type_'.KACANA_ORDER_TYPE_STORE_THD:
+                $iconStatus = '<span class="text-green" ><i class="fa fa-circle-o"></i> Đơn hàng kho THD </span>';
+                break;
             default:
                 $iconStatus = '<i class="fa fa-ban-circle"></i> Disabled ';
                 break;

@@ -191,7 +191,7 @@ class orderService extends baseService {
             array( 'db' => 'orders.total', 'dt' => 5 ),
             array( 'db' => 'orders.quantity', 'dt' => 6 ),
             array( 'db' => 'orders.status', 'dt' => 7 ),
-            array( 'db' => 'order_types.name AS order_type_name', 'dt' => 8 ),
+            array( 'db' => 'orders.order_type', 'dt' => 8 ),
             array( 'db' => 'orders.created', 'dt' => 9 ),
             array( 'db' => 'orders.updated', 'dt' => 10 )
         );
@@ -199,7 +199,7 @@ class orderService extends baseService {
         $return = $orderModel->generateOrderTable($request, $columns);
 
         if(count($return['data'])) {
-            $optionStatus = [KACANA_ORDER_STATUS_NEW, KACANA_ORDER_STATUS_PROCESSING, KACANA_ORDER_STATUS_CANCEL, KACANA_ORDER_STATUS_COMPLETE];
+            $typeOrderOption = [KACANA_ORDER_TYPE_ONLINE, KACANA_ORDER_TYPE_STORE_THD];
 
             foreach ($return['data'] as &$order) {
 
@@ -213,6 +213,8 @@ class orderService extends baseService {
                     $order->status = '<span class="label label-waring">đang xử lý</span>';
                 elseif($order->status == KACANA_ORDER_STATUS_COMPLETE)
                     $order->status = '<span class="label label-success">hoàn thành</span>';
+
+                $order->order_type = $viewHelper->dropdownView('orders', $order->id, $order->order_type, 'order_type', $typeOrderOption);
 
                 $order->total = formatMoney($order->total);
             }
