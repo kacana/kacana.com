@@ -61,7 +61,7 @@ class OrderController extends BaseController {
             $hubInfos = $shipService->getPickHubs();
 
             $mainHub = $shipService->getPickHubMain($hubInfos);
-            if($user_address->district_id)
+            if($user_address->district_id && isset($mainHub->DistrictCode))
             {
                 $serviceList = $shipService->getServiceList($user_address->district->code,  $mainHub->DistrictCode);
                 $shippingServiceInfos = $shipService->calculateServiceFee($user_address->district->code, $mainHub->DistrictCode, $serviceList);

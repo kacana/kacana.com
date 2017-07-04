@@ -158,9 +158,15 @@ class shipService extends baseService {
             return Cache::get($keyCachePickHubs);
 
         $results = $this->makeRequest('GetPickHubs');
-        Cache::put($keyCachePickHubs, $results->body->HubInfo, 1440);
+        if(isset($results->body->HubInfo))
+        {
+            Cache::put($keyCachePickHubs, $results->body->HubInfo, 1440);
 
-        return $results->body->HubInfo;
+            return $results->body->HubInfo;
+        }
+
+        return [];
+
     }
 
     /**
