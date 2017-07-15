@@ -131,7 +131,7 @@
                 @{{/if}}
                 @{{if this.status == 1}}
                     <span data-id="${this.id}" class="quick-order-btn">
-                        mua ngay
+                        Thêm vào giỏ hàng
                     </span>
                 @{{/if}}
                 <span class="pull-right viewless-wrap" >

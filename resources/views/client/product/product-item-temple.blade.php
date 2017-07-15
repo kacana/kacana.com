@@ -83,7 +83,7 @@
             </span>
         @else
             <span data-id="{{$item->id}}" class="quick-order-btn">
-                mua ngay
+                Thêm vào giỏ hàng
             </span>
         @endif
         <span class="pull-right viewless-wrap" >
