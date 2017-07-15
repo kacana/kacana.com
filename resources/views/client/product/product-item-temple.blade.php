@@ -58,11 +58,11 @@
 </div>
 <div class="product-short-description-like-wrap">
     <div class="product-short-description-wrap text-center" id="product-short-description-wrap-{{$item->id}}">
-        <div class="product-short-description">
+        <div class="product-short-description hidden-xs">
             {{fixHtml($item->short_description)}}
         </div>
 
-        <span class=@if($item->isLiked)"save-product-wrap active pull-left"@else"save-product-wrap pull-left"@endif >
+        <span class=@if($item->isLiked)"save-product-wrap hidden-xs active pull-left"@else"save-product-wrap hidden-xs pull-left"@endif >
             <a  data-product-id="{{$item->id}}"
                 data-product-url="{{urlProductDetail($item)}}"
                 href=@if(\Kacana\Util::isLoggedIn() && !$item->isLiked)"#save-product-like"@elseif(\Kacana\Util::isLoggedIn() && $item->isLiked)"#remove-product-like"@else"#login-header-popup"@endif
@@ -91,7 +91,7 @@
                 <i class="fa fa-angle-double-up" ></i>
             </a>
         </span>
-        <span class="pull-right viewmore-wrap" >
+        <span class="pull-right hidden-xs viewmore-wrap" >
             <a href="#show-more-short-desc" class="viewmore" >
                 <i class="fa fa-angle-double-down" ></i>
             </a>

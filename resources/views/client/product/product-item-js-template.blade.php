@@ -67,11 +67,11 @@
         </div>
         <div class="product-short-description-like-wrap">
             <div class="product-short-description-wrap text-center" id="product-short-description-wrap- ${this.id}">
-                <div class="product-short-description">
+                <div class="product-short-description hidden-xs">
                     ${this.short_description}
                 </div>
                 @{{if this.isLiked}}
-                <span class="save-product-wrap active pull-left" >
+                <span class="save-product-wrap hidden-xs active pull-left" >
                             <a
                                     data-product-id="${this.id}"
                                     data-product-url="${this.urlProductDetail}"
@@ -89,7 +89,7 @@
                         </span>
                 @{{/if}}
                 @{{if !this.isLiked}}
-                <span class="save-product-wrap pull-left">
+                <span class="save-product-wrap hidden-xs pull-left">
                             @{{if this.is_login}}
                     <a
                             data-product-id="${this.id}"
@@ -139,7 +139,7 @@
                             <i class="fa fa-angle-double-up" ></i>
                         </a>
                 </span>
-                <span class="pull-right viewmore-wrap" >
+                <span class="pull-right hidden-xs viewmore-wrap" >
                         <a href="#show-more-short-desc" class="viewmore" >
                             <i class="fa fa-angle-double-down" ></i>
                         </a>

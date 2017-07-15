@@ -84,7 +84,7 @@
             background: none;
             border: none;
             padding: 0;
-            height: 40px;
+            height: 42px;
             max-height: 105px;
             overflow: hidden;
             margin-top: 10px;
@@ -96,6 +96,9 @@
                 text-transform: uppercase;
                 color: @color-grey;
               }
+            }
+            @media (max-width: 767px) {
+              height: 25px;
             }
           }
           &:hover{
@@ -153,6 +156,9 @@
           }
           .product-short-description-like-wrap{
             height: 85px;
+            @media (max-width: 767px){
+              height: 0;
+            }
             .product-short-description-wrap{
               padding: 0 10px;
               border-left: 1px solid #fff;
@@ -241,6 +247,12 @@
                 &:hover{
                   background: linear-gradient(#78ce7c, @color-green);
                   color: #ffffff;
+                }
+                @media (max-width: 767px) {
+                  display: block;
+                  bottom: 0px;
+                  left: ~'calc(50% - 60px)';
+
                 }
               }
               .sold-out-btn{
@@ -362,3 +374,5 @@
     color:#0088cc !important;
   }
 }
+
+
