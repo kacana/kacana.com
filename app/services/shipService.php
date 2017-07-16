@@ -145,7 +145,10 @@ class shipService extends baseService {
         );
 
         $results = $this->makeRequest('GetServiceList', $params);
-        return $results->body->Services;
+
+        if(isset($results->body->Services))
+            return $results->body->Services;
+        return [];
     }
 
     /**
@@ -246,8 +249,11 @@ class shipService extends baseService {
             }
         }
         $results = $this->makeRequest('CalculateServiceFee', ['Items'=>json_decode(json_encode($itemsCheck))]);
-        $results = $results->body->Items;
-        return $results;
+        $return = [];
+        if(isset($results->body->Items))
+            $return = $results->body->Items;
+
+        return $return;
 
     }
 
