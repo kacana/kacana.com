@@ -67,7 +67,7 @@ class productService extends baseService {
         $columns = array(
             array( 'db' => 'products.id', 'dt' => 0 ),
             array( 'db' => 'products.name', 'dt' => 1 ),
-            array( 'db' => 'products.price', 'dt' => 2 ),
+            array( 'db' => 'products.image', 'dt' => 2 ),
             array( 'db' => 'products.sell_price', 'dt' => 3 ),
             array( 'db' => 'products.boot_priority', 'dt' => 4 ),
             array( 'db' => 'products.status', 'dt' => 5 ),

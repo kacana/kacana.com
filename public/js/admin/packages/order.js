@@ -255,9 +255,9 @@ var orderPackage = {
 
             var cacheLoadedCallBack = function(oData){
                 $formInline.find('input[name="code"]').val(oData.columns[1].search.search);
-                $formInline.find('input[name="name"]').val(oData.columns[2].search.search);
-                $formInline.find('input[name="phone"]').val(oData.columns[3].search.search);
-                $formInline.find('select[name="searchStatus"]').val(oData.columns[6].search.search);
+                $formInline.find('input[name="name"]').val(oData.columns[3].search.search);
+                $formInline.find('input[name="phone"]').val(oData.columns[4].search.search);
+                $formInline.find('select[name="searchStatus"]').val(oData.columns[7].search.search);
             };
 
             var datatable = Kacana.datatable.order(element, columns, addParamsCallBack, cacheLoadedCallBack);
@@ -273,10 +273,10 @@ var orderPackage = {
                     var phone = $formInline.find('input[name="phone"]').val();
                     var status = $formInline.find('select[name="searchStatus"]').val();
 
-                    api.column(2).search(name)
-                        .column(3).search(phone)
-                        .column(1).search(code)
-                        .column(6).search(status, true);
+                    api.column(1).search(code)
+                        .column(3).search(name)
+                        .column(4).search(phone)
+                        .column(7).search(status, true);
 
                     api.draw();
                 });

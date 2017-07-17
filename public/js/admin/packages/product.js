@@ -40,7 +40,11 @@ var productPackage = {
                       'title': 'name'
                   },
                   {
-                      'title': 'price'
+                      'title': 'Image',
+                      'sortable':false,
+                      'render': function ( data, type, full, meta ) {
+                          return '<img style="width: 50px" class="img-responsive" src="//image.kacana.vn'+data+'" />';
+                      }
                   },
                   {
                       'title': 'sell price'

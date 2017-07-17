@@ -25,11 +25,6 @@ class IndexController extends BaseController {
 
     public function index(Request $request)
     {
-        $slack = new Slack();
-        $slack->testSend();die;
-
-
-
         $productService = new productService();
         $tagService = new tagService();
 
