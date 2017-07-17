@@ -152,8 +152,8 @@
 
             <td>
                 {{isset($user_address->street)?$user_address->street:''}}<br>
-                {{isset($user_address->district->name)?$user_address->district->name:''}}<br>
-                {{isset($user_address->city->name)?$user_address->city->name:''}}<br>
+                {{(isset($user_address->district_id) && $user_address->district_id)?$user_address->district->name:''}}<br>
+                {{(isset($user_address->city_id) && $user_address->city_id)?$user_address->city->name:''}}<br>
             </td>
         </tr>
     </table>
