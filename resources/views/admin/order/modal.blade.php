@@ -28,16 +28,16 @@
                                             <span class="label label-success" >${this.order_service_id}</span>
                                         </div>
                                         <div class="cart-item-price">
-                                            Giá: ${this.price}
+                                            Giá: ${Kacana.utils.formatCurrency(this.price)}
                                         </div>
                                         <div class="cart-item-price">
                                             Số lượng:  ${this.quantity}
                                         </div>
                                         <div class="cart-item-price">
-                                            Giảm giá: ${this.discount}
+                                            Giảm giá: ${Kacana.utils.formatCurrency(this.discount)}
                                         </div>
                                         <div class="cart-item-price color-red">
-                                            Tổng:  ${this.subtotal}
+                                            Tổng:  ${Kacana.utils.formatCurrency(this.subtotal)}
                                         </div>
                                     </div>
                                     <div class="col-xs-2 col-sm-2 cart-item-total">
@@ -149,17 +149,38 @@
                 </div>
                 <div id="list-shipping-fee" class="form-group">
                     <input id="origin-ship-fee" name="originShipFee" value="0" class="hidden"/>
-                    @if(isset($shippingServiceInfos))
-                        @foreach($shippingServiceInfos as $shippingServiceInfo)
+                    <div id="list-shipping-ghn-fee">
+                        @if(isset($shippingServiceInfos))
+                            @foreach($shippingServiceInfos as $shippingServiceInfo)
+                                <div class="radio margin-bottom">
+                                    <label class="col-xs-12" >
+                                        <span class="col-xs-1 col-xs-offset-1" ><input data-value="{{$shippingServiceInfo->ServiceFee}}" id="shippingServiceTypeId" type="radio" checked="" value="{{$shippingServiceInfo->ServiceID}}" name="shippingServiceTypeId"></span>
+                                        <span class="col-xs-5" >{{$shippingServiceInfo->ServiceName}}</span>
+                                        <span class="col-xs-5" >Giá: <strong>{{formatMoney($shippingServiceInfo->ServiceFee)}}</strong></span>
+                                    </label>
+                                </div>
+                            @endforeach
+                        @endif
+                    </div>
+                    <div id="list-shipping-ghtk-fee">
+                        @if(isset($feeGhtk) && $feeGhtk->fee->delivery == 1)
                             <div class="radio margin-bottom">
                                 <label class="col-xs-12" >
-                                    <span class="col-xs-1 col-xs-offset-1" ><input data-value="{{$shippingServiceInfo->ServiceFee}}" id="shippingServiceTypeId" type="radio" checked="" value="{{$shippingServiceInfo->ServiceID}}" name="shippingServiceTypeId"></span>
-                                    <span class="col-xs-5" >{{$shippingServiceInfo->ServiceName}}</span>
-                                    <span class="col-xs-5" >Cước: <strong>{{formatMoney($shippingServiceInfo->ServiceFee)}}</strong></span>
+                                    <span class="col-xs-1 col-xs-offset-1" ><input data-value="{{$feeGhtk->fee->fee}}" type="radio" checked="" value="{{KACANA_SHIP_TYPE_ID_GHTK}}" name="shippingServiceTypeId"></span>
+                                    <span class="col-xs-5 text-danger text-bold" >Giao Hàng Tiết Kiệm</span>
+                                    <span class="col-xs-5" >Giá: <strong>{{formatMoney($feeGhtk->fee->fee)}}</strong></span>
                                 </label>
                             </div>
-                        @endforeach
-                    @endif
+                        @else
+                            <div class="radio margin-bottom">
+                                <label class="col-xs-12" >
+                                    <span class="col-xs-1 col-xs-offset-1" ><input disabled data-value="" type="radio" value="{{KACANA_SHIP_TYPE_ID_GHTK}}"></span>
+                                    <span class="col-xs-5 text-danger text-bold" >Giao Hàng Tiết Kiệm</span>
+                                    <span class="col-xs-5" > Chưa hỗ trợ </span>
+                                </label>
+                            </div>
+                        @endif
+                    </div>
                 </div>
             </div>
             <div class="modal-footer">
@@ -171,16 +192,35 @@
 </script>
 
 <script id="template-shipping-fee" type="template">
-    <input id="origin-ship-fee" name="originShipFee" value="0" class="hidden"/>
     @{{each listFee}}
         <div class="radio">
             <label class="col-xs-12" >
                 <span class="col-xs-1 col-xs-offset-1" ><input data-value="${this.ServiceFee}" id="shippingServiceTypeId" type="radio" checked="" value="${this.ServiceID}" name="shippingServiceTypeId"></span>
                 <span class="col-xs-5" >${this.ServiceName}</span>
-                <span class="col-xs-5" >Cước: <strong>${this.ServiceFee}</strong></span>
+                <span class="col-xs-5" >Giá: <strong>${Kacana.utils.formatCurrency(this.ServiceFee)}</strong></span>
             </label>
         </div>
     @{{/each }}
+</script>
+
+<script id="template-shipping-ghtk-fee" type="template">
+    @{{if ghtkFee.fee.delivery }}
+        <div class="radio">
+            <label class="col-xs-12" >
+                <span class="col-xs-1 col-xs-offset-1" ><input data-value="${ghtkFee.fee.fee}" type="radio" checked="" value="{{KACANA_SHIP_TYPE_ID_GHTK}}" name="shippingServiceTypeId"></span>
+                <span class="col-xs-5 text-danger text-bold" >Giao Hàng Tiết Kiệm</span>
+                <span class="col-xs-5" >Giá: <strong>${Kacana.utils.formatCurrency(ghtkFee.fee.fee)}</strong></span>
+            </label>
+        </div>
+    @{{else}}
+        <div class="radio margin-bottom">
+            <label class="col-xs-12" >
+                <span class="col-xs-1 col-xs-offset-1" ><input disabled data-value="" type="radio" value="{{KACANA_SHIP_TYPE_ID_GHTK}}"></span>
+                <span class="col-xs-5 text-danger text-bold" >Giao Hàng Tiết Kiệm</span>
+                <span class="col-xs-5" > Chưa hỗ trợ </span>
+            </label>
+        </div>
+    @{{/if}}
 </script>
 
 <div id="modal-add-product-order" class="modal fade" role="dialog">

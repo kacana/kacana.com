@@ -244,7 +244,7 @@ function formatMoney($number, $symbol=' đ')
 
 }
 
-function generateBarcode($code, $width = 2, $height = 40){
+function generateBarcode($code, $width = 10, $height = 340){
     $codeEan = str_pad($code, 12, '0', STR_PAD_LEFT);
     $barcodeService = new DNS1D();
     return $barcodeService->getBarcodePNG($codeEan, "EAN13", $width, $height);

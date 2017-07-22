@@ -10,7 +10,7 @@ use Kacana\DataTables;
 use Kacana\ViewGenerateHelper;
 
 /**
- * Class shipService
+ * Class shipGhnService
  * @package App\services
  */
 class addressService extends baseService {

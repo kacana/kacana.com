@@ -4,7 +4,7 @@ use Cart;
 use App\services\orderService;
 
 /**
- * Class shipService
+ * Class shipGhnService
  * @package App\services
  */
 class cartService extends baseService {

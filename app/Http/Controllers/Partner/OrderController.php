@@ -2,7 +2,7 @@
 
 use App\services\addressService;
 use App\services\productService;
-use App\services\shipService;
+use App\services\shipGhnService;
 use Illuminate\Http\Request;
 use App\services\orderService;
 
@@ -44,7 +44,7 @@ class OrderController extends BaseController {
     public function edit($domain, Request $request,$code){
         $orderService = new orderService();
         $addressService = new addressService();
-        $shipService = new shipService();
+        $shipGhnService = new shipGhnService();
         try {
             $order = $orderService->getOrderByOrderCode($code);
             $id = $order->id;
@@ -59,11 +59,11 @@ class OrderController extends BaseController {
             $buyer = $order->user;
             $user_address = $order->addressReceive;
 
-            $hubInfos = $shipService->getPickHubs();
+            $hubInfos = $shipGhnService->getPickHubs();
 
-            $mainHub = $shipService->getPickHubMain($hubInfos);
-            $serviceList = $shipService->getServiceList($user_address->district->code,  $mainHub->DistrictCode);
-            $shippingServiceInfos = $shipService->calculateServiceFee($user_address->district->code, $mainHub->DistrictCode, $serviceList);
+            $mainHub = $shipGhnService->getPickHubMain($hubInfos);
+            $serviceList = $shipGhnService->getServiceList($user_address->district->code,  $mainHub->DistrictCode);
+            $shippingServiceInfos = $shipGhnService->calculateServiceFee($user_address->district->code, $mainHub->DistrictCode, $serviceList);
 
             $cities = $addressService->getListCity()->lists('name', 'id');
             $wards = $addressService->getListWardByDistrictId($user_address->district_id);

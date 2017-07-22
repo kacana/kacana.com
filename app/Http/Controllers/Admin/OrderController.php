@@ -2,7 +2,8 @@
 
 use App\services\addressService;
 use App\services\productService;
-use App\services\shipService;
+use App\services\shipGhnService;
+use App\services\shipGhtkService;
 use Illuminate\Http\Request;
 use App\services\orderService;
 
@@ -47,7 +48,9 @@ class OrderController extends BaseController {
     public function edit($domain, Request $request,$id){
         $orderService = new orderService();
         $addressService = new addressService();
-        $shipService = new shipService();
+        $shipGhnService = new shipGhnService();
+        $shipGhtkService = new shipGhtkService();
+
         try {
             if($request->isMethod('PUT')){
                 $addressService->updateAddressReceive($request->all());
@@ -58,22 +61,27 @@ class OrderController extends BaseController {
             $buyer = $order->user;
             $user_address = $order->addressReceive;
 
-            $hubInfos = $shipService->getPickHubs();
+            $hubInfos = $shipGhnService->getPickHubs();
 
-            $mainHub = $shipService->getPickHubMain($hubInfos);
+            $mainHub = $shipGhnService->getPickHubMain($hubInfos);
             if($user_address->district_id )
             {
+                $pickDistrictCode = 0;
                 if (isset($mainHub->DistrictCode))
                 {
-                    $serviceList = $shipService->getServiceList($user_address->district->code,  $mainHub->DistrictCode);
-                    $shippingServiceInfos = $shipService->calculateServiceFee($user_address->district->code, $mainHub->DistrictCode, $serviceList);
+                    $pickDistrictCode = $mainHub->DistrictCode;
+                    $serviceList = $shipGhnService->getServiceList($user_address->district->code,  $mainHub->DistrictCode);
+                    $shippingServiceInfos = $shipGhnService->calculateServiceFee($user_address->district->code, $mainHub->DistrictCode, $serviceList);
                 }
+
                 $wards = $addressService->getListWardByDistrictId($user_address->district_id);
+                $feeGhtk = $shipGhtkService->calculateFee($pickDistrictCode, $user_address, $order->total);
             }
 
             $cities = $addressService->getListCity()->lists('name', 'id');
             $districts = $addressService->getListDistrict();
-            return view('admin.order.edit', compact('order', 'buyer', 'user_address', 'cities', 'districts', 'wards', 'shippingServiceInfos', 'hubInfos'));
+//            print_r($feeGhtk->fee);die;
+            return view('admin.order.edit', compact('order', 'buyer', 'user_address', 'cities', 'districts', 'wards', 'shippingServiceInfos', 'hubInfos', 'feeGhtk'));
         } catch (\Exception $e) {
             if($request->ajax())
             {
@@ -87,8 +95,8 @@ class OrderController extends BaseController {
 
     public function checkFeeShipping(Request $request){
         $orderService = new orderService();
-        $addressService = new addressService();
-        $shipService = new shipService();
+        $shipGhtkService = new shipGhtkService();
+        $shipGhnService = new shipGhnService();
 
         $weight = $request->input('weight', KACANA_SHIP_DEFAULT_WEIGHT);
         $length = $request->input('length', KACANA_SHIP_DEFAULT_LENGTH);
@@ -102,9 +110,10 @@ class OrderController extends BaseController {
         try{
             $order = $orderService->getOrderById($orderId);
             $user_address = $order->addressReceive;
-            $serviceList = $shipService->getServiceList($user_address->district->code,  $pickDistrictCode);
-
-            $return['data'] = $shipService->calculateServiceFee($user_address->district->code, $pickDistrictCode, $serviceList, $weight, $length, $width, $height);
+            $serviceList = $shipGhnService->getServiceList($user_address->district->code,  $pickDistrictCode);
+            $results['serviceGhn'] = $shipGhnService->calculateServiceFee($user_address->district->code, $pickDistrictCode, $serviceList, $weight, $length, $width, $height);
+            $results['serviceGhtk'] = $shipGhtkService->calculateFee($pickDistrictCode, $user_address, $weight);
+            $return['data'] = $results;
 
             $return['ok'] = 1;
         } catch (\Exception $e) {
@@ -147,35 +156,6 @@ class OrderController extends BaseController {
             $return['order'] = $orderService->getOrderById($orderId);
             $return['addressReceive'] = $orderService->getOrderById($orderId)->addressReceive;
             $return['data'] = $orderService->getOrderDetailisOrdered($orderId, $addressId);
-        } catch (\Exception $e) {
-            // @codeCoverageIgnoreStart
-            $return['error'] = $e->getMessage();
-            $return['errorMsg'] = $e->getMessage();
-            // @codeCoverageIgnoreEnd
-        }
-
-        return response()->json($return);
-    }
-
-    public function shipping(Request $request){
-
-        $shipService = new shipService();
-
-        $orderId = $request->input('orderId');
-        $orderDetailIds = $request->input('orderDetailId');
-        $pickHubId = $request->input('pickHubId', KACANA_SHIP_STORE_MAIN_ID);
-        $shippingServiceTypeId = $request->input('shippingServiceTypeId', 0);
-        $ExpectedDeliveryTime = $request->input('ExpectedDeliveryTime', '');
-
-        $weight = $request->input('Weight', KACANA_SHIP_DEFAULT_WEIGHT);
-        $length = $request->input('Length', KACANA_SHIP_DEFAULT_LENGTH);
-        $width = $request->input('Width', KACANA_SHIP_DEFAULT_WIDTH);
-        $height = $request->input('Height', KACANA_SHIP_DEFAULT_HEIGHT);
-
-
-        try{
-            $ship = $shipService->createShippingOrder($orderDetailIds, $orderId, $shippingServiceTypeId, $pickHubId, $weight, $length, $width, $height, $ExpectedDeliveryTime);
-
         } catch (\Exception $e) {
             // @codeCoverageIgnoreStart
             $return['error'] = $e->getMessage();

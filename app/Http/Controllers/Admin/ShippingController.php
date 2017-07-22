@@ -1,7 +1,8 @@
 <?php namespace App\Http\Controllers\Admin;
 
 use App\services\addressService;
-use App\services\shipService;
+use App\services\shipGhnService;
+use App\services\shipGhtkService;
 use Illuminate\Http\Request;
 use App\services\orderService;
 use Kacana\ViewGenerateHelper;
@@ -13,10 +14,11 @@ class ShippingController extends BaseController {
     }
 
     public function createShipping(Request $request){
-        $shipService = new shipService();
+        $shipGhnService = new shipGhnService();
+        $shipGhtkService = new shipGhtkService();
         $orderId = $request->input('orderId');
         $orderDetailIds = $request->input('orderDetailId');
-        $pickHubId = $request->input('pickHubId', KACANA_SHIP_STORE_MAIN_ID);
+        $pickHubId = $request->input('pickHubId', 0);
         $shippingServiceTypeId = $request->input('shippingServiceTypeId', 0);
 
         $shipFee = $request->input('shipFee', 0);
@@ -33,7 +35,38 @@ class ShippingController extends BaseController {
         $height = $request->input('Height', KACANA_SHIP_DEFAULT_HEIGHT);
 
         try{
-            $ship = $shipService->createShippingOrder($orderDetailIds, $orderId, $shippingServiceTypeId, $pickHubId, $weight, $length, $width, $height, $originShipFee, $shipFee, $extraDiscount, $extraDiscountDesc, $OrderClientNote, $OrderContentNote, $paid);
+            if($shippingServiceTypeId == KACANA_SHIP_TYPE_ID_GHTK)
+                $ship = $shipGhtkService->createShippingOrder($orderDetailIds,
+                    $orderId,
+                    $shippingServiceTypeId,
+                    $pickHubId,
+                    $weight,
+                    $length,
+                    $width,
+                    $height,
+                    $originShipFee,
+                    $shipFee,
+                    $extraDiscount,
+                    $extraDiscountDesc,
+                    $OrderClientNote,
+                    $OrderContentNote,
+                    $paid);
+            else
+                $ship = $shipGhnService->createShippingOrder($orderDetailIds,
+                    $orderId,
+                    $shippingServiceTypeId,
+                    $pickHubId,
+                    $weight,
+                    $length,
+                    $width,
+                    $height,
+                    $originShipFee,
+                    $shipFee,
+                    $extraDiscount,
+                    $extraDiscountDesc,
+                    $OrderClientNote,
+                    $OrderContentNote,
+                    $paid);
 
             return redirect('/shipping/detail?id='.$ship->OrderCode);
         } catch (\Exception $e) {
@@ -46,10 +79,10 @@ class ShippingController extends BaseController {
 
     public function generateShippingTable(Request $request){
         $params = $request->all();
-        $shipService = new shipService();
+        $shipGhnService = new shipGhnService();
 
         try {
-            $return = $shipService->generateShippingTable($params);
+            $return = $shipGhnService->generateShippingTable($params);
 
         } catch (\Exception $e) {
             // @codeCoverageIgnoreStart
@@ -65,14 +98,14 @@ class ShippingController extends BaseController {
 
         $orderService = new orderService();
         $addressService = new addressService();
-        $shipService = new shipService();
+        $shipGhnService = new shipGhnService();
 
         $shippingId =  $request->input('id');
 
         try {
 
-            $status = $shipService->GetOrderInfoStatus($shippingId);
-            $ship =  $shipService->updateShippingStatus($shippingId, $status);
+            $status = $shipGhnService->GetOrderInfoStatus($shippingId);
+            $ship =  $shipGhnService->updateShippingStatus($shippingId, $status);
             $ship->statusDesc = ViewGenerateHelper::getStatusDescriptionShip($status, $shippingId);
 
             $user_address = $ship->addressReceive;
@@ -92,12 +125,12 @@ class ShippingController extends BaseController {
     public function printOrder(Request $request){
         $orderService = new orderService();
         $addressService = new addressService();
-        $shipService = new shipService();
+        $shipGhnService = new shipGhnService();
 
         $shippingId =  $request->input('id');
 
         try {
-            $ship =  $shipService->getShippingById($shippingId);
+            $ship =  $shipGhnService->getShippingById($shippingId);
 
             $user_address = $ship->addressReceive;
             $cities = $addressService->getListCity()->lists('name', 'id');
@@ -122,7 +155,7 @@ class ShippingController extends BaseController {
     public function printOrderStore(Request $request){
         $orderService = new orderService();
         $addressService = new addressService();
-        $shipService = new shipService();
+        $shipGhnService = new shipGhnService();
 
         $orderId =  $request->input('id');
 

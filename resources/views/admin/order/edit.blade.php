@@ -91,7 +91,7 @@
                                         <th>Tổng</th>
                                         <td class="color-red">{{formatMoney($order->total + $order->shipping_fee)}}</td>
                                     </tr>
-                                    </tbody>n
+                                    </tbody>
                                 </table>
                             </div>
                         </div>

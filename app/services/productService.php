@@ -1030,9 +1030,9 @@ class productService extends baseService {
 //        $productGalleryModel = new productGalleryModel();
 //        $productGalleryService = new productGalleryService();
 //        $addressService = new addressService();
-//        $shipService = new shipService();
+//        $shipGhnService = new shipGhnService();
 //
-////        print_r($shipService->GetDistrictProvinceData());die;
+////        print_r($shipGhnService->GetDistrictProvinceData());die;
 //
 //        $row = 0;
 //        if (($handle = fopen(PATH_PUBLIC."/doc/wards.csv", "r")) !== FALSE) {

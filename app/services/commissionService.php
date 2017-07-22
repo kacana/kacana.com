@@ -10,7 +10,7 @@ use Kacana\DataTables;
 use Kacana\ViewGenerateHelper;
 use Carbon\Carbon;
 /**
- * Class shipService
+ * Class shipGhnService
  * @package App\services
  */
 class commissionService extends baseService {

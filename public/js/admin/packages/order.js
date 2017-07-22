@@ -529,8 +529,12 @@ var orderPackage = {
                 var callback = function(data){
                     if(data.ok){
                         var listShippingFeeTemplate = $('#template-shipping-fee');
-                        var listShippingFeeGenerate = $.tmpl(listShippingFeeTemplate, {'listFee': data.data});
-                        modal.find('#list-shipping-fee').empty().append(listShippingFeeGenerate);
+                        var listShippingFeeGenerate = $.tmpl(listShippingFeeTemplate, {'listFee': data.data.serviceGhn});
+                        modal.find('#list-shipping-ghn-fee').empty().append(listShippingFeeGenerate);
+
+                        var listShippingFeeTemplate = $('#template-shipping-ghtk-fee');
+                        var listShippingFeeGenerate = $.tmpl(listShippingFeeTemplate, {'ghtkFee': data.data.serviceGhtk});
+                        modal.find('#list-shipping-ghtk-fee').empty().append(listShippingFeeGenerate);
                         Kacana.order.detail.checkOriginShipFee();
                     }
                     Kacana.utils.closeLoading();

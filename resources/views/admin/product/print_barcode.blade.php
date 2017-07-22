@@ -14,8 +14,7 @@
                 margin-top: 0px;
             }
             .basic-info{
-                height: 50px;
-                width: 210px;
+                width: 960px;
                 display: block;
                 float: left;
             }
@@ -25,9 +24,11 @@
                 display: block;
             }
             .basic-info .price{
-                font-size: 19px;
+                font-size: 80px;
                 text-align: center;
                 font-weight: 500;
+                padding: 10px 0;
+
             }
             .basic-info .logo img{
                 max-width: 45%;
@@ -37,17 +38,17 @@
                 clear: both;
             }
             .barcode .property-code{
-                width: 190px;
+                width: 960px;
                 display: block;
                 overflow: hidden;
-                height: 60px;
+                height: 450px;
                 padding: 5px 10px;
                 float: left;
             }
             .barcode .bardcode-number
             {
                 text-align: center;
-                font-size: 17px;
+                font-size: 80px;
             }
             .product-link{
                 float: left;
@@ -84,7 +85,7 @@
             </div>
         </div>
         <script>
-            window.print();
+//            window.print();
         </script>
     </body>
 </html>

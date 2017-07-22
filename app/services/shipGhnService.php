@@ -9,10 +9,10 @@ use Cache;
 use Kacana\Client\SpeedSms;
 
 /**
- * Class shipService
+ * Class shipGhnService
  * @package App\services
  */
-class shipService extends baseService {
+class shipGhnService extends baseService {
     /**
      * @var Client
      */
@@ -48,7 +48,7 @@ class shipService extends baseService {
     protected $_shippingModel;
 
     /**
-     * shipService constructor.
+     * shipGhnService constructor.
      */
     public function __construct(){
 
@@ -170,6 +170,22 @@ class shipService extends baseService {
 
         return [];
 
+    }
+
+    public function getPickHubById($id)
+    {
+        $pickHubs = $this->getPickHubs();
+        $pickHubReturn = false;
+
+        if(count($pickHubs)){
+            foreach ($pickHubs as $pickHub)
+            {
+                if($pickHub->PickHubID == $id)
+                    $pickHubReturn = $pickHub;
+            }
+        }
+
+        return $pickHubReturn;
     }
 
     /**

@@ -3,7 +3,7 @@
 use App\services\chatService;
 use App\services\mailService;
 use App\services\productService;
-use App\services\shipService;
+use App\services\shipGhnService;
 use App\services\tagService;
 use App\services\trackingService;
 use App\services\userService;

@@ -11,7 +11,7 @@ use Kacana\ViewGenerateHelper;
 use Carbon\Carbon;
 use Kacana\Client\SpeedSms;
 /**
- * Class shipService
+ * Class shipGhnService
  * @package App\services
  */
 class orderService extends baseService {

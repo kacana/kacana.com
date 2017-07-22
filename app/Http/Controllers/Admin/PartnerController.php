@@ -3,7 +3,7 @@
 use App\services\addressService;
 use App\services\commissionService;
 use App\services\productService;
-use App\services\shipService;
+use App\services\shipGhnService;
 use App\services\userService;
 use Illuminate\Http\Request;
 use App\services\orderService;
