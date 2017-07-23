@@ -286,6 +286,7 @@ var orderPackage = {
             init: function(){
                 Kacana.order.detail.page = $('#content-edit-order');
                 Kacana.order.detail.bindEvent();
+                Kacana.order.detail.barcodeScanner();
             },
             bindEvent: function(){
                 Kacana.order.detail.page.on('click', 'a[href="#edit-detail-item"]', function () {
@@ -657,7 +658,21 @@ var orderPackage = {
                         Kacana.ajax.order.deleteOrderDetail(id, callBack, errorCallBack);
                     });
                 })
-            }
+            },
+            barcodeScanner: function () {
+                console.log('asdasdasdasdadsasdasdasdasdasda asdasdasd');
+                $(document).scannerDetection({
+                    timeBeforeScanTest: 200, // wait for the next character for upto 200ms
+                    avgTimeByChar: 40, // it's not a barcode if a character takes longer than 100ms
+                    preventDefault: false,
+                    endChar: [13],
+                    onComplete: function(barcode, qty){
+                        var propertyId = barcode.substring(0, 11);
+                        console.log(propertyId);
+                        window.location.href = "/order/addProductToOrder/?orderId=496&propertyId="+propertyId;
+                    }
+                });
+            },
         },
     }
 };

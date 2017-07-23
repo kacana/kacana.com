@@ -849,18 +849,19 @@ var productPackage = {
                     preventDefault: false,
                     endChar: [13],
                     onComplete: function(barcode, qty){
+                        console.log('barcode: '+barcode);
                         var propertyId = barcode.substring(0, 11);
 
                         var modal = $('#modal-import-product-by-barcode');
-
+                        console.log('barcode: '+barcode);
                         Kacana.product.imProduct.importProductBarcode(propertyId);
 
-                        console.log(barcode);
+                        console.log('barcode: '+barcode);
                     }
                 });
             },
             importProductBarcode: function (barcode) {
-
+                console.log('jhjgjgjg');
                 var propertyId = barcode;
                 var quantity = 1;
                 var price = 0;

@@ -299,7 +299,9 @@ class OrderController extends BaseController {
         $orderService = new orderService();
 
         $orderId = $request->input('orderId');
-        $productId = $request->input('productId');
+        $productId = $request->input('productId', 0);
+        $propertyId = intval($request->input('propertyId', 0));
+
 
         try{
             $order = $orderService->getOrderById($orderId);
@@ -308,7 +310,13 @@ class OrderController extends BaseController {
             $originTotal = $order->origin_total;
             $quantity = $order->quantity;
 
-            $product = $productService->getProductById($productId);
+            if($productId)
+                $product = $productService->getProductById($productId);
+            else
+            {
+                $propertyProduct = $productService->getProductProperty($propertyId);
+                $product = $propertyProduct->product;
+            }
 
             $productDiscount = 0;
 
@@ -326,8 +334,20 @@ class OrderController extends BaseController {
             $orderDetailData->quantity = 1;
             $orderDetailData->product_id = $product->id;;
             $orderDetailData->product_url = urlProductDetail($product);
-            $orderDetailData->image = $product->image;
+
             $orderDetailData->subtotal = $product->sell_price - $productDiscount;
+            $orderDetailData->image = $product->image;
+
+            if(isset($propertyProduct)){
+                if($propertyProduct->product_gallery_id)
+                    $orderDetailData->image = $propertyProduct->gallery->image;
+
+                if($propertyProduct->color_id)
+                    $orderDetailData->color_id = $propertyProduct->color->id;
+                if($propertyProduct->size_id)
+                    $orderDetailData->color_id = $propertyProduct->size->id;
+            }
+
             $orderService->createOrderDetailAdmin($orderDetailData);
 
             $orderService->calculateOrderCurrent($orderId);

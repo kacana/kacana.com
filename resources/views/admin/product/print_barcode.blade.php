@@ -85,7 +85,7 @@
             </div>
         </div>
         <script>
-//            window.print();
+            window.print();
         </script>
     </body>
 </html>
