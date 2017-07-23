@@ -25,7 +25,7 @@
                         <div class="color-grey-light" >Kacana với hơn 100.000 sản phẩm tuyệt vời đang chờ bạn <a href="/" >Shopping</a></div>
                     </div>
                 </div>
-                <div class="hide" id="block-information-payment-cart" class="col-xs-12 alert-signup-user">
+                <div id="block-information-payment-cart" class="hide col-xs-12 alert-signup-user">
                     Nếu muốn sử dụng điểm tích lũy, bạn bấm <a href="/checkout?step=login" ><span class="color-green">Thanh Toán</span></a> và ĐĂNG NHẬP vào hệ thống.<br>
                     Bạn có thể sử dụng điểm tích lũy cho đợt mua sắm lần tới. 1 điểm = 500 VNĐ.
                 </div>
