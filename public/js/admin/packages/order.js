@@ -648,7 +648,7 @@ var orderPackage = {
             },
             deleteOrderDetail: function(){
                 $(document).on("click", '.delete',function(){
-                    id = $(this).data('id');
+                    var id = $(this).data('id');
                     $('#confirm').modal('show');
                     var callBack = function(data){
                         window.location.reload();
@@ -660,7 +660,6 @@ var orderPackage = {
                 })
             },
             barcodeScanner: function () {
-                console.log('asdasdasdasdadsasdasdasdasdasda asdasdasd');
                 $(document).scannerDetection({
                     timeBeforeScanTest: 200, // wait for the next character for upto 200ms
                     avgTimeByChar: 40, // it's not a barcode if a character takes longer than 100ms
@@ -669,7 +668,8 @@ var orderPackage = {
                     onComplete: function(barcode, qty){
                         var propertyId = barcode.substring(0, 11);
                         console.log(propertyId);
-                        window.location.href = "/order/addProductToOrder/?orderId=496&propertyId="+propertyId;
+                        var orderId = $('#order-id').val();
+                        window.location.href = "/order/addProductToOrder/?orderId="+orderId+"&propertyId="+propertyId;
                     }
                 });
             },
