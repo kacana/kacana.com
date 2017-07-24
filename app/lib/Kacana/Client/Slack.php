@@ -20,35 +20,18 @@ Class Slack {
         $this->_client = new Client($this->_url, $settings);
     }
 
-    public function testSend($message, $attach){
+    public function send($message, $attach){
 
-
-
-        $this->_client->attach($attach)->send($message);
+        $this->_client->attach($attach)->attach($attach)->send($message);
     }
 
-    public function notificationNewOrder(){
+    public function notificationNewOrder($slackText, $attachAddress, $attachProducts){
+        $querySend = $this->_client->attach($attachAddress);
 
-
-
-        $attach = [
-            'fallback' => 'Current server stats',
-            'text' => 'Current server stats',
-            'color' => 'success',
-            'fields' => [
-                [
-                    'title' => 'CPU usage',
-                    'value' => '90%',
-                    'short' => true // whether the field is short enough to sit side-by-side other fields, defaults to false
-                ],
-                [
-                    'title' => 'RAM usage',
-                    'value' => '2.5GB of 4GB',
-                    'short' => true
-                ]
-            ]
-        ];
-
-
+        foreach ($attachProducts as $attachProduct)
+        {
+            $querySend = $querySend->attach($attachProduct);
+        }
+        $querySend->send($slackText);
     }
 }
