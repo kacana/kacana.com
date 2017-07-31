@@ -10,6 +10,19 @@ var checkoutPackage = {
             Kacana.checkout.page.on('click', 'input[name="optionSignup"]', Kacana.checkout.checkOptionOrder);
             Kacana.checkout.page.on('change', 'select[name="cityId"]', Kacana.checkout.changeCity);
             Kacana.checkout.page.on('change', 'select[name="districtId"]', Kacana.checkout.changeDistrict);
+            Kacana.checkout.page.on('click', '.checkout-address-item', Kacana.checkout.changeAddressUser);
+            Kacana.checkout.changeShipFeeByDefaultAddress();
+        },
+        changeAddressUser: function () {
+            Kacana.checkout.changeShippingFee($(this).data('cityId'));
+        },
+        changeShipFeeByDefaultAddress: function () {
+            var addressDefault = Kacana.checkout.page.find('#checkout-choose-address-step .checkout-address-item input[name="checkout-address-id"]:checked');
+
+            if(addressDefault.length)
+            {
+                Kacana.checkout.changeShippingFee(addressDefault.parent('.checkout-address-item').data('city-id'));
+            }
         },
         checkOptionOrder: function(){
             var inputPassword = $('#password');
@@ -162,7 +175,8 @@ var checkoutPackage = {
             var form = $('#form_address_step');
             var districtSelect = $('select[name="districtId"]');
             var wardSelect = $('select[name="wardId"]');
-
+            var cartTotal = parseInt($('#cart-information').data('cart-total'));
+            var cartTotalShow = Kacana.utils.formatCurrency(cartTotal);
             var cityId = $(this).val();
 
             form.formValidation('enableFieldValidators', 'wardId', false).formValidation('resetField', 'wardId');
@@ -181,12 +195,30 @@ var checkoutPackage = {
                 }
 
                 districtSelect.html(listOptionDistrict);
-                districtSelect.removeAttr('disabled')
+                districtSelect.removeAttr('disabled');
+                Kacana.checkout.changeShippingFee(cityId);
             }
             else
             {
+                $('#checkout-label-ship-fee').html('Hồ Chí Minh: 15.000 đ <br> Khác: 30.000 đ');
+                $('#checkout-cart-total').html(cartTotalShow +'<small class="text-red">+ Ship</small>')
                 form.formValidation('enableFieldValidators', 'districtId', false).formValidation('resetField', 'districtId');
                 districtSelect.val('').attr('disabled', true).find('option[value=""]').show();
+            }
+        },
+        changeShippingFee: function (cityId) {
+            var cartTotal = parseInt($('#cart-information').data('cart-total'));
+            if(cartTotal < 500000)
+            {
+                if(parseInt(cityId) == 29)
+                {
+                    $('#checkout-label-ship-fee').html('15.000 đ');
+                    $('#checkout-cart-total').html(Kacana.utils.formatCurrency(cartTotal+15000));
+                }
+                else{
+                    $('#checkout-label-ship-fee').html('30.000 đ');
+                    $('#checkout-cart-total').html(Kacana.utils.formatCurrency(cartTotal+30000))
+                }
             }
         },
         changeDistrict: function(){

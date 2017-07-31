@@ -77,6 +77,19 @@ class orderService extends baseService {
         $orderData->status = $status;
         $orderData->order_type = $type;
 
+        if($total < 500000)
+        {
+            if($address->city_id == 29)
+            {
+                $orderData->shipping_fee = 15000;
+                $orderData->total = $total + 15000;
+            }
+            elseif($address->city_id !== NULL){
+                $orderData->shipping_fee = 30000;
+                $orderData->total = $total + 30000;
+            }
+        }
+
         if($addressStr)
             $orderData->address = $addressStr.', '.$address->district->name.', '.$address->city->name;
         else

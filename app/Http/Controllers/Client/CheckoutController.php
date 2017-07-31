@@ -95,6 +95,7 @@ class CheckoutController extends BaseController {
     public function processOrder(Request $request){
         $cartService = new cartService();
         $orderService = new orderService();
+        $speedSms = new SpeedSms();
 
         $cart = $cartService->cartInformation();
         if(!$cart)
@@ -119,6 +120,11 @@ class CheckoutController extends BaseController {
             else{
                 $order = $cartService->processCart($order);
             }
+            $addressReceive = $order->addressReceive;
+
+            $contentSMS = str_replace('%order_id%', $order->order_code,KACANA_SPEED_SMS_CONTENT_NEW_ORDER);
+            $contentSMS = str_replace('%user_name%', $addressReceive->name,$contentSMS);
+            $speedSms->sendSMS([$addressReceive->phone], $contentSMS);
 
             \Session::remove($key);
             return view('client.checkout.success', ['order' => $order]);
@@ -146,7 +152,7 @@ class CheckoutController extends BaseController {
         try{
 
             $order = $cartService->quickProcessCart($phone);
-            $contentSMS = str_replace('%order_id%', $order->order_code,KACANA_SPEED_SMS_CONTENT_NEW_ORDER);
+            $contentSMS = str_replace('%order_id%', $order->order_code,KACANA_SPEED_SMS_CONTENT_NEW_QUICK_ORDER);
             $speedSms->sendSMS([$phone], $contentSMS);
             return view('client.checkout.quick-order-success', ['order' => $order]);
         }

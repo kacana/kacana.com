@@ -169,15 +169,19 @@
                                                     <table border="0" width="100%" cellpadding="0" cellspacing="0" align="left" style="border-spacing:0;border-collapse:collapse;font-size:14px;width:100%!important">
                                                         <tbody><tr>
                                                             <td valign="top" align="right" style="border-collapse:collapse;padding-top:10px;padding-right:10px;color:#646464;width:80%">Thành tiền:</td>
-                                                            <td valign="top" align="right" style="border-collapse:collapse;padding-top:10px;padding-right:10px;color:#292929;min-width:140px">{{ formatMoney($order->total)}}</td>
+                                                            <td valign="top" align="right" style="border-collapse:collapse;padding-top:10px;padding-right:10px;color:#292929;min-width:140px">{{ formatMoney($order->total - $order->shipping_fee)}}</td>
                                                         </tr>
                                                         <tr>
                                                             <td valign="top" align="right" style="border-collapse:collapse;padding-top:5px;padding-right:10px;color:#646464;width:80%">Phí giao hàng:</td>
-                                                            <td valign="top" align="right" style="border-collapse:collapse;padding-top:5px;padding-right:10px;color:#292929;min-width:140px">Miễn Phí</td>
+                                                            @if(!$order->shipping_fee)
+                                                                <td valign="top" align="right" style="border-collapse:collapse;padding-top:5px;padding-right:10px;color:#292929;min-width:140px">Miễn Phí</td>
+                                                            @else
+                                                                <td valign="top" align="right" style="border-collapse:collapse;padding-top:5px;padding-right:10px;color:#292929;min-width:140px">{{ formatMoney($order->shipping_fee)}}</td>
+                                                            @endif
                                                         </tr>
                                                         <tr>
                                                             <td valign="top" align="right" style="border-collapse:collapse;padding-top:5px;padding-right:10px;color:#646464;width:80%">Giảm giá (Voucher):</td>
-                                                            <td valign="top" align="right" style="border-collapse:collapse;padding-top:5px;padding-right:10px;color:#292929;min-width:140px">0.00 K</td>
+                                                            <td valign="top" align="right" style="border-collapse:collapse;padding-top:5px;padding-right:10px;color:#292929;min-width:140px">0</td>
                                                         </tr>
                                                         <tr>
                                                             <td valign="top" align="right" style="border-collapse:collapse;padding-top:10px;padding-right:10px;font-size:16px;width:80%"><strong>Tổng cộng:</strong></td>
@@ -366,15 +370,19 @@
                                                     <table border="0" width="100%" cellpadding="0" cellspacing="0" align="left" style="border-spacing:0;border-collapse:collapse;font-size:14px;width:100%!important">
                                                         <tbody><tr>
                                                             <td valign="top" align="right" style="border-collapse:collapse;padding-top:10px;padding-right:10px;color:#646464;width:80%">Subtotal:</td>
-                                                            <td valign="top" align="right" style="border-collapse:collapse;padding-top:10px;padding-right:10px;color:#292929;min-width:140px">{{ formatMoney($order->total)}}</td>
+                                                            <td valign="top" align="right" style="border-collapse:collapse;padding-top:10px;padding-right:10px;color:#292929;min-width:140px">{{ formatMoney($order->total - $order->shipping_fee)}}</td>
                                                         </tr>
                                                         <tr>
                                                             <td valign="top" align="right" style="border-collapse:collapse;padding-top:5px;padding-right:10px;color:#646464;width:80%">Shipping fee:</td>
-                                                            <td valign="top" align="right" style="border-collapse:collapse;padding-top:5px;padding-right:10px;color:#292929;min-width:140px">Free</td>
+                                                            @if(!$order->shipping_fee)
+                                                                <td valign="top" align="right" style="border-collapse:collapse;padding-top:5px;padding-right:10px;color:#292929;min-width:140px">Free</td>
+                                                            @else
+                                                                <td valign="top" align="right" style="border-collapse:collapse;padding-top:5px;padding-right:10px;color:#292929;min-width:140px">{{ formatMoney($order->shipping_fee)}}</td>
+                                                            @endif
                                                         </tr>
                                                         <tr>
                                                             <td valign="top" align="right" style="border-collapse:collapse;padding-top:5px;padding-right:10px;color:#646464;width:80%">Voucher:</td>
-                                                            <td valign="top" align="right" style="border-collapse:collapse;padding-top:5px;padding-right:10px;color:#292929;min-width:140px">0.00 VND</td>
+                                                            <td valign="top" align="right" style="border-collapse:collapse;padding-top:5px;padding-right:10px;color:#292929;min-width:140px">0</td>
                                                         </tr>
                                                         <tr>
                                                             <td valign="top" align="right" style="border-collapse:collapse;padding-top:10px;padding-right:10px;font-size:16px;width:80%"><strong>Total:</strong></td>

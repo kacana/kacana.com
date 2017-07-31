@@ -27,7 +27,6 @@ class mailService extends baseService {
         $order = $orderService->getOrderById($orderId);
         $subject = "[ĐẶT NHANH][".$order->addressReceive->phone."] Kacana đã nhận đơn hàng". $orderId;
         $viewBlade = 'client.emails.send-email-quick-order';
-        $bcc = KACANA_EMAIL_DON_HANG;
         $orderData = ['order'=>$order];
         return $this->send(KACANA_EMAIL_DON_HANG, $subject, $viewBlade, $orderData);
     }

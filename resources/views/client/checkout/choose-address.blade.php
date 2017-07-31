@@ -8,7 +8,7 @@
                         <form id="form_address_step" class="form-horizontal form-bordered" method="post" action="/checkout/success">
                             <div class="row" >
                                 @foreach($user->userAddress as $userAddress)
-                                    <label class="col-xs-12 checkout-address-item">
+                                    <label data-city-id="{{$userAddress->city_id}}" class="col-xs-12 checkout-address-item">
                                         <input @if($userAddress->default)checked="checked"@endif type="radio" value="{{$userAddress->id}}" name="checkout-address-id">
                                         <div class="col-xs-12">
                                             <div class="vpadding-10 hpadding-10">

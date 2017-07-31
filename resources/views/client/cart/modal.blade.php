@@ -123,11 +123,18 @@
             @{{/if}}
             <div class="col-xs-12 margin-bottom">
                 <span class="pull-left" >
-                    Phí vận chuyển
+                    Phí vận chuyển <a href="/contact/chinh-sach-van-chuyen" target="_blank"  ><i class="fa fa-info-circle"></i></a>
                 </span>
-                <span class="pull-right">
-                    miễn phí
+                @{{if parseInt(cart.total) >= 500000}}
+                    <span class="pull-right">
+                        miễn phí
+                    </span>
+                @{{/if}}
+                @{{if parseInt(cart.total) < 500000}}
+                <span class="pull-right text-red text-right">
+                        Hồ Chí Minh: 15.000 đ <br> Khác: 30.000 đ
                 </span>
+                @{{/if}}
             </div>
         </div>
     </div>
@@ -137,7 +144,12 @@
                 <h5>Thành tiền<small>(Đã bao gồm VAT)</small></h5>
             </span>
             <span class="pull-right" >
-                <h5 class="cart-totals" >${cart.totalShow}</h5>
+                <h5 class="cart-totals" >
+                    ${cart.totalShow}
+                    @{{if parseInt(cart.total) < 500000}}
+                        <small class="text-red" >+ Ship</small>
+                    @{{/if}}
+                </h5>
             </span>
         </div>
     </div>

@@ -88,8 +88,13 @@
                             </div>
                             <div class="col-sm-12 col-xs-12">
                                 <div class="order-total-info vpadding-10">
-                                    <div><b>Thành tiền (đã bao gồm thuế)</b> <b class="pull-right color-red" >{{formatMoney($order->total)}}</b> </div>
-                                    <div>Miễn phí vận chuyển(chỉ thanh toán {{formatMoney($order->total)}} khi nhận hàng)</div>
+                                    <div><b>Thành tiền (đã bao gồm thuế)</b> <b class="pull-right color-red" >{{formatMoney($order->total - $order->shipping_fee)}} + Ship</b> </div>
+                                    @if($order->total >= 500000)
+                                        <div>Miễn phí vận chuyển(chỉ thanh toán {{formatMoney($order->total)}} khi nhận hàng)</div>
+                                    @else
+                                        <div>Phí vận chuyển: <span class="text-red text-right">Hồ Chí Minh: 15.000 đ - Khác: 30.000 đ</span>
+                                            <br>(chỉ thanh toán {{formatMoney($order->total - $order->shipping_fee)}} <small class="text-red">+ Ship</small>  khi nhận hàng)</div>
+                                    @endif
                                 </div>
                             </div>
                         </div>

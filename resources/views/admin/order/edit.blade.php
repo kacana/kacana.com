@@ -266,7 +266,7 @@
                                                                     <option value="{{$productProperty->tag_color_id}}-{{$productProperty->tag_size_id}}" @if($productProperty->tag_color_id == $orderDetail->color_id && $productProperty->tag_size_id == $orderDetail->size_id) selected="true" @endif data-color-id="{{$productProperty->tag_color_id}}" data-size-id="{{$productProperty->tag_size_id}}" >
                                                                         {{$productProperty->color->name}} - {{$productProperty->size->name}}
                                                                     </option>
-                                                                @else
+                                                                @elseif(intval($productProperty->tag_color_id))
                                                                     <option value="{{$productProperty->tag_color_id}}-{{$productProperty->tag_size_id}}" @if($productProperty->tag_color_id == $orderDetail->color_id) selected="true" @endif data-color-id="{{$productProperty->tag_color_id}}">
                                                                         {{$productProperty->color->name}}
                                                                     </option>

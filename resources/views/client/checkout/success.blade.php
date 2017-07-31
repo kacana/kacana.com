@@ -92,7 +92,11 @@
                             <div class="col-sm-12 col-xs-12">
                                 <div class="order-total-info vpadding-10">
                                     <div><b>Thành tiền (đã bao gồm thuế)</b> <b class="pull-right color-red" >{{formatMoney($order->total)}}</b> </div>
-                                    <div>Miễn phí vận chuyển(chỉ thanh toán {{formatMoney($order->total)}} khi nhận hàng)</div>
+                                    @if(!$order->shipping_fee)
+                                        <div>Miễn phí vận chuyển(chỉ thanh toán {{formatMoney($order->total)}} khi nhận hàng)</div>
+                                    @else
+                                        <div>Phí vận chuyển: <b>{{formatMoney($order->shipping_fee)}}</b><br>(chỉ thanh toán {{formatMoney($order->total)}} khi nhận hàng)</div>
+                                    @endif
                                 </div>
                             </div>
                         </div>

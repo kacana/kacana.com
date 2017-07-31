@@ -67,7 +67,7 @@
                     @endif
 
                 </div>
-                <div id="cart-information" class="col-xs-12 col-sm-4 cart-information-basic">
+                <div id="cart-information" data-cart-total="{{$cart->total}}" class="col-xs-12 col-sm-4 cart-information-basic">
                     <div class="border-bottom margin-bottom">
                         <div class="row">
                             <div class="col-xs-12">
@@ -96,8 +96,12 @@
                                 @endforeach
                             </div>
                             <div class="col-xs-12 margin-bottom">
-                                <span class="pull-left"> Phí vận chuyển </span>
-                                <span class="pull-right"> miễn phí </span>
+                                <span class="pull-left"> Phí vận chuyển <a href="/contact/chinh-sach-van-chuyen" target="_blank"  ><i class="fa fa-info-circle"></i></a></span>
+                                @if(intval($cart->total) >= 500000)
+                                    <span class="pull-right"> miễn phí </span>
+                                @else
+                                    <span id="checkout-label-ship-fee" class="pull-right text-red text-right">Hồ Chí Minh: 15.000 đ <br> Khác: 30.000 đ</span>
+                                @endif
                             </div>
                         </div>
                     </div>
@@ -108,7 +112,12 @@
                                     (Đã bao gồm VAT)
                             </span>
                             <span class="pull-right">
-                                <h5 class="cart-totals">{{$cart->totalShow}}</h5>
+                                <h5 id="checkout-cart-total" class="cart-totals">
+                                    {{$cart->totalShow}}
+                                    @if(intval($cart->total) < 500000)
+                                        <small class="text-red" >+ Ship</small>
+                                    @endif
+                                </h5>
                             </span>
                         </div>
                     </div>

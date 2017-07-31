@@ -116,8 +116,6 @@ class cartService extends baseService {
         $options['origin_price'] = $product->sell_price;
         $options['origin_price_show'] = formatMoney($product->sell_price);
 
-
-
         $order = Cart::add(
             array(
                 'id' => $cartId,

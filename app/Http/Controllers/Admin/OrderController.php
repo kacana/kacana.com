@@ -311,7 +311,7 @@ class OrderController extends BaseController {
             $quantity = $order->quantity;
 
             if($productId)
-                $product = $productService->getProductById($productId);
+                $product = $productService->getProductById($productId, 0, false);
             else
             {
                 $propertyProduct = $productService->getProductProperty($propertyId);
