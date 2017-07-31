@@ -280,7 +280,7 @@ class OrderController extends BaseController {
 
         try{
             $return['ok'] = 1;
-            $return['data'] = $productService->searchProductByName($search);
+            $return['data'] = $productService->searchProductByNameForAdmin($search);
         } catch (\Exception $e) {
             if($request->ajax())
             {

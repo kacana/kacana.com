@@ -884,6 +884,11 @@ class productService extends baseService {
         return $productModel->suggestSearchProduct($name);
     }
 
+    public function searchProductByNameForAdmin($name){
+        $productModel = new productModel();
+        return $productModel->suggestSearchProductForAdmin($name);
+    }
+
     /**
      * @return mixed
      */

@@ -617,6 +617,25 @@ class productModel extends Model  {
 
 
         $query = $this->where('products.name', 'LIKE', "%".$searchString."%")
+            ->join('product_tag', 'products.id', '=', 'product_tag.product_id')
+            ->leftJoin('tag_relations', 'product_tag.tag_id', '=', 'tag_relations.child_id')
+            ->where('tag_relations.status', '=', TAG_RELATION_STATUS_ACTIVE)
+            ->where('tag_relations.tag_type_id', '=', TAG_RELATION_TYPE_MENU)
+            ->where('products.status', '=', KACANA_PRODUCT_STATUS_ACTIVE)
+            ->select(['products.*', 'product_tag.*'])
+            ->groupBy('products.id')
+            ->orderBy('products.updated', 'DESC')
+            ->take(10);
+
+        $results = $query->get();
+
+        return $results ? $results : false;
+    }
+
+    public function suggestSearchProductForAdmin($searchString){
+
+
+        $query = $this->where('products.name', 'LIKE', "%".$searchString."%")
             ->select(['products.*'])
             ->groupBy('products.id')
             ->orderBy('products.updated', 'DESC')
