@@ -68,7 +68,6 @@ class shipGhtkService extends baseService {
 
             $url .= $paramStr;
             $this->_client = Client::$type($url);
-
             $header = ['Token' => $this->_token];
         }
         else{
@@ -77,10 +76,16 @@ class shipGhtkService extends baseService {
 
         }
 
-        return $this->_client
-            ->addHeaders($header)
-            ->body(json_encode($params))
-            ->send();
+        if($type == 'get')
+            return $this->_client
+                ->addHeaders($header)
+                ->send();
+        elseif ($type == 'post')
+            return $this->_client
+                ->addHeaders($header)
+                ->sendsJson()
+                ->body(json_encode($params))
+                ->send();
     }
 
     public function signin(){
@@ -124,7 +129,7 @@ class shipGhtkService extends baseService {
         return $results->body;
     }
 
-    public function createShippingOrder($orderDetailIds, $orderId, $shippingServiceTypeId, $pickHubId, $weight, $length, $width, $height, $originShipFee, $shipFee, $extraDiscount, $extraDiscountDesc, $OrderClientNote, $OrderContentNote, $paid){
+    public function createShippingOrder($orderDetailIds, $orderId, $pickHubId, $weight, $originShipFee, $shipFee, $extraDiscount, $extraDiscountDesc, $paid){
 
         $orderService = new orderService();
         $shipGhnService = new shipGhnService();
@@ -150,7 +155,7 @@ class shipGhtkService extends baseService {
         }
         $CODAmount = $subtotal + $shipFee - $extraDiscount - $paid;
 
-        $params['id'] = $orderId;
+        $params['id'] = $orderId.'_'.time();
         $params['pick_name'] = 'Kacana';
         $params['pick_money'] = $CODAmount;
         $params['pick_tel'] = '0906054206';
@@ -191,14 +196,40 @@ class shipGhtkService extends baseService {
             $params['email'] = 'admin@kacana.com';
         $dataPost['order'] = $params;
         $results = $this->makeRequest('services/shipment/order', $dataPost, 'post');
-print_r($results->body);die;
-        $shipGhnService->createShippingRow($results->body, $orderDetailIds, $order, $subtotal,$shipFee, $extraDiscount, $extraDiscountDesc, $paid);
+
+        $this->createShippingRow($results->body, $originShipFee, $orderDetailIds, $order, $subtotal,$shipFee, $extraDiscount, $extraDiscountDesc, $paid);
 
         $contentSMS = str_replace('%order_id%', $order->order_code,KACANA_SPEED_SMS_CONTENT_ORDER_PROCESS);
         $contentSMS = str_replace('%user_name%', $orderService->stripVN($order->addressReceive->name),$contentSMS);
-        $speedSms->sendSMS([$order->addressReceive->phone], $contentSMS);
+//        $speedSms->sendSMS([$order->addressReceive->phone], $contentSMS);
 
         return $results->body;
+    }
+
+    /**
+     * @param $shipping
+     * @param $orderDetailIds
+     * @param $order
+     * @param $subtotal
+     * @param $shipFee
+     * @param $extraDiscount
+     * @param $extraDiscountDesc
+     * @return bool
+     */
+    public function createShippingRow($shipping, $originShipFee, $orderDetailIds, $order, $subtotal,  $shipFee, $extraDiscount, $extraDiscountDesc, $paid){
+        $orderService = new orderService();
+        $shippingModel = new shippingModel();
+
+
+        $address = $order->addressReceive->name.' - '.$order->address;
+        $shippingModel->createShippingRow($shipping->order->label, $originShipFee, KACANA_SHIP_TYPE_SERVICE_GHTK, $address, $subtotal, $order->addressReceive->id, $shipFee, $extraDiscount, $extraDiscountDesc, $paid);
+
+        $orderDetails = $orderService->getOrderDetailByIds($orderDetailIds);
+        foreach($orderDetails as $orderDetail){
+            $orderService->updateOrderDetail($orderDetail->id, ['ship_service_type'=> KACANA_SHIP_TYPE_SERVICE_GHTK, 'shipping_service_code' => $shipping->order->label, 'order_service_status' => KACANA_ORDER_SERVICE_STATUS_SHIPPING, 'order_id' => $orderDetail->order_id]);
+        }
+
+        return true;
     }
 
 }

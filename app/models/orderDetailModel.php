@@ -172,8 +172,7 @@ class orderDetailModel extends Model  {
         $results = $this->where('orders.address_id', $addressId)
             ->select(['order_detail.*', 'orders.address_id as order_address_id'])
             ->join('orders', 'orders.id', '=', 'order_detail.order_id')
-            ->whereNull('shipping_service_code')
-            ->whereIn('order_service_status', [KACANA_ORDER_SERVICE_STATUS_ORDERED])->get();
+            ->whereNull('shipping_service_code')->get();
 
         return($results)?$results->toArray():false;
     }

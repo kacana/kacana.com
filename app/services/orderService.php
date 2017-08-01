@@ -77,7 +77,7 @@ class orderService extends baseService {
         $orderData->status = $status;
         $orderData->order_type = $type;
 
-        if($total < 500000)
+        if($total < 500000 && $total != 0)
         {
             if($address->city_id == 29)
             {

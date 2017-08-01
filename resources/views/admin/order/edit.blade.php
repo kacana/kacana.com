@@ -11,10 +11,14 @@
                 <h3 class="box-title">Đơn Hàng: #{{$order->order_code}} Của [{{$order->user->name}}] Tổng {{formatMoney($order->total)}}</h3>
                 <div class="box-tools pull-left ">
                     @if($order->order_type == KACANA_ORDER_TYPE_ONLINE)
-                        @if(isset($shippingServiceInfos))
-                            <button data-toggle="modal" data-target="#modal-shipping-order" class="btn @if($order->status != KACANA_ORDER_STATUS_PROCESSING) hidden @endif btn-primary btn-sm">
+                        @if(isset($shippingServiceInfos) && count($order->orderDetail))
+                            <button data-toggle="modal" data-target="#modal-shipping-order" class="btn btn-primary btn-sm">
                                 <i class="fa fa-plane"></i> Ship cho khách
                             </button>
+                        @elseif(isset($shippingServiceInfos) && !count($order->orderDetail))
+                                <button class="btn btn-danger btn-sm">
+                                    <i class="fa fa-ban"></i> Vui lòng thêm sản phẩm
+                                </button>
                         @else
                             <button class="btn btn-danger btn-sm">
                                 <i class="fa fa-ban"></i> Vui lòng cập nhật địa chỉ khách hàng
@@ -222,7 +226,9 @@
                     <div class="box-header with-border">
                         <h3 class="box-title">Chi tiết đơn hàng</h3>
                         <div class="box-tools pull-right">
-                            <button data-toggle="modal" data-target="#modal-add-product-order" class="btn btn-box-tool"><i class="fa fa-plus"></i> Thêm sản phẩm</button>
+                            @if(!(!isset($shippingServiceInfos) && $order->order_type == KACANA_ORDER_TYPE_ONLINE))
+                                <button data-toggle="modal" data-target="#modal-add-product-order" class="btn btn-box-tool"><i class="fa fa-plus"></i> Thêm sản phẩm</button>
+                            @endif
                         </div>
                     </div><!-- /.box-header -->
 

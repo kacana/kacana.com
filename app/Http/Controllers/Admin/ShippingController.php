@@ -36,22 +36,21 @@ class ShippingController extends BaseController {
 
         try{
             if($shippingServiceTypeId == KACANA_SHIP_TYPE_ID_GHTK)
+            {
                 $ship = $shipGhtkService->createShippingOrder($orderDetailIds,
                     $orderId,
-                    $shippingServiceTypeId,
                     $pickHubId,
                     $weight,
-                    $length,
-                    $width,
-                    $height,
                     $originShipFee,
                     $shipFee,
                     $extraDiscount,
                     $extraDiscountDesc,
-                    $OrderClientNote,
-                    $OrderContentNote,
                     $paid);
+
+                return redirect('/shipping/detail?id='.$ship->order->label.'&type='.KACANA_SHIP_TYPE_SERVICE_GHTK);
+            }
             else
+            {
                 $ship = $shipGhnService->createShippingOrder($orderDetailIds,
                     $orderId,
                     $shippingServiceTypeId,
@@ -67,8 +66,11 @@ class ShippingController extends BaseController {
                     $OrderClientNote,
                     $OrderContentNote,
                     $paid);
-
-            return redirect('/shipping/detail?id='.$ship->OrderCode);
+                if($ship)
+                    return redirect('/shipping/detail?id='.$ship->OrderCode.'&type='.KACANA_SHIP_TYPE_SERVICE_GHN);
+                else
+                    return redirect('/order/edit/'.$orderId);
+            }
         } catch (\Exception $e) {
             // @codeCoverageIgnoreStart
             $return['error'] = $e->getMessage();
@@ -139,7 +141,7 @@ class ShippingController extends BaseController {
             $discount = 0;
             foreach ($ship->orderDetail as $orderDetail){
                 $origin_total += $orderDetail->price * $orderDetail->quantity;
-                $discount += $orderDetail->discount;
+                $discount += $orderDetail->discount * $orderDetail->quantity;
             }
             $ship->origin_total = $origin_total;
             $ship->discount = $discount;

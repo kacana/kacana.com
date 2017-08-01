@@ -402,8 +402,8 @@ var productdetailPackage = {
             Kacana.ajax.auth.facebookCallbackAllowPost(data, callBack, errorCallBack);
         },
         checkColorAvailable: function () {
-            if(Kacana.productdetail.page.find('a[href="#choose-product-color"]').length == 1){
-                Kacana.productdetail.page.find('a[href="#choose-product-color"]').click();
+            if(Kacana.productdetail.page.find('.product-colors a[href="#choose-product-color"]').length == 1){
+                Kacana.productdetail.page.find('.product-colors a[href="#choose-product-color"]').click();
             }
             Kacana.productdetail.checkSizeAvailable();
         },

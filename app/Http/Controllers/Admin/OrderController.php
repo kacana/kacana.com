@@ -305,10 +305,7 @@ class OrderController extends BaseController {
 
         try{
             $order = $orderService->getOrderById($orderId);
-            $total = $order->total;
-            $discount = $order->discount;
-            $originTotal = $order->origin_total;
-            $quantity = $order->quantity;
+
 
             if($productId)
                 $product = $productService->getProductById($productId, 0, false);

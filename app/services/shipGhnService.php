@@ -318,14 +318,18 @@ class shipGhnService extends baseService {
             $params['ToWardCode'] = $order->addressReceive->ward->code;
 
         $results = $this->makeRequest('CreateShippingOrder', $params);
+        $results = $results->body;
 
-        $this->createShippingRow($results->body, $orderDetailIds, $order, $subtotal,$shipFee, $extraDiscount, $extraDiscountDesc, $paid);
+        if($results->ErrorMessage)
+            return false;
+
+        $this->createShippingRow($results, $orderDetailIds, $order, $subtotal,$shipFee, $extraDiscount, $extraDiscountDesc, $paid);
 
         $contentSMS = str_replace('%order_id%', $order->order_code,KACANA_SPEED_SMS_CONTENT_ORDER_PROCESS);
         $contentSMS = str_replace('%user_name%', $orderService->stripVN($order->addressReceive->name),$contentSMS);
-        $speedSms->sendSMS([$order->addressReceive->phone], $contentSMS);
+//        $speedSms->sendSMS([$order->addressReceive->phone], $contentSMS);
 
-        return $results->body;
+        return $results;
     }
 
     /**
@@ -342,12 +346,12 @@ class shipGhnService extends baseService {
         $orderService = new orderService();
 
         $address = $order->addressReceive->name.' - '.$order->address;
-        $this->_shippingModel->createShippingRow($shipping, $address, $subtotal, $order->addressReceive->id, $shipFee, $extraDiscount, $extraDiscountDesc, $paid);
+        $this->_shippingModel->createShippingRow($shipping->OrderCode, $shipping->TotalFee, KACANA_SHIP_TYPE_SERVICE_GHN, $address, $subtotal, $order->addressReceive->id, $shipFee, $extraDiscount, $extraDiscountDesc, $paid);
 
         $orderDetails = $orderService->getOrderDetailByIds($orderDetailIds);
-        foreach($orderDetails as $orderDetail){
 
-            $orderService->updateOrderDetail($orderDetail->id, ['shipping_service_code' => $shipping->OrderCode, 'order_service_status' => KACANA_ORDER_SERVICE_STATUS_SHIPPING, 'order_id' => $orderDetail->order_id]);
+        foreach($orderDetails as $orderDetail){
+            $orderService->updateOrderDetail($orderDetail->id, ['ship_service_type'=> KACANA_SHIP_TYPE_SERVICE_GHN, 'shipping_service_code' => $shipping->OrderCode, 'order_service_status' => KACANA_ORDER_SERVICE_STATUS_SHIPPING, 'order_id' => $orderDetail->order_id]);
         }
 
         return true;

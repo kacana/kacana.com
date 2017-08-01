@@ -121,7 +121,7 @@
                         <td>
                             Mã đơn hàng: <span style="font-size: 20px" >{{$ship->id}}</span><br>
                             Phương thức thanh toán: <b>Thanh toán tiền mặt khi nhận hàng</b> <br>
-                            Phương thức vận chuyển: <b>Vận chuyển nhanh bằng giaohangnhanh.vn</b>
+                            Phương thức vận chuyển: <b>KAN Express</b>
                         </td>
                     </tr>
                 </table>
