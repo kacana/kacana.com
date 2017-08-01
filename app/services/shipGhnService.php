@@ -327,7 +327,7 @@ class shipGhnService extends baseService {
 
         $contentSMS = str_replace('%order_id%', $order->order_code,KACANA_SPEED_SMS_CONTENT_ORDER_PROCESS);
         $contentSMS = str_replace('%user_name%', $orderService->stripVN($order->addressReceive->name),$contentSMS);
-//        $speedSms->sendSMS([$order->addressReceive->phone], $contentSMS);
+        $speedSms->sendSMS([$order->addressReceive->phone], $contentSMS);
 
         return $results;
     }
