@@ -150,6 +150,8 @@ class shipGhtkService extends baseService {
             $discount += $orderDetail->discount;
 
             $productOrder['name'] = $orderDetail->name;
+            $productOrder['quantity'] = $orderDetail->quantity;
+            $productOrder['price'] = $orderDetail->subtotal;
             $productOrder['weight'] = number_format((float)($weight/(count($orderDetails))), 2, '.', '');
             array_push($dataPost['products'], $productOrder);
         }
