@@ -135,6 +135,7 @@ class shipGhtkService extends baseService {
         $shipGhnService = new shipGhnService();
         $speedSms = new SpeedSms();
         $districtModel = new addressDistrictModel();
+        $weight = $weight/1000;
 
         $params = array();
 
