@@ -247,20 +247,27 @@ class shipGhtkService extends baseService {
                 $status = KACANA_SHIP_STATUS_CANCEL;
                 break;
             case 3:
+            case 123:
                 $status = KACANA_SHIP_STATUS_STORING;
                 break;
             case 4:
+            case 410:
+            case 49:
                 $status = KACANA_SHIP_STATUS_DELIVERING;
                 break;
             case 9:
+            case 10:
             case 20:
                 $status = KACANA_SHIP_STATUS_RETURN;
                 break;
             case 5:
+            case 45:
                 $status = KACANA_SHIP_STATUS_WAITING_TO_FINISH;
                 break;
             case 21:
+            case 11:
                 $status = KACANA_SHIP_STATUS_RETURNED;
+                break;
             case 6:
                 $status = KACANA_SHIP_STATUS_FINISH;
                 break;
