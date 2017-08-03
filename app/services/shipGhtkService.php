@@ -235,6 +235,42 @@ class shipGhtkService extends baseService {
         return true;
     }
 
+    public function GetOrderInfoStatus($id){
+
+        $results = $this->makeRequest('/services/shipment/'.$id);
+        $results = $results->body->order;
+
+        $status = $results->status;
+
+        switch ($status){
+            case -1:
+                $status = KACANA_SHIP_STATUS_CANCEL;
+                break;
+            case 3:
+                $status = KACANA_SHIP_STATUS_STORING;
+                break;
+            case 4:
+                $status = KACANA_SHIP_STATUS_DELIVERING;
+                break;
+            case 9:
+            case 20:
+                $status = KACANA_SHIP_STATUS_RETURN;
+                break;
+            case 5:
+                $status = KACANA_SHIP_STATUS_WAITING_TO_FINISH;
+                break;
+            case 21:
+                $status = KACANA_SHIP_STATUS_RETURNED;
+            case 6:
+                $status = KACANA_SHIP_STATUS_FINISH;
+                break;
+            default:
+                $status = false;
+        }
+
+        return $status;
+    }
+
 }
 
 

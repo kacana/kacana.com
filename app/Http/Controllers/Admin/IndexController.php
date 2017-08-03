@@ -2,6 +2,8 @@
 
 use App\services\orderService;
 use App\services\productService;
+use App\services\shipGhnService;
+use App\services\shipGhtkService;
 use App\services\trackingService;
 use App\services\userService;
 use App\services\userTrackingService;
@@ -19,7 +21,8 @@ class IndexController extends BaseController {
      * @return \BladeView|bool|\Illuminate\View\View
      */
     public function index(Request $request)
-	{
+    {
+
 	    $duration = $request->input('duration', KACANA_REPORT_DURATION_DEFAULT);
 	    $userService = new userService();
         $orderService = new orderService();
