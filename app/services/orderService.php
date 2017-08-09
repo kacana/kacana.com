@@ -513,54 +513,7 @@ class orderService extends baseService {
             $contentSMS = str_replace('%order_id%', $order->order_code,KACANA_SPEED_SMS_CONTENT_ORDER_PROCESS);
             $contentSMS = str_replace('%user_name%', $this->stripVN($order->addressReceive->name),$contentSMS);
 
-            $slackText = 'Thực hiện xuất hàng tại kho: '. $order->orderType->name .' - Tổng: '. formatMoney($order->total);
-
-
-            $attachAddress = [
-                'fallback' => 'Địa chỉ nhận hàng',
-                'text' => 'Địa chỉ nhận hàng',
-                'color' => '#FA5858',
-                'fields' => [
-                    [
-                        'title' => 'Người Nhận',
-                        'value' => $order->addressReceive->name .' '.$order->addressReceive->phone,
-                        'short' => true
-                    ],
-                    [
-                        'title' => 'Địa chỉ',
-                        'value' => $order->address,
-                        'short' => true
-                    ]
-                ]
-            ];
-
-            $attachProducts = [];
-
-            foreach ($order->orderDetail as $orderDetail){
-
-                $imageUrl = "http://image.kacana.vn".str_replace('%2F', '/', urlencode($orderDetail->product->getOriginal('image')));
-                $attachProduct = [
-                    "color" => "#333",
-                    "title" => $orderDetail->name,
-                    "title_link" => "http://kacana.vn/san-pham/san-pham--".$orderDetail->product_id.'--387',
-                    "thumb_url" => $imageUrl,
-                    'fields' => [
-                        [
-                            'title' => 'Số lượng',
-                            'value' => $orderDetail->quantity,
-                            'short' => true
-                        ],
-                        [
-                            'title' => 'Tổng',
-                            'value' => formatMoney($orderDetail->price - $orderDetail->discount).'(Giảm: '.formatMoney($orderDetail->discount).')',
-                            'short' => true
-                        ]
-                    ]
-		        ];
-                array_push($attachProducts, $attachProduct);
-            }
-
-            $slack->notificationNewOrder($slackText,$attachAddress, $attachProducts);
+            $this->notificationSlackOrder($orderId);
 
             $speedSms->sendSMS([$order->addressReceive->phone], $contentSMS);
         }
@@ -568,6 +521,66 @@ class orderService extends baseService {
             return false;
 
         return true;
+    }
+
+    public function notificationSlackOrder($orderId){
+
+        $order = $this->_orderModel->getById($orderId);
+        $slack = new Slack();
+
+        if($order->orderType->id == KACANA_ORDER_TYPE_STORE_THD)
+            $slackText = 'Thực hiện xuất hàng tại kho: '. $order->orderType->name .' - Tổng: '. formatMoney($order->total);
+        else{
+            $slackText = 'Thực hiện Ship hàng: '. $order->orderType->name .' - Tổng: '. formatMoney($order->total);
+        }
+
+
+        $attachAddress = [
+            'fallback' => 'Địa chỉ nhận hàng',
+            'text' => 'Địa chỉ nhận hàng',
+            'color' => '#FA5858',
+            'fields' => [
+                [
+                    'title' => 'Người Nhận',
+                    'value' => $order->addressReceive->name .' '.$order->addressReceive->phone,
+                    'short' => true
+                ],
+                [
+                    'title' => 'Địa chỉ',
+                    'value' => $order->address,
+                    'short' => true
+                ]
+            ]
+        ];
+
+        $attachProducts = [];
+
+        foreach ($order->orderDetail as $orderDetail){
+
+            $imageUrl = "http://image.kacana.vn".str_replace('%2F', '/', urlencode($orderDetail->product->getOriginal('image')));
+            $attachProduct = [
+                "color" => "#333",
+                "title" => $orderDetail->name,
+                "title_link" => "http://kacana.vn/san-pham/san-pham--".$orderDetail->product_id.'--387',
+                "thumb_url" => $imageUrl,
+                'fields' => [
+                    [
+                        'title' => 'Số lượng',
+                        'value' => $orderDetail->quantity,
+                        'short' => true
+                    ],
+                    [
+                        'title' => 'Tổng',
+                        'value' => formatMoney($orderDetail->price - $orderDetail->discount).'(Giảm: '.formatMoney($orderDetail->discount).')',
+                        'short' => true
+                    ]
+                ]
+            ];
+            array_push($attachProducts, $attachProduct);
+        }
+
+        $slack->notificationNewOrder($slackText,$attachAddress, $attachProducts);
+
     }
 
     /**

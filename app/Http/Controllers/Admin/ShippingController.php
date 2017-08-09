@@ -16,6 +16,7 @@ class ShippingController extends BaseController {
     public function createShipping(Request $request){
         $shipGhnService = new shipGhnService();
         $shipGhtkService = new shipGhtkService();
+        $orderService = new orderService();
         $orderId = $request->input('orderId');
         $orderDetailIds = $request->input('orderDetailId');
         $pickHubId = $request->input('pickHubId', 0);
@@ -47,6 +48,7 @@ class ShippingController extends BaseController {
                     $extraDiscountDesc,
                     $paid);
 
+                $orderService->notificationSlackOrder($orderId);
                 return redirect('/shipping/detail?id='.$ship->order->label.'&type='.KACANA_SHIP_TYPE_SERVICE_GHTK);
             }
             else
@@ -67,7 +69,10 @@ class ShippingController extends BaseController {
                     $OrderContentNote,
                     $paid);
                 if($ship)
+                {
+                    $orderService->notificationSlackOrder($orderId);
                     return redirect('/shipping/detail?id='.$ship->OrderCode.'&type='.KACANA_SHIP_TYPE_SERVICE_GHN);
+                }
                 else
                     return redirect('/order/edit/'.$orderId);
             }
