@@ -12,8 +12,7 @@ class lazada extends thirdPartyTradeAbstract  implements thirdPartyTradeInterfac
         $categories = [];
         $cats = $lazadaProduct->getCategory();
 
-        $categories[] = $cats[3]; // for fashion and travel
-        $categories[] = $cats[15]; // for bagPack
+        $categories[] = $cats[0]; // for bag and packbag
         return $categories;
     }
 

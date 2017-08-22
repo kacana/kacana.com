@@ -341,12 +341,12 @@ var productPackage = {
                       var api = datatable.api(true);
 
                       //var userType = $formInline.find('select[name="searchUserType"]').val();
-                      var status = $formInline.find('select[name="searchStatus"]').val();
+                      var discount = $formInline.find('select[name="discount"]').val();
                       //var level = $formInline.find('select[name="searchLevel"]').val();
-                      var text = $formInline.find('input[name="search"]').val();
+                      var name = $formInline.find('input[name="name"]').val();
                       //
-                      api.column(1).search(text)
-                          .column(2).search(status, true);
+                      api.column(1).search(name)
+                          .column(4).search(discount, true);
 
                       api.draw();
                   });
