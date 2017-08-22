@@ -301,6 +301,7 @@ class productModel extends Model  {
             ->orderBy($order['field'], $order['dir'])
             ->where('products.boot_priority', '>', 0)
             ->where('products.status', '=', KACANA_PRODUCT_STATUS_ACTIVE)
+            ->groupBy('products.id')
             ->skip($limit['offset'])
             ->take($limit['limit']);
 

@@ -43,7 +43,8 @@ class createProductLazadaService extends baseService {
 
         $attributes['brand'] = 'OEM';
         $attributes['model'] = 'NEW '.date('Y');
-        $attributes['warranty_type'] = '63623';
+        $attributes['warranty_type'] = '63666';
+        $attributes['recommended_gender'] = 'Unisex';
 
         $this->_productPost['Attributes'] = $attributes;
 
@@ -57,7 +58,7 @@ class createProductLazadaService extends baseService {
             $productProperty = $this->_productProperties[$property['propertiesId']];
             $sku = [];
             $sku['SellerSku'] = $productProperty['product_id'].'_'.$property['propertiesId'];
-            $sku['color_family'] = $productProperty['nameProperty'];
+            $sku['color_family'] = 'Not Specified';
             $sku['quantity'] = 3;
             $sku['price'] = $productProperty['price'];
 

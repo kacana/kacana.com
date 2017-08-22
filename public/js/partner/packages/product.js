@@ -50,6 +50,8 @@ var productPackage = {
               });
 
               modalLazada.on('click', '.item-image-post-to-facebook img', function () {
+                  if($(this).parent('.item-image-post-to-facebook').hasClass('disabled'))
+                      return false;
                   var listItem = $(this).parents('.list-image-post-to-facebook');
                   var numberProduct = modalLazada.find('.product-boot-item').length;
                   if(listItem.find('.item-image-post-to-facebook.active').length == 6 && !$(this).parents('.item-image-post-to-facebook').hasClass('active') && numberProduct >= 1)
@@ -195,6 +197,8 @@ var productPackage = {
                           placeholder: "image-post-to-facebook-holder"
                       });
                       modal.modal();
+                      Kacana.product.listProductBoot.bootCheckDimensionImage();
+
                   }
                   else
                   {
@@ -207,6 +211,18 @@ var productPackage = {
 
               Kacana.utils.loading.loading(Kacana.product.listProductBoot.page);
               Kacana.ajax.product.productSupperBoot([productId], callBack, errorCallBack);
+          },
+          bootCheckDimensionImage: function () {
+              //('.item-image-post-to-facebook').eq(1).find('img').prop('naturalHeight');
+              var modal = $('#modal-boot-product-lazada');
+              modal.find('.item-image-post-to-facebook').each(function () {
+                  var image = $(this).find('img');
+
+                  if(image.prop('naturalHeight') < 500 || image.prop('naturalWidth') < 500)
+                  {
+                      $(this).addClass('disabled');
+                  }
+              });
           },
           productSupperBoot: function () {
               var productIds = [];
