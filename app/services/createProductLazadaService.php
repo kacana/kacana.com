@@ -39,7 +39,7 @@ class createProductLazadaService extends baseService {
 
         $attributes['name'] = $this->_product->name;
         $attributes['short_description'] = '<ul><li>Chất liệu cao cấp</li> <li>Kiểu dáng thời trang</li> <li>Nổi bật lên phong cách của bạn </li> <li>Phong Cách Châu Âu Quý Phái </li> </ul>';
-        $attributes['description'] = $this->_product->short_description. '<br>'. str_replace('src="//', 'src="http://', $this->_product->description);
+        $attributes['description'] = $this->_product->short_description. '<br>' .$this->_product->property_description. '<br>' . str_replace('src="//', 'src="http://', $this->_product->description);
 
         $attributes['brand'] = 'OEM';
         $attributes['model'] = 'NEW '.date('Y');
