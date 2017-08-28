@@ -58,7 +58,7 @@
         @if($tag->description)
             <div class="container background-white vpadding-10 margin-top-10px">
                 <div class="row">
-                    <div class="col-md-12 text-center">
+                    <div class="col-md-12">
                         {!! fixHtml($tag->description) !!}
                     </div>
                 </div>
