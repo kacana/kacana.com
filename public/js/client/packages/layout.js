@@ -42,7 +42,8 @@ var layoutPackage = {
 
             //Add csrf token for any submit
             $('body').on('submit', 'form', function(){
-                $(this).append('<input name="_token" class="hide" value="'+$('meta[name="csrf-token"]').attr('content')+'">');
+                if(!$(this).find('input[name="_token"]').length)
+                    $(this).append('<input name="_token" class="hide" value="'+$('meta[name="csrf-token"]').attr('content')+'">');
             });
 
             // Show Cart in header
