@@ -44,6 +44,8 @@ $action = getActionName(class_basename(Route::currentRouteAction()));
                 <li class="{{($controller == 'TagController' && $action == 'relation') ? 'active':''}}"><a href="{{URL::to('/tag/relation/'.TAG_RELATION_TYPE_MENU)}}"><i class="fa fa-circle-o"></i> Tag Sản Phẩm</a></li>
             </ul>
         </li>
+        <li class="header">Quản lý marketing</li>
+        <li class="treeview {{($controller == 'PromotionController')?'active':''}}"><a href="{{URL::to('/campaign')}}"><i class="fa fa-rocket"></i><span>Chiến dịch khuyến mãi</span></a>
 
         <li class="header">Admin</li>
         <li class="treeview {{($controller == 'UserController')?'active':''}}"><a href="{{URL::to('/user')}}"><i class="fa fa-user"></i><span>Người dùng</span></a>

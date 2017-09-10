@@ -360,6 +360,8 @@ var productPackage = {
                             var nodeParent = document.createElement('p');
                             var node = document.createElement('img');
                             node.src = data.image;
+                            node.title = $('#name').val();
+                            node.alt = $('#name').val();
                             nodeParent.appendChild(node);
                             $areaEditorImageUpload.summernote('insertNode', nodeParent);
                         }

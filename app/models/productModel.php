@@ -59,6 +59,14 @@ class productModel extends Model  {
     /**
      * Get the galleries associated with product
      */
+    public function campaignProduct()
+    {
+        return $this->hasMany('App\models\campaignProductModel', 'product_id', 'id');
+    }
+
+    /**
+     * Get the galleries associated with product
+     */
     public function productView()
     {
         return $this->hasMany('App\models\productViewModel', 'product_id', 'id');
@@ -117,16 +125,15 @@ class productModel extends Model  {
      */
     public function updateItem($id, $inputs){
 
-        $product = $this->find($id);
         $item['updated'] = date('Y-m-d H:i:s');
         $item['name'] = $inputs['name'];
-        $item['short_description'] = $inputs['short_description'];
-        $item['meta'] = $inputs['meta'];
+        $item['short_description'] = trim($inputs['short_description']);
+        $item['meta'] = trim($inputs['meta']);
         $item['price'] = $inputs['price'];
         $item['sell_price'] = $inputs['sell_price'];
         $item['discount'] = $inputs['price_discount'];
-        $item['description'] = $inputs['description'];
-        $item['property'] = $inputs['property'];
+        $item['description'] = trim($inputs['description']);
+        $item['property'] = trim($inputs['property']);
         $item['tag_style_id'] = $inputs['tag_style_id'];
         $item['made_in'] = $inputs['made_in'];
         $item['source_url'] = $inputs['source_url'];

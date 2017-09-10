@@ -41,6 +41,9 @@
         <script src="/lib/datatables/js/dataTables.bootstrap.min.js" type="text/javascript"></script>
         <script src="/js/admin/admin.js" type="text/javascript"></script>
         <script src="/lib/summernote/summernote.js"></script>
+        <script src="/lib/summernote-custom-plugin/image-captionit.js"></script>
+        <script src="/lib/summernote-custom-plugin/image-attributes.js"></script>
+        <script src="/lib/summernote-custom-plugin/video-attributes.js"></script>
         <script src="/lib/plupload/js/plupload.full.min.js" type="text/javascript"></script>
         <script src="/lib/cropper/cropper.min.js" type="text/javascript"></script>
         <script src="/lib/jqTree/1.3.5/tree.jquery.js" type="text/javascript"></script>

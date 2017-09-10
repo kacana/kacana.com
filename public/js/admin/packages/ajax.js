@@ -571,6 +571,24 @@ var ajaxPackage = {
                 var options = [];
                 Kacana.ajax.init(url, dataType, type, dataPost, callBack, errorCallBack, options);
             },
+        },
+        campaign: {
+            validateTimeCampaign: function (data, callBack, errorCallBack){
+                var url = '/campaign/validateTimeCampaign';
+                var dataType = 'json';
+                var type = 'post';
+                var dataPost =data;
+                var options = [];
+                Kacana.ajax.init(url, dataType, type, dataPost, callBack, errorCallBack, options);
+            },
+            updateCampaignImage: function(data, callBack, errorCallBack){
+                var url = '/campaign/updateCampaignImage';
+                var dataType = 'json';
+                var type = 'post';
+                var dataPost =data;
+                var options = [];
+                Kacana.ajax.init(url, dataType, type, dataPost, callBack, errorCallBack, options);
+            },
         }
      }
 };

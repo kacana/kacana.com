@@ -39,9 +39,34 @@ var configPackage = {
                     ['style', ['italic', 'bold','underline', 'clear','fontsize', 'color']],
                     ['asd', ['ul', 'paragraph']],
                     ['height', ['height']],
-                    ['insert', ['picture', 'table', 'hr', 'video', 'link']],
+                    ['insert', ['picture', 'table', 'hr', 'link', 'videoAttributes']],
                     ['misc', ['undo', 'redo', 'fullscreen']]
                 ],
+                popover: {
+                    image: [
+                        ['custom', ['captionIt', 'imageAttributes']],
+                        ['imagesize', ['imageSize100', 'imageSize50', 'imageSize25']],
+                        ['float', ['floatLeft', 'floatRight', 'floatNone']],
+                        ['remove', ['removeMedia']]
+                    ],
+                },
+                captionIt:{
+                    icon:'<i class="fa fa-image"/>', // Leave empty or don't set for default Icon.
+                    figureClass:'kacana-figure-image',
+                    figcaptionClass:'kacana-figcaption-image',
+                },
+                lang: 'en-US',
+                imageAttributes:{
+                    imageDialogLayout:'default', // default|horizontal
+                    icon:'<i class="note-icon-pencil"/>',
+                    removeEmpty:false // true = remove attributes | false = leave empty if present
+                },
+                displayFields:{
+                    imageBasic:true,  // show/hide Title, Source, Alt fields
+                    imageExtra:false, // show/hide Alt, Class, Style, Role fields
+                    linkBasic:true,   // show/hide URL and Target fields for link
+                    linkExtra:false   // show/hide Class, Rel, Role fields for link
+                },
                 callbacks: {
                     onImageUpload: function(files) {
                         $areaEditorImageUpload = $(this);
@@ -51,8 +76,6 @@ var configPackage = {
                             uploaderTextImage.addFile(file);
                         });
                         uploaderTextImage.start();
-
-
                     },
                     onMediaDelete : function($target, editor, $editable) {
                         console.log($target.attr('src'));

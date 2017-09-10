@@ -38,6 +38,7 @@ class ViewGenerateHelper {
             case 'tags_status_'.KACANA_TAG_STATUS_ACTIVE:
             case 'blog_posts_status_'.KACANA_BLOG_POST_STATUS_ACTIVE:
             case 'blog_comments_status_'.KACANA_BLOG_COMMENT_STATUS_ACTIVE:
+            case 'campaigns_status_'.KACANA_CAMPAIGN_STATUS_ACTIVE:
                 $iconStatus = '<i class="fa fa-chevron-down"></i> Active ';
                 break;
             case 'products_status_'.KACANA_PRODUCT_STATUS_INACTIVE:
@@ -45,6 +46,7 @@ class ViewGenerateHelper {
             case 'tags_status_'.KACANA_TAG_STATUS_INACTIVE:
             case 'blog_posts_status_'.KACANA_BLOG_POST_STATUS_INACTIVE:
             case 'blog_comments_status_'.KACANA_BLOG_COMMENT_STATUS_INACTIVE:
+            case 'campaigns_status_'.KACANA_CAMPAIGN_STATUS_INACTIVE:
                 $iconStatus = '<i class="fa fa-minus"></i> Inactive ';
                 break;
             case 'users_status_'.KACANA_USER_STATUS_BLOCK:

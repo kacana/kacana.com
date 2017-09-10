@@ -208,6 +208,16 @@ Route::group(['domain'=>KACANA_AUTH_ADMIN_NAME.'.{nameDomain}','middleware' => '
         Route::any('/addPostImage',                             array('as'=>'Blog.add.image',                   'uses'=>'Admin\BlogController@addPostImage'));
     });
 
+    Route::group(['prefix'=>'campaign'], function(){
+        Route::get('/',                                         array('as'=>'Campaign.index',                        'uses'=>'Admin\CampaignController@index'));
+        Route::get('/generateCampaignTable',                    array('as'=>'Campaign.list',                         'uses'=>'Admin\CampaignController@generateCampaignTable'));
+        Route::post('/createCampaign',                          array('as'=>'Campaign.createCampaign',               'uses'=>'Admin\CampaignController@createCampaign'));
+        Route::post('/validateTimeCampaign',                    array('as'=>'Campaign.validateTimeCampaign',         'uses'=>'Admin\CampaignController@validateTimeCampaign'));
+        Route::get('/edit',                                     array('as'=>'Campaign.editCampaign',                 'uses'=>'Admin\CampaignController@edit'));
+        Route::post('/edit',                                    array('as'=>'Campaign.postEditCampaign',             'uses'=>'Admin\CampaignController@postEdit'));
+        Route::post('/updateCampaignImage',                     array('as'=>'Campaign.updateCampaignImage',          'uses'=>'Admin\CampaignController@updateCampaignImage'));
+    });
+
 });
 
 Route::group(['domain'=>KACANA_AUTH_PARTNER_NAME.'.{nameDomain}','middleware' => 'auth'], function () {
