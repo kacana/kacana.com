@@ -49,6 +49,21 @@ class baseService {
         return $result;
     }
 
+    public function trimElementDesc($description)
+    {
+        preg_match_all('#<p.*?>([^>]*)</p>#i', $description, $data);
+        $listElement = $data[0];
+        foreach ($listElement as $item) {
+            if(!trim(strip_tags($item)) && !strpos('img', $item))
+            {
+                $from = '/' . preg_quote($item, '/') . '/';
+                $description = preg_replace($from, '', $description, 1);
+            }
+        }
+        return $description;
+    }
+
+
 }
 
 

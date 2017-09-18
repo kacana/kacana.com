@@ -2,13 +2,13 @@
     <div class="product-image-inside royalSlider rsDefault" data-first-image="{{$item->image}}" >
         <a data-rsbigimg="{{$item->image}}" href="{{AWS_CDN_URL.PRODUCT_IMAGE_PLACE_HOLDER}}" class="rsImg">
             {{$item->name}}
-            <img class="rsTmb" data-original="{{$item->image}}"/>
+            <img title="{{$item->name}}" alt="{{$item->name}}" class="rsTmb" data-src="{{$item->image}}"/>
         </a>
         @if($item->properties && count($item->properties)>0)
             @foreach($item->properties as $property)
                 @if($property->product_gallery)
                     <a id="product-property-gallery-id-{{$item->id}}" class="rsImg" data-rsbigimg="{{$property->product_gallery->image}}" href="{{$property->product_gallery->image}}" >
-                        <img class="rsTmb" data-original="{{$property->product_gallery->thumb}}" >
+                        <img title="{{$item->name}}" alt="{{$item->name}}" class="rsTmb" data-src="{{$property->product_gallery->thumb}}" >
                     </a>
                 @endif
             @endforeach
@@ -22,7 +22,7 @@
             @if($property->product_gallery)
                 <div>
                     <a data-id="{{$property->color_id}}" href="#choose-product-color">
-                        <img  data-original="{{$property->product_gallery->thumb}}">
+                        <img title="{{$item->name}}" alt="{{$item->name}}" data-src="{{$property->product_gallery->thumb}}">
                     </a>
                 </div>
             @endif
@@ -32,7 +32,7 @@
     <div class="list-color-product multiple-items nav" >
         <div>
             <a >
-                <img  data-original="{{$item->image}}">
+                <img title="{{$item->name}}" alt="{{$item->name}}" data-src="{{$item->image}}">
             </a>
         </div>
     </div>

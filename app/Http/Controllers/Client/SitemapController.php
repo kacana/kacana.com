@@ -82,7 +82,7 @@ class SitemapController extends BaseController {
         // create sitemap
         $sitemap_products = \App::make("sitemap");
 
-//        set cache
+        //set cache
         $sitemap_products->setCache('__sitemap_products__', 3600);
 
         $products = $productService->getAllProductAvailable();

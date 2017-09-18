@@ -5,14 +5,14 @@
             <div class="product-image-inside royalSlider rsDefault" data-first-image="${this.image}"  >
                 <a data-rsbigimg="${this.image}" href="{{AWS_CDN_URL.PRODUCT_IMAGE_PLACE_HOLDER}}" class="rsImg" title="${this.name}">
                     ${this.name}
-                    <img class="rsTmb" data-original="${this.image}" />
+                    <img class="rsTmb" data-src="${this.image}" />
                 </a>
                 @{{if this.properties_js}}
                     @{{each this.properties_js}}
                         @{{if this.product_gallery}}
                             <a id="product-property-gallery-id-${this.id}" class="rsImg" data-rsbigimg="${this.product_gallery.image}" href="${this.product_gallery.image}" >
                                 ${this.color_name}
-                                <img class="rsTmb" data-original="${this.product_gallery.image}"/>
+                                <img class="rsTmb" data-src="${this.product_gallery.image}"/>
                             </a>
                         @{{/if}}
                     @{{/each}}
@@ -26,7 +26,7 @@
                     @{{if this.product_gallery}}
                         <div>
                             <a data-id="${this.color_id}" href="#choose-product-color">
-                                <img  data-original="${this.product_gallery.image}">
+                                <img  data-src="${this.product_gallery.image}">
                             </a>
                         </div>
                     @{{/if}}
@@ -38,7 +38,7 @@
             <div class="list-color-product multiple-items nav" >
                 <div>
                     <a >
-                        <img  data-original="${this.image}">
+                        <img  data-src="${this.image}">
                     </a>
                 </div>
             </div>

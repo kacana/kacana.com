@@ -122,7 +122,7 @@ var homepagePackage = {
                             if(currSlideObject.id == 0){
                                 var productItem = e.target.slider.parents('.product-item');
                                 var firstImage = productItem.find('.product-image-inside').data('firstImage');
-                                productItem.find('.rsImg.rsMainSlideImage').attr('data-original', firstImage);
+                                productItem.find('.rsImg.rsMainSlideImage').attr('data-src', firstImage);
                                 productItem.find('.rsImg.rsMainSlideImage').lazyload();
                             }
                         });

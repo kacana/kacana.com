@@ -197,7 +197,7 @@
 <script src="/lib/form-validation/js/formValidator.min.js" type="text/javascript"></script>
 <script src="/lib/vide/vide.js"></script>
 <script src="/lib/ml-menu/ml-menu.js"></script>
-<script src="/lib/lazyload/jquery.lazyload.min.js"></script>
+<script src="/lib/lazyload-2/lazyload.min.js"></script>
 <script src="/lib/nivo-slider/jquery.nivo.slider.js"></script>
 
 <!-- Theme Base, Components and Settings -->
@@ -242,18 +242,6 @@
 
 </script>
  -->
-<!-- Google Code dành cho Thẻ tiếp thị lại -->
-<!--------------------------------------------------
-Không thể liên kết thẻ tiếp thị lại với thông tin nhận dạng cá nhân hay đặt thẻ tiếp thị lại trên các trang có liên quan đến danh mục nhạy cảm. Xem thêm thông tin và hướng dẫn về cách thiết lập thẻ trên: http://google.com/ads/remarketingsetup
---------------------------------------------------->
-<!-- Google Code dành cho Thẻ tiếp thị lại -->
-<!--------------------------------------------------
-Không thể liên kết thẻ tiếp thị lại với thông tin nhận dạng cá nhân hay đặt thẻ tiếp thị lại trên các trang có liên quan đến danh mục nhạy cảm. Xem thêm thông tin và hướng dẫn về cách thiết lập thẻ trên: http://google.com/ads/remarketingsetup
---------------------------------------------------->
-<!-- Google Code dành cho Thẻ tiếp thị lại -->
-<!--------------------------------------------------
-Không thể liên kết thẻ tiếp thị lại với thông tin nhận dạng cá nhân hay đặt thẻ tiếp thị lại trên các trang có liên quan đến danh mục nhạy cảm. Xem thêm thông tin và hướng dẫn về cách thiết lập thẻ trên: http://google.com/ads/remarketingsetup
---------------------------------------------------->
 
 <script type="text/javascript">
 
