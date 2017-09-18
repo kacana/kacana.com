@@ -86,9 +86,14 @@ class baseService
         for ($i = 0; $i < $nodeList->length; $i++) {
 
             $node = $nodeList->item($i);
+            $childNode = $node->childNodes;
+            $firstChildNode = $childNode->item(0);
             $parentNode = $node->parentNode;
             if (!(trim($node->textContent) || $node->getElementsByTagName('img')->length))
                 $parentNode->removeChild($node);
+            else if(isset($firstChildNode->tagName) && ($firstChildNode->tagName == 'figure')) {
+                $node->parentNode->replaceChild($firstChildNode, $node);
+            }
         }
 
         $nodeFigureList = $xpath->evaluate('//figure');
@@ -122,6 +127,10 @@ class baseService
         }
 
         $description = $this->parseToCurrentString($dom);
+
+        $description = str_replace('<b>', '<strong>', $description);
+        $description = str_replace('</b>', '</strong>', $description);
+
         return trim($description);
     }
 

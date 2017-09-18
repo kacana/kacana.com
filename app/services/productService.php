@@ -619,7 +619,7 @@ class productService extends baseService {
         {
             $imageNameFinal = explode('.', $imageName);
             $typeImage = $imageNameFinal[count($imageNameFinal)-1];
-            $newImageName = $prefixPath.$product->name.' '.time().'.'.$typeImage;
+            $newImageName = $prefixPath.str_slug($product->name.' '.time()).'.'.$typeImage;
 
             $productGalleryService->uploadToS3($imageName, $newImageName);
         }

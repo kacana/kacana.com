@@ -213,7 +213,7 @@ class blogService extends baseService {
         $imageNameFinal = explode('.', $imageName);
         $typeImage = $imageNameFinal[count($imageNameFinal)-1];
 
-        $newImageName = $prefixPath.$post->title.' '.crc32($imageName).'.'.$typeImage;
+        $newImageName = $prefixPath.str_slug($post->title.' '.crc32($imageName)).'.'.$typeImage;
         $return = $blogPostGallery->addPostImage($id, $newImageName, $newThumbPath);
 
         $productGalleryService->uploadToS3($imageName, $newImageName);

@@ -107,7 +107,7 @@ class campaignService extends baseService {
         $imageNameFinal = explode('.', $imageName);
         $typeImage = $imageNameFinal[count($imageNameFinal) - 1];
 
-        $newImageName = $prefixPath . $campaign->name . ' ' . crc32($imageName) . '.' . $typeImage;
+        $newImageName = $prefixPath . str_slug($campaign->name . ' ' . crc32($imageName)) . '.' . $typeImage;
         $productGalleryService->uploadToS3($imageName, $newImageName);
 
         if ($type == KACANA_CAMPAIGN_IMAGE_TYPE_MAIN_IMAGE) {
