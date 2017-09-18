@@ -37,12 +37,12 @@ class productGalleryService extends baseService {
 
         if($type == PRODUCT_IMAGE_TYPE_SLIDE)
         {
-            $newThumbPath = $prefixPath.$product->name.' thumb '.crc32($imageName).'.'.$typeImage;
+            $newThumbPath = $prefixPath.str_slug($product->name.' thumb '.crc32($imageName)).'.'.$typeImage;
             $thumbPath = str_replace(PATH_PUBLIC, '', $this->createThumbnail(PATH_PUBLIC . $imageName, 80, 80, [255, 255, 255]));
 
             $this->uploadToS3($thumbPath, $newThumbPath);
         }
-        $newImageName = $prefixPath.$product->name.' '.crc32($imageName).'.'.$typeImage;
+        $newImageName = $prefixPath.str_slug($product->name.' '.crc32($imageName)).'.'.$typeImage;
         $return = $productGallery->addProductImage($id, $newImageName, $newThumbPath, $type);
 
         $this->uploadToS3($imageName, $newImageName);
