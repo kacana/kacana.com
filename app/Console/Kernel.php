@@ -23,6 +23,6 @@ class Kernel extends ConsoleKernel {
 	 */
 	protected function schedule(Schedule $schedule)
 	{
-        $schedule->command('csv:everyDay')->everyFiveMinutes()->withoutOverlapping();;
+        $schedule->command('csv:everyDay')->hourly()->withoutOverlapping();;
 	}
 }
