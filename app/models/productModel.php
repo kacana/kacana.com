@@ -775,10 +775,8 @@ class productModel extends Model  {
     }
 
     public function getProductToCreateCsv($limit = false, $offset = 0){
-        $products = $this->join('product_tag', 'products.id', '=', 'product_tag.product_id')
+        $products = $this->leftJoin('product_tag', 'products.id', '=', 'product_tag.product_id')
             ->leftJoin('tag_relations', 'product_tag.tag_id', '=', 'tag_relations.child_id')
-            ->where('tag_relations.status', '=', TAG_RELATION_STATUS_ACTIVE)
-            ->where('tag_relations.tag_type_id', '=', TAG_RELATION_TYPE_MENU)
             ->whereIn('products.status', [KACANA_PRODUCT_STATUS_ACTIVE, KACANA_PRODUCT_STATUS_SOLD_OUT])->groupBy('products.id')
             ->select(['products.*', 'product_tag.*']);
 

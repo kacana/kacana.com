@@ -69,6 +69,8 @@ class campaignService extends baseService {
     {
         $campaign = $this->_campaignModel->getItemById($id);
         $this->trimImageDesc($campaign->description, $id);
+        $description = $this->trimElementDesc($description);
+        print_r($description);die;
         return $this->_campaignModel->updateCampaign($id, $campaignName, $description, $displayDateStart, $displayDateEnd, $dateStart, $dateEnd);
     }
 

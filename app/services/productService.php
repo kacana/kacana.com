@@ -269,8 +269,8 @@ class productService extends baseService {
 
         if($product->description)
         {
-            $product->description = $htmlFixer->getFixedHtml($product->description);
-            $product->descriptionLazyLoad = $htmlFixer->getFixedHtml($product->descriptionLazyLoad);
+            $product->description = $product->description;
+            $product->descriptionLazyLoad = $product->descriptionLazyLoad;
         }
 
         if($userId)
