@@ -117,10 +117,15 @@ class baseService
             $node = $nodeFigcaptionList->item($i);
             $childNode = $node->childNodes;
             $firstChildNode = $childNode->item(0);
+            $previousNode = $node->previousSibling;
 
             if(isset($firstChildNode) && !trim($firstChildNode->textContent))
                 $node->parentNode->removeChild($node);
             else if(isset($firstChildNode->tagName) && ($firstChildNode->tagName == 'figure' || $firstChildNode->tagName == 'figcaption')) {
+                $node->parentNode->replaceChild($firstChildNode, $node);
+            }
+            else if(!(isset($previousNode) && isset($previousNode->tagName) && ($previousNode->tagName == 'img')))
+            {
                 $node->parentNode->replaceChild($firstChildNode, $node);
             }
 
