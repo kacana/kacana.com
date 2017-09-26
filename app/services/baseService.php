@@ -124,10 +124,6 @@ class baseService
             else if(isset($firstChildNode->tagName) && ($firstChildNode->tagName == 'figure' || $firstChildNode->tagName == 'figcaption')) {
                 $node->parentNode->replaceChild($firstChildNode, $node);
             }
-            else if(!(isset($previousNode) && isset($previousNode->tagName) && ($previousNode->tagName == 'img')))
-            {
-                $node->parentNode->replaceChild($firstChildNode, $node);
-            }
 
         }
 

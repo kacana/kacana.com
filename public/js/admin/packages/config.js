@@ -39,7 +39,7 @@ var configPackage = {
                     ['style', ['italic', 'bold','underline', 'clear','fontsize', 'color']],
                     ['asd', ['ul', 'paragraph']],
                     ['height', ['height']],
-                    ['insert', ['picture', 'table', 'hr', 'link', 'videoAttributes']],
+                    ['insert', ['picture', 'table', 'hr', 'link', 'video']],
                     ['misc', ['undo', 'redo', 'fullscreen']]
                 ],
                 popover: {
