@@ -1,0 +1,67 @@
+version: "2"
+services:
+
+  kacana-webserver:
+    build: ./docker/nginx
+    container_name: kacana-webserver
+    restart: on-failure:3
+    volumes:
+      - ./docker/data/logs/nginx:/var/log/nginx
+    volumes_from:
+      - kacana-app
+    links:
+      - kacana-app:app
+    ports:
+      - "80:80"
+
+  kacana-mysql:
+    container_name: kacana-mysql
+    image: mysql
+    volumes:
+      - ./docker/data/mysql:/var/lib/mysql
+      - ./docker/mysql/my.cnf:/etc/mysql/my.cnf
+    env_file:
+      - .env
+    ports:
+      - "3306:3306"
+
+  kacana-app:
+    container_name: kacana-app
+    build: ./docker/app
+    env_file:
+      - .env
+    dns: 192.168.1.1
+    volumes:
+      - ./:/app
+      - ./docker/data/logs/supervisor:/var/log/supervisor
+    ports:
+      - "9000:9000"
+
+  kacana-redis:
+    image: redis:3.0
+    container_name: kacana-redis
+    restart: on-failure:3
+    volumes:
+      - ./docker/data/redis:/data
+    env_file:
+      - .env
+    ports:
+      - "6379:6379"
+
+  kacana-rabbitmq:
+    build: ./docker/rabbitmq
+    container_name: kacana-rabbitmq
+    restart: on-failure:3
+    ports:
+      - "15672:15672"
+      - "5672:5672"
+    volumes:
+      - ./docker/data/rabbitmq/mnesia:/var/lib/rabbitmq/mnesia
+    env_file:
+      - .env
+
+  composer:
+    build: ./docker/composer
+    container_name: kacana-composer
+    volumes_from:
+      - kacana-app:rw

@@ -1,0 +1,1 @@
+FROM prooph/composer:7.1
