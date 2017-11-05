@@ -17,7 +17,7 @@ Route::pattern('status', '[0-1]+');
 Route::pattern('keyword', '[a-z0-9-]+');
 Route::pattern('slug', '[a-zA-Z0-9-]+');
 
-Route::pattern('nameDomain', '(www.kacana.com|kacana.com|dev.kacana.com|staging.kacana.com|www.kacana.vn|kacana.vn|dev.kacana.vn|staging.kacana.vn)');
+Route::pattern('nameDomain', '(www.kacana.com|kacana.com|dev.kacana.com|www.kacana.vn|kacana.vn|dev.kacana.vn)');
 
 
 Route::group(['prefix' => 'auth/'], function(){
@@ -378,5 +378,7 @@ Route::group(['domain'=>'{nameDomain}', 'middleware' => 'client'], function () {
         Route::post('/trackUserPostView',                   array('as'=>'Blog.track.user.post.view',        'uses'=>'Client\BlogController@trackUserPostView'));
         Route::any('/chuyen-muc/{slug}.{id}',               array('as'=>'Blog.cat.post',                    'uses'=>'Client\BlogController@catPost'));
     });
+
+    Route::any('/.well-known/acme-challenge/{string}',     array('as'=>'verifyCertificatedSSL',        'uses'=>'Client\IndexController@certonly'));
 
 });
