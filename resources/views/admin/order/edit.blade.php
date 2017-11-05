@@ -131,7 +131,7 @@
                                     <div class="form-group">
                                         <label class="col-sm-3 control-label" for="inputEmail3">Ngày đặt</label>
                                         <div class="col-sm-9">
-                                            <input value="{{$order->created}}" disabled="disabled"  class="form-control disabled">
+                                            <input value="{{$order->created_at}}" disabled="disabled"  class="form-control disabled">
                                         </div>
                                     </div>
                                 </div>
