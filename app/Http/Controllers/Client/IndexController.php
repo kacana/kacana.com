@@ -66,6 +66,11 @@ class IndexController extends BaseController {
 
     }
 
+    public function certonly ($domain, $string){
+        return $string;
+    }
+
+
     public function testMessages(){
         return view('client.index.test-messages');
     }
