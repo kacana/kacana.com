@@ -19,7 +19,7 @@ class orderModel extends Model  {
     /**
      * @var bool
      */
-    public $timestamps = false;
+    public $timestamps = true;
 
 
     /**
@@ -63,8 +63,7 @@ class orderModel extends Model  {
         foreach($item as $k=>$v){
             $object->{$k} = $v;
         }
-        $object->created = date('Y-m-d H:i:s');
-        $object->updated = date('Y-m-d H:i:s');
+
         $object->save();
         return $object;
     }
@@ -79,8 +78,6 @@ class orderModel extends Model  {
         foreach($item as $k=>$v){
             $object->{$k} = $v;
         }
-
-        $object->updated = date('Y-m-d H:i:s');
         $this->where('id', $id)->update($item);
     }
 
@@ -106,7 +103,7 @@ class orderModel extends Model  {
     }
 
     public function getOrderByOrderCode($code){
-        return $this->where('order_code', $code)->orderBy('created', 'DESC')->first();
+        return $this->where('order_code', $code)->orderBy('created_at', 'DESC')->first();
     }
 
 
@@ -220,14 +217,14 @@ class orderModel extends Model  {
         $dateSelected = $request['dateSelected'];
 
         if($type == 'day')
-            $typeWhere = DB::raw('DATE_FORMAT(kacana_orders.created, "%Y-%m-%d")');
+            $typeWhere = DB::raw('DATE_FORMAT(kacana_orders.created_at, "%Y-%m-%d")');
         elseif($type == 'month') {
             $dateSelected = substr($dateSelected,0,7);
-            $typeWhere =DB::raw('DATE_FORMAT(kacana_orders.created, "%Y-%m")');
+            $typeWhere =DB::raw('DATE_FORMAT(kacana_orders.created_at, "%Y-%m")');
         }
         elseif($type == 'year') {
             $dateSelected = substr($dateSelected,0,4);
-            $typeWhere = DB::raw('DATE_FORMAT(kacana_orders.created, "%Y")');
+            $typeWhere = DB::raw('DATE_FORMAT(kacana_orders.created_at, "%Y")');
         }
         // Main query to actually get the data
         $selectData = DB::table('orders')
@@ -268,7 +265,7 @@ class orderModel extends Model  {
         if($duration === false)
             return $this->count();
         else
-            return $this->where('created', '>=', $date)->count();
+            return $this->where('created_at', '>=', $date)->count();
     }
 
     /**
@@ -279,16 +276,16 @@ class orderModel extends Model  {
      */
     public function reportOrder($startTime, $endTime, $type = 'date')
     {
-        $orderReport =  $this->where('created', '>=', $startTime)
-            ->where('created', '<=', $endTime);
+        $orderReport =  $this->where('created_at', '>=', $startTime)
+            ->where('created_at', '<=', $endTime);
         if($type == 'day')
-            $orderReport->select('*', DB::raw('DATE_FORMAT(created, "%Y-%m-%d") as date'), (DB::raw('count(id) as item')))
+            $orderReport->select('*', DB::raw('DATE_FORMAT(created_at, "%Y-%m-%d") as date'), (DB::raw('count(id) as item')))
                 ->groupBy('date');
         elseif($type == 'month')
-            $orderReport->select('*', DB::raw('DATE_FORMAT(created, "%Y-%m") as date'), (DB::raw('count(id) as item')))
+            $orderReport->select('*', DB::raw('DATE_FORMAT(created_at, "%Y-%m") as date'), (DB::raw('count(id) as item')))
                 ->groupBy('date');
         elseif($type == 'year')
-            $orderReport->select('*',DB::raw('DATE_FORMAT(created, "%Y") as date'), (DB::raw('count(id) as item')))
+            $orderReport->select('*',DB::raw('DATE_FORMAT(created_at, "%Y") as date'), (DB::raw('count(id) as item')))
                 ->groupBy('date');
 
         return $orderReport->get();

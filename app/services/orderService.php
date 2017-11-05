@@ -206,8 +206,8 @@ class orderService extends baseService {
             array( 'db' => 'orders.quantity', 'dt' => 6 ),
             array( 'db' => 'orders.status', 'dt' => 7 ),
             array( 'db' => 'orders.order_type', 'dt' => 8 ),
-            array( 'db' => 'orders.created', 'dt' => 9 ),
-            array( 'db' => 'orders.updated', 'dt' => 10 )
+            array( 'db' => 'orders.created_at', 'dt' => 9 ),
+            array( 'db' => 'orders.updated_at', 'dt' => 10 )
         );
 
         $return = $orderModel->generateOrderTable($request, $columns);
@@ -258,8 +258,8 @@ class orderService extends baseService {
             array( 'db' => 'orders.total', 'dt' => 3 ),
             array( 'db' => 'orders.quantity', 'dt' => 4 ),
             array( 'db' => 'orders.status', 'dt' => 5 ),
-            array( 'db' => 'orders.created', 'dt' => 6 ),
-            array( 'db' => 'orders.updated', 'dt' => 7 )
+            array( 'db' => 'orders.created_at', 'dt' => 6 ),
+            array( 'db' => 'orders.updated_at', 'dt' => 7 )
         );
 
         $return = $orderModel->generateOrderTableByUserId($request, $columns, $userId);
@@ -309,8 +309,8 @@ class orderService extends baseService {
             array( 'db' => 'orders.total', 'dt' => 3 ),
             array( 'db' => 'orders.quantity', 'dt' => 4 ),
             array( 'db' => 'orders.status', 'dt' => 5 ),
-            array( 'db' => 'orders.created', 'dt' => 6 ),
-            array( 'db' => 'orders.updated', 'dt' => 7 )
+            array( 'db' => 'orders.created_at', 'dt' => 6 ),
+            array( 'db' => 'orders.updated_at', 'dt' => 7 )
         );
 
         $return = $orderModel->reportDetailTableOrder($request, $columns);
