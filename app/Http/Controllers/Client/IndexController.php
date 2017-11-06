@@ -66,8 +66,9 @@ class IndexController extends BaseController {
 
     }
 
-    public function certonly ($domain, $string){
-        return $string;
+    public function facebookWebhook (Request $request){
+        \Log::info('Log message', 'test log');
+        \Log::info('Log message', print_r($request->all()));
     }
 
 
