@@ -9,18 +9,19 @@ use Illuminate\Http\Request;
 use Kacana\Client\Slack;
 use Kacana\Util;
 use Pusher;
+
 /**
  * Class IndexController
  * @package App\Http\Controllers\Client
  */
-class IndexController extends BaseController {
+class IndexController extends BaseController
+{
 
     /**
      * Show the application welcome screen to the user.
      *
      * @param Request $request
      * @return \BladeView|bool|\Illuminate\View\View
-
      */
 
     public function index(Request $request)
@@ -31,31 +32,32 @@ class IndexController extends BaseController {
         $limit = KACANA_HOMEPAGE_ITEM_PER_TAG;
         $mainTags = $tagService->getRootTag();
         $data = array();
-        foreach($mainTags as $tag){
+        foreach ($mainTags as $tag) {
             $result['tag'] = $tag->name;
             $result['short_desc'] = $tag->short_desc;
-            $result['slug'] = str_slug($tag->name. '-');
+            $result['slug'] = str_slug($tag->name . '-');
             $result['tag_id'] = $tag->child_id;
             $result['tag_url'] = '';
-            $userId = (\Kacana\Util::isLoggedIn())?$this->_user->id:0;
-            $result['products'] = $productService->getProductByTagId($tag->id, $limit, $userId, 1, ['product_tag_type_id'=>TAG_RELATION_TYPE_MENU]);
+            $userId = (\Kacana\Util::isLoggedIn()) ? $this->_user->id : 0;
+            $result['products'] = $productService->getProductByTagId($tag->id, $limit, $userId, 1, ['product_tag_type_id' => TAG_RELATION_TYPE_MENU]);
             $data[] = $result;
         }
         $newestProduct = $productService->getNewestProduct($userId);
         $discountProduct = $productService->getDiscountProduct($userId);
-        return view('client.index.index', array('items'=>$data, 'newest' => $newestProduct, 'discount' => $discountProduct));
+        return view('client.index.index', array('items' => $data, 'newest' => $newestProduct, 'discount' => $discountProduct));
     }
 
-    public function searchProduct($domain, $searchString, Request $request){
+    public function searchProduct($domain, $searchString, Request $request)
+    {
         $productService = new productService();
         $trackingService = new trackingService();
         $result['ok'] = 0;
-        $userId = (\Kacana\Util::isLoggedIn())?$this->_user->id:0;
+        $userId = (\Kacana\Util::isLoggedIn()) ? $this->_user->id : 0;
         $page = $request->input('page', 1);
         $limit = $request->input('limit', KACANA_PRODUCT_ITEM_PER_TAG);
 
         $sort = $request->input('sort');
-        $options = ['sort'=>$sort];
+        $options = ['sort' => $sort];
 
         $products = $productService->searchProduct($searchString, $limit, $page, $options, $userId);
         $trackingService->createTrackingSearch($searchString, $userId, $request->ip(), 'sub');
@@ -66,13 +68,21 @@ class IndexController extends BaseController {
 
     }
 
-    public function facebookWebhook (Request $request){
-        \Log::info('Log message', 'test log');
-        \Log::info('Log message', print_r($request->all()));
+    public function facebookWebhook(Request $request)
+    {
+        \Log::info('Log message', array('test log'));
+        if (count($request->all())) {
+            $logFacebook = $request->all();
+            \Log::info('Log message', $logFacebook);
+        }
+
+        $return['respone'] = true;
+        return response()->json($return);
     }
 
 
-    public function testMessages(){
+    public function testMessages()
+    {
         return view('client.index.test-messages');
     }
 }
