@@ -124,7 +124,7 @@
                     <tr>
                         <td>
                             <span class="label-for-main-info">Mã đơn hàng: </span><span style="font-size: 20px" >{{$order->order_code}}</span><br>
-                            <span class="label-for-main-info">Ngày mua hàng: </span><b>{{$order->created}}</b> <br>
+                            <span class="label-for-main-info">Ngày mua hàng: </span><b>{{$order->created_at}}</b> <br>
                             <span class="label-for-main-info">Cửa hàng: </span><b>{{$order->orderType->name}}</b><br>
                             <span class="label-for-main-info">Nhân viên BH: </span><b>{{$user->name}}</b><br>
                             <span class="label-for-main-info">Địa chỉ: </span><b>60/36 Trần Hưng Đạo, Phường 7, Quận 5, Hồ Chí Minh</b>
