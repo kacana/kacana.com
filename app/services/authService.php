@@ -34,7 +34,7 @@ class authService extends baseService {
         if($this->_user)
             return false;
 
-        $permissions = [KACANA_AUTH_ADMIN_NAME, KACANA_AUTH_CUS_NAME];
+        $permissions = [KACANA_AUTH_ADMIN_NAME, KACANA_AUTH_CUS_NAME, KACANA_AUTH_KCNER_NAME];
 
         $attempt = ['email' => $email, 'password' => md5($password), 'status' => KACANA_USER_STATUS_ACTIVE];
 
@@ -104,7 +104,7 @@ class authService extends baseService {
 
         $result['ok'] = 0;
 
-        $permissions = [KACANA_AUTH_ADMIN_NAME, KACANA_AUTH_CUS_NAME, KACANA_AUTH_BUYER_NAME];
+        $permissions = [KACANA_AUTH_ADMIN_NAME, KACANA_AUTH_CUS_NAME, KACANA_AUTH_BUYER_NAME, KACANA_AUTH_KCNER_NAME];
 
         if($this->_user)
             return false;

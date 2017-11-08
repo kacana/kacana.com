@@ -5,6 +5,7 @@ use App\services\shipGhnService;
 use App\services\tagService;
 use App\services\trackingService;
 use App\services\userService;
+use App\services\webhookService;
 use Illuminate\Http\Request;
 use Kacana\Client\Slack;
 use Kacana\Util;
@@ -26,6 +27,9 @@ class IndexController extends BaseController
 
     public function index(Request $request)
     {
+//        $webHookService = new webhookService();
+//        return $webHookService->facebookWebhook($request->all());
+
         $productService = new productService();
         $tagService = new tagService();
 
@@ -70,14 +74,8 @@ class IndexController extends BaseController
 
     public function facebookWebhook(Request $request)
     {
-        \Log::info('Log message', array('test log'));
-        if (count($request->all())) {
-            $logFacebook = $request->all();
-            \Log::info('Log message', $logFacebook);
-        }
-
-        $return['respone'] = true;
-        return response()->json($return);
+        $webHookService = new webhookService();
+        return $webHookService->facebookWebhook($request->all());
     }
 
 

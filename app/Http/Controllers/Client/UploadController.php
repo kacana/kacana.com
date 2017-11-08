@@ -116,7 +116,6 @@ class UploadController extends BaseController {
 
         } catch (Exception $e) {
             // @codeCoverageIgnoreStart
-            Binumi_Util::logErr($e->getMessage());
             $return['message'] = $e->getMessage();
             // @codeCoverageIgnoreEnd
         }

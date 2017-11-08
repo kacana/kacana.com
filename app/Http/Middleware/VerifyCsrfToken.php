@@ -4,7 +4,8 @@ use Closure;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken as BaseVerifier;
 
 class VerifyCsrfToken extends BaseVerifier {
-    private $openRoutes = ['loadListProducts', 'loadFilter'];
+
+    private $openRoutes = ['facebookWebhook', 'loadFilter', '/'];
 	/**
 	 * Handle an incoming request.
 	 *
