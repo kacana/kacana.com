@@ -134,6 +134,8 @@ Route::group(['domain'=>KACANA_AUTH_ADMIN_NAME.'.{nameDomain}','middleware' => '
     Route::get('/user/get-tracking-message-info',           array('as'=>'getTrackingMessageInfo',    'uses'=>'Admin\UserController@getTrackingMessageInfo'));
     Route::get('/user/generateUserTrackingHistoryTable',    array('as'=>'generateUserTrackingHistoryTable',        'uses'=>'Admin\UserController@generateUserTrackingHistoryTable'));
     Route::get('/user/detailUserTracking',                  array('as'=>'detailUserTracking',        'uses'=>'Admin\UserController@detailUserTracking'));
+    Route::get('/user/facebookComment',                     array('as'=>'userFacebookComment',       'uses'=>'Admin\UserController@facebookComment'));
+    Route::get('/user/generateFacebookCommentTable',        array('as'=>'userGenerateFacebookCommentTable',       'uses'=>'Admin\UserController@generateFacebookCommentTable'));
 
     //Info request
     Route::any('/advisory',                                  array('as'=>'index',                           'uses'=>'Admin\AdvisoryController@index'));

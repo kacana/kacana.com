@@ -157,6 +157,76 @@ var userPackage = {
               api.draw();
           });
       },
+      setupDatatableForFacebookComment: function(){
+          var $formInline = $('.form-inline');
+          var element = '#facebookComment';
+          $(element).parents('.box').css('overflow', 'auto');
+          var columns = [
+              {
+                  'title': 'ID',
+                  'width':'5%'
+              },
+              {
+                  'title': 'Sender',
+                  'render': function ( data, type, full, meta ) {
+                      return '<a href="https://facebook.com/'+full[2]+'" target="_blank" ><b>'+data+'</b></a>';
+                  }
+              },
+              {
+                  'title': 'Sender Image',
+                  'render':  function ( data, type, full, meta ) {
+                      return '<a href="https://facebook.com/'+full[2]+'" target="_blank" ><img src="http://graph.facebook.com/'+data+'/picture?type=large" style="width:70px"/></a>';
+                  }
+              },
+              {
+                  'title': 'PostId',
+                  'sortable':true,
+                  'render':  function ( data, type, full, meta ) {
+                        var postId = data.split('_');
+                        return postId[1];
+                  }
+              },
+              {
+                  'title': 'Message',
+                  'sortable':false
+              },
+              {
+                  'title': 'created',
+                  'width':'12%',
+                  'render': function ( data, type, full, meta ) {
+                      return data ? data.slice(0, -8) +'<br><b>' + data.slice(11, 19)+'</b>' : '';
+                  }
+              }
+          ];
+
+          var addParamsCallBack = function(oData){
+
+          };
+
+          var cacheLoadedCallBack = function(oData){
+              $formInline.find('input[name="name"]').val(oData.columns[1].search.search);
+              $formInline.find('input[name="post_id"]').val(oData.columns[3].search.search);
+              $formInline.find('input[name="message"]').val(oData.columns[4].search.search);
+          };
+
+          var datatable = Kacana.datatable.generateFacebookCommentTable(element, columns, addParamsCallBack, cacheLoadedCallBack);
+
+          $formInline.off('submit').on('submit', function (e) {
+              e.preventDefault();
+
+              var api = datatable.api(true);
+
+              var name = $formInline.find('input[name="name"]').val();
+              var postId = $formInline.find('input[name="post_id"]').val();
+              var message = $formInline.find('input[name="message"]').val();
+
+              api.column(1).search(name)
+                  .column(3).search(postId)
+                  .column(4).search(message);
+
+              api.draw();
+          });
+      },
       detailUser:{
           init: function () {
                 Kacana.user.detailUser.generateAddressReceiveByUserId();

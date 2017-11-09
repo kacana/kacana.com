@@ -35,4 +35,44 @@ class facebookCommentModel extends Model  {
 
         return $facebookComment;
     }
+
+    /**
+     * @param $request
+     * @param $columns
+     * @return array
+     */
+    public function generateUserTable($request, $columns){
+
+        $datatables = new DataTables();
+
+        $limit = $datatables::limit( $request, $columns );
+        $order = $datatables::order( $request, $columns );
+        $where = $datatables::filter( $request, $columns );
+
+        // Main query to actually get the data
+        $selectData = DB::table($this->table)
+            ->select($datatables::pluck($columns, 'db'))
+            ->orderBy($order['field'], $order['dir'])
+            ->skip($limit['offset'])
+            ->take($limit['limit']);
+
+        // Data set length
+        $recordsFiltered = $selectLength = DB::table($this->table)
+            ->select($datatables::pluck($columns, 'db'));
+
+        if($where){
+            $selectData->whereRaw($where);
+            $recordsFiltered->whereRaw($where);
+        }
+
+        /*
+         * Output
+         */
+        return array(
+            "draw"            => intval( $request['draw'] ),
+            "recordsTotal"    => intval( $selectLength->count() ),
+            "recordsFiltered" => intval( $recordsFiltered->count() ),
+            "data"            => $selectData->get()
+        );
+    }
 }

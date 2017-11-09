@@ -68,6 +68,15 @@ $action = getActionName(class_basename(Route::currentRouteAction()));
             </a>
         </li>
 
+        <li class="{{($controller == 'UserController' && $action == 'trackingUser')?'active':''}}">
+            <a href="{{URL::to('/user/facebookComment')}}">
+                <i class="fa fa-comment"></i>
+                <span>Facebook Comment</span>
+                <span class="pull-right-container">
+                </span>
+            </a>
+        </li>
+
         <li class="header">Quản Lý Đơn Hàng</li>
         <li class="treeview {{($controller == 'OrderController')?'active':''}}">
             <a href="{{URL::to('/order')}}">

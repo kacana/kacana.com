@@ -1,6 +1,7 @@
 <?php namespace App\services;
 
 use App\Http\Requests\Request;
+use App\models\facebookCommentModel;
 use App\models\orderDetailModel;
 use App\models\User;
 use App\models\userBusinessSocialModel;
@@ -118,6 +119,27 @@ class userService extends baseService {
         }
 
 
+
+        $return['data'] = $datatables::data_output( $columns, $return['data'] );
+
+        return $return;
+    }
+
+    public function generateFacebookCommentTable($request){
+        $facebookCommentModel = new facebookCommentModel();
+        $datatables = new DataTables();
+        $viewHelper = new ViewGenerateHelper();
+
+        $columns = array(
+            array( 'db' => 'facebook_comments.id', 'dt' => 0 ),
+            array( 'db' => 'facebook_comments.sender_name', 'dt' => 1 ),
+            array( 'db' => 'facebook_comments.sender_id', 'dt' => 2 ),
+            array( 'db' => 'facebook_comments.post_id', 'dt' => 3 ),
+            array( 'db' => 'facebook_comments.message', 'dt' => 4 ),
+            array( 'db' => 'facebook_comments.created_at', 'dt' => 5 )
+        );
+
+        $return = $facebookCommentModel->generateUserTable($request, $columns);
 
         $return['data'] = $datatables::data_output( $columns, $return['data'] );
 

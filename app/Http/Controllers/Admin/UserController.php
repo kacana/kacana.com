@@ -233,4 +233,26 @@ class UserController extends BaseController {
         return response()->json($return);
     }
 
+    public function facebookComment(Request $request){
+        return view('admin.user.facebook-comment');
+    }
+
+    public function generateFacebookCommentTable(Request $request)
+    {
+        $params = $request->all();
+        $userService = new userService();
+
+        try {
+            $return = $userService->generateFacebookCommentTable($params);
+
+        } catch (\Exception $e) {
+            // @codeCoverageIgnoreStart
+            $return['error'] = $e->getMessage();
+            $return['errorMsg'] = $e->getMessage();
+            // @codeCoverageIgnoreEnd
+        }
+
+        return response()->json($return);
+    }
+
 }
