@@ -135,8 +135,9 @@ class userService extends baseService {
             array( 'db' => 'facebook_comments.sender_name', 'dt' => 1 ),
             array( 'db' => 'facebook_comments.sender_id', 'dt' => 2 ),
             array( 'db' => 'facebook_comments.post_id', 'dt' => 3 ),
-            array( 'db' => 'facebook_comments.message', 'dt' => 4 ),
-            array( 'db' => 'facebook_comments.created_at', 'dt' => 5 )
+            array( 'db' => 'facebook_comments.item', 'dt' => 4 ),
+            array( 'db' => 'facebook_comments.message', 'dt' => 5 ),
+            array( 'db' => 'facebook_comments.created_at', 'dt' => 6 )
         );
 
         $return = $facebookCommentModel->generateUserTable($request, $columns);

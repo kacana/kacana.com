@@ -26,6 +26,11 @@
                             <input type="text" name="name" class="form-control" placeholder="Search Sender Name"/>
                             <input type="text" name="post_id" class="form-control" placeholder="Search Post"/>
                             <input type="text" name="message" class="form-control" placeholder="Search Message"/>
+                            <select class="form-control" name="search_type">
+                                <option value="">All Type</option>
+                                <option value="{{KACANA_FACEBOOK_COMMENT_TYPE_COMMENT}}">comment</option>
+                                <option value="{{KACANA_FACEBOOK_COMMENT_TYPE_LIKE}}">like</option>
+                            </select>
                             <button type="submit" class="btn btn-primary">Find</button>
                             <button type="reset" class="btn btn-default">Reset</button>
                             <button type="submit" class="btn btn-default">Export Data</button>
