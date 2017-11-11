@@ -16,4 +16,11 @@ class webhookService extends baseService {
         if(isset($data['hub_challenge']))
             return $data['hub_challenge'];
     }
+
+    public function getFacebookComment($senderName = '', $postId = '', $message = '', $type = '')
+    {
+        $facebookCommentModel = new facebookCommentModel();
+
+        return $facebookCommentModel->getFacebookComment($senderName, $postId, $message, $type);
+    }
 }

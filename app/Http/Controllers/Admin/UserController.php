@@ -8,6 +8,7 @@ use App\models\addressReceiveModel;
 use App\services\addressService;
 use App\services\userTrackingService;
 use App\services\orderService;
+use App\services\webhookService;
 use GuzzleHttp\Psr7\Response;
 use Image;
 use Datatables;
@@ -253,6 +254,23 @@ class UserController extends BaseController {
         }
 
         return response()->json($return);
+    }
+
+    public function printFacebookComment(Request $request)
+    {
+        try {
+            $webhookService = new webhookService();
+            $senderName = $request->input('senderName', false);
+            $postId = $request->input('postId', false);
+            $type = $request->input('type', false);
+            $message = $request->input('message', false);
+
+            $faceBookComment = $webhookService->getFacebookComment($senderName, $postId, $message, $type);
+
+            return view('admin.user.print-facebook-comment', ['facebookComment' => $faceBookComment]);
+        } catch (\Exception $e) {
+           abort(404, 'failed to get facebook comment;');
+        }
     }
 
 }

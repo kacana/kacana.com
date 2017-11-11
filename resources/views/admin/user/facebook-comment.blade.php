@@ -33,7 +33,7 @@
                             </select>
                             <button type="submit" class="btn btn-primary">Find</button>
                             <button type="reset" class="btn btn-default">Reset</button>
-                            <button type="submit" class="btn btn-default">Export Data</button>
+                            <div type="button" id="export-comment" class="btn btn-default">Export Data </div>
                         </form>
                     </div>
                 </div>
@@ -55,6 +55,6 @@
     </section>
 @stop
 @section('javascript')
-    Kacana.user.setupDatatableForFacebookComment();
+    Kacana.user.facebookComment.init();
 @stop
 

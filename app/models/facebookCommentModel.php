@@ -75,4 +75,22 @@ class facebookCommentModel extends Model  {
             "data"            => $selectData->get()
         );
     }
+
+    public function getFacebookComment($senderName = '', $postId = '', $message = '', $type = '')
+    {
+        $query = $this;
+
+        if($senderName)
+            $query = $query->where('sender_name', 'LIKE', '%'.$senderName.'%');
+        if($postId)
+            $query = $query->where('post_id', 'LIKE', '%'.$postId.'%');
+        if($message)
+            $query = $query->where('message', 'LIKE', '%'.$message.'%');
+        if($type)
+            $query = $query->where('item', $type);
+
+        $query->groupBy('sender_id');
+
+        return $query->get();
+    }
 }

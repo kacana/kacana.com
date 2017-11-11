@@ -146,101 +146,13 @@ var userPackage = {
           var cacheLoadedCallBack = function(oData){
 
           };
-            var trackingId = $('#user-tracking-id').data('id');
+          var trackingId = $('#user-tracking-id').data('id');
           var datatable = Kacana.datatable.userTracking(trackingId, element, columns, addParamsCallBack, cacheLoadedCallBack);
 
           $formInline.off('submit').on('submit', function (e) {
               e.preventDefault();
 
               var api = datatable.api(true);
-
-              api.draw();
-          });
-      },
-      setupDatatableForFacebookComment: function(){
-          var $formInline = $('.form-inline');
-          var element = '#facebookComment';
-          $(element).parents('.box').css('overflow', 'auto');
-          var columns = [
-              {
-                  'title': 'ID',
-                  'width':'5%'
-              },
-              {
-                  'title': 'Sender',
-                  'width':'10%',
-                  'render': function ( data, type, full, meta ) {
-                      return '<a href="https://facebook.com/'+full[2]+'" target="_blank" ><b>'+data+'</b></a>';
-                  }
-              },
-              {
-                  'title': 'Sender Image',
-                  'width':'5%',
-                  'sortable':false,
-                  'render':  function ( data, type, full, meta ) {
-                      return '<a href="https://facebook.com/'+full[2]+'" target="_blank" ><img src="http://graph.facebook.com/'+data+'/picture?type=large" style="width:50px"/></a>';
-                  }
-              },
-              {
-                  'title': 'PostId',
-                  'sortable':true,
-                  'width':'12%',
-                  'render':  function ( data, type, full, meta ) {
-                        var postId = data.split('_');
-                        return postId[1];
-                  }
-              },
-              {
-                  'title': 'type',
-                  'width':'5%',
-                  'sortable':true,
-                  'render':  function ( data, type, full, meta ) {
-                      if(data == 'like')
-                        return '<span style="display: block" class="text-aqua text-center"><i class="fa fa-thumbs-o-up"></i><p>'+data+'</p></span>';
-                      else if(data == 'comment')
-                        return '<span style="display: block" class="text-green text-center"><i class="fa fa-comment" ></i><p>'+data+'</p></span>';
-                  }
-              },
-              {
-                  'title': 'Message',
-                  'sortable':true
-              },
-              {
-                  'title': 'created',
-                  'width':'12%',
-                  'render': function ( data, type, full, meta ) {
-                      return data ? data.slice(0, -8) +'<br><b>' + data.slice(11, 19)+'</b>' : '';
-                  }
-              }
-          ];
-
-          var addParamsCallBack = function(oData){
-
-          };
-
-          var cacheLoadedCallBack = function(oData){
-              $formInline.find('input[name="name"]').val(oData.columns[1].search.search);
-              $formInline.find('input[name="post_id"]').val(oData.columns[3].search.search);
-              $formInline.find('select[name="search_type"]').val(oData.columns[4].search.search);
-              $formInline.find('input[name="message"]').val(oData.columns[5].search.search);
-          };
-
-          var datatable = Kacana.datatable.generateFacebookCommentTable(element, columns, addParamsCallBack, cacheLoadedCallBack);
-
-          $formInline.off('submit').on('submit', function (e) {
-              e.preventDefault();
-
-              var api = datatable.api(true);
-
-              var name = $formInline.find('input[name="name"]').val();
-              var postId = $formInline.find('input[name="post_id"]').val();
-              var searchType = $formInline.find('select[name="search_type"]').val();
-              var message = $formInline.find('input[name="message"]').val();
-
-              api.column(1).search(name)
-                  .column(3).search(postId)
-                  .column(4).search(searchType)
-                  .column(5).search(message);
 
               api.draw();
           });
@@ -376,6 +288,118 @@ var userPackage = {
 
                       api.draw();
                   });
+          }
+      },
+      facebookComment: {
+          init: function () {
+              Kacana.user.facebookComment.setupDatatableForFacebookComment();
+              Kacana.user.facebookComment.bindEvent();
+          },
+          bindEvent: function () {
+              $('#export-comment').on('click', Kacana.user.facebookComment.printCommentFacebook)
+          },
+          printCommentFacebook: function () {
+              var $formInline = $('.form-inline');
+
+              var senderName = $formInline.find('input[name="name"]').val();
+              var postId = $formInline.find('input[name="post_id"]').val();
+              var searchType = $formInline.find('select[name="search_type"]').val();
+              var message = $formInline.find('input[name="message"]').val();
+
+              var url = '/user/printFacebookComment/?senderName=' + senderName;
+              url += '&postId='+postId;
+              url += '&type='+searchType;
+              url += '&message='+message;
+              // window.open('/shipping/printOrderStore/?id=100', 'Receipt Information', 'height=900,width=940');
+              window.open(url, 'Receipt Information', 'height=900,width=940');
+          },
+          setupDatatableForFacebookComment: function(){
+              var $formInline = $('.form-inline');
+              var element = '#facebookComment';
+              $(element).parents('.box').css('overflow', 'auto');
+              var columns = [
+                  {
+                      'title': 'ID',
+                      'width':'5%'
+                  },
+                  {
+                      'title': 'Sender',
+                      'width':'10%',
+                      'render': function ( data, type, full, meta ) {
+                          return '<a href="https://facebook.com/'+full[2]+'" target="_blank" ><b>'+data+'</b></a>';
+                      }
+                  },
+                  {
+                      'title': 'Sender Image',
+                      'width':'5%',
+                      'sortable':false,
+                      'render':  function ( data, type, full, meta ) {
+                          return '<a href="https://facebook.com/'+full[2]+'" target="_blank" ><img src="http://graph.facebook.com/'+data+'/picture?type=large" style="width:50px"/></a>';
+                      }
+                  },
+                  {
+                      'title': 'PostId',
+                      'sortable':true,
+                      'width':'12%',
+                      'render':  function ( data, type, full, meta ) {
+                          var postId = data.split('_');
+                          return postId[1];
+                      }
+                  },
+                  {
+                      'title': 'type',
+                      'width':'5%',
+                      'sortable':true,
+                      'render':  function ( data, type, full, meta ) {
+                          if(data == 'like')
+                              return '<span style="display: block" class="text-aqua text-center"><i class="fa fa-thumbs-o-up"></i><p>'+data+'</p></span>';
+                          else if(data == 'comment')
+                              return '<span style="display: block" class="text-green text-center"><i class="fa fa-comment" ></i><p>'+data+'</p></span>';
+                      }
+                  },
+                  {
+                      'title': 'Message',
+                      'sortable':true
+                  },
+                  {
+                      'title': 'created',
+                      'width':'12%',
+                      'render': function ( data, type, full, meta ) {
+                          return data ? data.slice(0, -8) +'<br><b>' + data.slice(11, 19)+'</b>' : '';
+                      }
+                  }
+              ];
+
+              var addParamsCallBack = function(oData){
+
+              };
+
+              var cacheLoadedCallBack = function(oData){
+                  $formInline.find('input[name="name"]').val(oData.columns[1].search.search);
+                  $formInline.find('input[name="post_id"]').val(oData.columns[3].search.search);
+                  $formInline.find('select[name="search_type"]').val(oData.columns[4].search.search);
+                  $formInline.find('input[name="message"]').val(oData.columns[5].search.search);
+              };
+
+              var datatable = Kacana.datatable.generateFacebookCommentTable(element, columns, addParamsCallBack, cacheLoadedCallBack);
+
+              $formInline.off('submit').on('submit', function (e) {
+                  e.preventDefault();
+
+                  var api = datatable.api(true);
+
+                  var name = $formInline.find('input[name="name"]').val();
+                  var postId = $formInline.find('input[name="post_id"]').val();
+                  var searchType = $formInline.find('select[name="search_type"]').val();
+                  var message = $formInline.find('input[name="message"]').val();
+
+                  api.column(1).search(name)
+                      .column(3).search(postId)
+                      .column(4).search(searchType)
+                      .column(5).search(message);
+
+                  api.draw();
+              });
           }
       }
    }
