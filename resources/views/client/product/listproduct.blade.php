@@ -4,7 +4,7 @@
 @section('meta-keyword', implode(", ",$tag->tagKeyword))
 
 @section('top-infomation')
-    <section class="parallax" id="product-list-top-menu" data-stellar-background-ratio="0.5" style="background-image: url('@if($tag->image){{ AWS_CDN_URL.$tag->image}}@else {{AWS_CDN_URL}}/images/client/account-cover.jpg @endif');">
+    <section class="parallax" id="product-list-top-menu" data-stellar-background-ratio="0.5" style="background-image: url('@if($tag->image){{ AWS_CDN_URL.$tag->image}}@else {{ KACANA_URL_BACKGROUND_BANNER_DEFAULT }} @endif');">
         <div class="container">
             <div class="row center">
                 <div class="col-md-12">

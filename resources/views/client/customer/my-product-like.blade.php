@@ -1,7 +1,7 @@
 @extends('layouts.client.master')
 @section('meta-title', 'Danh sách yêu thích')
 @section('top-infomation')
-    <section class="parallax" id="product-list-top-menu" data-stellar-background-ratio="0.5" style="background-image: url('/images/client/homepage/account-cover.jpg');">
+    <section class="parallax" id="product-list-top-menu" data-stellar-background-ratio="0.5" style="background-image: url('{{KACANA_URL_BACKGROUND_BANNER_DEFAULT}}');">
         <div class="container">
             <div class="row center">
                 <div class="col-md-12">
