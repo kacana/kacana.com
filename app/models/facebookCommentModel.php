@@ -90,6 +90,7 @@ class facebookCommentModel extends Model  {
             $query = $query->where('item', $type);
 
         $query->groupBy('sender_id');
+        $query->orderBy('id', 'desc');
 
         return $query->get();
     }

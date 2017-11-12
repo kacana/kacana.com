@@ -20,7 +20,7 @@
             width: 415px;
             padding: 5px;
             border: 1px solid #ccc;
-            margin: 10px;
+            margin: 10px 10px 9px 10px;
             display: inline-block;
         }
 
@@ -60,7 +60,7 @@
     @endforeach
 </div>
 <script>
-//    window.print();
+    window.print();
 </script>
 </body>
 </html>
