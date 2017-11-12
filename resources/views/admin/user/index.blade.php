@@ -31,6 +31,7 @@
                                 <option value="{{KACANA_USER_ROLE_ADMIN}}">Admin</option>
                                 <option value="{{KACANA_USER_ROLE_BUYER}}">Buyer</option>
                                 <option value="{{KACANA_USER_ROLE_PARTNER}}">Partner</option>
+                                <option value="{{KACANA_USER_ROLE_KCNER}}">Kcner</option>
                             </select>
                             <select class="form-control" name="searchStatus">
                                 <option value="">All Status</option>

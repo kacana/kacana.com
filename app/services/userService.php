@@ -110,7 +110,7 @@ class userService extends baseService {
 
         if(count($return['data'])) {
             $optionStatus = [KACANA_TAG_STATUS_ACTIVE ,KACANA_USER_STATUS_INACTIVE, KACANA_USER_STATUS_BLOCK, KACANA_USER_STATUS_CREATE_BY_SYSTEM];
-            $optionRole = [KACANA_USER_ROLE_ADMIN, KACANA_USER_ROLE_BUYER, KACANA_USER_ROLE_PARTNER];
+            $optionRole = [KACANA_USER_ROLE_ADMIN, KACANA_USER_ROLE_BUYER, KACANA_USER_ROLE_PARTNER, KACANA_USER_ROLE_KCNER];
 
             foreach ($return['data'] as &$res) {
                 $res->status = $viewHelper->dropdownView('users', $res->id, $res->status, 'status', $optionStatus);

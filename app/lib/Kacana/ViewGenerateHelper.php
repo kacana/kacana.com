@@ -67,6 +67,9 @@ class ViewGenerateHelper {
             case 'users_role_'.KACANA_USER_ROLE_PARTNER:
                 $iconStatus = '<i class="fa fa-user"></i> Partner ';
                 break;
+            case 'users_role_'.KACANA_USER_ROLE_KCNER:
+                $iconStatus = '<i class="fa fa-user"></i> kcner ';
+                break;
             case 'orders_status_'.KACANA_ORDER_STATUS_NEW:
                 $iconStatus = '<span class="label label-primary"><i class="fa fa-smile-o"></i> new</span>';
                 break;
