@@ -1,255 +1,64 @@
 @extends('layouts.kcner.master')
 
-@section('title', 'Dashboard Admin page ')
+@section('title', 'KacanaEr Management')
 
-@section('section-content-id', 'content-dashboard-page')
+@section('section-content-id', 'content-index-page')
 
 @section('content')
-		<!-- Content Header (Page header) -->
-<section class="content-header">
-	<h1>
-		KACANA REPORT
-		<small>Version 1.0</small>
-	</h1>
-	<ol class="breadcrumb">
-		<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-		<li class="active">Dashboard</li>
-	</ol>
-</section>
 
-<!-- Main content -->
-<section class="content">
-	<!-- Info boxes -->
-	<div class="row" >
-		<div class="col-xs-4">
-			<div class="box">
-				<div class="box-header with-border">
-					<h3 class="box-title">Kacana Simple Report</h3>
-					<div class="box-tools pull-right">
-						<button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-						<div class="btn-group">
-							<button class="btn btn-box-tool dropdown-toggle" data-toggle="dropdown"><i class="fa fa-wrench"></i></button>
-							<ul class="dropdown-menu" role="menu">
-								<li><a href="/?duration=1">1 ngày</a></li>
-								<li class="divider"></li>
-								<li><a href="/?duration=7">1 Tuần</a></li>
-								<li class="divider"></li>
-								<li><a href="/?duration=30">1 Tháng</a></li>
-								<li class="divider"></li>
-								<li><a href="/?duration=90">3 Tháng</a></li>
-								<li class="divider"></li>
-								<li><a href="/?duration=180">6 Tháng</a></li>
-								<li class="divider"></li>
-								<li><a href="/?duration=365">1 Năm</a></li>
-								<li class="divider"></li>
-								<li><a href="/?duration=all">Tất cả</a></li>
-							</ul>
-						</div>
-					</div>
-				</div><!-- /.box-header -->
-				<div class="box-body">
-					<div class="row">
-						<div class="col-xs-12">
-							<div data-url="/index/reportChartUser" data-color="f39c12" data-type-report="User" data-xkey="created" data-ykey="count" class="info-box item-report bg-yellow">
-								<span class="info-box-icon"><i class="ion ion-ios-personadd-outline"></i></span>
-								<div class="info-box-content">
-									<span class="info-box-text">Thành viên</span>
-									<span class="info-box-number">{{$user_count}}</span>
-									<div class="progress">
-										<div class="progress-bar" style="width: 0%"></div>
-									</div>
-									<span class="progress-description">
-										{{$user_count_duration}} thành viên mới trong {{$duration}} ngày
-									  </span>
-								</div><!-- /.info-box-content -->
-							</div><!-- /.info-box -->
-							<div data-url="/index/reportChartOrder" data-color="00a65a" data-type-report="Order" data-xkey="created" data-ykey="count" class="info-box item-report bg-green">
-								<span class="info-box-icon"><i class="ion ion-ios-cart-outline"></i></span>
-								<div class="info-box-content">
-									<span class="info-box-text">Đơn hàng</span>
-									<span class="info-box-number">{{$order_count}}</span>
-									<div class="progress">
-										<div class="progress-bar" style="width: 0%"></div>
-									</div>
-									<span class="progress-description">
-										{{$order_count_duration}} đơn hàng trong {{$duration}} ngày
-									  </span>
-								</div><!-- /.info-box-content -->
-							</div><!-- /.info-box -->
-							<div data-url="/index/reportChartProductLike" data-color="dd4b39" data-type-report="ProductLike" data-xkey="created" data-ykey="count" class="info-box item-report bg-red">
-								<span class="info-box-icon"><i class="ion ion-ios-heart-outline"></i></span>
-								<div class="info-box-content">
-									<span class="info-box-text">Thích sản phẩm</span>
-									<span class="info-box-number">{{$like_count}}</span>
-									<div class="progress">
-										<div class="progress-bar" style="width: 0%"></div>
-									</div>
-									<span class="progress-description">
-										{{$like_count_duration}} lượt thích sản phẩm trong {{$duration}} ngày
-									  </span>
-								</div><!-- /.info-box-content -->
-							</div><!-- /.info-box -->
-							<div data-url="/index/reportChartProductView" data-color="00c0ef" data-type-report="ProductView" data-xkey="created" data-ykey="count" class="info-box item-report bg-aqua">
-								<span class="info-box-icon"><i class="ion ion-ios-eye-outline"></i></span>
-								<div class="info-box-content">
-									<span class="info-box-text">Xem sản phẩm</span>
-									<span class="info-box-number">{{$view_count}}</span>
-									<div class="progress">
-										<div class="progress-bar" style="width: 0%"></div>
-									</div>
-									<span class="progress-description">
-										{{$view_count_duration}} lượt xem sản phẩm trong {{$duration}} ngày
-									  </span>
-								</div><!-- /.info-box-content -->
-							</div>
-							<div data-url="/index/reportChartTrackingSearch" data-color="d81b60" data-type-report="TrackingSearch" data-xkey="created" data-ykey="count" class="info-box item-report bg-maroon">
-								<span class="info-box-icon"><i class="ion ion-ios-search"></i></span>
-								<div class="info-box-content">
-									<span class="info-box-text">Tìm kiếm</span>
-									<span class="info-box-number">{{$search_count}}</span>
-									<div class="progress">
-										<div class="progress-bar" style="width: 0%"></div>
-									</div>
-									<span class="progress-description">
-										{{$search_count_duration}} lượt tìm kiếm trong {{$duration}} ngày
-									  </span>
-								</div><!-- /.info-box-content -->
-							</div>
-							<div data-url="/index/reportChartUserTracking" data-color="39cccc" data-type-report="UserTracking" data-xkey="created" data-ykey="count" class="info-box item-report bg-teal">
-								<span class="info-box-icon"><i class="ion ion-ios-search"></i></span>
-								<div class="info-box-content">
-									<span class="info-box-text">Phiên người dùng</span>
-									<span class="info-box-number">{{$user_session}}</span>
-									<div class="progress">
-										<div class="progress-bar" style="width: 0%"></div>
-									</div>
-									<span class="progress-description">
-										{{$user_session_duration}} Phiên người dùng trong hôm nay
-									  </span>
-								</div><!-- /.info-box-content -->
-							</div>
-						</div>
-						</div>
-					</div><!-- /.row -->
-				</div><!-- ./box-body -->
-			</div><!-- /.box -->
-		<div class="col-xs-8">
-			<div class="box">
-				<div class="box-header with-border">
-					<h3 class="box-title">Kacana Chart Report</h3>
-					<div class="box-tools pull-right">
-						<button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-					</div>
-				</div><!-- /.box-header -->
-				<div class="box-body">
-					<div class="row">
-						<div class="col-xs-4">
-							<div class="form-group">
-								<label>Chọn thời gian:</label>
+    <style>
 
-								<div class="input-group">
-									<div class="input-group-addon">
-										<i class="fa fa-calendar"></i>
-									</div>
-									<input class="form-control pull-right" id="report-duration" type="text">
-								</div>
-								<!-- /.input group -->
-							</div>
-						</div>
-						<div class="col-xs-4">
-							<div class="form-group">
-								<label>Loại báo cáo:</label>
+        .bgimg-1 {
+            position: relative;
+            opacity: 0.65;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            min-height: inherit;
 
-								<div class="input-group">
-									<div class="input-group-addon">
-										<i class="fa fa-area-chart"></i>
-									</div>
-									<select id="report-type" class="form-control" >
-										<option value="day">
-											ngày
-										</option>
-										<option value="month">
-											tháng
-										</option>
-										<option value="year">
-											năm
-										</option>
-									</select>
-								</div>
-								<!-- /.input group -->
-							</div>
-						</div>
-						<div class="col-xs-4">
-							<label>.</label>
-							<div class="form-group">
-								<button id="btn-show-report" class="btn btn-primary">Thống kê</button>
-							</div>
-						</div>
+        }
+        .bgimg-1 {
+            background-image: url("https://source.unsplash.com/1600x400?bags,purses,backpacks");
+            height: 100%;
+        }
 
-					</div>
-					<div class="row">
-						<div class="col-xs-12">
-							<div class="chart tab-pane active" id="revenue-chart" style="position: relative; height: 556px;"></div>
-						</div>
-					</div>
-				</div><!-- /.row -->
-			</div><!-- ./box-body -->
+        .caption {
+            position: absolute;
+            left: 0;
+            top: 50%;
+            width: 100%;
+            text-align: center;
+            color: #000;
+        }
 
-		</div><!-- /.box -->
-	</div>
-	{{--<div class="row">--}}
-		{{--<div class="col-lg-12">--}}
-			{{--<div class="box box-primary">--}}
-				{{--<div class="box-header">--}}
-					{{--<h3 class="box-title">Search user</h3>--}}
+        .caption span.border {
+            background-color: #111;
+            color: #fff;
+            padding: 18px;
+            font-size: 25px;
+            letter-spacing: 10px;
+        }
 
-				{{--</div>--}}
-				{{--<div class="box-body">--}}
-					{{--<form method="post" class="form-inline">--}}
-						{{--<input type="text" name="name" class="form-control" placeholder="Search Name"/>--}}
-						{{--<input type="text" name="email" class="form-control" placeholder="Search Email"/>--}}
-						{{--<input type="text" name="phone" class="form-control" placeholder="Search Phone"/>--}}
-						{{--<select class="form-control" name="searchRole">--}}
-							{{--<option value="">All Role</option>--}}
-							{{--<option value="'{{KACANA_USER_ROLE_ADMIN}}'">Admin</option>--}}
-							{{--<option value="'{{KACANA_USER_ROLE_BUYER}}'">Buyer</option>--}}
-						{{--</select>--}}
-						{{--<select class="form-control" name="searchStatus">--}}
-							{{--<option value="">All Status</option>--}}
-							{{--<option value="{{KACANA_USER_STATUS_ACTIVE}}">Active</option>--}}
-							{{--<option value="{{KACANA_USER_STATUS_INACTIVE}}">Inactive</option>--}}
-							{{--<option value="{{KACANA_USER_STATUS_BLOCK}}">Block</option>--}}
-							{{--<option value="{{KACANA_USER_STATUS_CREATE_BY_SYSTEM}}">create by sys</option>--}}
-						{{--</select>--}}
-						{{--<button type="submit" class="btn btn-primary">Find</button>--}}
-						{{--<button type="reset" class="btn btn-default">Reset</button>--}}
-					{{--</form>--}}
-				{{--</div>--}}
-			{{--</div>--}}
-		{{--</div>--}}
-	{{--</div>--}}
-	<div class="row" >
-		<div class="col-lg-12">
-			<div class="box">
-				<div class="box-header">
-					<h3 class="box-title table-title-report">Detail Table</h3>
-				</div>
-				<div class="box-body no-padding">
-					<table id="detailTable" class="table table-striped">
-						<thead>
-						</thead>
-						<tbody>
-						</tbody>
-					</table>
-					<div class="clearfix"></div>
-				</div>
-			</div>
-		</div>
-	</div>
-</section><!-- /.content -->
+        h3 {
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            font: 20px "Lato", sans-serif;
+            color: #111;
+        }
+    </style>
+    <style type="text/css">@keyframes fadeInOpacity{0%{opacity:0}to{opacity:1}}:hover>*>.fbvd--wrapper{animation-name:fadeInOpacity;animation-duration:.3s;opacity:1}.fbvd--wrapper{position:absolute;top:10px;left:10px;opacity:0;text-align:center;margin:0;z-index:5}.fbvd--wrapper a{background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz48IURPQ1RZUEUgc3ZnIFBVQkxJQyAiLS8vVzNDLy9EVEQgU1ZHIDEuMS8vRU4iICJodHRwOi8vd3d3LnczLm9yZy9HcmFwaGljcy9TVkcvMS4xL0RURC9zdmcxMS5kdGQiPjxzdmcgdmVyc2lvbj0iMS4xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIHZpZXdCb3g9IjAgMCAxNiAxNiI+PHBhdGggZmlsbD0iIzRiNGY1NiIgZD0iTTggMTUuNWw3LjUtNy41aC00LjV2LThoLTZ2OGgtNC41eiI+PC9wYXRoPjwvc3ZnPg==) no-repeat 3px 4.55px; background-color: #fff; display:inline-block;font:700 14px Helvetica,Arial,sans-serif;color:#4b4f56;text-decoration:none;vertical-align:middle;padding:0px 8px 0px;margin-right:8px;border-radius:2px; line-height: 22px; padding-left:19px; border: 1px solid #e7e7e7; background-size: 13px}.fbvd--wrapper a:last-child{margin-right:0}.fbvd--wrapper a:hover{text-decoration:none}.fbvd--wrapper a:focus{box-shadow:0 0 1px 2px rgba(88,144,255,.75),0 1px 1px rgba(0,0,0,.15);outline:none}.fbvd--wrapper b{font-size:13px;position:relative;top:1px;color:#3b5998;font-weight:400}</style></head>
+    <div class="bgimg-1">
+        <div class="caption">
+            <span class="border">{{Auth::getUser()->name}}</span>
+            <br>
+            <br>
+            <br>
+            <span class="border">Fighting together to get GOAL!</span>
+        </div>
+    </div>
 
 @stop
 
 @section('javascript')
-	Kacana.index.init();
+    Kacana.blog.listPost.init();
 @stop
