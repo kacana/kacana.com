@@ -401,4 +401,6 @@ Route::group(['domain'=>KACANA_AUTH_KCNER_NAME.'.{nameDomain}','middleware' => '
         Route::any('/updatePostMainImage',                      array('as'=>'Blog.update.post.main.image',      'uses'=>'Kcner\BlogController@updatePostMainImage'));
         Route::any('/addPostImage',                             array('as'=>'Blog.add.image',                   'uses'=>'Kcner\BlogController@addPostImage'));
     });
+
+    Route::any('/upload/chunk',                             array('as'=>'upload',                           'uses'=>'Client\UploadController@chunk'));
 });
