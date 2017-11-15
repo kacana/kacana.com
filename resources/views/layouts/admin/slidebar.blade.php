@@ -90,6 +90,13 @@ $action = getActionName(class_basename(Route::currentRouteAction()));
                 <span>Shipping</span>
             </a>
         </li>
+        <li class="treeview {{($controller == 'OrderFromController')?'active':''}}">
+            <a href="{{URL::to('/orderFrom')}}">
+                <i class="fa fa-link fa-6"></i>
+                <span>Quản lý Order From</span>
+            </a>
+        </li>
+
         <li class="header">Quản Lý Partner</li>
         <li class="treeview {{($controller == 'PartnerController' && $action == 'index')?'active':''}}">
             <a href="{{URL::to('/partner')}}">
