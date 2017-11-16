@@ -226,9 +226,6 @@ Route::group(['domain'=>KACANA_AUTH_ADMIN_NAME.'.{nameDomain}','middleware' => '
         Route::any('/generateOrderFromTable',                   array('as'=>'OrderFrom.generate.orderFrom.table',    'uses'=>'Admin\OrderFromController@generateOrderFromTable'));
         Route::any('/createOrderFrom',                          array('as'=>'OrderFrom.create.orderFrom',            'uses'=>'Admin\OrderFromController@createOrderFrom'));
         Route::any('/editOrderFrom/{id}',              array('as'=>'OrderFrom.edit.orderFrom',              'uses'=>'Admin\OrderFromController@editOrderFrom'));
-//        Route::any('/searchTagPost',                            array('as'=>'Blog.search.tag.post',             'uses'=>'Admin\BlogController@searchTagPost'));
-//        Route::any('/updatePostMainImage',                      array('as'=>'Blog.update.post.main.image',      'uses'=>'Admin\BlogController@updatePostMainImage'));
-//        Route::any('/addPostImage',                             array('as'=>'Blog.add.image',                   'uses'=>'Admin\BlogController@addPostImage'));
     });
 });
 

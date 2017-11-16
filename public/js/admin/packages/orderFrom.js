@@ -67,34 +67,14 @@ var orderFromPackage = {
                 ];
 
                 var addParamsCallBack = function (oData) {
-                    //search name or email
-                    //oData.columns[2].search.orWhere = true;
-                    //oData.columns[3].search.orWhere = true;
+
                 };
 
                 var cacheLoadedCallBack = function (oData) {
-                    $formInline.find('input[name="search"]').val(oData.columns[1].search.search);
-                    $formInline.find('select[name="searchStatus"]').val(oData.columns[2].search.search);
+
                 };
 
                 var datatable = Kacana.datatable.orderFrom(element, columns, addParamsCallBack, cacheLoadedCallBack);
-
-                $formInline.off('submit')
-                    .on('submit', function (e) {
-                        e.preventDefault();
-
-                        var api = datatable.api(true);
-
-                        //var userType = $formInline.find('select[name="searchUserType"]').val();
-                        var status = $formInline.find('select[name="searchStatus"]').val();
-                        //var level = $formInline.find('select[name="searchLevel"]').val();
-                        var text = $formInline.find('input[name="search"]').val();
-                        //
-                        api.column(1).search(text)
-                            .column(2).search(status, true);
-
-                        api.draw();
-                    });
             }
         }
     }
