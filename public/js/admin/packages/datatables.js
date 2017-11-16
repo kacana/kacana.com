@@ -562,7 +562,29 @@ var datatablePackage = {
             };
 
             return Kacana.datatable.init(element, url, columns, defaultSearchColumns, addParamsCallBack, cacheParamsCallBack, rowCallBack, drawCallBack, cacheLoadedCallBack, options);
-        }
+        },
+        orderFrom: function (element, columns, addParamsCallBack, cacheLoadedCallBack) {
+            var url = '/orderFrom/generateOrderFromTable/';
+            var options = {
+                'order': [0, "desc"],
+                displayLength: 10
+            };
+            var defaultSearchColumns = [];
+
+            var cacheParamsCallBack = function(oData){
+                //do something
+            };
+
+            var drawCallBack = function(e){
+
+            };
+
+            var rowCallBack = function(){
+                //do something
+            };
+
+            return Kacana.datatable.init(element, url, columns, defaultSearchColumns, addParamsCallBack, cacheParamsCallBack, rowCallBack, drawCallBack, cacheLoadedCallBack, options);
+        },
 
     }
 };
