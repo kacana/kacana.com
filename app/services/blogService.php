@@ -47,7 +47,7 @@ class blogService extends baseService
         return $this->_blogComment->createItem();
     }
 
-    public function generatePostTable($request)
+    public function generatePostTable($request, $userId = false)
     {
         $blogPostModel = new blogPostModel();
         $datatables = new DataTables();
@@ -64,7 +64,7 @@ class blogService extends baseService
             array('db' => 'blog_posts.updated_at', 'dt' => 7)
         );
 
-        $return = $blogPostModel->generatePostTable($request, $columns);
+        $return = $blogPostModel->generatePostTable($request, $columns,$userId);
         $optionStatus = [KACANA_BLOG_POST_STATUS_ACTIVE, KACANA_BLOG_POST_STATUS_INACTIVE];
 
         if (count($return['data'])) {
@@ -108,18 +108,18 @@ class blogService extends baseService
         return $return;
     }
 
-    public function getPostById($postId, $status = KACANA_BLOG_POST_STATUS_ACTIVE)
+    public function getPostById($postId, $status = KACANA_BLOG_POST_STATUS_ACTIVE, $userId = false)
     {
-        $post = $this->_blogPost->getItemById($postId, $status);
+        $post = $this->_blogPost->getItemById($postId, $status, $userId);
 
         return $post;
     }
 
-    public function updateBlogPost($id, $title, $tagId, $status, $body, $postTags)
+    public function updateBlogPost($id, $title, $tagId, $status, $body, $postTags, $userId = false)
     {
         $this->updateTagPost($postTags, $id);
         $this->trimImageDesc($body, $id);
-        return $this->_blogPost->updateItem($id, $title, $tagId, $status, $this->trimElementDesc($body));
+        return $this->_blogPost->updateItem($id, $title, $tagId, $status, $this->trimElementDesc($body), $userId);
     }
 
     /**

@@ -49,7 +49,7 @@ class BlogController extends BaseController {
         $blogService = new blogService();
 
         try {
-            $return = $blogService->generatePostTable($params);
+            $return = $blogService->generatePostTable($params, $this->_user->id);
 
         } catch (\Exception $e) {
             // @codeCoverageIgnoreStart
@@ -107,13 +107,17 @@ class BlogController extends BaseController {
                 $status = $request->input('status', KACANA_BLOG_POST_STATUS_INACTIVE);
                 $postTags = $request->input('post_tags', 0);
                 $body =  $request->input('post_body', '');
-                $blogService->updateBlogPost($id, $title, $tagId, $status, $body, $postTags);
+                $blogService->updateBlogPost($id, $title, $tagId, $status, $body, $postTags, $this->_user->id);
             }
-            $post = $blogService->getPostById($postId, false);
+            $post = $blogService->getPostById($postId, false, $this->_user->id);
 
             $tags = $tagService->getPostTag();
             $groupTag = $tagService->getTagGroup();
-            return view('kcner.blog.edit-post', array('post'=>$post, 'tags' => $tags, 'groupTag' => $groupTag));
+            if($post)
+                return view('kcner.blog.edit-post', array('post'=>$post, 'tags' => $tags, 'groupTag' => $groupTag));
+            else
+                return view('kcner.blog.index', array('tags'=>$tags));
+
         } catch (\Exception $e) {
             // @codeCoverageIgnoreStart
             $return['error'] = $e->getMessage();

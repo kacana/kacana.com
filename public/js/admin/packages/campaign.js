@@ -133,7 +133,7 @@ var campaignPackage = {
                         'class': 'center',
                         'sortable': false,
                         'render': function (data, type, full, meta) {
-                            return '<a href="/campaign/edit/?campaignId=' + full[0] + '" class="btn btn-default btn-xs"><i class="fa fa-pencil"></i></a>';
+                            return '<a href="/campaign/edit/' + full[0] + '" class="btn btn-default btn-xs"><i class="fa fa-pencil"></i></a>';
                         }
                     },
                 ];

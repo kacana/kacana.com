@@ -66,10 +66,8 @@ class CampaignController extends BaseController
         return response()->json($return);
     }
 
-    public function edit(Request $request){
+    public function edit($domain, $campaignId, Request $request){
         $campaignService = new campaignService();
-        $campaignId = $request->input('campaignId');
-
         $campaign = $campaignService->getCampaignById($campaignId);
 
         return view('admin.campaign.edit', array('campaign' => $campaign) );
@@ -94,7 +92,7 @@ class CampaignController extends BaseController
 
         $campaignService->updateCampaign($campaignId, $campaignName, $campaignDescription, $displayDateStart, $displayDateEnd, $dateStart, $dateEnd);
 
-        return redirect('/campaign/edit/?campaignId='.$campaignId);
+        return redirect('/campaign/edit/'.$campaignId);
     }
 
     public function updateCampaignImage(Request $request){

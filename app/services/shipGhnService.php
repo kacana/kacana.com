@@ -7,6 +7,7 @@ use Kacana\DataTables;
 use Kacana\ViewGenerateHelper;
 use Cache;
 use Kacana\Client\SpeedSms;
+use League\Flysystem\Exception;
 
 /**
  * Class shipGhnService
@@ -88,6 +89,7 @@ class shipGhnService extends baseService {
         ];
 
         $configParam = array_merge($baseParams, $params);
+
         return $this->_client
             ->addHeaders($header)
             ->body(json_encode($configParam))
@@ -159,17 +161,19 @@ class shipGhnService extends baseService {
 
         if(Cache::get($keyCachePickHubs))
             return Cache::get($keyCachePickHubs);
+        try{
+            $results = $this->makeRequest('GetPickHubs');
+            if(isset($results->body->HubInfo))
+            {
+                Cache::put($keyCachePickHubs, $results->body->HubInfo, 1440);
 
-        $results = $this->makeRequest('GetPickHubs');
-        if(isset($results->body->HubInfo))
-        {
-            Cache::put($keyCachePickHubs, $results->body->HubInfo, 1440);
-
-            return $results->body->HubInfo;
+                return $results->body->HubInfo;
+            }
+        }catch (Exception $e){
+            return [];
         }
 
         return [];
-
     }
 
     public function getPickHubById($id)

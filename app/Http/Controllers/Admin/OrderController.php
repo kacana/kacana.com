@@ -80,7 +80,6 @@ class OrderController extends BaseController {
 
             $cities = $addressService->getListCity()->lists('name', 'id');
             $districts = $addressService->getListDistrict();
-//            print_r($feeGhtk->fee);die;
             return view('admin.order.edit', compact('order', 'buyer', 'user_address', 'cities', 'districts', 'wards', 'shippingServiceInfos', 'hubInfos', 'feeGhtk'));
         } catch (\Exception $e) {
             if($request->ajax())
