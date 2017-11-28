@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>In barcode sản phẩm: {{$product->name}}</title>
+    <title>In barcode sản phẩm: {{$product->name}} - {{$property->color->name}}</title>
     <link href="/css/admin/admin.css" rel="stylesheet" type="text/css"/>
     <style>
         body {
