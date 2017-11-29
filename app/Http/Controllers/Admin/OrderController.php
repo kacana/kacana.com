@@ -432,4 +432,9 @@ class OrderController extends BaseController {
         if($orderService->exportProductAtStore($orderId))
             return response()->json(['ok' => 1]);
     }
+
+    public function exportOrderByDuration(Request $request){
+        $orderService = new orderService;
+
+    }
 }

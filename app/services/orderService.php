@@ -1,5 +1,6 @@
 <?php namespace App\services;
 
+use App\models\orderFromModel;
 use App\models\orderModel;
 use App\models\orderDetailModel;
 use App\models\orderTypeModel;
@@ -37,6 +38,11 @@ class orderService extends baseService {
     private $_orderTypeModel;
 
     /**
+     * @var
+     */
+    private $_orderFrom;
+
+    /**
      * orderService constructor.
      */
     public function __construct()
@@ -45,6 +51,7 @@ class orderService extends baseService {
         $this->_orderModel = new orderModel();
         $this->_addressService = new addressService();
         $this->_orderTypeModel = new orderTypeModel();
+        $this->_orderFrom = new orderFromModel();
     }
 
 
@@ -692,6 +699,11 @@ class orderService extends baseService {
         $str = preg_replace("/(Ỳ|Ý|Ỵ|Ỷ|Ỹ)/", 'Y', $str);
         $str = preg_replace("/(Đ)/", 'D', $str);
         return $str;
+    }
+
+    public function exportOrderByDuration($from = false, $to = false){
+        $orderModel = new orderModel();
+        return $orderModel->exportOrderByDuration($from, $to);
     }
 }
 
