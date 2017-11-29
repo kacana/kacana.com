@@ -7,6 +7,7 @@ use App\services\shipGhtkService;
 use App\services\trackingService;
 use App\services\userService;
 use App\services\userTrackingService;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 /**
@@ -302,5 +303,23 @@ class IndexController extends BaseController {
         }
 
         return response()->json($return);
+    }
+
+    public function exportOrderByDuration(Request $request){
+        $orderService = new orderService;
+        $dateRange = $request->input('dateRange', false);
+
+        if($dateRange){
+            $dateRange = explode(' - ', $dateRange);
+            $startTime = $dateRange[0];
+            $endTime = Carbon::createFromFormat('Y-m-d', $dateRange[1])->addDay();
+        } else {
+            $startTime = Carbon::now()->subDays(29);
+            $endTime = Carbon::now();
+        }
+        $order = $orderService->exportOrderByDuration($startTime, $endTime);
+        $orderGroupDate = $orderService->exportOrderByDuration($startTime, $endTime, true);
+//        print_r($orderGroupDate->toArray());die;
+        return view('admin.index.export-order', array('orders' => $order, 'ordersGroup' => $orderGroupDate, 'from' => $startTime->format('d/m/Y'), 'to' => $endTime->format('d/m/Y')));
     }
 }

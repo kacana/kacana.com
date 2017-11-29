@@ -59,6 +59,7 @@ Route::group(['domain'=>KACANA_AUTH_ADMIN_NAME.'.{nameDomain}','middleware' => '
     Route::any('/index/reportDetailTableTrackingSearch',    array('as'=>'reportDetailTableTrackingSearch',      'uses'=>'Admin\IndexController@reportDetailTableTrackingSearch'));
     Route::any('/index/reportChartUserTracking',            array('as'=>'reportChartUserTracking',              'uses'=>'Admin\IndexController@reportChartUserTracking'));
     Route::any('/index/reportDetailTableUserTracking',      array('as'=>'reportDetailTableUserTracking',        'uses'=>'Admin\IndexController@reportDetailTableUserTracking'));
+    Route::any('/index/exportOrderByDuration',              array('as'=>'ExportOrderByDuration',                'uses'=>'Admin\IndexController@exportOrderByDuration'));
 
     //product
     Route::any('/product',                                  array('as'=>'listProducts',                         'uses'=>'Admin\ProductController@index'));

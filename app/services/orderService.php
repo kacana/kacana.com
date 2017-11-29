@@ -701,9 +701,11 @@ class orderService extends baseService {
         return $str;
     }
 
-    public function exportOrderByDuration($from = false, $to = false){
+    public function exportOrderByDuration($from = false, $to = false, $group = false){
         $orderModel = new orderModel();
-        return $orderModel->exportOrderByDuration($from, $to);
+        $order = $orderModel->exportOrderByDuration($from, $to, $group);
+
+        return $order;
     }
 }
 
