@@ -189,4 +189,13 @@ class ShippingController extends BaseController {
             // @codeCoverageIgnoreEnd
         }
     }
+
+    public function printBarcode(Request $request){
+        $shipGhnService = new shipGhnService();
+        $shippingId =  $request->input('id');
+        $ship = $shipGhnService->getShippingById($shippingId);
+        $userAddress = $ship->addressReceive;
+
+        return view('admin.shipping.print_barcode', array('ship'=> $ship,'userAddress' => $userAddress));
+    }
 }

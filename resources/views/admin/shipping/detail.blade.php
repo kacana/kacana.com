@@ -14,6 +14,9 @@
                     <button data-target="#modal-print-order" class="btn btn-success btn-sm">
                         <i class="fa fa-print"></i> in vận đơn
                     </button>
+                    <button data-target="#modal-print-barcode" data-href="/shipping/printBarcode?id={{$ship->id}}" class="btn btn-info btn-sm">
+                        <i class="fa fa-print"></i> in shipping tag
+                    </button>
                 </div>
             </div><!-- /.box-header -->
         </div>

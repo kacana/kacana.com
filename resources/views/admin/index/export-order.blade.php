@@ -8,8 +8,6 @@
         .invoice-box{
             max-width:800px;
             margin:auto;
-            border:1px solid #eee;
-            box-shadow:0 0 10px rgba(0, 0, 0, .15);
             font-size:14px;
             line-height:24px;
             font-family:'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
@@ -63,10 +61,18 @@
             padding-bottom:10px;
             background: #ddd;
             margin-top: 20px;
+            -webkit-print-color-adjust: exact;
         }
 
         .invoice-box table tr.item td{
-            border-bottom:1px solid #999;
+            border-bottom:2px solid #ddd;
+        }
+
+        .invoice-box table tr.item td:first-child{
+            border-left:2px solid #ddd;
+        }
+        .invoice-box table tr.item td:last-child{
+            border-right:2px solid #ddd;
         }
 
         .invoice-box table tr.item:last-child td{
@@ -160,7 +166,7 @@
                     </tr>
                 </table>
                 <table style="margin-bottom: 30px" cellpadding="0" cellspacing="0">
-                    <tr class="detail">
+                    <tr class="item">
                         <td style="width: 40%;font-weight: bold">
                             Sản phẩm
                         </td>

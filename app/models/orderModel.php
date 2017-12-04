@@ -301,7 +301,7 @@ class orderModel extends Model
         return $orderReport->get();
     }
 
-    public function exportOrderByDuration($from = false, $to = false)
+    public function exportOrderByDuration($from = false, $to = false, $group = false)
     {
         $order = $this;
 
@@ -316,6 +316,12 @@ class orderModel extends Model
             $order = $order->where('created_at', '<=', $to);
         }
 
+        $order = $order->select('*', DB::raw('DATE_FORMAT(created_at, "%Y-%m-%d") as date'));
+        if($group)
+        {
+            $order = $order->select('*', DB::raw('DATE_FORMAT(created_at, "%Y-%m-%d") as date'), (DB::raw('SUM(total) as item')))
+                ->groupBy('date');
+        }
         return $order->get();
     }
 }

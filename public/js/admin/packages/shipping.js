@@ -10,6 +10,13 @@ var shippingPackage = {
                 window.open('/shipping/printOrder/?id='+shippingId, 'Receipt Information', 'height=900,width=940');
                 return true;
             });
+            Kacana.shipping.pageDetail.on('click', 'button[data-target="#modal-print-barcode"]', function () {
+                var href = $(this).data('href');
+                console.log(href);
+                console.log('21212112');
+                window.open(href, 'Print Barcode', 'height=700,width=1000');
+                return true;
+            });
         },
         setupDatatableForShipping: function () {
             var $formInline = $('.form-inline');
