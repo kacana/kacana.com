@@ -239,13 +239,10 @@
                                     <div class="col-xs-3 col-sm-3" >
                                         <h4 class="color-grey-light">{{$order->quantity}} Sản phẩm</h4>
                                     </div>
-                                    <div class="col-xs-4 col-sm-4" >
-                                        <h4 class="color-grey-light">Chi tiết</h4>
+                                    <div class="col-xs-6 col-sm-6" >
+                                        <h4 class="color-grey-light text-center">Chi tiết</h4>
                                     </div>
                                     <div class="col-xs-3 col-sm-3" >
-                                        <h4 class="color-grey-light">Đặt hàng</h4>
-                                    </div>
-                                    <div class="col-xs-2 col-sm-2" >
                                         <h4 class="color-grey-light text-center">Shipping</h4>
                                     </div>
                                 </div>
@@ -254,12 +251,30 @@
                             <div class="order-detail-item border-bottom vpadding-1" >
                                 <div class="row" >
                                     <div class="col-xs-3 col-sm-3" >
-                                        <img style="width: 60%" class="img-responsive" src="{{$orderDetail->image}}">
+                                        <img style="width: 100%" class="img-responsive" src="{{$orderDetail->image}}">
                                     </div>
-                                    <div class="col-xs-4 col-sm-4" >
+                                    <div class="col-xs-6 col-sm-6" >
                                         <form method="POST" accept-charset="UTF-8" action="/order/updateOrderDetail/{{$order->id}}/{{$orderDetail->id}}" class="form-horizontal">
                                             <div class="cart-item-title text-center" >
                                               <a target="_blank" href="{{$orderDetail->product_url}}"> {{$orderDetail->name}}</a>
+                                            </div>
+
+                                            <div class="cart-item-price" >
+                                                <div style="margin-bottom: 5px;" class="form-group">
+                                                    <label class="col-sm-4 control-label" for="inputEmail3">ĐH từ</label>
+                                                    <div class="col-xs-8">
+                                                        <select disabled="disabled" name="order-from-id" class="form-control order-from-id" data-order-from-id="{{$orderDetail->order_from_id}}">
+                                                            <option value="0" >
+                                                                Chọn đơn hàng từ đâu
+                                                            </option>
+                                                            @foreach($orderFroms as $orderFrom)
+                                                                <option value="{{$orderFrom->id}}" @if($orderDetail->order_from_id == $orderFrom->id) selected="true" @endif>
+                                                                    {{$orderFrom->name}}
+                                                                </option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                </div>
                                             </div>
 
                                             @if(count($orderDetail->product->productProperties))
@@ -337,22 +352,7 @@
                                             </div>
                                         </form>
                                     </div>
-                                    <div class="col-xs-3 col-sm-3 order-detail-service" data-image="{{$orderDetail->image}}" data-name="{{$orderDetail->name}}" data-order-detail-id="{{$orderDetail->id}}">
-                                        @if($order->status != KACANA_ORDER_STATUS_CANCEL)
-                                            <a target="_blank" href="{{$orderDetail->product->source_url}}"> Link đặt hàng</a>
-                                            @if($orderDetail->order_service_status == KACANA_ORDER_SERVICE_STATUS_ORDERED || $orderDetail->order_service_status == KACANA_ORDER_SERVICE_STATUS_SHIPPING)
-                                                <input type="text" value="{{$orderDetail->order_service_id}}" name="order-service-id" placeholder="id nhập hàng" disabled="disabled" class="form-control vmargin-1" required="required">
-                                            @elseif($orderDetail->order_service_status == KACANA_ORDER_SERVICE_STATUS_SOLD_OUT)
-                                                <div class="label btn-danger"><i class="icon fa fa-ban vmargin-1"></i>sản phẩm đã hết hàng!</div>
-                                            @else
-                                                <div class="label btn-danger label-sold-out hidden" ><i class="icon fa fa-ban vmargin-1"></i>sản phẩm đã hết hàng!</div>
-                                                <input type="text" value="{{KACANA_PREFIX_ORDER_CODE}}" name="order-service-id" placeholder="id nhập hàng" class="form-control vmargin-1" required="required">
-                                                <a data-status="{{KACANA_ORDER_SERVICE_STATUS_ORDERED}}" class="btn btn-primary" href="#update-order-service-id" type="submit">Cập nhật</a>
-                                                <a data-status="{{KACANA_ORDER_SERVICE_STATUS_SOLD_OUT}}" class="btn btn-danger" href="#update-order-sold-out" type="submit">Hết hàng</a>
-                                            @endif
-                                        @endif
-                                    </div>
-                                    <div class="col-xs-2 text-center col-sm-2 cart-item-total" >
+                                    <div class="col-xs-3 text-center col-sm-3 cart-item-total" >
                                         @if($orderDetail->shipping_service_code)
                                           <a target="_blank" href="/shipping/detail?id={{$orderDetail->shipping->id}}" class="label label-success" >đã ship: {{$orderDetail->shipping_service_code}}</a><br><br><p>tình trạng ship hàng</p>
                                           {!! \Kacana\ViewGenerateHelper::getStatusDescriptionShip($orderDetail->shipping->status, $orderDetail->shipping->id) !!}

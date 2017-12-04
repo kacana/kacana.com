@@ -62,6 +62,10 @@ class orderFromModel extends Model  {
         return $this->find($id);
     }
 
+    public function getAll(){
+        return $this->get();
+    }
+
     /**
      * @param $request
      * @param $columns

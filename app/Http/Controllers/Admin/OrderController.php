@@ -1,6 +1,7 @@
 <?php namespace App\Http\Controllers\Admin;
 
 use App\services\addressService;
+use App\services\orderFromService;
 use App\services\productService;
 use App\services\shipGhnService;
 use App\services\shipGhtkService;
@@ -47,6 +48,7 @@ class OrderController extends BaseController {
      */
     public function edit($domain, Request $request,$id){
         $orderService = new orderService();
+        $orderFromService = new orderFromService();
         $addressService = new addressService();
         $shipGhnService = new shipGhnService();
         $shipGhtkService = new shipGhtkService();
@@ -77,10 +79,10 @@ class OrderController extends BaseController {
                 $wards = $addressService->getListWardByDistrictId($user_address->district_id);
                 $feeGhtk = $shipGhtkService->calculateFee($pickDistrictCode, $user_address, $order->total);
             }
-
+            $orderFroms = $orderFromService->getListOrderFrom();
             $cities = $addressService->getListCity()->lists('name', 'id');
             $districts = $addressService->getListDistrict();
-            return view('admin.order.edit', compact('order', 'buyer', 'user_address', 'cities', 'districts', 'wards', 'shippingServiceInfos', 'hubInfos', 'feeGhtk'));
+            return view('admin.order.edit', compact('order', 'buyer', 'user_address', 'cities', 'districts', 'wards', 'shippingServiceInfos', 'hubInfos', 'feeGhtk', 'orderFroms'));
         } catch (\Exception $e) {
             if($request->ajax())
             {
@@ -234,6 +236,7 @@ class OrderController extends BaseController {
         $orderDetailProperty = $request->input('product-properties', '');
         $orderDetailDiscount = $request->input('product-discount', 0);
         $orderDetailQuantity = $request->input('product-quantity', 0);
+        $orderDetailFrom = $request->input('order-from-id', 0);
 
         $total = 0;
         $discount = 0;
@@ -251,7 +254,8 @@ class OrderController extends BaseController {
                         'size_id'=>isset($orderDetailProperty[1])?$orderDetailProperty[1]:'',
                         'discount'=> $orderDetailDiscount,
                         'quantity' => $orderDetailQuantity,
-                        'subtotal' => $orderDetail->price * $orderDetailQuantity - $orderDetailDiscount
+                        'subtotal' => $orderDetail->price * $orderDetailQuantity - $orderDetailDiscount,
+                        'order_from_id' => $orderDetailFrom
                     ];
                     $orderService->updateOrderDetail($orderDetailId, $dataOrderDetail);
                 }

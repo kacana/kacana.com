@@ -291,7 +291,7 @@ var orderPackage = {
             bindEvent: function(){
                 Kacana.order.detail.page.on('click', 'a[href="#edit-detail-item"]', function () {
                     var form = $(this).parents('form');
-                    form.find('.product-properties, .product-discount, .product-quantity').prop('disabled', false);
+                    form.find('.product-properties, .product-discount, .product-quantity, .order-from-id').prop('disabled', false);
                     form.find('a[href="#submit-edit-detail-item"], a[href="#cancel-edit-detail-item"]').removeClass('hidden');
                     form.find('a[href="#edit-detail-item"]').addClass('hidden');
                     form.find('.product-discount').val(form.find('.product-discount').data('value'));
@@ -333,7 +333,7 @@ var orderPackage = {
                 Kacana.order.detail.page.on('click', 'a[href="#cancel-edit-detail-item"]', function () {
                     var form = $(this).parents('form');
                     form.trigger("reset");
-                    form.find('.product-properties, .product-discount, .product-quantity').prop('disabled', true);
+                    form.find('.product-properties, .product-discount, .product-quantity, .order-from-id').prop('disabled', true);
                     form.find('a[href="#submit-edit-detail-item"], a[href="#cancel-edit-detail-item"]').addClass('hidden');
                     form.find('a[href="#edit-detail-item"]').removeClass('hidden');
 

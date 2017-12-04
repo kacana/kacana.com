@@ -55,6 +55,10 @@ class orderFromService extends baseService
         return $this->_orderFrom->updateItem($id, $title, $description);
     }
 
+    public function getListOrderFrom(){
+        return $this->_orderFrom->getAll();
+    }
+
 }
 
 

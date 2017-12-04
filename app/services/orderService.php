@@ -346,11 +346,11 @@ class orderService extends baseService {
     public function updateOrderDetail($id, $data){
         $orderDetailModel = new orderDetailModel();
 
-        if(isset($options['_token'])){
-            unset($options['_token']);
+        if(isset($data['_token'])){
+            unset($data['_token']);
         }
-        if(isset($options['_method'])){
-            unset($options['_method']);
+        if(isset($data['_method'])){
+            unset($data['_method']);
         }
 
         if(isset($data['order_service_status']) && $data['order_service_status'] == KACANA_ORDER_SERVICE_STATUS_SOLD_OUT && isset($data['order_service_id']))
