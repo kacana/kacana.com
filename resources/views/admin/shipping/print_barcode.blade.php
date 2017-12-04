@@ -56,7 +56,6 @@
             width: 960px;
             display: block;
             overflow: hidden;
-            height: 370px;
             padding: 5px 10px;
             float: left;
         }
