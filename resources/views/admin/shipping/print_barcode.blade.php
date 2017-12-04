@@ -37,7 +37,7 @@
         }
 
         .basic-info .property-code {
-            font-size: 90px;
+            font-size: 120px;
             text-align: center;
             font-weight: 500;
             padding: 0px 0 10px;
@@ -87,7 +87,8 @@
         <br>
         <div class="product-name">{{$ship->address}}</div>
         <br>
-        <div class="property-code">{{$ship->id}}</div>
+        <div class="property-code">{{$shippingId}}</div>
+        <div class="property-code">{{$shippingIdExtra}}</div>
     </div>
     <br>
     <br>

@@ -196,6 +196,15 @@ class ShippingController extends BaseController {
         $ship = $shipGhnService->getShippingById($shippingId);
         $userAddress = $ship->addressReceive;
 
-        return view('admin.shipping.print_barcode', array('ship'=> $ship,'userAddress' => $userAddress));
+        $shippingIds = explode('.', $shippingId);
+        $shippingIdExtra = '';
+        if(count($shippingIds) == 4)
+        {
+            $shippingId = $shippingIds[0].'.'.$shippingIds[1];
+            $shippingIdExtra = $shippingIds[2].'.'.$shippingIds[3];
+        }
+
+
+        return view('admin.shipping.print_barcode', array('ship'=> $ship,'userAddress' => $userAddress, 'shippingId'=> $shippingId, 'shippingIdExtra' => $shippingIdExtra));
     }
 }
