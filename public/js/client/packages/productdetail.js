@@ -9,13 +9,13 @@ var productdetailPackage = {
             Kacana.productdetail.showPopupRequest();
             Kacana.productdetail.closeAdvisePopup();
             Kacana.productdetail.bindEvent();
-            $('body .list-color-product').on('init', function (slick) {
-                if(!$('.list-color-product').not('.slick-initialized').length)
-                {
-                    $('#product-detail-gallery').removeClass('hidden');
-                    $('.list-color-product').removeClass('hidden');
-                }
-            });
+            // $('body .list-color-product').on('init', function (slick) {
+            //     if(!$('.list-color-product').not('.slick-initialized').length)
+            //     {
+            //         $('#product-detail-gallery').removeClass('hidden');
+            //         $('.list-color-product').removeClass('hidden');
+            //     }
+            // });
 
             Kacana.homepage.applySlideImage();
 

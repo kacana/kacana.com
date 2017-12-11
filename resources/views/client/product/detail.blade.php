@@ -20,7 +20,7 @@
     <div class="container background-white vpadding-20">
         <div class="row">
             <div class="col-xs-12 col-sm-5 col-lg-6">
-                <div id="product-detail-gallery" class="royalSlider hidden rsDefault">
+                <div id="product-detail-gallery" class="royalSlider rsDefault">
                     @if($productSlide && count($productSlide)>0)
                         @foreach($productSlide as $gallery)
                             <a id="product-detail-gallery-id-{{$product->id}}" class="rsImg bugaga" data-rsbigimg="{{$gallery->image}}" href="{{$gallery->image}}">
