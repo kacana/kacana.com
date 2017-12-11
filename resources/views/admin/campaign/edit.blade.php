@@ -137,7 +137,7 @@
                     <div class="box-header with-border">
                         <h3 class="box-title">Campaign Product</h3>
                         <div class="box-tools pull-left ">
-                            <button class="btn btn-success btn-sm create-campaign-rocket-btn" type="button">
+                            <button class="btn btn-success btn-sm" id="add-product-campaign-btn" type="button">
                                 <i class="fa fa-plus"></i>
                                 Add product
                             </button>

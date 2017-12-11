@@ -16,27 +16,27 @@
     </div>
 </div>
 
-@if($item->properties && count($item->properties)>0)
-    <div class="list-color-product multiple-items nav" >
-        @foreach($item->properties as $property)
-            @if($property->product_gallery)
-                <div>
-                    <a href="#choose-product-color">
-                        <img src="{{$property->product_gallery->thumb}}" >
-                    </a>
-                </div>
-            @endif
-        @endforeach
-    </div>
-@else
-    <div class="list-color-product multiple-items nav" >
-        <div>
-            <a >
-                <img src="{{$item->image}}">
-            </a>
-        </div>
-    </div>
-@endif
+{{--@if($item->properties && count($item->properties)>0)--}}
+    {{--<div class="list-color-product multiple-items nav" >--}}
+        {{--@foreach($item->properties as $property)--}}
+            {{--@if($property->product_gallery)--}}
+                {{--<div>--}}
+                    {{--<a href="#choose-product-color">--}}
+                        {{--<img src="{{$property->product_gallery->thumb}}" >--}}
+                    {{--</a>--}}
+                {{--</div>--}}
+            {{--@endif--}}
+        {{--@endforeach--}}
+    {{--</div>--}}
+{{--@else--}}
+    {{--<div class="list-color-product multiple-items nav" >--}}
+        {{--<div>--}}
+            {{--<a >--}}
+                {{--<img src="{{$item->image}}">--}}
+            {{--</a>--}}
+        {{--</div>--}}
+    {{--</div>--}}
+{{--@endif--}}
 <div class="product-info">
     <div class="product-title"> <a href="{{urlProductDetail($item)}}" title="{{$item->name}}">{{$item->name}}</a></div>
 </div>

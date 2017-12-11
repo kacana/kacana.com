@@ -62,42 +62,42 @@ var productdetailPackage = {
                 }
             }
 
-            $('#list-product-related #listProductPage .taglist').slick({
-                dots: false,
-                infinite: true,
-                speed: 500,
-                slidesToShow: 4,
-                slidesToScroll: 2,
-                arrows: true,
-                lazyLoad: 'progressive',
-                autoplay: true,
-                autoplaySpeed: 3000,
-                responsive: [
-                    {
-                        breakpoint: 992,
-                        settings: {
-                            slidesToShow: 3,
-                            slidesToScroll: 1,
-                            autoplaySpeed: 2000
-                        }
-                    },
-                    {
-                        breakpoint: 768,
-                        settings: {
-                            slidesToShow: 2,
-                            slidesToScroll: 1,
-                            autoplaySpeed: 2000
-                        }
-                    },
-                    {
-                        breakpoint: 385,
-                        settings: {
-                            slidesToShow: 1,
-                            slidesToScroll: 1,
-                            autoplaySpeed: 2000
-                        }
-                    }]
-            });
+            // $('#list-product-related #listProductPage .taglist').slick({
+            //     dots: false,
+            //     infinite: true,
+            //     speed: 500,
+            //     slidesToShow: 4,
+            //     slidesToScroll: 2,
+            //     arrows: true,
+            //     lazyLoad: 'progressive',
+            //     autoplay: true,
+            //     autoplaySpeed: 3000,
+            //     responsive: [
+            //         {
+            //             breakpoint: 992,
+            //             settings: {
+            //                 slidesToShow: 3,
+            //                 slidesToScroll: 1,
+            //                 autoplaySpeed: 2000
+            //             }
+            //         },
+            //         {
+            //             breakpoint: 768,
+            //             settings: {
+            //                 slidesToShow: 2,
+            //                 slidesToScroll: 1,
+            //                 autoplaySpeed: 2000
+            //             }
+            //         },
+            //         {
+            //             breakpoint: 385,
+            //             settings: {
+            //                 slidesToShow: 1,
+            //                 slidesToScroll: 1,
+            //                 autoplaySpeed: 2000
+            //             }
+            //         }]
+            // });
         },
         bindEvent: function(){
             var slideImageProduct = $('#slide-product-image-mobile, #slide-product-image');

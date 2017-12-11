@@ -219,7 +219,7 @@
         <div class="row" >
         </div>
         <div id="product-main-information" class="row product-information-detail">
-            <div class="col-xs-12 col-sm-12">
+            <div id="product-description" class="col-xs-12 col-sm-9">
                 @if(str_replace(' ','',strip_tags($product->property)))
                     <div class="toogle" data-plugin-toggle="">
                          <section class="toggle active">
@@ -245,7 +245,7 @@
                     </section>
                 </div>
             </div>
-            <div id="list-product-related-wrap" class="col-xs-12 col-sm-12">
+            <div id="list-product-related-wrap" class="col-xs-12 col-sm-3">
                 <div class="toogle"  data-plugin-toggle="" id="list-product-related">
                     <section class="toggle active" >
                         <label>
@@ -260,7 +260,7 @@
                                             <div style="z-index: 1" class="taglist as-search-results-tiles background-white">
                                                 @forelse($productRelated as $item)
                                                     @if($item->id != $product->id)
-                                                        <div class="col-xxs-12 col-xs-6 col-sm-4 col-md-3 product-item" >
+                                                        <div class="col-xxs-12 col-xs-6 col-sm-12 product-item" >
                                                             @include('client.product.product-item-related-temple')
                                                         </div>
                                                     @endif
@@ -274,7 +274,7 @@
                     </section>
                 </div>
             </div>
-            <div class="col-xs-12">
+            <div id="list-tag-related-product-wrap" class="col-xs-12">
                 <div class="toogle" id="list-tag-related-product" data-plugin-toggle="">
                     <section class="toggle active">
                         <label>
@@ -292,7 +292,7 @@
                     </section>
                 </div>
             </div>
-            <div class="col-xs-12 col-sm-12">
+            <div id="comment-block" class="col-xs-12 col-sm-12">
                 <div class="toogle" data-plugin-toggle="">
                     <section class="toggle active">
                         <label>

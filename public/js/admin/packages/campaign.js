@@ -181,6 +181,8 @@ var campaignPackage = {
                     var campaignId = $('#campagin_id').val();
                     Kacana.campaign.listCampaign.validateTimeCampaign(value, Kacana.campaign.editCampaign.callBackValidateTimeCampaign, campaignId);
                 });
+
+                Kacana.campaign.editCampaign.page.on('click', ' #add-product-campaign-btn', Kacana.campaign.editCampaign.addProductCampaign)
             },
             callBackValidateTimeCampaign: function(data){
                 var modalCreateCampaign = $('#modal-create-campaign');
@@ -392,6 +394,10 @@ var campaignPackage = {
                         Kacana.ajax.campaign.updateCampaignImage(sendData, callBack, errorCallBack);
                     }
                 });
+            },
+            addProductCampaign:function () {
+                var modalAddProduct = $('#modal-add-product-campaign');
+                modalAddProduct.modal();
             }
         }
     }
