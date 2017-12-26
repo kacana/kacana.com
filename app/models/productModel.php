@@ -5,11 +5,13 @@ use Image;
 use DB;
 use Kacana\DataTables;
 use Illuminate\Pagination\LengthAwarePaginator;
+
 /**
  * Class productModel
  * @package App\models
  */
-class productModel extends Model  {
+class productModel extends Model
+{
     /**
      * The database table used by the model.
      *
@@ -22,7 +24,7 @@ class productModel extends Model  {
     public $timestamps = false;
 
     //Make it available in the json response
-    protected $appends = ['descriptionLazyLoad','mainDiscount'];
+    protected $appends = ['descriptionLazyLoad', 'mainDiscount'];
 
     /**
      * Get the tags associated with product
@@ -107,7 +109,8 @@ class productModel extends Model  {
      * @param $item
      * @return bool
      */
-    public function createBaseProduct($item){
+    public function createBaseProduct($item)
+    {
         $product = new productModel();
         $product->name = $item['name'];
         $product->price = $item['price'];
@@ -123,7 +126,8 @@ class productModel extends Model  {
      * @param $id
      * @param $inputs
      */
-    public function updateItem($id, $inputs){
+    public function updateItem($id, $inputs)
+    {
 
         $item['updated'] = date('Y-m-d H:i:s');
         $item['name'] = $inputs['name'];
@@ -146,7 +150,8 @@ class productModel extends Model  {
      * @param $limit
      * @return array|static[]
      */
-    public function getItemsByTag($tag, $limit){
+    public function getItemsByTag($tag, $limit)
+    {
         $tag_model = new Tag();
         $listChildId = $tag_model->getIdChildsById($tag->id);
         $listChildId[] = $tag->id;
@@ -173,7 +178,8 @@ class productModel extends Model  {
      * @param $id
      * @return mixed
      */
-    public function getProductsByTag($id){
+    public function getProductsByTag($id)
+    {
         $tag = new Tag();
         $listChildId = $tag->getIdChildsById($id);
         $listChildId[] = $id;
@@ -187,32 +193,34 @@ class productModel extends Model  {
     /**
      * @return mixed
      */
-    public function getAllProductForListAdmin(){
+    public function getAllProductForListAdmin()
+    {
 
         return $this->orderBy('id', 'asc ')->get();
     }
 
 
 
-     /*
-     * generate product table model
-     *
-     * @param $request
-     * @param $columns
-     * @return array
-     */
+    /*
+    * generate product table model
+    *
+    * @param $request
+    * @param $columns
+    * @return array
+    */
     /**
      * @param $request
      * @param $columns
      * @return array
      */
-    public function generateProductTable($request, $columns){
+    public function generateProductTable($request, $columns)
+    {
 
         $datatables = new DataTables();
 
-        $limit = $datatables::limit( $request, $columns );
-        $order = $datatables::order( $request, $columns );
-        $where = $datatables::filter( $request, $columns );
+        $limit = $datatables::limit($request, $columns);
+        $order = $datatables::order($request, $columns);
+        $where = $datatables::filter($request, $columns);
 
         // Main query to actually get the data
         $selectData = DB::table('products')
@@ -225,7 +233,7 @@ class productModel extends Model  {
         $recordsFiltered = $selectLength = DB::table('products')
             ->select($datatables::pluck($columns, 'db'));
 
-        if($where){
+        if ($where) {
             $selectData->whereRaw($where);
             $recordsFiltered->whereRaw($where);
         }
@@ -234,20 +242,21 @@ class productModel extends Model  {
          * Output
          */
         return array(
-            "draw"            => intval( $request['draw'] ),
-            "recordsTotal"    => intval( $selectLength->count() ),
-            "recordsFiltered" => intval( $recordsFiltered->count() ),
-            "data"            => $selectData->get()
+            "draw" => intval($request['draw']),
+            "recordsTotal" => intval($selectLength->count()),
+            "recordsFiltered" => intval($recordsFiltered->count()),
+            "data" => $selectData->get()
         );
     }
 
-    public function generateImportProductTable($request, $columns){
+    public function generateImportProductTable($request, $columns)
+    {
 
         $datatables = new DataTables();
 
-        $limit = $datatables::limit( $request, $columns );
-        $order = $datatables::order( $request, $columns );
-        $where = $datatables::filter( $request, $columns );
+        $limit = $datatables::limit($request, $columns);
+        $order = $datatables::order($request, $columns);
+        $where = $datatables::filter($request, $columns);
 
         // Main query to actually get the data
         $selectData = DB::table('product_import')
@@ -267,7 +276,7 @@ class productModel extends Model  {
             ->leftJoin('users', 'users.id', '=', 'product_import.user_id')
             ->select($datatables::pluck($columns, 'db'));
 
-        if($where){
+        if ($where) {
             $selectData->whereRaw($where);
             $recordsFiltered->whereRaw($where);
         }
@@ -276,10 +285,10 @@ class productModel extends Model  {
          * Output
          */
         return array(
-            "draw"            => intval( $request['draw'] ),
-            "recordsTotal"    => intval( $selectLength->count() ),
-            "recordsFiltered" => intval( $recordsFiltered->count() ),
-            "data"            => $selectData->get()
+            "draw" => intval($request['draw']),
+            "recordsTotal" => intval($selectLength->count()),
+            "recordsFiltered" => intval($recordsFiltered->count()),
+            "data" => $selectData->get()
         );
     }
     /*
@@ -294,12 +303,13 @@ class productModel extends Model  {
      * @param $columns
      * @return array
      */
-    public function generateProductBootTable($request, $columns){
+    public function generateProductBootTable($request, $columns)
+    {
 
         $datatables = new DataTables();
-        $limit = $datatables::limit( $request, $columns );
-        $order = $datatables::order( $request, $columns );
-        $where = $datatables::filter( $request, $columns );
+        $limit = $datatables::limit($request, $columns);
+        $order = $datatables::order($request, $columns);
+        $where = $datatables::filter($request, $columns);
 
         // Main query to actually get the data
         $selectData = DB::table('products')
@@ -317,7 +327,7 @@ class productModel extends Model  {
             ->where('products.boot_priority', '>', 0)
             ->select($datatables::pluck($columns, 'db'));
 
-        if($where){
+        if ($where) {
             $selectData->whereRaw($where);
             $recordsFiltered->whereRaw($where);
         }
@@ -326,19 +336,20 @@ class productModel extends Model  {
          * Output
          */
         return array(
-            "draw"            => intval( $request['draw'] ),
-            "recordsTotal"    => intval( $selectLength->count() ),
-            "recordsFiltered" => intval( $recordsFiltered->count() ),
-            "data"            => $selectData->get()
+            "draw" => intval($request['draw']),
+            "recordsTotal" => intval($selectLength->count()),
+            "recordsFiltered" => intval($recordsFiltered->count()),
+            "data" => $selectData->get()
         );
     }
 
-    public function generateProductTagTable($tags, $request, $columns){
+    public function generateProductTagTable($tags, $request, $columns)
+    {
         $datatables = new DataTables();
 
-        $limit = $datatables::limit( $request, $columns );
-        $order = $datatables::order( $request, $columns );
-        $where = $datatables::filter( $request, $columns );
+        $limit = $datatables::limit($request, $columns);
+        $order = $datatables::order($request, $columns);
+        $where = $datatables::filter($request, $columns);
 
         // Main query to actually get the data
         $selectData = DB::table('products')
@@ -354,7 +365,7 @@ class productModel extends Model  {
             ->skip($limit['offset'])
             ->take($limit['limit']);
 
-         // Data set length
+        // Data set length
         $recordsFiltered = $selectLength = DB::table('products')
             ->select('products.id')
             ->leftJoin('product_tag', 'products.id', '=', 'product_tag.product_id')
@@ -364,7 +375,7 @@ class productModel extends Model  {
             ->orWhereIn('product_properties.tag_size_id', $tags)
             ->orWhereIn('products.tag_style_id', $tags);
 
-        if($where){
+        if ($where) {
             $selectData->whereRaw($where);
             $recordsFiltered->whereRaw($where);
         }
@@ -373,14 +384,15 @@ class productModel extends Model  {
          * Output
          */
         return array(
-            "draw"            => intval( $request['draw'] ),
-            "recordsTotal"    => intval( $selectLength->distinct()->count('products.id') ),
-            "recordsFiltered" => intval( $recordsFiltered->distinct()->count('products.id') ),
-            "data"            => $selectData->get()
+            "draw" => intval($request['draw']),
+            "recordsTotal" => intval($selectLength->distinct()->count('products.id')),
+            "recordsFiltered" => intval($recordsFiltered->distinct()->count('products.id')),
+            "data" => $selectData->get()
         );
     }
 
-    public function countSearchProductByTagId($tags){
+    public function countSearchProductByTagId($tags)
+    {
 
         $selectData = DB::table('products')
             ->select('products.id')
@@ -394,7 +406,8 @@ class productModel extends Model  {
         return $selectData->distinct()->count('products.id');
     }
 
-    public function countProductByTagId($tags){
+    public function countProductByTagId($tags)
+    {
 
         $selectData = DB::table('products')
             ->select('products.id')
@@ -405,7 +418,8 @@ class productModel extends Model  {
         return $selectData->distinct()->count('products.id');
     }
 
-    public function searchProductByTagId($tags){
+    public function searchProductByTagId($tags)
+    {
 
         $selectData = DB::table('products')
             ->leftJoin('product_tag', 'products.id', '=', 'product_tag.product_id')
@@ -425,8 +439,9 @@ class productModel extends Model  {
      * @param $status
      * @return \Illuminate\Support\Collection|null|static
      */
-    public function getProductById($id, $status = [KACANA_PRODUCT_STATUS_ACTIVE, KACANA_PRODUCT_STATUS_SOLD_OUT]){
-        if($status)
+    public function getProductById($id, $status = [KACANA_PRODUCT_STATUS_ACTIVE, KACANA_PRODUCT_STATUS_SOLD_OUT])
+    {
+        if ($status)
             return $this->whereIn('status', $status)->find($id);
         else
             return $this->find($id);
@@ -440,19 +455,19 @@ class productModel extends Model  {
      * @param bool $options
      * @return bool|\Illuminate\Contracts\Pagination\LengthAwarePaginator
      */
-    public function getProductByTagId($tagIds, $limit, $offset = 0, $page = 1, $options = false){
+    public function getProductByTagId($tagIds, $limit, $offset = 0, $page = 1, $options = false)
+    {
         $select = $this->leftJoin('product_tag', 'products.id', '=', 'product_tag.product_id')
             ->whereIn('product_tag.tag_id', $tagIds)
             ->whereIn('products.status', [KACANA_PRODUCT_STATUS_ACTIVE, KACANA_PRODUCT_STATUS_SOLD_OUT]);
 
-        if(!$page)
-        {
+        if (!$page) {
             $select->skip($offset)
-            ->take($limit);
+                ->take($limit);
         }
 
-        if(isset($options['sort']) && $options['sort']){
-            switch ($options['sort']){
+        if (isset($options['sort']) && $options['sort']) {
+            switch ($options['sort']) {
                 case PRODUCT_LIST_SORT_PRICE_FROM_LOW:
                     $select->orderBy('products.sell_price', 'ASC');
                     break;
@@ -468,33 +483,30 @@ class productModel extends Model  {
                 case PRODUCT_LIST_SORT_COMMENT:
                     break;
             }
-        }
-        else
-        {
+        } else {
             $select->orderBy('products.updated', 'DESC');
         }
 
-        if(isset($options['product_tag_type_id'])){
+        if (isset($options['product_tag_type_id'])) {
             $select->where('product_tag.type', '=', $options['product_tag_type_id'])
                 ->leftJoin('tag_relations', 'product_tag.tag_id', '=', 'tag_relations.child_id')
                 ->where('tag_relations.tag_type_id', '=', $options['product_tag_type_id'])
                 ->where('tag_relations.status', '=', TAG_RELATION_STATUS_ACTIVE);
-        }
-        else{
+        } else {
             $select->leftJoin('tag_relations', 'product_tag.tag_id', '=', 'tag_relations.child_id')
                 ->whereExists(function ($query) {
-                $query->select(DB::raw(1))
-                    ->from('product_tag as product_tag_check')
-                    ->whereRaw('kacana_product_tag_check.product_id = kacana_products.id')
-                    ->join('tag_relations as tag_relation_check', 'product_tag_check.tag_id', '=', 'tag_relation_check.child_id')
-                    ->where('tag_relation_check.status', '=', TAG_RELATION_STATUS_ACTIVE)
-                    ->where('tag_relation_check.tag_type_id', '=', TAG_RELATION_TYPE_MENU);
-            });
+                    $query->select(DB::raw(1))
+                        ->from('product_tag as product_tag_check')
+                        ->whereRaw('kacana_product_tag_check.product_id = kacana_products.id')
+                        ->join('tag_relations as tag_relation_check', 'product_tag_check.tag_id', '=', 'tag_relation_check.child_id')
+                        ->where('tag_relation_check.status', '=', TAG_RELATION_STATUS_ACTIVE)
+                        ->where('tag_relation_check.tag_type_id', '=', TAG_RELATION_TYPE_MENU);
+                });
         }
         $select->select(['products.*', 'product_tag.*']);
         $select->groupBy('products.id');
 
-        if($page)
+        if ($page)
             $results = $select->paginate($limit);
         else
             $results = $select->get();
@@ -506,7 +518,8 @@ class productModel extends Model  {
      * @param $data
      * @return bool
      */
-    public function updateProduct($id, $data){
+    public function updateProduct($id, $data)
+    {
         return $this->updateItem($id, $data);
     }
 
@@ -515,13 +528,15 @@ class productModel extends Model  {
      * @param $image
      * @return mixed
      */
-    public function updateImage($id, $image){
+    public function updateImage($id, $image)
+    {
         $item['image'] = $image;
 
         return $this->where('id', $id)->update($item);
     }
 
-    public function updateDescription($id, $desc){
+    public function updateDescription($id, $desc)
+    {
         $item['description'] = $desc;
 
         return $this->where('id', $id)->update($item);
@@ -532,7 +547,8 @@ class productModel extends Model  {
      * @param $sellPrice
      * @return mixed
      */
-    public function updatePrice($id, $sellPrice){
+    public function updatePrice($id, $sellPrice)
+    {
         $item['sell_price'] = $sellPrice;
 
         return $this->where('id', $id)->update($item);
@@ -542,10 +558,11 @@ class productModel extends Model  {
      * @param $productId
      * @return int
      */
-    public function removeProductProperties($productId){
+    public function removeProductProperties($productId)
+    {
         $productProperties = DB::table('product_properties');
 
-        return $productProperties->where('product_id','=',$productId)
+        return $productProperties->where('product_id', '=', $productId)
             ->delete();
     }
 
@@ -556,7 +573,8 @@ class productModel extends Model  {
      * @param $productGalleryId
      * @return bool
      */
-    public function addProductProperties($productId, $tagColorId, $tagSizeId, $productGalleryId, $price){
+    public function addProductProperties($productId, $tagColorId, $tagSizeId, $productGalleryId, $price)
+    {
         $productProperties = DB::table('product_properties');
 
         $data = array(
@@ -575,12 +593,13 @@ class productModel extends Model  {
      * @param $limit
      * @return bool
      */
-    public function getNewestProduct($offset, $limit){
+    public function getNewestProduct($offset, $limit)
+    {
 
         $products = $this->leftJoin('product_tag', 'products.id', '=', 'product_tag.product_id')
-                        ->leftJoin('tag_relations', 'product_tag.tag_id', '=', 'tag_relations.child_id');
+            ->leftJoin('tag_relations', 'product_tag.tag_id', '=', 'tag_relations.child_id');
         $products->skip($offset)
-                ->take($limit);
+            ->take($limit);
 
         $products->orderBy('products.created', 'DESC');
         $products->where('product_tag.type', '=', TAG_RELATION_TYPE_MENU);
@@ -599,7 +618,8 @@ class productModel extends Model  {
      * @param $limit
      * @return bool
      */
-    public function getDiscountProduct($offset, $limit){
+    public function getDiscountProduct($offset, $limit)
+    {
 
         $products = $this->leftJoin('product_tag', 'products.id', '=', 'product_tag.product_id')
             ->leftJoin('tag_relations', 'product_tag.tag_id', '=', 'tag_relations.child_id');
@@ -621,10 +641,11 @@ class productModel extends Model  {
         return $results ? $results : false;
     }
 
-    public function suggestSearchProduct($searchString){
+    public function suggestSearchProduct($searchString)
+    {
 
 
-        $query = $this->where('products.name', 'LIKE', "%".$searchString."%")
+        $query = $this->where('products.name', 'LIKE', "%" . $searchString . "%")
             ->join('product_tag', 'products.id', '=', 'product_tag.product_id')
             ->leftJoin('tag_relations', 'product_tag.tag_id', '=', 'tag_relations.child_id')
             ->where('tag_relations.status', '=', TAG_RELATION_STATUS_ACTIVE)
@@ -640,10 +661,11 @@ class productModel extends Model  {
         return $results ? $results : false;
     }
 
-    public function suggestSearchProductForAdmin($searchString){
+    public function suggestSearchProductForAdmin($searchString)
+    {
 
 
-        $query = $this->where('products.name', 'LIKE', "%".$searchString."%")
+        $query = $this->where('products.name', 'LIKE', "%" . $searchString . "%")
             ->select(['products.*'])
             ->groupBy('products.id')
             ->orderBy('products.updated', 'DESC')
@@ -654,11 +676,12 @@ class productModel extends Model  {
         return $results ? $results : false;
     }
 
-    public function searchProduct($searchString, $limit = 20, $page = 1,  $options = false){
+    public function searchProduct($searchString, $limit = 20, $page = 1, $options = false)
+    {
 
-        $path = '/tim-kiem/'.$searchString;
+        $path = '/tim-kiem/' . $searchString;
 
-        $query = DB::table('products')->where('products.name', 'LIKE', "%".$searchString."%")
+        $query = DB::table('products')->where('products.name', 'LIKE', "%" . $searchString . "%")
             ->join('product_tag', 'products.id', '=', 'product_tag.product_id')
             ->join('tags', 'tags.id', '=', 'product_tag.tag_id')
             ->join('tag_relations', 'product_tag.tag_id', '=', 'tag_relations.child_id')
@@ -667,7 +690,7 @@ class productModel extends Model  {
             ->where('products.status', '=', KACANA_PRODUCT_STATUS_ACTIVE)
             ->select('products.*', 'tags.name as tag_name', 'tags.id as tag_id')->groupBy('products.id');
 
-        $query_1 = DB::table('products')->where('products.name', 'NOT LIKE', "%".$searchString."%")
+        $query_1 = DB::table('products')->where('products.name', 'NOT LIKE', "%" . $searchString . "%")
             ->join('product_tag', 'products.id', '=', 'product_tag.product_id')
             ->join('tags', 'tags.id', '=', 'product_tag.tag_id')
             ->join('tag_relations', 'product_tag.tag_id', '=', 'tag_relations.child_id')
@@ -676,8 +699,8 @@ class productModel extends Model  {
             ->where('products.status', '=', KACANA_PRODUCT_STATUS_ACTIVE)
             ->select('products.*', 'tags.name as tag_name', 'tags.id as tag_id')->groupBy('products.id');
 
-        $query_2 = DB::table('products')->where('tags.name', 'LIKE', "%".$searchString."%")
-            ->where('products.name', 'NOT LIKE', "%".$searchString."%")
+        $query_2 = DB::table('products')->where('tags.name', 'LIKE', "%" . $searchString . "%")
+            ->where('products.name', 'NOT LIKE', "%" . $searchString . "%")
             ->where('products.status', '=', KACANA_PRODUCT_STATUS_ACTIVE)
             ->join('product_tag', 'products.id', '=', 'product_tag.product_id')
             ->join('tags', 'tags.id', '=', 'product_tag.tag_id')
@@ -695,25 +718,24 @@ class productModel extends Model  {
 
         $searchString = explode(' ', $searchString);
 
-        if(count($searchString))
-        {
+        if (count($searchString)) {
             $query_1_where = '';
-            for($i = 0; $i < count($searchString)-1; $i++){
-                $query_1_where .= 'kacana_products.name LIKE "%'.$searchString[$i].'%" OR ';
+            for ($i = 0; $i < count($searchString) - 1; $i++) {
+                $query_1_where .= 'kacana_products.name LIKE "%' . $searchString[$i] . '%" OR ';
 
-                $query_2->where('products.name', 'NOT LIKE', "%".$searchString[$i]."%");
+                $query_2->where('products.name', 'NOT LIKE', "%" . $searchString[$i] . "%");
             }
 
-            $query_1_where .= 'kacana_products.name LIKE "%'.$searchString[count($searchString)-1].'%"';
+            $query_1_where .= 'kacana_products.name LIKE "%' . $searchString[count($searchString) - 1] . '%"';
 
-            $query_1->whereRaw('('.$query_1_where.')');
-            $query_2->where('products.name', 'NOT LIKE', "%".$searchString[count($searchString)-1]."%");
+            $query_1->whereRaw('(' . $query_1_where . ')');
+            $query_2->where('products.name', 'NOT LIKE', "%" . $searchString[count($searchString) - 1] . "%");
 
         }
 
 
-        if(isset($options['sort'])){
-            switch ($options['sort']){
+        if (isset($options['sort'])) {
+            switch ($options['sort']) {
                 case PRODUCT_LIST_SORT_PRICE_FROM_LOW:
                     $query->orderBy('products.sell_price', 'ASC');
                     $query_1->orderBy('products.sell_price', 'ASC');
@@ -737,59 +759,60 @@ class productModel extends Model  {
                 case PRODUCT_LIST_SORT_COMMENT:
                     break;
             }
-        }
-        else
-        {
+        } else {
             $query->orderBy('products.updated', 'DESC');
         }
 
         $query = $query->unionAll($query_1)->unionAll($query_2);
         $querySql = $query->toSql();
 
-        $query = DB::table(DB::raw("(".$querySql." order by updated desc) as a"))->mergeBindings($query);
+        $query = DB::table(DB::raw("(" . $querySql . " order by updated desc) as a"))->mergeBindings($query);
 
         $results = $query->get();
         $results_1 = $query->take($limit)->skip($limit * ($page - 1))->get();
-        $results = new LengthAwarePaginator($results_1, count($results), $limit, null, ['path'=>$path]);
+        $results = new LengthAwarePaginator($results_1, count($results), $limit, null, ['path' => $path]);
 
         return $results ? $results : false;
     }
 
 
-    public function getDescriptionAttribute($value){
-        return str_replace('"/images/product','"'.AWS_CDN_URL.'/images/product', $value);
+    public function getDescriptionAttribute($value)
+    {
+        return str_replace('"/images/product', '"' . AWS_CDN_URL . '/images/product', $value);
     }
 
-    public function getDescriptionLazyLoadAttribute($value){
-        return str_replace('src="'.AWS_CDN_URL.'/images/product','src="'.AWS_CDN_URL.PRODUCT_IMAGE_PLACE_HOLDER.'" data-src="'.AWS_CDN_URL.'/images/product', $this->original['description'] );
+    public function getDescriptionLazyLoadAttribute($value)
+    {
+        return str_replace('src="' . AWS_CDN_URL . '/images/product', 'src="' . AWS_CDN_URL . PRODUCT_IMAGE_PLACE_HOLDER . '" data-src="' . AWS_CDN_URL . '/images/product', $this->original['description']);
     }
 
-    public function getMainDiscountAttribute($value){
+    public function getMainDiscountAttribute($value)
+    {
 //        return ($this->attributes['sell_price']*10/100);
         return 0;
     }
 
     public function getImageAttribute($value)
     {
-        return AWS_CDN_URL.$value;
+        return AWS_CDN_URL . $value;
     }
 
-    public function getProductToCreateCsv($limit = false, $offset = 0){
+    public function getProductToCreateCsv($limit = false, $offset = 0)
+    {
         $products = $this->leftJoin('product_tag', 'products.id', '=', 'product_tag.product_id')
             ->leftJoin('tag_relations', 'product_tag.tag_id', '=', 'tag_relations.child_id')
             ->whereIn('products.status', [KACANA_PRODUCT_STATUS_ACTIVE, KACANA_PRODUCT_STATUS_SOLD_OUT])->groupBy('products.id')
             ->select(['products.*', 'product_tag.*']);
 
 
-        if($limit)
-        {
+        if ($limit) {
             return $products->take($limit)->skip($offset)->get();
-        }
-        else
+        } else
             return $products->get();
     }
 
-    public function getProductsToBoot($productIds){
+    public function getProductsToBoot($productIds)
+    {
         $products = $this->whereIn('products.id', $productIds)
             ->where('products.boot_priority', '>', 0);
 
@@ -809,6 +832,9 @@ class productModel extends Model  {
         return $products->first();
     }
 
+    public function searchProductCampaign($keyword)
+    {
 
+    }
 
 }

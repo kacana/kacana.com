@@ -1025,6 +1025,12 @@ class productService extends baseService {
         $productPropertyModal = new productPropertiesModel();
         return $productPropertyModal->decrementQuantityProductProperty($propertyId, $value);
     }
+
+    public function searchProductCampaign($keyword){
+        $productModel = new productModel();
+        return $productModel->suggestSearchProductForAdmin($keyword);
+
+    }
 }
 
 

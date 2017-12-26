@@ -2,6 +2,7 @@
 
 use App\Http\Requests\BranchRequest;
 use App\services\campaignService;
+use App\services\productService;
 use Illuminate\Http\Request;
 use Datatables;
 use App\models\Branch;
@@ -105,6 +106,27 @@ class CampaignController extends BaseController
 
         try {
             $return['data'] = $campaignService->updateCampaignImage($campaignId, $imageName, $type);
+            $return['ok'] = 1;
+        } catch (\Exception $e) {
+            // @codeCoverageIgnoreStart
+            $return['errorMsg'] = $e->getMessage();
+            // @codeCoverageIgnoreEnd
+        }
+        return response()->json($return);
+    }
+
+    public function searchProduct(Request $request){
+        $keySearch = $request->input('key');
+        $productService = new productService();
+        $return['ok'] = 0;
+
+        try {
+            $products = $productService->searchProductCampaign($keySearch);
+            foreach ($products as &$product)
+            {
+                $product->campaignProduct;
+            }
+            $return['data'] = $products;
             $return['ok'] = 1;
         } catch (\Exception $e) {
             // @codeCoverageIgnoreStart

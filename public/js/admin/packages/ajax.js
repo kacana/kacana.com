@@ -589,6 +589,14 @@ var ajaxPackage = {
                 var options = [];
                 Kacana.ajax.init(url, dataType, type, dataPost, callBack, errorCallBack, options);
             },
+            searchProduct: function(data, callBack, errorCallBack){
+                var url = '/campaign/searchProduct';
+                var dataType = 'json';
+                var type = 'get';
+                var dataPost =data;
+                var options = [];
+                Kacana.ajax.init(url, dataType, type, dataPost, callBack, errorCallBack, options);
+            }
         }
      }
 };

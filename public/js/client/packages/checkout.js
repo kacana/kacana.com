@@ -135,7 +135,7 @@ var checkoutPackage = {
                                 data: {
                                     // Registry a Mailgun account and get a free API key
                                     // at https://mailgun.com/signup
-                                    api_key: 'pubkey-83a6-sl6j2m3daneyobi87b3-ksx3q29'
+                                    api_key: 'pubkey-87e0ad4d05f287e05e78fa9ae4cd1ec0'
                                 },
                                 dataType: 'jsonp',
                                 validKey: 'is_valid',

@@ -182,7 +182,9 @@ var campaignPackage = {
                     Kacana.campaign.listCampaign.validateTimeCampaign(value, Kacana.campaign.editCampaign.callBackValidateTimeCampaign, campaignId);
                 });
 
-                Kacana.campaign.editCampaign.page.on('click', ' #add-product-campaign-btn', Kacana.campaign.editCampaign.addProductCampaign)
+                Kacana.campaign.editCampaign.page.on('click', ' #add-product-campaign-btn', Kacana.campaign.editCampaign.addProductCampaign);
+                Kacana.campaign.editCampaign.bindEventModal();
+
             },
             callBackValidateTimeCampaign: function(data){
                 var modalCreateCampaign = $('#modal-create-campaign');
@@ -398,6 +400,28 @@ var campaignPackage = {
             addProductCampaign:function () {
                 var modalAddProduct = $('#modal-add-product-campaign');
                 modalAddProduct.modal();
+            },
+            bindEventModal: function () {
+                var modal = $('#modal-add-product-campaign');
+                modal.on('change', '#input-search-add-product-name', Kacana.campaign.editCampaign.searchProduct);
+            },
+            searchProduct: function () {
+                var keySearch = $(this).val();
+                var sendData = {'key': keySearch};
+                var callBack = function(data){
+
+                    if(data.ok){
+                        location.reload();
+                    }
+                };
+
+                var errorCallBack = function(){
+
+                };
+
+                Kacana.ajax.campaign.searchProduct(sendData, callBack, errorCallBack);
+
+                return false;
             }
         }
     }
