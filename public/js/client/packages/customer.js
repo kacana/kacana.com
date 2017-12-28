@@ -20,17 +20,9 @@ var customerPackage = {
                                     notEmpty: {
                                         message: 'Vui lòng nhập địa chỉ email của bạn'
                                     },
-                                    remote: {
-                                        type: 'GET',
-                                        url: 'https://api.mailgun.net/v2/address/validate?callback=?',
-                                        crossDomain: true,
-                                        name: 'address',
-                                        data: {
-                                            api_key: 'pubkey-87e0ad4d05f287e05e78fa9ae4cd1ec0'
-                                        },
-                                        dataType: 'jsonp',
-                                        validKey: 'is_valid',
-                                        message: 'Email không đúng định dạng'
+                                    regexp: {
+                                        regexp: '^[^@\\s]+@([^@\\s]+\\.)+[^@\\s]+$',
+                                        message: 'Vui lòng nhập địa chỉ email của bạn'
                                     }
                                 }
                             },
@@ -120,17 +112,9 @@ var customerPackage = {
                                 notEmpty: {
                                     message: 'Vui lòng nhập địa chỉ email của bạn'
                                 },
-                                remote: {
-                                    type: 'GET',
-                                    url: 'https://api.mailgun.net/v2/address/validate?callback=?',
-                                    crossDomain: true,
-                                    name: 'address',
-                                    data: {
-                                        api_key: 'pubkey-87e0ad4d05f287e05e78fa9ae4cd1ec0'
-                                    },
-                                    dataType: 'jsonp',
-                                    validKey: 'is_valid',
-                                    message: 'Email không đúng định dạng'
+                                regexp: {
+                                    regexp: '^[^@\\s]+@([^@\\s]+\\.)+[^@\\s]+$',
+                                    message: 'Vui lòng nhập địa chỉ email của bạn'
                                 }
                             }
                         },
@@ -225,17 +209,9 @@ var customerPackage = {
                                 notEmpty: {
                                     message: 'Vui lòng nhập địa chỉ email của bạn'
                                 },
-                                remote: {
-                                    type: 'GET',
-                                    url: 'https://api.mailgun.net/v2/address/validate?callback=?',
-                                    crossDomain: true,
-                                    name: 'address',
-                                    data: {
-                                        api_key: 'pubkey-87e0ad4d05f287e05e78fa9ae4cd1ec0'
-                                    },
-                                    dataType: 'jsonp',
-                                    validKey: 'is_valid',
-                                    message: 'Email không đúng định dạng'
+                                regexp: {
+                                    regexp: '^[^@\\s]+@([^@\\s]+\\.)+[^@\\s]+$',
+                                    message: 'Vui lòng nhập địa chỉ email của bạn'
                                 }
                             }
                         }
