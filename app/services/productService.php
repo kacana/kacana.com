@@ -478,6 +478,7 @@ class productService extends baseService {
         $this->updateTagProduct($data, $id, KACANA_PRODUCT_TAG_TYPE_SEARCH);
         $this->updateTagProduct($data, $id, KACANA_PRODUCT_TAG_TYPE_MENU);
         $this->trimImageDesc($data['description'], $id);
+        $data['description'] = trim($data['description']);
         return $productModel->updateItem($id, $data);
     }
 
