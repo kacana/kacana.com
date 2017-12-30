@@ -455,7 +455,7 @@ class productModel extends Model
      * @param bool $options
      * @return bool|\Illuminate\Contracts\Pagination\LengthAwarePaginator
      */
-    public function getProductByTagId($tagIds, $limit, $offset = 0, $page = 1, $options = false)
+    public function getProductByTagId($tagIds, $limit, $offset = 0, $page = 1, $options = false, $excludeProductIds = false)
     {
         $select = $this->leftJoin('product_tag', 'products.id', '=', 'product_tag.product_id')
             ->whereIn('product_tag.tag_id', $tagIds)
@@ -503,6 +503,11 @@ class productModel extends Model
                         ->where('tag_relation_check.tag_type_id', '=', TAG_RELATION_TYPE_MENU);
                 });
         }
+
+        if($excludeProductIds){
+            $select->whereNotIn('products.id', $excludeProductIds);
+        }
+
         $select->select(['products.*', 'product_tag.*']);
         $select->groupBy('products.id');
 
@@ -510,6 +515,7 @@ class productModel extends Model
             $results = $select->paginate($limit);
         else
             $results = $select->get();
+
         return $results ? $results : false;
     }
 

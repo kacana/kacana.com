@@ -2,13 +2,13 @@
     <div class="product-image-inside royalSlider rsDefault" data-first-image="{{$item->image}}" >
         <a data-rsbigimg="{{$item->image}}" href="{{$item->image}}" class="rsImg">
             {{$item->name}}
-            <img class="rsTmb" src="{{$item->image}}"/>
+            <img alt="{{$item->name}}" class="rsTmb" src="{{$item->image}}"/>
         </a>
         @if($item->properties && count($item->properties)>0)
             @foreach($item->properties as $property)
                 @if($property->product_gallery)
                     <a id="product-property-gallery-id-{{$item->id}}" class="rsImg" data-rsbigimg="{{$property->product_gallery->image}}" href="{{$property->product_gallery->image}}" >
-                        <img class="rsTmb" src="{{$property->product_gallery->thumb}}" >
+                        <img alt="{{$item->name}}" class="rsTmb" src="{{$property->product_gallery->thumb}}" >
                     </a>
                 @endif
             @endforeach
@@ -38,7 +38,7 @@
     {{--</div>--}}
 {{--@endif--}}
 <div class="product-info">
-    <div class="product-title"> <a href="{{urlProductDetail($item)}}" title="{{$item->name}}">{{$item->name}}</a></div>
+    <h4 class="product-title"> <a href="{{urlProductDetail($item)}}" title="{{$item->name}}">{{$item->name}}</a></h4>
 </div>
 <div class="product-price-wrap">
     @if($item->discount)

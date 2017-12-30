@@ -5,7 +5,7 @@
         <div class="container">
             <div class="row center">
                 <div class="col-md-12">
-                    <h2 class="short text-shadow big white bold"><span class="color-grey" >{{$search}}</span></h2>
+                    <h2 class="short text-shadow big white bold"><span class="color-white" >{{$search}}</span></h2>
                 </div>
             </div>
         </div>
@@ -20,10 +20,10 @@
                     <div class="row">
                         <div class="col-xs-12 col-sm-8" >
                             <div class="row">
-                                <span class="col-xs-12 tag-name">Sản phẩm với từ khoá <span class="color-green">{{ $search}}</span></span>
+                                <h4>Sản phẩm với từ khoá <span class="color-green">{{ $search}}</span></h4>
                             </div>
                             <div class="row">
-                                <span class="col-xs-12 tag-sub-name">Kết quả tìm kiếm với từ khoá {{ $search}}</span>
+                                <h5>Kết quả tìm kiếm với từ khoá {{ $search}}</h5>
                             </div>
                         </div>
                         <div class="col-sm-4 pull-right">

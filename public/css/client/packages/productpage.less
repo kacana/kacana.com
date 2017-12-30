@@ -6,10 +6,11 @@
   margin: 0;
   .header-page-title{
     border-bottom: 1px solid #ccc;
-    h1{
-      padding: 0;
+    .product-tag-title{
+      padding: 10px 0;
       margin: 5px 0;
       font-weight: 400;
+      font-size: 25px;
     }
   }
   .thumbnail{}
@@ -329,10 +330,10 @@
         color: #cccccc;
         margin: 0;
         position: relative;
-        h2{
+        .description-detail-title{
           color: @color-green;
           span{
-            padding: 0 10px;
+            padding: 0 20px;
             background: #ffffff;
           }
         }
@@ -344,6 +345,7 @@
           font-weight: 400;
           margin-bottom: 0;
           text-transform: none;
+          padding: 8px 0;
         }
         i{
           color: @color-border;
@@ -486,5 +488,15 @@
 
   select.select-custom::-ms-expand {
     display: none;
+  }
+}
+
+.tag-description{
+  color: @color-grey-light;
+  h1,h2,h3,h4,h5{
+    text-transform: none;
+    color: @color-grey-light;
+    font-weight: 400;
+    margin: 20px 0 5px;
   }
 }

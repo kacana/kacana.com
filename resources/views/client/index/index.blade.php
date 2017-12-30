@@ -12,10 +12,10 @@
                     <div class="row">
                         <div class="col-xs-12 col-sm-12" >
                             <div class="row">
-                                <span class="col-xs-12 tag-name">SẢN PHẨM MỚI</span>
+                                <h3>TÚI XÁCH MỚI</h3>
                             </div>
                             <div class="row">
-                                <span class="col-xs-12 tag-sub-name">Những sản phẩm dành cho tín đồ thời trang mới lên kệ tại KACANA</span>
+                                <h5>Những mẫu túi xách đẹp mới lên kệ tại KACANA</h5>
                             </div>
                         </div>
                     </div>
@@ -53,10 +53,10 @@
                     <div class="row">
                         <div class="col-xs-12 col-sm-8" >
                             <div class="row">
-                                <span class="col-xs-12 tag-name">SẢN PHẨM KHUYẾN MÃI</span>
+                                <h4>TÚI XÁCH KHUYẾN MÃI</h4>
                             </div>
                             <div class="row">
-                                <span class="col-xs-12 tag-sub-name">Những sản phẩm đang khuyến mãi hấp dẫn tại KACANA</span>
+                                <h5>Túi xách đang khuyến mãi hấp dẫn tại KACANA</h5>
                             </div>
                         </div>
                     </div>
@@ -97,10 +97,10 @@
                     <div class="row">
                         <div class="col-xs-12 col-sm-8" >
                             <div class="row">
-                                <span class="col-xs-12 tag-name">{{$block['tag']}}</span>
+                                <h4>{{$block['tag']}}</h4>
                             </div>
                             <div class="row">
-                                <span class="col-xs-12 tag-sub-name">@if($block['short_desc']){{$block['short_desc']}}@else Danh sách {{ $block['tag']}} của KACANA! @endif</span>
+                                <h5>@if($block['short_desc']){{$block['short_desc']}}@else Danh sách {{ $block['tag']}} của KACANA! @endif</h5>
                             </div>
                         </div>
                         <div class="show-all col-xs-12 col-sm-4" >

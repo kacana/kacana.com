@@ -4,7 +4,7 @@
 
             <div class="hidden-xs col-sm-5">
                 <div class="newsletter">
-                    <h4>ĐĂNG KÝ NHẬN TIN</h4>
+                    <span class="text-head">Đăng kí nhận tin</span>
                     <div class="alert alert-success hidden" id="newsletterSuccess">
                         <strong>Success!</strong> You've been added to our email list.
                     </div>
@@ -39,7 +39,7 @@
 
             <div class="col-sm-5">
                 <div class="contact-details">
-                    <h4>Liên Hệ</h4>
+                    <span class="text-head">Liên Hệ</span>
                     <ul class="contact">
                         <li><p><i class="fa fa-map-marker"></i> <strong>Địa Chỉ:</strong> 60/36 Trần Hưng Đạo, phường 7, Quận 5, Hồ Chí Minh</p></li>
                         <li><p><i class="fa fa-phone"></i> <strong>Điện Thoại :</strong> 0906.054.206 - 01695.393.076</p></li>
@@ -51,7 +51,7 @@
 
             <div class="hidden-xs col-sm-2">
                 <div class="contact-details">
-                    <h4>Sản phẩm</h4>
+                    <span class="text-head color-white">Sản phẩm</span>
                     <ul class="contact">
                         @foreach($menu_items as $item)
                                 <li>

@@ -79,15 +79,44 @@ class ProductController extends BaseController {
             $sort = $request->input('sort');
             $options = ['tagId' => $tag, 'sort'=>$sort, 'product_tag_type_id' => TAG_RELATION_TYPE_MENU];
 
-            $limit = KACANA_PRODUCT_ITEM_PER_TAG;
-            $data['items'] = $productService->getProductByTagId($tagId, $limit, $userId, $page, $options);
-            $tags = $tagService->getTagById($tagId, false);
+            $tags = $tagService->getTagById($tagId, TAG_RELATION_TYPE_MENU);
+
+
+            if(isset($tags->childs))
+            {
+                $limit = KACANA_HOMEPAGE_ITEM_PER_TAG;
+                $excludeProductIds = array();
+                foreach ($tags->childs as $tag)
+                {
+                    $result['tag'] = $tag;
+                    $result['short_desc'] = $tag->short_desc;
+                    $result['slug'] = str_slug($tag->name . '-');
+                    $result['tag_id'] = $tag->child_id;
+                    $result['tag_url'] = '';
+                    $userId = (\Kacana\Util::isLoggedIn()) ? $this->_user->id : 0;
+                    $result['products'] = $productService->getProductByTagId($tag->id, $limit, $userId, 1, ['product_tag_type_id' => TAG_RELATION_TYPE_MENU], $excludeProductIds);
+
+                    foreach ($result['products'] as $product)
+                    {
+                        array_push($excludeProductIds, $product->id);
+                    }
+
+                    $data[] = $result;
+                }
+            }
+            else {
+                $limit = KACANA_PRODUCT_ITEM_PER_TAG;
+                $result['products'] = $productService->getProductByTagId($tagId, $limit, $userId, $page, $options);
+                $tags = $tagService->getTagById($tagId, false);
+                $result['tag'] = $tags;
+                $result['options'] = $options;
+                $data[] = $result;
+            }
+
             $tags->allChilds = $tagService->getAllChildTagHaveProduct($tagId);
             $tagIdRelated = [];
             $tags->tagKeyword = $tagService->formatMetaKeyword($tags->allChilds, $tagIdRelated);
 
-            $data['tag'] = $tags;
-            $data['options'] = $options;
         } catch (\Exception $e) {
             if($request->ajax())
             {
@@ -98,7 +127,7 @@ class ProductController extends BaseController {
                 return view('errors.404', ['error_message' => $e->getMessage()]);
         }
 
-        return view('client.product.listproduct', $data);
+        return view('client.product.listproduct', array('items' => $data, 'tag' => $tags));
     }
 
     public function suggestSearchProduct(Request $request){

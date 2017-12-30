@@ -8,6 +8,7 @@
             @foreach($item->properties as $property)
                 @if($property->product_gallery)
                     <a id="product-property-gallery-id-{{$item->id}}" class="rsImg" data-rsbigimg="{{$property->product_gallery->image}}" href="{{$property->product_gallery->image}}" >
+                        {{$item->name}}
                         <img title="{{$item->name}}" alt="{{$item->name}}" class="rsTmb" data-src="{{$property->product_gallery->thumb}}" >
                     </a>
                 @endif
@@ -38,7 +39,7 @@
     </div>
 @endif
 <div class="product-info">
-    <div class="product-title"> <a href="{{urlProductDetail($item)}}" title="{{$item->name}}">{{$item->name}}</a></div>
+    <h4 class="product-title"> <a href="{{urlProductDetail($item)}}" title="{{$item->name}}">{{$item->name}}</a></h4>
 </div>
 <div class="product-price-wrap">
     @if($item->discount)

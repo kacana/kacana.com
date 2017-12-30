@@ -17,46 +17,59 @@
 
 @section('content')
     <div id="listProductPage">
-        <div class="block-tag">
-            <div class="block-tag-header homepage" >
-                <div class="container">
-                    <div class="row">
-                        <div class="col-xs-12 col-sm-8" >
+        @foreach($items as $itemTag)
+            @if(count($itemTag['products']))
+                <div class="block-tag">
+                    <div class="block-tag-header homepage" >
+                        <div class="container">
                             <div class="row">
-                                <span class="col-xs-12 tag-name">{{ $tag->name}}</span>
-                            </div>
-                            <div class="row">
-                                <span class="col-xs-12 tag-sub-name">@if($tag->short_desc){{ $tag->short_desc}}@else Danh sách {{ $tag->name}} của KACANA! @endif</span>
+                                <div class="col-xs-12 col-sm-8" >
+                                    <div class="row">
+                                        <h4>{{ $itemTag['tag']->name}}</h4>
+                                    </div>
+                                    <div class="row">
+                                        <h5>@if($itemTag['tag']->short_desc){{ $itemTag['tag']->short_desc}}@else Danh sách {{ $itemTag['tag']->name}} của KACANA! @endif</h5>
+                                    </div>
+                                </div>
+                                @if(count($items) == 1)
+                                    <div class="col-sm-4 pull-right">
+                                        @include('client.product.sort')
+                                    </div>
+                                @else
+                                    <div class="show-all col-xs-12 col-sm-4" >
+                                        <a href="{{urlTagProduct($itemTag)}}">Xem tất cả <i class="fa fa-angle-right"></i></a>
+                                    </div>
+                                @endif
                             </div>
                         </div>
-                        <div class="col-sm-4 pull-right">
-                            @include('client.product.sort')
+                    </div>
+                    <div class="block-tag-body as-accessories-results">
+                        {{--@include('client.product.sidebar')--}}
+                        <div class="container taglist as-search-results-tiles background-white" id="content">
+                            @forelse($itemTag['products'] as $item)
+                                <div class="col-xxs-12 col-xs-6 col-sm-4 col-md-4 product-item" >
+                                    @include('client.product.product-item-temple')
+                                </div>
+                            @empty
+                            @endforelse
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="block-tag-body as-accessories-results">
-                {{--@include('client.product.sidebar')--}}
-                <div class="container taglist as-search-results-tiles background-white" id="content">
-                    @forelse($items as $item)
-                        <div class="col-xxs-12 col-xs-6 col-sm-4 col-md-4 product-item" >
-                            @include('client.product.product-item-temple')
-                        </div>
-                    @empty
-                    @endforelse
-                </div>
-            </div>
-        </div>
+            @endif
+        @endforeach
 
-        <div style="margin-top: -7px" class="container background-white">
-            <div class="row">
-                <div class="col-md-12 text-center">
-                    {!! $items->appends(['sort' => (isset($options['sort']))?$options['sort']:''])->render() !!}
+        @if(count($items) == 1)
+            <div style="margin-top: -7px" class="container background-white">
+                <div class="row">
+                    <div class="col-md-12 text-center">
+                        {!! $items[0]['products']->appends(['sort' => (isset($options['sort']))?$options['sort']:''])->render() !!}
+                    </div>
                 </div>
             </div>
-        </div>
+        @endif
+
         @if($tag->description)
-            <div class="container background-white vpadding-10 margin-top-10px">
+            <div class="container tag-description background-white vpadding-10 margin-top-10px">
                 <div class="row">
                     <div class="col-md-12">
                         {!! fixHtml($tag->description) !!}
@@ -68,7 +81,7 @@
             <div class="container background-white vpadding-10 margin-top-10px">
                 <div class="row">
                     <div class="col-md-12">
-                        <h3 class="color-grey">Có thể bạn quan tâm</h3>
+                        <span class="text-head color-grey">Có thể bạn quan tâm</span>
                         @foreach($tag->allChilds as $subTag)
                             <a class="color-grey-light tag-relation-suggestion" href="{{urlTag($subTag)}}" >
                                 <span class="tag-name">{{$subTag->name}}</span>
@@ -79,7 +92,6 @@
                 </div>
             </div>
         @endif
-
     </div>
     <input type="hidden" name="" value="{{$tag->id}}" id="tag-id"/>
     <input type="hidden" name="" value="" id="color-id"/>
@@ -95,5 +107,5 @@
     @include('client.product.modal')
 @stop
 
-@section('google-param-prodid', implode(", ",getProductIds($items)))
+@section('google-param-prodid', implode(", ",getProductIds($items[0]['products'])))
 @section('google-param-pagetype', 'category')

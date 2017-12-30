@@ -136,7 +136,7 @@ var layoutPackage = {
                             htmlString +='<li>';
                             htmlString +=   '<a href="/san-pham/'+products[i].slug+'--'+products[i].id+'--'+products[i].tag_id+'" >';
                             htmlString +=       '<img src="'+products[i].image+'">';
-                            htmlString +=       '<span title="'+products[i].name+'" >'+products[i].name+'</span>';
+                            htmlString +=       '<h5 title="'+products[i].name+'" >'+products[i].name+'</h5>';
                             htmlString +=       '<span class="color-green">'+products[i].priceShow+'</span>';
                             htmlString +=   '</a>';
                             htmlString +='</li>';

@@ -427,7 +427,7 @@ class productService extends baseService {
      * @return array|bool|static[]
      * @throws \Exception
      */
-    public function getProductByTagId($tagId, $limit = 20, $userId = 0, $page = 1, $options = false){
+    public function getProductByTagId($tagId, $limit = 20, $userId = 0, $page = 1, $options = false, $excludeProductIds = false){
 
         $productModel = new productModel();
         $userProductLike = new userProductLikeModel();
@@ -445,11 +445,11 @@ class productService extends baseService {
         else
             $offset = 0;
 
-        $products = $productModel->getProductByTagId($tagIds, $limit, $offset, $page, $options);
+        $products = $productModel->getProductByTagId($tagIds, $limit, $offset, $page, $options, $excludeProductIds);
 
         if(($page && !$products->total()) || !count($products)){
             unset($options['product_tag_type_id']);
-            $products = $productModel->getProductByTagId($tagIds, $limit, $offset, $page, $options);
+            $products = $productModel->getProductByTagId($tagIds, $limit, $offset, $page, $options, $excludeProductIds);
         }
 
 

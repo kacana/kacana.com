@@ -36,6 +36,7 @@ class IndexController extends BaseController
         $limit = KACANA_HOMEPAGE_ITEM_PER_TAG;
         $mainTags = $tagService->getRootTag();
         $data = array();
+        $excludeProductIds= array();
         foreach ($mainTags as $tag) {
             $result['tag'] = $tag->name;
             $result['short_desc'] = $tag->short_desc;
@@ -43,7 +44,11 @@ class IndexController extends BaseController
             $result['tag_id'] = $tag->child_id;
             $result['tag_url'] = '';
             $userId = (\Kacana\Util::isLoggedIn()) ? $this->_user->id : 0;
-            $result['products'] = $productService->getProductByTagId($tag->id, $limit, $userId, 1, ['product_tag_type_id' => TAG_RELATION_TYPE_MENU]);
+            $result['products'] = $productService->getProductByTagId($tag->id, $limit, $userId, 1, ['product_tag_type_id' => TAG_RELATION_TYPE_MENU], $excludeProductIds);
+            foreach ($result['products'] as $product)
+            {
+                array_push($excludeProductIds, $product->id);
+            }
             $data[] = $result;
         }
         $newestProduct = $productService->getNewestProduct($userId);

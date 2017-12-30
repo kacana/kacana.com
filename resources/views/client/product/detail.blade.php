@@ -12,7 +12,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <h1><a href="{{urlTag($tag)}}" >{{$tag->name}}</a></h1>
+                    <p class="product-tag-title"><a href="{{urlTag($tag)}}" >{{$tag->name}}</a></p>
                 </div>
             </div>
         </div>
@@ -25,7 +25,7 @@
                         @foreach($productSlide as $gallery)
                             <a id="product-detail-gallery-id-{{$product->id}}" class="rsImg bugaga" data-rsbigimg="{{$gallery->image}}" href="{{$gallery->image}}">
                                 {{$product->name}}
-                                <img class="rsTmb" src="{{$gallery->thumb}}">
+                                <img alt="{{$product->name}}" title="{{$product->name}}" class="rsTmb" src="{{$gallery->thumb}}">
                             </a>
                         @endforeach
                     @endif
@@ -100,16 +100,16 @@
                         </div>
                     @endif
                     @if(count($product->properties))
-                        <h4 class="product-information-head" >
+                        <p class="product-information-head" >
                             Màu sắc
-                        </h4>
+                        </p>
                         <div class="product-colors current-product-colors multiple-items nav">
                             @foreach($product->properties as $property)
                                 @if($productSlide && count($productSlide)>0)
                                     @foreach($productSlide as $galleryIndex => $gallery)
                                         @if($gallery->id == $property->product_gallery_id)
                                                 <a href="#choose-product-color" data-index="{{$galleryIndex}}" data-offset="25" data-popup-kacana="title" data-image-id="{{$property->product_gallery_id}}" data-size="{{json_encode($property->sizeIds)}}" data-title="{{$property->color_name}}" data-id="{{$property->color_id}}" >
-                                                    <img src="{{$gallery->thumb}}" >
+                                                    <img alt="{{$product->name}} - {{$property->color_name}}" src="{{$gallery->thumb}}" >
                                                 </a>
                                         @endif
                                     @endforeach
@@ -125,9 +125,9 @@
                     @endif
 
                     @if(isset($product->propertiesSize))
-                        <h4 class="product-information-head">
+                        <p class="product-information-head">
                             Kích thước
-                        </h4>
+                        </p>
                         <ul class="list-size-product nav">
                             @foreach($product->propertiesSize as $propertySize)
                                 <li>
@@ -146,9 +146,9 @@
                         </div>
                         <div class="col-xs-12 quick-order-block">
                             <form method="post" id="quick_order_form" action="/cart/quickOrder" >
-                                <h4 class="product-information-head">
+                                <p class="product-information-head">
                                     Đặt hàng ngay chỉ cần để lại SĐT
-                                </h4>
+                                </p>
                                 <input class="hidden" name="sizeId"  value="0" type="text" >
                                 <input class="hidden" name="colorId"  value="0" type="text" >
                                 <input class="hidden" name="tagId"  value="{{$tag->id}}" type="text" >
@@ -224,7 +224,7 @@
                     <div class="toogle" data-plugin-toggle="">
                          <section class="toggle active">
                              <label>
-                                 <h2 class="center description-detail-title"><span>Thuộc tính sản phẩm</span></h2>
+                                 <p class="center description-detail-title"><span>Thuộc tính sản phẩm</span></p>
                              </label>
                              <div class="description-detail-title-footer"></div>
                              <div class="toggle-content">
@@ -236,7 +236,7 @@
                 <div class="toogle product-description-detail" data-plugin-toggle="">
                     <section class="toggle active">
                         <label>
-                            <h2 class="center description-detail-title"><span>Thông tin chi tiết</span></h2>
+                            <p class="center description-detail-title"><span>Thông tin chi tiết</span></p>
                         </label>
                         <div class="description-detail-title-footer"></div>
                         <div class="toggle-content">
@@ -249,7 +249,7 @@
                 <div class="toogle"  data-plugin-toggle="" id="list-product-related">
                     <section class="toggle active" >
                         <label>
-                            <h2 class="center description-detail-title"><span>Sản phẩm tương tự</span></h2>
+                            <p class="center description-detail-title"><span>Sản phẩm tương tự</span></p>
                         </label>
                         <div class="description-detail-title-footer"></div>
                         <div class="toggle-content">
@@ -278,7 +278,7 @@
                 <div class="toogle" id="list-tag-related-product" data-plugin-toggle="">
                     <section class="toggle active">
                         <label>
-                            <h2 class="center description-detail-title"><span>Có thể bạn đang tìm kiếm</span></h2>
+                            <p class="center description-detail-title"><span>Có thể bạn đang tìm kiếm</span></p>
                         </label>
                         <div class="description-detail-title-footer"></div>
                         <div class="toggle-content">
@@ -296,7 +296,7 @@
                 <div class="toogle" data-plugin-toggle="">
                     <section class="toggle active">
                         <label>
-                            <h2 class="center description-detail-title"><span>Đánh giá và bình luận</span></h2>
+                            <p class="center description-detail-title"><span>Đánh giá và bình luận</span></p>
                         </label>
                         <div class="description-detail-title-footer"></div>
                         <div class="toggle-content" style="display: none;">
