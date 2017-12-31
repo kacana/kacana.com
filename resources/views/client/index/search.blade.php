@@ -5,7 +5,7 @@
         <div class="container">
             <div class="row center">
                 <div class="col-md-12">
-                    <h2 class="short text-shadow big white bold"><span class="color-white" >{{$search}}</span></h2>
+                    <h1 class="short text-shadow big white bold"><span class="color-white" >{{$search}}</span></h1>
                 </div>
             </div>
         </div>

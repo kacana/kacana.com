@@ -45,7 +45,7 @@
         @{{/if}}
 
         <div class="product-info">
-            <h4 class="product-title"> <a href="${this.urlProductDetail}" title="${this.name}">${this.name}</a></h4>
+            <h2 class="product-title"> <a href="${this.urlProductDetail}" title="${this.name}">${this.name}</a></h2>
         </div>
 
         <div class="product-price-wrap">

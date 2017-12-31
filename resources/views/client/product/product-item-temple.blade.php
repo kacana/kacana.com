@@ -39,7 +39,7 @@
     </div>
 @endif
 <div class="product-info">
-    <h4 class="product-title"> <a href="{{urlProductDetail($item)}}" title="{{$item->name}}">{{$item->name}}</a></h4>
+    <h2 class="product-title"><a href="{{urlProductDetail($item)}}" title="{{$item->name}}">{{$item->name}}</a></h2>
 </div>
 <div class="product-price-wrap">
     @if($item->discount)

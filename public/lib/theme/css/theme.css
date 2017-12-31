@@ -963,7 +963,7 @@ body #header nav.mega-menu .mega-menu-signin ul.dropdown-menu li a, body #header
 	{
 		margin-left: 5px;
 	}
-	#product-list-top-menu h2{
+	#product-list-top-menu h1{
 		font-size: 4vw!important;
 	}
 }
@@ -973,7 +973,7 @@ body #header nav.mega-menu .mega-menu-signin ul.dropdown-menu li a, body #header
 	#product-list-top-menu{
 		padding-top: 55px!important;
 	}
-	#product-list-top-menu h2{
+	#product-list-top-menu h1{
 		font-size: 7vw!important;
 	}
 	#header {

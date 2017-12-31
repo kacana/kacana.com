@@ -12,10 +12,10 @@
                     <div class="row">
                         <div class="col-xs-12 col-sm-12" >
                             <div class="row">
-                                <h3>TÚI XÁCH MỚI</h3>
+                                <h1>TÚI XÁCH MỚI</h1>
                             </div>
                             <div class="row">
-                                <h5>Những mẫu túi xách đẹp mới lên kệ tại KACANA</h5>
+                                <h3>Những mẫu túi xách đẹp mới lên kệ tại KACANA</h3>
                             </div>
                         </div>
                     </div>
@@ -53,10 +53,10 @@
                     <div class="row">
                         <div class="col-xs-12 col-sm-8" >
                             <div class="row">
-                                <h4>TÚI XÁCH KHUYẾN MÃI</h4>
+                                <h2>TÚI XÁCH KHUYẾN MÃI</h2>
                             </div>
                             <div class="row">
-                                <h5>Túi xách đang khuyến mãi hấp dẫn tại KACANA</h5>
+                                <h3>Túi xách đang khuyến mãi hấp dẫn tại KACANA</h3>
                             </div>
                         </div>
                     </div>
@@ -97,10 +97,10 @@
                     <div class="row">
                         <div class="col-xs-12 col-sm-8" >
                             <div class="row">
-                                <h4>{{$block['tag']}}</h4>
+                                <h2>{{$block['tag']}}</h2>
                             </div>
                             <div class="row">
-                                <h5>@if($block['short_desc']){{$block['short_desc']}}@else Danh sách {{ $block['tag']}} của KACANA! @endif</h5>
+                                <h3>@if($block['short_desc']){{$block['short_desc']}}@else Danh sách {{ $block['tag']}} của KACANA! @endif</h3>
                             </div>
                         </div>
                         <div class="show-all col-xs-12 col-sm-4" >

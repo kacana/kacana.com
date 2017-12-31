@@ -8,7 +8,7 @@
         <div class="container">
             <div class="row center">
                 <div class="col-md-12">
-                    <h2 class="short text-shadow big white bold">{{ $tag->name}}</h2>
+                    <h1 class="short text-shadow big white bold">{{ $tag->name}}</h1>
                 </div>
             </div>
         </div>
@@ -25,10 +25,10 @@
                             <div class="row">
                                 <div class="col-xs-12 col-sm-8" >
                                     <div class="row">
-                                        <h4>{{ $itemTag['tag']->name}}</h4>
+                                        <h2>{{ $itemTag['tag']->name}}</h2>
                                     </div>
                                     <div class="row">
-                                        <h5>@if($itemTag['tag']->short_desc){{ $itemTag['tag']->short_desc}}@else Danh sách {{ $itemTag['tag']->name}} của KACANA! @endif</h5>
+                                        <h3>@if($itemTag['tag']->short_desc){{ $itemTag['tag']->short_desc}}@else Danh sách {{ $itemTag['tag']->name}} của KACANA! @endif</h3>
                                     </div>
                                 </div>
                                 @if(count($items) == 1)
