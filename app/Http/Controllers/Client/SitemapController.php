@@ -32,7 +32,7 @@ class SitemapController extends BaseController {
 
 	public function sitemapPages(Request $request){
         $sitemap_pages = \App::make("sitemap");
-        $domain = str_replace('http://', '', $request->root());
+        $domain = str_replace('https://', '', $request->root());
         // set cache
         $sitemap_pages->setCache('__sitemap_pages__', 3600);
 
