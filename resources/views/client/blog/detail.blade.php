@@ -11,9 +11,9 @@
             <div class="col-xs-12 col-sm-9" >
                 <div class="row">
                     <div class="col-xs-12 post-header">
-                        <div class="post-title" >
+                        <h1 class="post-title" >
                             {{$post->title}}
-                        </div>
+                        </h1>
                         <img src="{{$post->image}}" class="img-responsive">
 
                         <div class="post-author">

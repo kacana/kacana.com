@@ -1,5 +1,4 @@
 #blog-page{
-  padding-top: 120px;
   min-height: 300px;
   background: #fff;
   img {
@@ -134,10 +133,22 @@
     font-size: 16pt;
     font-weight: 500;
   }
-  .promote .forum a {
-    color: #098bf9;
-    font-weight: 400
+  .promote .forum{
+    h2{
+      display: inline;
+      margin-left: 10px;
+    }
+    a {
+      font-weight: 500;
+      font-size: 14px;
+      text-decoration: none;
+      color: @color-green-light;
+      &:hover{
+        color: @color-green-dark;
+      }
+    }
   }
+
   .promote .thread-info {
     height: 48px;
     padding-left: 63px;
@@ -161,6 +172,7 @@
   }
   .promote .thread-title {
     margin-top: 30px;
+    text-transform: none;
     a{
       color: #475b6f;
       font-size: 18pt;
@@ -262,9 +274,11 @@
       line-height: inherit;
       margin-top: 0
     }
-    .promote .process-time,
-    .promote .forum {
+    .promote .process-time {
       margin-top: 2px
+    }
+    .promote .forum {
+      margin-top: -2px
     }
     .promote .sharing {
       float: left
@@ -293,6 +307,9 @@
       background: rgba(0, 0 ,0, 0.5);
       width: ~'calc(100% - 30px)';
       font-size: 20px;
+      margin: 0;
+      padding: 5px 20px;
+      font-weight: 400;
     }
     .post-author{
       position: absolute;

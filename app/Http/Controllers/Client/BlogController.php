@@ -4,6 +4,7 @@ use App\services\blogService;
 use App\services\chatService;
 use App\services\mailService;
 use App\services\productService;
+use App\services\tagService;
 use Illuminate\Http\Request;
 use Kacana\Client\KPusher;
 
@@ -98,10 +99,11 @@ class BlogController extends BaseController {
     public function catPost($domain, $slug, $tagId, Request $request){
 
         $blogService = new blogService();
+        $tagService = new tagService();
         try{
             $posts = $blogService->getListPost(10, 0, $tagId);
-
-            return view('client.blog.index', ['posts' => $posts]);
+            $tag = $tagService->getTagById($tagId);
+            return view('client.blog.index', ['posts' => $posts, 'tag' => $tag]);
         } catch (\Exception $e) {
             if($request->ajax())
             {

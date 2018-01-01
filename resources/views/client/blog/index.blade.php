@@ -2,6 +2,18 @@
 
 @section('meta-title', 'Tin tức')
 
+@section('top-infomation')
+    <section class="parallax" id="product-list-top-menu" data-stellar-background-ratio="0.5" style="background-image: url('@if(isset($tag) && $tag->image){{ AWS_CDN_URL.$tag->image}}@else {{ KACANA_URL_BACKGROUND_BANNER_DEFAULT }} @endif');">
+        <div class="container">
+            <div class="row center">
+                <div class="col-md-12">
+                    <h1 class="short text-shadow big white bold">@if(isset($tag)){{$tag->name}}@else Tín đồ túi xách @endif</h1>
+                </div>
+            </div>
+        </div>
+    </section>
+@stop
+
 @section('content')
     <div class="container" id="blog-page">
         <div class="row">
@@ -10,7 +22,7 @@
                     <div class="thread-info width-narrow">
                         <span class="poster-avatar">
                             <a href="#" class="avatar" data-avatarhtml="true">
-                                <img src="{{$post->user->image}}" alt="TTKM" height="96" width="96">
+                                <img src="{{$post->user->image}}" alt="{{$post->user->name}}" height="96" width="96">
                             </a>
                         </span>
                         <span class="poster">
@@ -21,17 +33,19 @@
                         </span>
                         <span class="forum">
                             <span>trong</span>
-                            <a href="/tin-tuc/chuyen-muc/{{str_slug($post->tag->name)}}.{{str_slug($post->tag->id)}}">{{$post->tag->name}}</a>
+                            <h2>
+                                <a href="/tin-tuc/chuyen-muc/{{str_slug($post->tag->name)}}.{{str_slug($post->tag->id)}}">{{$post->tag->name}}</a>
+                            </h2>
                         </span>
                     </div><!-- .thread-info -->
                     <div class="thread-image width-wide" data-src="{{$post->image}}">
                         <a href="/tin-tuc/{{$post->slug}}.{{$post->id}}">
-                            <img src="{{$post->image}}">
+                            <img alt="{{$post->title}}" src="{{$post->image}}">
                         </a>
                     </div>
-                    <div class="thread-title width-narrow">
+                    <h3 class="thread-title width-narrow">
                         <a href="/tin-tuc/{{$post->slug}}.{{$post->id}}">{{$post->title}}</a>
-                    </div>
+                    </h3>
                     <div class="post-body width-narrow">
                         <article>
                             <blockquote class="messageText ugc baseHtml">
