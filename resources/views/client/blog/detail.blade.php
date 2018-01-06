@@ -1,7 +1,7 @@
 @extends('layouts.client.master')
 
 @section('meta-title', ucfirst($post->title))
-@section('meta-description', trim_text($post->body, 300, true, true))
+@section('meta-description', trim_text($post->body, 160, true, true))
 @section('meta-keyword', implode(", ", $metaKeyword))
 @section('meta-image', 'http:'.AWS_CDN_URL.str_replace(' ', '%20',$post->getOriginal('image')))
 
