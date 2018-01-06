@@ -21,7 +21,7 @@
         </div>
 
         @{{if this.properties_js}}
-            <div class="list-color-product multiple-items nav" >
+            <div class="list-color-product multiple-items nav hidden-xs" >
                 @{{each this.properties_js}}
                     @{{if this.product_gallery}}
                         <div>
@@ -35,7 +35,7 @@
         @{{/if}}
 
         @{{if !this.properties_js}}
-            <div class="list-color-product multiple-items nav" >
+            <div class="list-color-product multiple-items nav hidden-xs" >
                 <div>
                     <a >
                         <img  data-src="${this.image}">
@@ -67,7 +67,7 @@
         </div>
         <div class="product-short-description-like-wrap">
             <div class="product-short-description-wrap text-center" id="product-short-description-wrap- ${this.id}">
-                <div class="product-short-description hidden-xs">
+                <div class="product-short-description">
                     ${this.short_description}
                 </div>
                 @{{if this.isLiked}}
