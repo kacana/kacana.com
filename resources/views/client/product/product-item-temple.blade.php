@@ -18,7 +18,7 @@
 </div>
 
 @if($item->properties && count($item->properties)>0)
-    <div class="list-color-product multiple-items nav" >
+    <div class="list-color-product multiple-items nav hidden-xs" >
         @foreach($item->properties as $property)
             @if($property->product_gallery)
                 <div>
@@ -30,7 +30,7 @@
         @endforeach
     </div>
 @else
-    <div class="list-color-product multiple-items nav" >
+    <div class="list-color-product multiple-items nav hidden-xs" >
         <div>
             <a >
                 <img title="{{$item->name}}" alt="{{$item->name}}" data-src="{{$item->image}}">
@@ -59,7 +59,7 @@
 </div>
 <div class="product-short-description-like-wrap">
     <div class="product-short-description-wrap text-center" id="product-short-description-wrap-{{$item->id}}">
-        <div class="product-short-description hidden-xs">
+        <div class="product-short-description">
             {{fixHtml($item->short_description)}}
         </div>
 

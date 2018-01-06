@@ -9,8 +9,8 @@
     <meta charset="utf-8">
 
     <!-- GOOGLE META AND SEO -->
-    <title>@yield('meta-title', 'Chuyên bán túi xách, ví, balo thời trang') - Kacana.vn</title>
-    <meta name="description" content="@yield('meta-description', 'Hàng hiệu túi xách nam nữ, ví nam, ví nữ, balo nam, balo nữ✅Chất lượng cao cấp✅Mẫu mã thời trang✅Giá rẻ hợp lý✅Công sở, dự tiệc, du lịch✅Giao hàng miễn phí')" />
+    <title>@yield('meta-title', 'Chuyên bán túi xách, ví, balo thời trang')</title>
+    <meta name="description" content="@yield('meta-description', 'Hàng hiệu chính hãng túi xách nam nữ, ví nam, ví nữ, balo nam, ba lô nữ✅Thời trang hàn quốc✅Mẫu đẹp giá rẻ✅Chất lượng cao cấp✅Shop online✅Free ship toàn quốc')" />
     <meta name="keywords" content="@yield('meta-keyword', 'túi xách nam, túi xách nữ, ví nam, ví nữ, balo nam, ba lô nữ, ví cầm tay')" />
 
     <link rel="alternate" href="http://kacana.vn" hreflang="vn" />
