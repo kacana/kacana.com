@@ -16,6 +16,8 @@ var blogPackage = {
                 var data = {postId: postId};
                 Kacana.ajax.blog.trackUserPostView(data, callBack, errorCallBack);
             }, 3000);
+
+            $('#blog-detail-page img').lazyload();
         }
     }
 };

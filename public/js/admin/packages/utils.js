@@ -85,6 +85,42 @@ var utilsPackage = {
             formatted = output.reverse().join("");
             return(formatted + ((parts) ? "." + parts[1].substr(0, 2) : "") + " đ");
         },
+        dealType: function ($type) {
+            var typeName = '';
+            switch ($type) {
+                case 1:
+                    typeName = 'giảm giá tiền';
+                    break;
+                case 2:
+                    typeName = 'giảm giá %';
+                    break;
+                case 3:
+                    typeName = 'mua 1 tặng 1';
+                    break;
+                case 4:
+                    typeName = 'đồng giá';
+                    break;
+            }
+            return typeName;
+        },
+        dealRef: function ($type, $ref) {
+            var refName = '';
+            switch ($type) {
+                case 1:
+                    refName = Kacana.utils.formatCurrency($ref);
+                    break;
+                case 2:
+                    refName = $ref+'%';
+                    break;
+                case 3:
+                    refName = '<a href="/product/editProduct/'+$ref+'" target="_blank" >sản phẩm</a>';
+                    break;
+                case 4:
+                    refName = Kacana.utils.formatCurrency($ref);
+                    break;
+            }
+            return refName;
+        },
         KPusher: function () {
             // Enable pusher logging - don't include this in production
             Pusher.logToConsole = true;

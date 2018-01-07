@@ -27,7 +27,7 @@
                 <div class="">
                     <div class="col-xs-12 background-white blog-body">
                         <div class="kacana-wysiwyg-block" >
-                            {!! $post->body !!}
+                            {!! $post->bodyLazyLoad !!}
                         </div>
                     </div>
                 </div>

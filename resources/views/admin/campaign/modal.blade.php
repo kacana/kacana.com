@@ -47,112 +47,7 @@
                             </div>
                             <div class="row">
                                 <div id="list-search-product-campaign">
-                                    <div class="col-sm-12 item">
-                                        <div class="col-sm-5 product-info" >
-                                            <img src="//image.kacana.vn/images/product/Balo chống trộm phiên bản balo đeo chéo ngực một quai MIXI 2060 1496040258.jpg">
-                                            <span >Balo chống trộm phiên bản balo đeo chéo ngực một quai MIXI 2060</span>
-                                            <span class="text-aqua" >990,000 đ</span></a>
-                                        </div>
-                                        <div class="col-sm-6 product-current-deal">
-                                            <span class="text-danger">2017-12-01 21:38:00 - 2017-12-01 21:38:00</span> <span class="type-product-deal text-info">Đồng Giá</span> <span class="text-maroon">500,000 đ</span><br>
-                                            <span class="text-danger">2017-12-01 21:38:00 - 2017-12-01 21:38:00</span> <span class="type-product-deal text-info">Đồng Giá</span> <span class="text-maroon">500,000 đ</span><br>
-                                            <span class="text-danger">2017-12-01 21:38:00 - 2017-12-01 21:38:00</span> <span class="type-product-deal text-info">Đồng Giá</span> <span class="text-maroon">500,000 đ</span><br>
-                                        </div>
-                                        <div class="col-sm-1 action-item">
-                                            <a href="#add-product"><i class="fa fa-plus-circle fa-2x" ></i></a>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-12 item">
-                                        <div class="col-sm-5 product-info" >
-                                            <img src="//image.kacana.vn/images/product/Balo chống trộm phiên bản balo đeo chéo ngực một quai MIXI 2060 1496040258.jpg">
-                                            <span >Balo chống trộm phiên bản balo đeo chéo ngực một quai MIXI 2060</span>
-                                            <span class="text-aqua" >990,000 đ</span></a>
-                                        </div>
-                                        <div class="col-sm-6 product-current-deal">
-                                            <span class="text-danger">2017-12-01 21:38:00 - 2017-12-01 21:38:00</span> <span class="type-product-deal text-info">Đồng Giá</span> <span class="text-maroon">500,000 đ</span><br>
-                                        </div>
-                                        <div class="col-sm-1 action-item">
-                                            <a href="#add-product"><i class="fa fa-plus-circle fa-2x" ></i></a>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-12 item">
-                                        <div class="col-sm-5 product-info" >
-                                            <img src="//image.kacana.vn/images/product/Balo chống trộm phiên bản balo đeo chéo ngực một quai MIXI 2060 1496040258.jpg">
-                                            <span >Balo chống trộm phiên bản balo đeo chéo ngực một quai MIXI 2060</span>
-                                            <span class="text-aqua" >990,000 đ</span></a>
-                                        </div>
-                                        <div class="col-sm-6 product-current-deal">
-                                            {{--<span class="text-danger">2017-12-01 21:38:00 - 2017-12-01 21:38:00</span> <span class="type-product-deal text-info">Đồng Giá</span> <span class="text-maroon">500,000 đ</span><br>--}}
-                                        </div>
-                                        <div class="col-sm-1 action-item">
-                                            <a href="#add-product"><i class="fa fa-plus-circle fa-2x" ></i></a>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-12 item">
-                                        <div class="col-sm-5 product-info" >
-                                            <img src="//image.kacana.vn/images/product/Balo chống trộm phiên bản balo đeo chéo ngực một quai MIXI 2060 1496040258.jpg">
-                                            <span >Balo chống trộm phiên bản balo đeo chéo ngực một quai MIXI 2060</span>
-                                            <span class="text-aqua" >990,000 đ</span></a>
-                                        </div>
-                                        <div class="col-sm-6 product-current-deal">
-                                            <span class="text-danger">2017-12-01 21:38:00 - 2017-12-01 21:38:00</span> <span class="type-product-deal text-info">Đồng Giá</span> <span class="text-maroon">500,000 đ</span><br>
-                                        </div>
-                                        <div class="col-sm-1 action-item">
-                                            <a href="#add-product"><i class="fa fa-plus-circle fa-2x" ></i></a>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-12 item">
-                                        <div class="col-sm-5 product-info" >
-                                            <img src="//image.kacana.vn/images/product/Balo chống trộm phiên bản balo đeo chéo ngực một quai MIXI 2060 1496040258.jpg">
-                                            <span >Balo chống trộm phiên bản balo đeo chéo ngực một quai MIXI 2060</span>
-                                            <span class="text-aqua" >990,000 đ</span></a>
-                                        </div>
-                                        <div class="col-sm-6 product-current-deal">
-                                            <span class="text-danger">2017-12-01 21:38:00 - 2017-12-01 21:38:00</span> <span class="type-product-deal text-info">Đồng Giá</span> <span class="text-maroon">500,000 đ</span><br>
-                                        </div>
-                                        <div class="col-sm-1 action-item">
-                                            <a href="#add-product"><i class="fa fa-plus-circle fa-2x" ></i></a>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-12 item">
-                                        <div class="col-sm-5 product-info" >
-                                            <img src="//image.kacana.vn/images/product/Balo chống trộm phiên bản balo đeo chéo ngực một quai MIXI 2060 1496040258.jpg">
-                                            <span >Balo chống trộm phiên bản balo đeo chéo ngực một quai MIXI 2060</span>
-                                            <span class="text-aqua" >990,000 đ</span></a>
-                                        </div>
-                                        <div class="col-sm-6 product-current-deal">
-                                            <span class="text-danger">2017-12-01 21:38:00 - 2017-12-01 21:38:00</span> <span class="type-product-deal text-info">Đồng Giá</span> <span class="text-maroon">500,000 đ</span><br>
-                                        </div>
-                                        <div class="col-sm-1 action-item">
-                                            <a href="#add-product"><i class="fa fa-plus-circle fa-2x" ></i></a>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-12 item">
-                                        <div class="col-sm-5 product-info" >
-                                            <img src="//image.kacana.vn/images/product/Balo chống trộm phiên bản balo đeo chéo ngực một quai MIXI 2060 1496040258.jpg">
-                                            <span >Balo chống trộm phiên bản balo đeo chéo ngực một quai MIXI 2060</span>
-                                            <span class="text-aqua" >990,000 đ</span></a>
-                                        </div>
-                                        <div class="col-sm-6 product-current-deal">
-                                            <span class="text-danger">2017-12-01 21:38:00 - 2017-12-01 21:38:00</span> <span class="type-product-deal text-info">Đồng Giá</span> <span class="text-maroon">500,000 đ</span><br>
-                                        </div>
-                                        <div class="col-sm-1 action-item">
-                                            <a href="#add-product"><i class="fa fa-plus-circle fa-2x" ></i></a>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-12 item">
-                                        <div class="col-sm-5 product-info" >
-                                            <img src="//image.kacana.vn/images/product/Balo chống trộm phiên bản balo đeo chéo ngực một quai MIXI 2060 1496040258.jpg">
-                                            <span >Balo chống trộm phiên bản balo đeo chéo ngực một quai MIXI 2060</span>
-                                            <span class="text-aqua" >990,000 đ</span></a>
-                                        </div>
-                                        <div class="col-sm-6 product-current-deal">
-                                            <span class="text-danger">2017-12-01 21:38:00 - 2017-12-01 21:38:00</span> <span class="type-product-deal text-info">Đồng Giá</span> <span class="text-maroon">500,000 đ</span><br>
-                                        </div>
-                                        <div class="col-sm-1 action-item">
-                                            <a href="#add-product"><i class="fa fa-plus-circle fa-2x" ></i></a>
-                                        </div>
-                                    </div>
+
                                 </div>
                                 <h4 class="text-danger text-bold text-center">List Product Campaign</h4>
                                 <div id="list-product-add-to-campaign" >
@@ -216,3 +111,26 @@
         </div>
     </div>
 </div>
+
+<script id="template-product-item-add-campaign" type="template">
+    @{{each listItem}}
+        <div data-product-id="" class="col-sm-12 item">
+            <div class="col-sm-5 product-info" >
+                <img src="${this.image}">
+                <span >${this.name}</span>
+                <span class="text-aqua" >${Kacana.utils.formatCurrency(this.sell_price)}</span></a>
+            </div>
+            <div class="col-sm-6 product-current-deal">
+                @{{each this.campaign_product}}
+                    <span class="text-danger">${this.start_date} - ${this.end_date}</span>
+                    <span class="type-product-deal text-info">${Kacana.utils.dealType(this.promotion_type)}</span>
+                    <span class="text-maroon">@{{html Kacana.utils.dealRef(this.promotion_type,this.promotion_ref)}}</span>
+                <br><br>
+                @{{/each}}
+            </div>
+            <div class="col-sm-1 action-item">
+                <a href="#add-product"><i class="fa fa-plus-circle fa-2x" ></i></a>
+            </div>
+        </div>
+    @{{/each}}
+</script>

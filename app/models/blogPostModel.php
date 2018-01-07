@@ -13,6 +13,8 @@ class blogPostModel extends Model
 
     public $timestamps = true;
 
+    protected $appends = ['bodyLazyLoad'];
+
     /**
      * Get the tags associated with product
      */
@@ -173,4 +175,8 @@ class blogPostModel extends Model
         return $this->where('blog_posts.status', KACANA_BLOG_POST_STATUS_ACTIVE)->get();
     }
 
+    public function getBodyLazyLoadAttribute()
+    {
+        return str_replace('src="' . AWS_CDN_URL . '/images/blog', 'src="' . AWS_CDN_URL . PRODUCT_IMAGE_PLACE_HOLDER . '" alt="'.$this->original['title'].'" data-src="' . AWS_CDN_URL . '/images/blog', $this->original['body']);
+    }
 }

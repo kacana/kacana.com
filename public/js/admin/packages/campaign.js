@@ -408,10 +408,13 @@ var campaignPackage = {
             searchProduct: function () {
                 var keySearch = $(this).val();
                 var sendData = {'key': keySearch};
+                var modal = $('#modal-add-product-campaign');
+                var template = $('#template-product-item-add-campaign');
                 var callBack = function(data){
-
                     if(data.ok){
-                        location.reload();
+                        var item = data.data;
+                        var templateGenerate = $.tmpl(template, {'listItem': item});
+                        modal.find('.modal-body #list-search-product-campaign').empty().append(templateGenerate);
                     }
                 };
 
