@@ -177,6 +177,6 @@ class blogPostModel extends Model
 
     public function getBodyLazyLoadAttribute()
     {
-        return str_replace('src="' . AWS_CDN_URL . '/images/blog', 'src="' . AWS_CDN_URL . PRODUCT_IMAGE_PLACE_HOLDER . '" alt="'.$this->original['title'].'" data-src="' . AWS_CDN_URL . '/images/blog', $this->original['body']);
+        return str_replace('src="' . AWS_CDN_URL . '/images/blog', 'alt="'.$this->original['title'].'" src="' . AWS_CDN_URL . '/images/blog', $this->original['body']);
     }
 }
