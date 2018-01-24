@@ -2,6 +2,7 @@
 
 use App\models\baseModel;
 use UAParser\Parser;
+use Carbon\Carbon;
 
 /**
  * Class baseService
@@ -145,6 +146,106 @@ class baseService
         $body = str_replace('</body>', '', $body);
 
         return $body;
+    }
+
+    public function optimizeImage($image){
+
+        if(trim($image))
+            \Log::info('------- PROCESS COMPRESS IMAGE : '.$image.' -----------');
+        else
+        {
+            \Log::warning('------- IMAGE NULL -----------');
+            return false;
+        }
+
+        $longitude = HEAD_COMPANY_LOCATION_LONGITUDE;
+        $latitude = HEAD_COMPANY_LOCATION_LATITUDE;
+        $path = '/images/product/';
+        $imageName = str_replace($path, '', $image);
+
+        //optimize sie file
+        try {
+
+            $tinyKey = $this->getTinyfySecretKey();
+            \Tinify\setKey($tinyKey);
+            $source = \Tinify\fromUrl("https:".AWS_CDN_URL.$path.urlencode($imageName));
+            $copyrighted = $source->preserve("copyright", "creation", 'location');
+            $copyrighted->toFile("/app/public$path$imageName");
+
+        } catch(\Tinify\AccountException $e) {
+            \Log::error("The AccountException error message is: " . $e->getMessage());
+            \Log::info('---FAILED COMPRESS IMAGE: '. $image .'-----');
+            // Verify your API key and account limit.
+        } catch(\Tinify\ClientException $e) {
+            \Log::error("The ClientException error message is: " . $e->getMessage());
+            \Log::info('---FAILED COMPRESS IMAGE: '. $image .'-----');
+            // Check your source image and request options.
+        } catch(\Tinify\ServerException $e) {
+            \Log::error("The ServerException error message is: " . $e->getMessage());
+            \Log::info('---FAILED COMPRESS IMAGE: '. $image .'-----');
+            // Temporary issue with the Tinify API.
+        } catch(\Tinify\ConnectionException $e) {
+            \Log::error("The ConnectionException error message is: " . $e->getMessage());
+            \Log::info('---FAILED COMPRESS IMAGE: '. $image .'-----');
+            // A network connection error occurred.
+        } catch(\Exception $e) {
+            \Log::error("The Exception error message is: " . $e->getMessage());
+            \Log::info('---FAILED COMPRESS IMAGE: '. $image .'-----');
+            // Something else went wrong, unrelated to the Tinify API.
+        }
+
+
+        // add location for image file
+        $imageFileName = str_replace(' ', '\\ ', $imageName);
+        $command = "/app/Image-ExifTool-10.75/exiftool -GPSLongitudeRef=E -GPSLongitude=$longitude -GPSLatitudeRef=N -GPSLatitude=$latitude /app/public$path$imageFileName";
+        exec($command);
+
+        $productGalleryService = new productGalleryService();
+
+        $productGalleryService->uploadToS3($image);
+    }
+
+    public function getTinyfySecretKey(){
+        $keys = explode('|', TINYFY_SECRET_KEY);
+        $keyAvailable = $keys[0]; // main key if free key is over limit 500
+        foreach ($keys  as $key)
+        {
+            \Tinify\setKey($key);
+            \Tinify\validate();
+            $compressionsThisMonth = \Tinify\compressionCount();
+            \Log::info('__Key: ' .$key.'__'.$compressionsThisMonth);
+            if($compressionsThisMonth < 500 )
+            {
+                $keyAvailable = $key;
+                return $keyAvailable;
+            }
+
+        }
+
+        return $keyAvailable;
+    }
+
+    public function fixImageSize(){
+        $basicService = new baseService();
+        $productService = new productService();
+
+        $products = $productService->getAllProductAvailable();
+
+        foreach ($products as $product){
+            \Log::debug('-----PRODUCT NAME: '.$product->name.' ------');
+            foreach ($product->galleries as $gallery){
+                $image = $gallery->getOriginal('image');
+                $basicService->optimizeImage($image);
+
+                if($gallery->getOriginal('thumb'))
+                {
+                    $image = $gallery->getOriginal('thumb');
+                    $basicService->optimizeImage($image);
+                }
+            }
+            $basicService->optimizeImage($product->getOriginal('image'));
+        }
+        \Log::info('--- DONE ROI ---');
     }
 
 

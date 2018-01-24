@@ -170,7 +170,9 @@ var productPackage = {
                 });
 
                 $page.find('#tag_search_product').select2({
+                    closeOnSelect: false,
                     ajax: {
+
                         url: "/tag/searchTagProduct",
                         dataType: 'json',
                         delay: 250,
@@ -202,6 +204,7 @@ var productPackage = {
                     templateSelection: Kacana.product.detail.parseProductTagSelection,
                     templateResult: Kacana.product.detail.parseProductTagTemplate,
                 });
+
 
                 Kacana.product.detail.limitColor();
 

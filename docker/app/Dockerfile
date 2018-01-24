@@ -3,7 +3,7 @@ FROM php:7.0.24-fpm
 RUN echo "nameserver 8.8.8.8" | tee /etc/resolv.conf > /dev/null
 
 RUN apt-get update \
-    && apt-get install -y curl openssh-server pdftk supervisor zlib1g-dev libmcrypt-dev libpng-dev\
+    && apt-get install -y curl openssh-server pdftk supervisor zlib1g-dev libmcrypt-dev libpng-dev imagemagick\
 	&& docker-php-ext-install pdo pdo_mysql zip \
 	&& mkdir -p /var/run/sshd /var/log/supervisor \
 	&& chmod -R 777 /var/run \

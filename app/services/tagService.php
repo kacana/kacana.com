@@ -507,8 +507,7 @@ class tagService extends baseService {
         {
             array_push($tagNotIn, $tagAddedProduct->tag_id);
         }
-
-        return $tagModel->searchTagByName($name, $tagNotIn);
+        return $tagModel->searchTagByName($name, $tagNotIn, KACANA_TAG_STATUS_ACTIVE);
     }
 
     public function searchTagPost($name, $postId){

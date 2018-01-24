@@ -414,12 +414,18 @@ class tagModel extends Model  {
      * @param bool $exclude
      * @return mixed
      */
-    public function searchTagByName($name, $exclude = false){
+    public function searchTagByName($name, $exclude = false, $status = false){
 
-        $select = $this->where('tags.name','like', '%'.$name.'%')
-                        ->orWhere('tags.id','=', $name);
+        $select = $this->where(function ($query) use ($name) {
+            $query->where('tags.name','like', '%'.$name.'%')
+                ->orWhere('tags.id','=', $name);
+        });
+
         if($exclude)
             $select->whereNotIn('tags.id', $exclude);
+
+        if($status)
+            $select->where('tags.status', $status);
 
         $select->orderBy('tags.created', 'DESC');
         $select->take(50);

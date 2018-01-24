@@ -404,6 +404,8 @@ var campaignPackage = {
             bindEventModal: function () {
                 var modal = $('#modal-add-product-campaign');
                 modal.on('change', '#input-search-add-product-name', Kacana.campaign.editCampaign.searchProduct);
+                modal.on('click', '#list-search-product-campaign a[href="#add-product"]', Kacana.campaign.editCampaign.addProductToCampaign);
+                modal.on('click', '#list-product-add-to-campaign a[href="#add-product"]', Kacana.campaign.editCampaign.removeProductToCampaign);
             },
             searchProduct: function () {
                 var keySearch = $(this).val();
@@ -425,6 +427,22 @@ var campaignPackage = {
                 Kacana.ajax.campaign.searchProduct(sendData, callBack, errorCallBack);
 
                 return false;
+            },
+            addProductToCampaign: function () {
+                var productId = $(this).parents('.item').data('product-id');
+
+                $('#list-product-add-to-campaign .item').each(function () {
+                    if($(this).data('product-id') == productId){
+                        return Kacana.utils.showError('sản phẩm đã được thêm!')
+                    }
+                });
+
+                var item = $(this).parents('.item').clone();
+                item.find('a[href="#add-product"] i').attr('class', "text-danger fa fa-minus-circle fa-2x");
+                item.prependTo('#list-product-add-to-campaign');
+            },
+            removeProductToCampaign: function () {
+                $(this).parents('.item').remove();
             }
         }
     }

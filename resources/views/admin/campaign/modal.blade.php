@@ -114,7 +114,7 @@
 
 <script id="template-product-item-add-campaign" type="template">
     @{{each listItem}}
-        <div data-product-id="" class="col-sm-12 item">
+        <div data-product-id="${this.id}" class="col-sm-12 item">
             <div class="col-sm-5 product-info" >
                 <img src="${this.image}">
                 <span >${this.name}</span>

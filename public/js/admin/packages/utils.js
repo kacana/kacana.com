@@ -4,6 +4,13 @@ var utilsPackage = {
         init: function(){
            Kacana.utils.changeStatus();
         },
+        showError: function (text) {
+            sweetAlert(
+                'Oops...',
+                text,
+                'error'
+            )
+        },
         changeStatus: function(){
             $('body table').on('click', 'a[href="#change-kacana-dropdown"]', function(){
 
