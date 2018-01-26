@@ -227,14 +227,6 @@ class UploadController extends BaseController {
     }
 
     public function optimizeImage($image){
-
-        if(trim($image))
-            \Log::info('------- PROCESS COMPRESS IMAGE : '.$image.' -----------');
-        else
-        {
-            \Log::warning('------- IMAGE NULL -----------');
-            return false;
-        }
         $image = public_path().$image;
         $longitude = HEAD_COMPANY_LOCATION_LONGITUDE;
         $latitude = HEAD_COMPANY_LOCATION_LATITUDE;
@@ -271,7 +263,6 @@ class UploadController extends BaseController {
         }
 
         $command = base_path()."/../Image-ExifTool-10.77/exiftool -GPSLongitudeRef=E -GPSLongitude=$longitude -GPSLatitudeRef=N -GPSLatitude=$latitude $image";
-        \Log::info('------- Run command : '.$command.' -----------');
         exec($command);
     }
 
