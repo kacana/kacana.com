@@ -271,6 +271,7 @@ class UploadController extends BaseController {
         }
 
         $command = base_path()."/Image-ExifTool-10.75/exiftool -GPSLongitudeRef=E -GPSLongitude=$longitude -GPSLatitudeRef=N -GPSLatitude=$latitude $image";
+        \Log::info('------- Run command : '.$command.' -----------');
         exec($command);
     }
 
