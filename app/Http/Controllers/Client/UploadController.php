@@ -270,7 +270,7 @@ class UploadController extends BaseController {
             // Something else went wrong, unrelated to the Tinify API.
         }
 
-        $command = "/app/Image-ExifTool-10.75/exiftool -GPSLongitudeRef=E -GPSLongitude=$longitude -GPSLatitudeRef=N -GPSLatitude=$latitude $image";
+        $command = base_path()."/Image-ExifTool-10.75/exiftool -GPSLongitudeRef=E -GPSLongitude=$longitude -GPSLatitudeRef=N -GPSLatitude=$latitude $image";
         exec($command);
     }
 
