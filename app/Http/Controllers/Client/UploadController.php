@@ -109,8 +109,10 @@ class UploadController extends BaseController {
                     }
                     // Strip the temp .part suffix off
                     rename($partFilePath, $finalFilePath);
+                    $imagePath = '/'.$filePath.'.'.$ext;
+                    $this->optimizeImage($imagePath);
 
-                    $return['name'] = '/'.$filePath.'.'.$ext;
+                    $return['name'] = $imagePath;
                     $return['ok'] = 1;
                 }
 
@@ -222,5 +224,72 @@ class UploadController extends BaseController {
         }
 
         closedir($dir);
+    }
+
+    public function optimizeImage($image){
+
+        if(trim($image))
+            \Log::info('------- PROCESS COMPRESS IMAGE : '.$image.' -----------');
+        else
+        {
+            \Log::warning('------- IMAGE NULL -----------');
+            return false;
+        }
+        $image = public_path().$image;
+        $longitude = HEAD_COMPANY_LOCATION_LONGITUDE;
+        $latitude = HEAD_COMPANY_LOCATION_LATITUDE;
+
+        //optimize sie file
+        try {
+
+            $tinyKey = $this->getTinyfySecretKey();
+            \Tinify\setKey($tinyKey);
+            $source = \Tinify\fromFile($image);
+            $copyrighted = $source->preserve("copyright", "creation", 'location');
+            $copyrighted->toFile($image);
+
+        } catch(\Tinify\AccountException $e) {
+            \Log::error("The AccountException error message is: " . $e->getMessage());
+            \Log::info('---FAILED COMPRESS IMAGE: '. $image .'-----');
+            // Verify your API key and account limit.
+        } catch(\Tinify\ClientException $e) {
+            \Log::error("The ClientException error message is: " . $e->getMessage());
+            \Log::info('---FAILED COMPRESS IMAGE: '. $image .'-----');
+            // Check your source image and request options.
+        } catch(\Tinify\ServerException $e) {
+            \Log::error("The ServerException error message is: " . $e->getMessage());
+            \Log::info('---FAILED COMPRESS IMAGE: '. $image .'-----');
+            // Temporary issue with the Tinify API.
+        } catch(\Tinify\ConnectionException $e) {
+            \Log::error("The ConnectionException error message is: " . $e->getMessage());
+            \Log::info('---FAILED COMPRESS IMAGE: '. $image .'-----');
+            // A network connection error occurred.
+        } catch(\Exception $e) {
+            \Log::error("The Exception error message is: " . $e->getMessage());
+            \Log::info('---FAILED COMPRESS IMAGE: '. $image .'-----');
+            // Something else went wrong, unrelated to the Tinify API.
+        }
+
+        $command = "/app/Image-ExifTool-10.75/exiftool -GPSLongitudeRef=E -GPSLongitude=$longitude -GPSLatitudeRef=N -GPSLatitude=$latitude $image";
+        exec($command);
+    }
+
+    public function getTinyfySecretKey(){
+        $keys = explode('|', TINYFY_SECRET_KEY);
+        $keyAvailable = $keys[0]; // main key if free key is over limit 500
+        foreach ($keys  as $key)
+        {
+            \Tinify\setKey($key);
+            \Tinify\validate();
+            $compressionsThisMonth = \Tinify\compressionCount();
+            if($compressionsThisMonth < 450 )
+            {
+                $keyAvailable = $key;
+                return $keyAvailable;
+            }
+
+        }
+
+        return $keyAvailable;
     }
 }
