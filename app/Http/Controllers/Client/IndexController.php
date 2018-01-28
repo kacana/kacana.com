@@ -27,9 +27,6 @@ class IndexController extends BaseController
 
     public function index(Request $request)
     {
-//        $webHookService = new webhookService();
-//        return $webHookService->facebookWebhook($request->all());
-
         $productService = new productService();
         $tagService = new tagService();
 

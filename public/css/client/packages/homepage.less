@@ -100,17 +100,19 @@
             margin-top: 10px;
             .product-title{
               line-height: 0;
+              letter-spacing: -0.5px;
               a{
                 font-size: 14px;
                 font-weight: 500;
-                line-height: 1.7;
+                line-height: 1.3;
                 text-transform: uppercase;
                 color: @color-grey;
               }
             }
             @media (max-width: 767px) {
-              height: 17px;
+              height: 13px;
               .product-title {
+                letter-spacing: normal;
                 a {
                   font-size: 11px;
                   font-weight: 600;
@@ -146,8 +148,9 @@
               }
             }
             .product-price{
-              color: @color-green;
-              font-size: 15px;
+              color: @color-red-dark;
+              font-weight: 500;
+              font-size: 18px;
               width: 70%;
               margin-left: 15%;
               text-align: center;
@@ -155,6 +158,7 @@
               @media (max-width: 767px){
                 width: 100%;
                 margin-left: 0;
+                color: @color-grey;
               }
               &.discount{
                 text-align: right;
@@ -164,7 +168,7 @@
                 font-size: 16px;
                 text-align: left;
                 .product-price-original{
-                  color: red;
+                  color: @color-green-dark;
                   text-decoration: line-through;
                 }
                 .price-discount
@@ -181,6 +185,7 @@
           }
           .product-short-description-like-wrap{
             height: 85px;
+            margin-top: 5px;
             @media (max-width: 767px){
               height: 73px;
             }
@@ -280,11 +285,11 @@
                   left: ~'calc(50% - 70px)';
                   background: no-repeat;
                   color: @color-red;
-                  font-weight: 700;
+                  font-weight: 600;
                   text-transform: uppercase;
                   font-size: 11px;
                   padding: 0px 12px;
-                  border: 1px solid;
+                  border: none;
                 }
               }
               .sold-out-btn{
