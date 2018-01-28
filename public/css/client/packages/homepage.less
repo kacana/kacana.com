@@ -148,15 +148,19 @@
             .product-price{
               color: @color-green;
               font-size: 15px;
-              width: 100%;
+              width: 70%;
+              margin-left: 15%;
               text-align: center;
               position: relative;
+              @media (max-width: 767px){
+                width: 100%;
+                margin-left: 0;
+              }
               &.discount{
                 text-align: right;
               }
               .discount-info{
                 position: absolute;
-                top: -10px;
                 font-size: 16px;
                 text-align: left;
                 .product-price-original{
@@ -166,6 +170,7 @@
                 .price-discount
                 {
                   font-size: 12px;
+                  display: none;
                 }
               }
             }
