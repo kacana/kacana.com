@@ -116,6 +116,7 @@ class TagController extends BaseController {
         $tagService = new tagService();
 
         $tagName = $request->input('name');
+        $tagNameSEO = $request->input('name_seo');
         $tagId = $request->input('id');
         $tagIdshortTagDescription = $request->input('shortTagDescription');
 
@@ -125,7 +126,7 @@ class TagController extends BaseController {
             if($tagName)
             {
                 $return['ok'] = 1;
-                $return['data'] = $tagService->editTag($tagId, $tagName, $tagIdshortTagDescription);
+                $return['data'] = $tagService->editTag($tagId, $tagName, $tagNameSEO, $tagIdshortTagDescription, $tagNameSEO);
             }
         }
         catch (\Exception $e) {
@@ -144,11 +145,12 @@ class TagController extends BaseController {
         try{
             if($request->isMethod('post')){
                 $name = $request->input('name', '');
+                $tagNameSEO = $request->input('name_seo', '');
                 $status = $request->input('status', KACANA_TAG_STATUS_ACTIVE);
                 $shortDesc = $request->input('short_desc', '');
                 $description = $request->input('description', '');
 
-                $tagService->fullEditTag($id, $name, $shortDesc, $description, $status);
+                $tagService->fullEditTag($id, $name, $tagNameSEO,$shortDesc, $description, $status);
                 $success = 'Cập nhật tag '.$name.' thành công!';
             }
 

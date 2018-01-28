@@ -1,6 +1,6 @@
 @extends('layouts.client.master')
 
-@section('meta-title', ucfirst($product->name))
+@section('meta-title', ucfirst($product->name_seo))
 @section('meta-description', $product->meta)
 @section('meta-keyword', implode(", ", $product->metaKeyword))
 @section('meta-image', 'http:'.AWS_CDN_URL.str_replace(' ', '%20',$product->getOriginal('image')))

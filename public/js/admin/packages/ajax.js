@@ -296,12 +296,13 @@ var ajaxPackage = {
             showEditForm: function(id, callBack, errorCallBack){
                 Kacana.ajax.init('/tag/showEditFormTag/'+id, '', 'get', '', callBack, errorCallBack, []);
             },
-            editTag: function(id, name, shortTagDescription, callBack, errorCallBack){
+            editTag: function(id, name, nameSEO, shortTagDescription, callBack, errorCallBack){
                 var url = '/tag/editTag';
                 var dataType = 'json';
                 var type = 'post';
                 var dataPost = {
                     name: name,
+                    name_seo: nameSEO,
                     id: id,
                     shortTagDescription: shortTagDescription
                 };

@@ -99,16 +99,18 @@ class tagService extends baseService {
      *
      * @param $id
      * @param $tagName
+     * @param $tagNameSEO
      * @param $shortTagDescription
      * @param int $status
      * @return \Illuminate\Support\Collection|null|static
      */
-    public function editTag($id, $tagName, $shortTagDescription, $status = KACANA_TAG_STATUS_ACTIVE){
+    public function editTag($id, $tagName, $tagNameSEO, $shortTagDescription, $status = KACANA_TAG_STATUS_ACTIVE){
 
         $tag = new tagModel();
 
         $data = [
             'name' =>   $tagName,
+            'name_seo' => $tagNameSEO,
             'status' => $status,
             'short_desc' => $shortTagDescription
         ];
@@ -116,12 +118,13 @@ class tagService extends baseService {
         return $tag->updateItem($id, $data);
     }
 
-    public function fullEditTag($id, $tagName, $shortDescription, $description, $status){
+    public function fullEditTag($id, $tagName, $tagNameSEO, $shortDescription, $description, $status){
 
         $tag = new tagModel();
 
         $data = [
             'name' =>   $tagName,
+            'name_seo' =>   $tagNameSEO,
             'status' => $status,
             'short_desc' => $shortDescription,
             'description' => $description

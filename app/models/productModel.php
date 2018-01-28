@@ -131,6 +131,7 @@ class productModel extends Model
 
         $item['updated'] = date('Y-m-d H:i:s');
         $item['name'] = $inputs['name'];
+        $item['name_seo'] = $inputs['name_seo'];
         $item['short_description'] = trim($inputs['short_description']);
         $item['meta'] = trim($inputs['meta']);
         $item['price'] = $inputs['price'];

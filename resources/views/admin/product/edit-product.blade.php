@@ -40,6 +40,11 @@
                             {!! Form::text('name', $product['name'], array('required', 'class' => 'form-control', 'placeholder' => 'Tên sản phẩm')) !!}
                         </div>
 
+                        <div class="form-group">
+                            {!! Form::label('name', 'Tên SEO sản phẩm') !!}
+                            {!! Form::text('name_seo', $product['name_seo'], array('required', 'class' => 'form-control', 'placeholder' => 'Tên SEO sản phẩm')) !!}
+                        </div>
+
                         <!-- sell price -->
                         <div class="form-group">
                             {!! Form::label('price', 'Giá nhập sản phẩm') !!}

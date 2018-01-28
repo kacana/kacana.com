@@ -30,6 +30,11 @@
                                 {!! Form::label('name', 'Name') !!}
                                 {!! Form::text('name', $tag->name, array('required', 'class' => 'form-control', 'placeholder' => 'Tag')) !!}
                             </div>
+                            <!-- name SEO -->
+                            <div class="form-group">
+                                {!! Form::label('name', 'Name SEO') !!}
+                                {!! Form::text('name_seo', $tag->name_seo, array('required', 'class' => 'form-control', 'placeholder' => 'Tag')) !!}
+                            </div>
                             <!-- status -->
                             <div class="form-group">
                                 {!! Form::label('name', 'Status') !!}

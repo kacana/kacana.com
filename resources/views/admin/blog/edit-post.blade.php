@@ -38,6 +38,10 @@
                             {!! Form::text('title', $post->title, array('required', 'class' => 'form-control', 'placeholder' => 'Title')) !!}
                         </div>
                         <div class="form-group">
+                            {!! Form::label('name', 'Title SEO') !!}
+                            {!! Form::text('title_seo', $post->title_seo, array('required', 'class' => 'form-control', 'placeholder' => 'Title')) !!}
+                        </div>
+                        <div class="form-group">
                             {!! Form::label('name', 'Chuyên mục') !!}
                             <select name="tag_id" class="form-control" >
                                 @foreach($tags as $tag)

@@ -57,9 +57,9 @@ class blogPostModel extends Model
         return $post;
     }
 
-    public function updateItem($id, $title, $tagId, $status, $body, $userId = false)
+    public function updateItem($id, $title, $titleSeo, $tagId, $status, $body, $userId = false)
     {
-        $updateData = ['title' => $title, 'body' => trim($body), 'slug' => str_slug($title), 'tag_id' => $tagId, 'status' => $status];
+        $updateData = ['title' => $title, 'title_seo' => $titleSeo, 'body' => trim($body), 'slug' => str_slug($title), 'tag_id' => $tagId, 'status' => $status];
         if($userId)
             return $this->where('id', $id)->where('user_id', $userId)->update($updateData);
         else

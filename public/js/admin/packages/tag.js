@@ -110,13 +110,14 @@ var tagPackage = {
                     data = data.items;
                     swal({
                         title: 'Edit Tag',
-                        html: '<input id="fTagId" placeholder="tag id" disabled="" class="swal2-input" value="'+data.id+'" autofocus="">'+'<input autofocus id="fTagName" placeholder="tag name" class="swal2-input" value="'+data.name+'" autofocus="">'+'<textarea autofocus id="fTagShortDescription" placeholder="tag short description" class="swal2-textarea" >'+data.short_desc+'</textarea>',
+                        html: '<input id="fTagId" placeholder="tag id" disabled="" class="swal2-input" value="'+data.id+'" autofocus="">'+'<input autofocus id="fTagName" placeholder="tag name" class="swal2-input" value="'+data.name+'" autofocus="">'+'<input autofocus id="fTagNameSEO" placeholder="tag name SEO" class="swal2-input" value="'+data.name_seo+'" autofocus="">'+'<textarea autofocus id="fTagShortDescription" placeholder="tag short description" class="swal2-textarea" >'+data.short_desc+'</textarea>',
                         showCancelButton: true,
                         showLoaderOnConfirm: true,
                         confirmButtonText: 'Change',
                         preConfirm: function() {
                             return new Promise(function(resolve, reject) {
                                 var tagName = $('#fTagName').val();
+                                var tagNameSEO = $('#fTagNameSEO').val();
                                 var shortTagDescription = $('#fTagShortDescription').val();
                                 if(shortTagDescription == 'null' || shortTagDescription == 'NULL')
                                     shortTagDescription = '';
@@ -133,7 +134,7 @@ var tagPackage = {
                                     var errorCallback = function(){
                                         // do something here if error
                                     };
-                                    Kacana.ajax.tag.editTag(id, tagName, shortTagDescription, callback, errorCallback);
+                                    Kacana.ajax.tag.editTag(id, tagName, tagNameSEO, shortTagDescription, callback, errorCallback);
                                 }
                             });
                         }
@@ -496,13 +497,14 @@ var tagPackage = {
                       data = data.items;
                       swal({
                           title: 'Edit Tag',
-                          html: '<input id="fTagId" placeholder="tag id" disabled="" class="swal2-input" value="'+data.id+'" autofocus="">'+'<input autofocus id="fTagName" placeholder="tag name" class="swal2-input" value="'+data.name+'" autofocus="">'+'<textarea autofocus id="fTagShortDescription" placeholder="tag short description" class="swal2-textarea" >'+data.short_desc+'</textarea>',
+                          html: '<input id="fTagId" placeholder="tag id" disabled="" class="swal2-input" value="'+data.id+'" autofocus="">'+'<input autofocus id="fTagName" placeholder="tag name" class="swal2-input" value="'+data.name+'" autofocus="">'+'<input autofocus id="fTagNameSEO" placeholder="tag name SEO" class="swal2-input" value="'+data.name_seo+'" autofocus="">'+'<textarea autofocus id="fTagShortDescription" placeholder="tag short description" class="swal2-textarea" >'+data.short_desc+'</textarea>',
                           showCancelButton: true,
                           showLoaderOnConfirm: true,
                           confirmButtonText: 'Change',
                           preConfirm: function() {
                               return new Promise(function(resolve, reject) {
                                   var tagName = $('#fTagName').val();
+                                  var tagNameSEO = $('#fTagNameSEO').val();
                                   var shortTagDescription = $('#fTagShortDescription').val();
                                   if(shortTagDescription == 'null' || shortTagDescription == 'NULL')
                                       shortTagDescription = '';
@@ -524,7 +526,7 @@ var tagPackage = {
                                       var errorCallback = function(){
                                           // do something here if error
                                       };
-                                      Kacana.ajax.tag.editTag(id, tagName, shortTagDescription, callback, errorCallback);
+                                      Kacana.ajax.tag.editTag(id, tagName, tagNameSEO, shortTagDescription, callback, errorCallback);
                                   }
                               });
                           }

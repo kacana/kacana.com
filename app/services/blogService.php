@@ -115,11 +115,11 @@ class blogService extends baseService
         return $post;
     }
 
-    public function updateBlogPost($id, $title, $tagId, $status, $body, $postTags, $userId = false)
+    public function updateBlogPost($id, $title, $titleSeo, $tagId, $status, $body, $postTags, $userId = false)
     {
         $this->updateTagPost($postTags, $id);
         $this->trimImageDesc($body, $id);
-        return $this->_blogPost->updateItem($id, $title, $tagId, $status, $this->trimElementDesc($body), $userId);
+        return $this->_blogPost->updateItem($id, $title, $titleSeo, $tagId, $status, $this->trimElementDesc($body), $userId);
     }
 
     /**
