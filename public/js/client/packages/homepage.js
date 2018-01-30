@@ -122,7 +122,9 @@ var homepagePackage = {
                             if(currSlideObject.id == 0){
                                 var productItem = e.target.slider.parents('.product-item');
                                 var firstImage = productItem.find('.product-image-inside').data('firstImage');
+                                var altImage = productItem.find('.product-image-inside').data('altImage');
                                 productItem.find('.rsImg.rsMainSlideImage').attr('data-src', firstImage);
+                                productItem.find('.rsImg.rsMainSlideImage').attr('alt', altImage);
                                 productItem.find('.rsImg.rsMainSlideImage').lazyload();
                             }
                         });
@@ -156,7 +158,7 @@ var homepagePackage = {
                 keyboardNavEnabled: true,
                 fadeinLoadedSlide: true,
                 globalCaption: true,
-                globalCaptionInside: false,
+                globalCaptionInside: true,
                 transitionType: 'fade',
                 thumbs: {
                     appendSpan: true,
