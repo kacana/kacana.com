@@ -19,6 +19,24 @@ var productdetailPackage = {
 
             Kacana.homepage.applySlideImage();
 
+            $.extend($.rsProto, {
+                _initGlobalCaption: function() {
+                    var self = this;
+                    if(self.st.globalCaption) {
+
+                        self.ev.on('rsAfterContentSet', function(e, currSlideObject) {
+                            if(currSlideObject.id == 0){
+                                var wrapParrent = e.target.slider;
+                                var altImage = wrapParrent.data('altImage');
+                                wrapParrent.find('.rsImg.rsMainSlideImage').attr('alt', altImage);
+                            }
+                        });
+                    }
+                }
+            });
+
+            $.rsModules.globalCaption = $.rsProto._initGlobalCaption;
+
             $('#product-detail-gallery').royalSlider({
                 fullscreen: {
                     enabled: true,
@@ -37,8 +55,8 @@ var productdetailPackage = {
                 arrowsNavHideOnTouch: false,
                 keyboardNavEnabled: true,
                 fadeinLoadedSlide: true,
-                globalCaption: false,
-                globalCaptionInside: false,
+                globalCaption: true,
+                globalCaptionInside: true,
                 transitionType: 'move',
                 thumbs: {
                     appendSpan: true,

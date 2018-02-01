@@ -137,6 +137,7 @@ var homepagePackage = {
                     }
                 }
             });
+
             $.rsModules.globalCaption = $.rsProto._initGlobalCaption;
 
             $('.product-item .product-image-inside').royalSlider({

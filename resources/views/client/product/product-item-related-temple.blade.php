@@ -1,5 +1,5 @@
 <div class="product-image" >
-    <div class="product-image-inside royalSlider rsDefault" data-first-image="{{$item->image}}" >
+    <div class="product-image-inside royalSlider rsDefault" data-first-image="{{$item->image}}" data-alt-image="{{$item->name}}" >
         <a data-rsbigimg="{{$item->image}}" href="{{$item->image}}" class="rsImg">
             {{$item->name}}
             <img alt="{{$item->name}}" class="rsTmb" src="{{$item->image}}"/>
