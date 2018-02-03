@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7 ie6" lang="en"> <![endif]-->
-<!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8 ie7" lang="en"> <![endif]-->
-<!--[if IE 8]>    <html class="no-js lt-ie9 ie8" lang="en" xmlns:fb="http://www.facebook.com/2008/fbml"> <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" xmlns:fb="http://www.facebook.com/2008/fbml"> <!--<![endif]-->
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7 ie6" lang="vi"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8 ie7" lang="vi"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js lt-ie9 ie8" lang="vi" xmlns:fb="http://www.facebook.com/2008/fbml"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="vi" xmlns:fb="http://www.facebook.com/2008/fbml"> <!--<![endif]-->
 <!-- Đánh dấu siêu dữ liệu đã được thêm bởi Trình trợ giúp đánh dấu dữ liệu có cấu trúc của Google. -->
 <head>
 
