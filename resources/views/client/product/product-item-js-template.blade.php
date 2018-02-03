@@ -45,14 +45,14 @@
         @{{/if}}
 
         <div class="product-info">
-            <h2 class="product-title"> <a href="${this.urlProductDetail}" title="${this.name}">${this.name}</a></h2>
+            <h2 itemprop="name" class="product-title"> <a href="${this.urlProductDetail}" title="${this.name}">${this.name}</a></h2>
         </div>
 
         <div class="product-price-wrap">
             @{{if parseInt(this.discount)}}
-            <div class="product-price discount">
+            <div itemprop="offers" itemscope itemtype="http://schema.org/Offer" class="product-price discount">
                 <div class="discount-info">
-                    <div class="product-price-original">
+                    <div itemprop="price" class="product-price-original">
                         ${this.sell_price_show}
                     </div>
                     <div class="price-discount" >
@@ -67,7 +67,7 @@
         </div>
         <div class="product-short-description-like-wrap">
             <div class="product-short-description-wrap text-center" id="product-short-description-wrap- ${this.id}">
-                <div class="product-short-description">
+                <div itemprop="description" class="product-short-description">
                     ${this.short_description}
                 </div>
                 @{{if this.isLiked}}

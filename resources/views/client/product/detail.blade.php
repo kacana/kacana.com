@@ -18,7 +18,7 @@
         </div>
     </section>
     <div class="container background-white vpadding-20">
-        <div class="row">
+        <div itemscope itemtype="http://schema.org/Product" class="row">
             <div class="col-xs-12 col-sm-5 col-lg-6">
                 <div id="product-detail-gallery" class="royalSlider rsDefault" data-alt-image="{{$product->name}}">
                     @if($productSlide && count($productSlide)>0)
@@ -31,9 +31,9 @@
                 </div>
             </div>
             <div class="col-xs-12 col-sm-4 col-lg-3">
-                <h1 class="name-product">{{ucfirst($product->name)}}</h1>
-                <p class="price">
-                    <span class="amount">
+                <h1 itemprop="name" class="name-product">{{ucfirst($product->name)}}</h1>
+                <p itemprop="offers" itemscope itemtype="http://schema.org/Offer" class="price">
+                    <span itemprop="price" class="amount">
                         @if($product->discount)
                             {{formatMoney($product->sell_price - $product->discount)}}
                         @elseif($product->main_discount)
@@ -45,7 +45,7 @@
                 </p>
                 <div class="row">
                     <div class="col-xs-12 kacana-wysiwyg-block product-basic-information">
-                        <p >{{$product->short_description}}</p>
+                        <p itemprop="description">{{$product->short_description}}</p>
                         @if(str_replace(' ','',strip_tags($product->property_description)))
                             {!! $product->property_description !!}
                         @endif
@@ -244,7 +244,7 @@
                     </section>
                 </div>
             </div>
-            <div id="list-product-related-wrap" class="col-xs-12 col-sm-3">
+            <div itemscope itemtype="http://schema.org/ItemList" id="list-product-related-wrap" class="col-xs-12 col-sm-3">
                 <div class="toogle"  data-plugin-toggle="" id="list-product-related">
                     <section class="toggle active" >
                         <label>
@@ -259,7 +259,7 @@
                                             <div style="z-index: 1" class="taglist as-search-results-tiles background-white">
                                                 @forelse($productRelated as $item)
                                                     @if($item->id != $product->id)
-                                                        <div class="col-xxs-12 col-xs-6 col-sm-12 product-item" >
+                                                        <div itemprop="itemListElement" itemscope itemtype="http://schema.org/Product" class="col-xxs-12 col-xs-6 col-sm-12 product-item" >
                                                             @include('client.product.product-item-related-temple')
                                                         </div>
                                                     @endif

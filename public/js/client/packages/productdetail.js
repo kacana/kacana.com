@@ -29,6 +29,7 @@ var productdetailPackage = {
                                 var wrapParrent = e.target.slider;
                                 var altImage = wrapParrent.data('altImage');
                                 wrapParrent.find('.rsImg.rsMainSlideImage').attr('alt', altImage);
+                                wrapParrent.find('.rsImg.rsMainSlideImage').attr('itemprop', 'image');
                             }
                         });
                     }

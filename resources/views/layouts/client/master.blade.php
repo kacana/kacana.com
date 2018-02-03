@@ -3,6 +3,7 @@
 <!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8 ie7" lang="en"> <![endif]-->
 <!--[if IE 8]>    <html class="no-js lt-ie9 ie8" lang="en" xmlns:fb="http://www.facebook.com/2008/fbml"> <![endif]-->
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en" xmlns:fb="http://www.facebook.com/2008/fbml"> <!--<![endif]-->
+<!-- Đánh dấu siêu dữ liệu đã được thêm bởi Trình trợ giúp đánh dấu dữ liệu có cấu trúc của Google. -->
 <head>
 
     <!-- Basic -->
@@ -25,13 +26,29 @@
     <link rel="manifest" href="/images/client/favicons/manifest.json">
     <link rel="mask-icon" href="/images/client/favicons/safari-pinned-tab.svg" color="#5bbad5">
 
+    <!-- Twitter Card data -->
+    <meta name="twitter:card" content="product">
+    <meta name="twitter:site" content="Kacana">
+    <meta name="twitter:title" content="Kacana | @yield('meta-title', 'Chuyên bán túi xách, ví, balo thời trang')">
+    <meta name="twitter:description" content="@yield('meta-description', 'Shop online tphcm mua bán túi xách đeo chéo, ví cầm tay, balo nam, ba lô nữ và cặp cho trẻ em✅Hàng hiệu chính hãng✅Chất tốt, da bò thật cao cấp✅Thời trang cá tính hàn quốc giá rẻ✅Mẫu hot, độc đẹp, dễ thương và cute✅Size to lớn đến mini nhỏ xinh✅Phù hợp công sở, đi chơi, du lịch✅Có giá sỉ cho đại lý') - Kacana.vn">
+    <meta name="twitter:creator" content="@kacana">
+    <meta name="twitter:image" content="@yield('meta-image', 'http:'.AWS_CDN_URL.'/images/client/short_logo.png')">
+
+    <meta property="fb:admins" content="cuong.nguyen.it" />
     <meta property="fb:app_id" content="{{KACANA_SOCIAL_FACEBOOK_KEY}}" />
-    <meta prefix="og: http://ogp.me/ns#" property="og:url" content="{{Request::url()}}">
-    <meta prefix="og: http://ogp.me/ns#" property="og:title" content="@yield('meta-title', 'Chuyên bán túi xách, ví, balo thời trang') - Kacana.vn">
-    <meta prefix="og: http://ogp.me/ns#" property="og:description" content="@yield('meta-description', 'Hàng loạt các mẫu túi ví, túi xách, túi đeo, ví da, ví cầm tay,ba lo nam nữ thời trang chính hãng  liên tục được cập nhật - Mua bán trực tuyến') - Kacana.vn">
-    <meta prefix="og: http://ogp.me/ns#" property="og:site_name" content="@yield('meta-title', 'Chuyên bán túi xách, ví, balo thời trang') - Kacana.vn">
+
+    <!-- Open Graph data -->
+    <meta property="og:url" content="{{Request::url()}}"/>
+    <meta property="og:title" content="@yield('meta-title', 'Chuyên bán túi xách, ví, balo thời trang') - Kacana.vn" />
+    <meta property="og:type" content="product" />
+
+    <!-- If landing page -->
     <meta property="og:image" content="@yield('meta-image', 'http:'.AWS_CDN_URL.'/images/client/short_logo.png')" />
-    <meta property="og:locale" content="vi_VN" />
+    <!--  <meta property="og:description" content="" /> -->
+    <meta property="og:description" content="@yield('meta-description', 'Shop online tphcm mua bán túi xách đeo chéo, ví cầm tay, balo nam, ba lô nữ và cặp cho trẻ em✅Hàng hiệu chính hãng✅Chất tốt, da bò thật cao cấp✅Thời trang cá tính hàn quốc giá rẻ✅Mẫu hot, độc đẹp, dễ thương và cute✅Size to lớn đến mini nhỏ xinh✅Phù hợp công sở, đi chơi, du lịch✅Có giá sỉ cho đại lý') - Kacana.vn">
+    <meta property="og:site_name" content="Kacana" />
+
+    <link rel="alternate" href="http://www.kacana.vn/" hreflang="vi-vn" />
 
     <meta name="author" content="Kacana.vn">
     <meta name="csrf-token" content="{{ csrf_token() }}">

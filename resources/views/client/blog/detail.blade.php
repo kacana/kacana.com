@@ -6,26 +6,26 @@
 @section('meta-image', 'http:'.AWS_CDN_URL.str_replace(' ', '%20',$post->getOriginal('image')))
 
 @section('content')
-    <div class="container" data-id="{{$post->id}}" id="blog-detail-page">
+    <div itemscope itemtype="http://schema.org/Article" class="container" data-id="{{$post->id}}" id="blog-detail-page">
         <div class="row">
             <div class="col-xs-12 col-sm-9" >
                 <div class="row">
                     <div class="col-xs-12 post-header">
-                        <h1 class="post-title" >
+                        <h1 itemprop="name" class="post-title" >
                             {{$post->title}}
                         </h1>
-                        <img src="{{$post->image}}" class="img-responsive">
+                        <img itemprop="image" src="{{$post->image}}" class="img-responsive">
 
-                        <div class="post-author">
+                        <div itemprop="author" itemscope itemtype="http://schema.org/Person" class="post-author">
                             <img class="post-author-image" src="{{$post->user->image}}" >
-                            <span class="post-author-name">
+                            <span itemprop="name" class="post-author-name">
                                 {{$post->user->name}}
                             </span>
                         </div>
                     </div>
                 </div>
                 <div class="">
-                    <div class="col-xs-12 background-white blog-body">
+                    <div itemprop="articleBody" class="col-xs-12 background-white blog-body">
                         <div class="kacana-wysiwyg-block" >
                             {!! $post->bodyLazyLoad !!}
                         </div>

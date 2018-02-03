@@ -125,6 +125,7 @@ var homepagePackage = {
                                 var altImage = productItem.find('.product-image-inside').data('altImage');
                                 productItem.find('.rsImg.rsMainSlideImage').attr('data-src', firstImage);
                                 productItem.find('.rsImg.rsMainSlideImage').attr('alt', altImage);
+                                productItem.find('.rsImg.rsMainSlideImage').attr('itemprop', 'image');
                                 productItem.find('.rsImg.rsMainSlideImage').lazyload();
                             }
                         });

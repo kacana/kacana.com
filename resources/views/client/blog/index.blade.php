@@ -15,18 +15,18 @@
 @stop
 
 @section('content')
-    <div class="container" id="blog-page">
+    <div itemscope itemtype="http://schema.org/ItemList" class="container" id="blog-page">
         <div class="row">
             @foreach($posts as $post)
-                <div class="promote thread col-xs-12" data-author="{{$post->user->name}}">
+                <div itemscope itemtype="http://schema.org/Article" class="promote thread col-xs-12" data-author="{{$post->user->name}}">
                     <div class="thread-info width-narrow">
                         <span class="poster-avatar">
                             <a href="#" class="avatar" data-avatarhtml="true">
                                 <img src="{{$post->user->image}}" alt="{{$post->user->name}}" height="96" width="96">
                             </a>
                         </span>
-                        <span class="poster">
-                            <a href="#" class="username" dir="auto">{{$post->user->name}}</a>
+                        <span itemprop="author" itemscope itemtype="http://schema.org/Person" class="poster">
+                            <a itemprop="name" href="#" class="username" dir="auto">{{$post->user->name}}</a>
                         </span>
                         <span class="process-time">
                             <a href="/tin-tuc/{{$post->slug}}.{{$post->id}}" class="Tooltip">{{formatTimeAgo($post->updated_at)}}</a>
@@ -40,10 +40,10 @@
                     </div><!-- .thread-info -->
                     <div class="thread-image width-wide" data-src="{{$post->image}}">
                         <a href="/tin-tuc/{{$post->slug}}.{{$post->id}}">
-                            <img alt="{{$post->title}}" src="{{$post->image}}">
+                            <img itemprop="image" alt="{{$post->title}}" src="{{$post->image}}">
                         </a>
                     </div>
-                    <h3 class="thread-title width-narrow">
+                    <h3 itemprop="name" class="thread-title width-narrow">
                         <a href="/tin-tuc/{{$post->slug}}.{{$post->id}}">{{$post->title}}</a>
                     </h3>
                     <div class="post-body width-narrow">

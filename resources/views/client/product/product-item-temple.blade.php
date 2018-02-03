@@ -37,13 +37,13 @@
     </div>
 @endif
 <div class="product-info">
-    <h2 class="product-title"><a href="{{urlProductDetail($item)}}" title="{{$item->name}}">{{$item->name}}</a></h2>
+    <h2 itemprop="name" class="product-title"><a href="{{urlProductDetail($item)}}" title="{{$item->name}}">{{$item->name}}</a></h2>
 </div>
 <div class="product-price-wrap">
     @if($item->discount)
         <div class="product-price discount">
-            <div class="discount-info">
-                <div class="product-price-original">
+            <div itemprop="offers" itemscope itemtype="http://schema.org/Offer" class="discount-info">
+                <div itemprop="price" class="product-price-original">
                     {{formatMoney($item->sell_price)}}
                 </div>
                 <div class="price-discount" >
@@ -57,7 +57,7 @@
 </div>
 <div class="product-short-description-like-wrap">
     <div class="product-short-description-wrap text-center" id="product-short-description-wrap-{{$item->id}}">
-        <div class="product-short-description">
+        <div itemprop="description" class="product-short-description">
             {{fixHtml($item->short_description)}}
         </div>
 

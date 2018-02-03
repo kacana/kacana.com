@@ -43,8 +43,8 @@
 <div class="product-price-wrap">
     @if($item->discount)
         <div class="product-price discount">
-            <div class="discount-info">
-                <div class="product-price-original">
+            <div itemprop="offers" itemscope itemtype="http://schema.org/Offer" class="discount-info">
+                <div itemprop="price" class="product-price-original">
                     {{formatMoney($item->sell_price)}}
                 </div>
                 <div class="price-discount" >
