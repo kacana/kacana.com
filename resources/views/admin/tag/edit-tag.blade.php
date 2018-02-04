@@ -27,7 +27,7 @@
                             </div>
                             <!-- name -->
                             <div class="form-group">
-                                {!! Form::label('name', 'Name') !!}  - <span class="text-danger text-bold word-count" >{{strlen(utf8_decode($tag->name))}}</span>
+                                {!! Form::label('name', 'Name') !!} - <span class="text-danger text-bold word-count" >{{strlen(utf8_decode($tag->name))}}</span>
                                 {!! Form::text('name', $tag->name, array('required', 'class' => 'form-control', 'placeholder' => 'Tag')) !!}
                             </div>
                             <!-- name SEO -->
@@ -45,7 +45,7 @@
                             </div>
                             <!--  short description -->
                             <div class="form-group">
-                                {!! Form::label('short_desc', 'Miêu tả ngắn') !!}
+                                {!! Form::label('short_desc', 'Miêu tả ngắn') !!}  - <span class="text-danger text-bold word-count" >{{strlen(utf8_decode($tag->short_desc))}}</span>
                                 {!! Form::textarea('short_desc', $tag->short_desc, ['size' => '30x4','class' => 'form-control']) !!}
                             </div>
 
