@@ -400,6 +400,13 @@ var campaignPackage = {
             addProductCampaign:function () {
                 var modalAddProduct = $('#modal-add-product-campaign');
                 modalAddProduct.modal();
+                modalAddProduct.find('#product_apply_date').daterangepicker({
+                    timePicker: true,
+                    timePicker24Hour: true,
+                    locale: {
+                        format: 'YYYY-MM-DD H:mm'
+                    }
+                });
             },
             bindEventModal: function () {
                 var modal = $('#modal-add-product-campaign');
@@ -412,6 +419,8 @@ var campaignPackage = {
                 var sendData = {'key': keySearch};
                 var modal = $('#modal-add-product-campaign');
                 var template = $('#template-product-item-add-campaign');
+
+
                 var callBack = function(data){
                     if(data.ok){
                         var item = data.data;
@@ -430,18 +439,25 @@ var campaignPackage = {
             },
             addProductToCampaign: function () {
                 var productId = $(this).parents('.item').data('product-id');
-
+                var productIsAdded = false;
                 $('#list-product-add-to-campaign .item').each(function () {
                     if($(this).data('product-id') == productId){
+                        productIsAdded = true;
                         return Kacana.utils.showError('sản phẩm đã được thêm!')
                     }
                 });
-
-                var item = $(this).parents('.item').clone();
-                item.find('a[href="#add-product"] i').attr('class', "text-danger fa fa-minus-circle fa-2x");
-                item.prependTo('#list-product-add-to-campaign');
+                if(!productIsAdded) {
+                    var item = $(this).parents('.item').clone();
+                    item.find('a[href="#add-product"] i').attr('class', "text-danger fa fa-minus-circle fa-2x");
+                    item.prependTo('#list-product-add-to-campaign');
+                    $(this).parents('.item').remove();
+                }
             },
             removeProductToCampaign: function () {
+                var item = $(this).parents('.item').clone();
+                item.find('a[href="#add-product"] i').attr('class', "text-primary fa fa-plus-circle fa-2x");
+                item.prependTo('#list-search-product-campaign');
+
                 $(this).parents('.item').remove();
             }
         }

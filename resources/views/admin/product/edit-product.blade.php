@@ -36,12 +36,12 @@
                         </div>
                         <!-- name -->
                         <div class="form-group">
-                            {!! Form::label('name', 'Tên sản phẩm') !!}
-                            {!! Form::text('name', $product['name'], array('required', 'class' => 'form-control', 'placeholder' => 'Tên sản phẩm')) !!}
+                            <label for="name">Tên sản phẩm</label> - <span class="text-danger text-bold word-count" >{{strlen(utf8_decode($product['name']))}}</span>
+                            <input required="required" class="form-control" placeholder="Tên sản phẩm" name="name" type="text" value="{{$product['name']}}" id="name">
                         </div>
 
                         <div class="form-group">
-                            {!! Form::label('name', 'Tên SEO sản phẩm') !!}
+                            {!! Form::label('name', 'Tên SEO sản phẩm') !!} - <span class="text-danger text-bold word-count" >{{strlen(utf8_decode($product['name_seo']))}}</span>
                             {!! Form::text('name_seo', $product['name_seo'], array('required', 'class' => 'form-control', 'placeholder' => 'Tên SEO sản phẩm')) !!}
                         </div>
 
@@ -412,7 +412,7 @@
                             <div class="kacana-editor-content" data-table="products" data-field="property" data-id="{{$product->id}}" contenteditable="true" name="property" id="property">{!! $product->property !!}</div>
                         </div>
                         <div class="form-group">
-                            {!! Form::label('meta', 'Miêu tả sản phẩm') !!}<br/>
+                            {!! Form::label('meta', 'Miêu tả sản phẩm') !!} - <span class="text-danger text-bold word-count" >{{strlen(utf8_decode($product['short_description']))}}</span>
                             {!! Form::textarea('short_description', $product['short_description'], array('class'=>'form-control', 'style'=>'height:80px')) !!}
                         </div>
                         <button id="btn-upload-image-desc" class="" ></button>

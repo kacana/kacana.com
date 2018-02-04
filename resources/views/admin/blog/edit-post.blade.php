@@ -34,11 +34,11 @@
                         </div>
                         <!-- name -->
                         <div class="form-group">
-                            {!! Form::label('name', 'Title') !!}
+                            {!! Form::label('name', 'Title') !!}  - <span class="text-danger text-bold word-count" >{{strlen(utf8_decode($post->title))}}</span>
                             {!! Form::text('title', $post->title, array('required', 'class' => 'form-control', 'placeholder' => 'Title')) !!}
                         </div>
                         <div class="form-group">
-                            {!! Form::label('name', 'Title SEO') !!}
+                            {!! Form::label('name', 'Title SEO') !!}  - <span class="text-danger text-bold word-count" >{{strlen(utf8_decode($post->title_seo))}}</span>
                             {!! Form::text('title_seo', $post->title_seo, array('required', 'class' => 'form-control', 'placeholder' => 'Title')) !!}
                         </div>
                         <div class="form-group">

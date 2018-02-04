@@ -27,12 +27,12 @@
                             </div>
                             <!-- name -->
                             <div class="form-group">
-                                {!! Form::label('name', 'Name') !!}
+                                {!! Form::label('name', 'Name') !!}  - <span class="text-danger text-bold word-count" >{{strlen(utf8_decode($tag->name))}}</span>
                                 {!! Form::text('name', $tag->name, array('required', 'class' => 'form-control', 'placeholder' => 'Tag')) !!}
                             </div>
                             <!-- name SEO -->
                             <div class="form-group">
-                                {!! Form::label('name', 'Name SEO') !!}
+                                {!! Form::label('name', 'Name SEO') !!}  - <span class="text-danger text-bold word-count" >{{strlen(utf8_decode($tag->name_seo))}}</span>
                                 {!! Form::text('name_seo', $tag->name_seo, array('required', 'class' => 'form-control', 'placeholder' => 'Tag')) !!}
                             </div>
                             <!-- status -->
