@@ -1,5 +1,6 @@
 <?php namespace App\Http\Controllers\Client;
 
+use App\services\chatService;
 use App\services\productService;
 use App\services\shipGhnService;
 use App\services\tagService;
@@ -81,8 +82,10 @@ class IndexController extends BaseController
     }
 
 
-    public function testMessages()
+    public function messageSlack(Request $request)
     {
-        return view('client.index.test-messages');
+        $params = $request->all();
+        $chatMessage = new chatService();
+        $chatMessage->createMessagesResponseFromSlack($params);
     }
 }

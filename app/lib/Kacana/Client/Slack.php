@@ -8,12 +8,12 @@ Class Slack {
 
     private $_client;
 
-    public function __construct()
+    public function __construct($channel = '#don_hang')
     {
         $this->_url = KACANA_INCOMING_WEB_HOOK_URL.KACANA_INCOMING_WEB_HOOK_KEY;
         $settings = [
             'username' => 'Kacana Bot',
-            'channel' => '#don_hang',
+            'channel' => $channel,
             'link_names' => true
         ];
 
@@ -33,5 +33,16 @@ Class Slack {
             $querySend = $querySend->attach($attachProduct);
         }
         $querySend->send($slackText);
+    }
+
+    public function notificationNewMessage($threadId, $body, $tracking)
+    {
+        $attachAddress = [
+            'color' => '#FA5858',
+            "title"=> "User URL",
+            "title_link"=> $tracking->url,
+        ];
+        $querySend = $this->_client->attach($attachAddress);
+        $querySend->send('`#'.$threadId.'` '.$body);
     }
 }
