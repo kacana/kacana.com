@@ -238,9 +238,14 @@ class shipGhtkService extends baseService {
     public function GetOrderInfoStatus($id){
 
         $results = $this->makeRequest('/services/shipment/'.$id);
-        $results = $results->body->order;
 
-        $status = $results->status;
+        if(isset($results->body->order))
+        {
+            $order = $results->body->order;
+            $status = $order->status;
+        } else {
+            $status = -1;
+        }
 
         switch ($status){
             case -1:
@@ -251,12 +256,14 @@ class shipGhtkService extends baseService {
                 $status = KACANA_SHIP_STATUS_STORING;
                 break;
             case 4:
-            case 410:
-            case 49:
                 $status = KACANA_SHIP_STATUS_DELIVERING;
                 break;
-            case 9:
+            case 410:
+            case 49:
             case 10:
+                $status = KACANA_SHIP_STATUS_RE_DELIVERING;
+                break;
+            case 9:
             case 20:
                 $status = KACANA_SHIP_STATUS_RETURN;
                 break;

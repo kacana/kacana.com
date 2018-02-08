@@ -12,7 +12,9 @@ class Kernel extends ConsoleKernel {
 	 */
 	protected $commands = [
 		'App\Console\Commands\Inspire',
-        'App\Console\Commands\CreateCSVRemarketing'
+        'App\Console\Commands\CreateCSVRemarketing',
+        'App\Console\Commands\UpdateShippingStatus'
+
 	];
 
 	/**
@@ -23,6 +25,7 @@ class Kernel extends ConsoleKernel {
 	 */
 	protected function schedule(Schedule $schedule)
 	{
-        $schedule->command('csv:everyDay')->hourly()->withoutOverlapping();;
+//        $schedule->command('csv:everyDay')->hourly()->withoutOverlapping();
+        $schedule->command('UpdateShippingStatus')->everyThirtyMinutes()->withoutOverlapping();
 	}
 }

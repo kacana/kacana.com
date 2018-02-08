@@ -132,6 +132,9 @@ class ViewGenerateHelper {
             case KACANA_SHIP_STATUS_DELIVERING:
                 $desc = '<a target="_blank" href="https://5sao.ghn.vn/Tracking/ViewTracking/'.$shipId.'" class="label label-info">đang giao hàng</a>';
                 break;
+            case KACANA_SHIP_STATUS_RE_DELIVERING:
+                $desc = '<a target="_blank" href="https://5sao.ghn.vn/Tracking/ViewTracking/'.$shipId.'" class="label label-info">đang giao hàng lại</a>';
+                break;
             case KACANA_SHIP_STATUS_RETURN:
                 $desc = '<a target="_blank" href="https://5sao.ghn.vn/Tracking/ViewTracking/'.$shipId.'" class="label label-danger">Chờ trả hàng</a>';
                 break;
