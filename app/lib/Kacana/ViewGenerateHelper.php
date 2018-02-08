@@ -1,4 +1,5 @@
 <?php namespace Kacana;
+use App\models\shippingModel;
 use Illuminate\Support\Facades\Auth;
 
 
