@@ -372,10 +372,9 @@ class shipGhnService extends baseService {
             array( 'db' => 'address_receive.name', 'dt' => 1 ),
             array( 'db' => 'shipping.total', 'dt' => 2 ),
             array( 'db' => 'shipping.fee', 'dt' => 3 ),
-            array( 'db' => 'shipping.expected_delivery_time', 'dt' => 4 ),
-            array( 'db' => 'shipping.status', 'dt' => 5 ),
-            array( 'db' => 'shipping.created', 'dt' => 6 ),
-            array( 'db' => 'shipping.updated', 'dt' => 7 )
+            array( 'db' => 'shipping.status', 'dt' => 4 ),
+            array( 'db' => 'shipping.created', 'dt' => 5 ),
+            array( 'db' => 'shipping.updated', 'dt' => 6 )
         );
 
         $return = $shippingModel->generateShippingTable($request, $columns);

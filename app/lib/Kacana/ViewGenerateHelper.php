@@ -118,37 +118,45 @@ class ViewGenerateHelper {
     }
 
     static function getStatusDescriptionShip($status, $shipId){
+        $shippingModel = new shippingModel();
+        $shipping = $shippingModel->getById($shipId);
+        $url = '';
+        if ($shipping->ship_service_type == KACANA_SHIP_TYPE_SERVICE_GHN) {
+            $url = 'https://5sao.ghn.vn/Tracking/ViewTracking/';
+        } elseif ($shipping->ship_service_type == KACANA_SHIP_TYPE_SERVICE_GHTK) {
+            $url = 'https://khachhang.giaohangtietkiem.vn/khach-hang/tracking/order?orderId=';
+        }
         $desc = '';
         switch ($status){
             case KACANA_SHIP_STATUS_CANCEL:
-                $desc = '<a target="_blank" href="https://5sao.ghn.vn/Tracking/ViewTracking/'.$shipId.'" class="label label-danger">đã huỷ</a>';
+                $desc = '<a target="_blank" href="'.$url.$shipId.'" class="label label-danger">đã huỷ</a>';
                 break;
             case KACANA_SHIP_STATUS_STORE_TO_REDELIVERING:
-                $desc = '<a target="_blank" href="https://5sao.ghn.vn/Tracking/ViewTracking/'.$shipId.'" class="label label-warning">Chờ giao lại</a>';
+                $desc = '<a target="_blank" href="'.$url.$shipId.'" class="label label-warning">Chờ giao lại</a>';
                 break;
             case KACANA_SHIP_STATUS_STORING:
-                $desc = '<a target="_blank" href="https://5sao.ghn.vn/Tracking/ViewTracking/'.$shipId.'" class="label label-info">đã lấy hàng</a>';
+                $desc = '<a target="_blank" href="'.$url.$shipId.'" class="label label-info">đã lấy hàng</a>';
                 break;
             case KACANA_SHIP_STATUS_DELIVERING:
-                $desc = '<a target="_blank" href="https://5sao.ghn.vn/Tracking/ViewTracking/'.$shipId.'" class="label label-info">đang giao hàng</a>';
+                $desc = '<a target="_blank" href="'.$url.$shipId.'" class="label label-info">đang giao hàng</a>';
                 break;
             case KACANA_SHIP_STATUS_RE_DELIVERING:
-                $desc = '<a target="_blank" href="https://5sao.ghn.vn/Tracking/ViewTracking/'.$shipId.'" class="label label-info">đang giao hàng lại</a>';
+                $desc = '<a target="_blank" href="'.$url.$shipId.'" class="label label-info">đang giao hàng lại</a>';
                 break;
             case KACANA_SHIP_STATUS_RETURN:
-                $desc = '<a target="_blank" href="https://5sao.ghn.vn/Tracking/ViewTracking/'.$shipId.'" class="label label-danger">Chờ trả hàng</a>';
+                $desc = '<a target="_blank" href="'.$url.$shipId.'" class="label label-danger">Chờ trả hàng</a>';
                 break;
             case KACANA_SHIP_STATUS_WAITING_TO_FINISH:
-                $desc = '<a target="_blank" href="https://5sao.ghn.vn/Tracking/ViewTracking/'.$shipId.'" class="label label-success">Chờ Chuyển COD</a>';
+                $desc = '<a target="_blank" href="'.$url.$shipId.'" class="label label-success">Chờ Chuyển COD</a>';
                 break;
             case KACANA_SHIP_STATUS_RETURNED:
-                $desc = '<a target="_blank" href="https://5sao.ghn.vn/Tracking/ViewTracking/'.$shipId.'" class="label label-danger">đã hoàn trả hàng</a>';
+                $desc = '<a target="_blank" href="'.$url.$shipId.'" class="label label-danger">đã hoàn trả hàng</a>';
                 break;
             case KACANA_SHIP_STATUS_FINISH;
-                $desc = '<a target="_blank" href="https://5sao.ghn.vn/Tracking/ViewTracking/'.$shipId.'" class="label label-success">hoàn thành</a>';
+                $desc = '<a target="_blank" href="'.$url.$shipId.'" class="label label-success">hoàn thành</a>';
                 break;
             default:
-                $desc = '<a target="_blank" href="https://5sao.ghn.vn/Tracking/ViewTracking/'.$shipId.'" class="label label-primary">mới giao</a>';
+                $desc = '<a target="_blank" href="'.$url.$shipId.'" class="label label-primary">mới giao</a>';
         }
         return $desc;
     }

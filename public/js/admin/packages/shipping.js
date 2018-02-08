@@ -36,9 +36,6 @@ var shippingPackage = {
                     'title': 'Phí'
                 },
                 {
-                    'title': 'dự kiến'
-                },
-                {
                     'title': 'status',
                     'width':'5%',
                 },
