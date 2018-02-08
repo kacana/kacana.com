@@ -458,7 +458,7 @@ class shipGhnService extends baseService {
             $typeShipping = 'Giao Hàng Tiết kiệm';
         }
 
-        if (in_array($status, [KACANA_SHIP_STATUS_RE_DELIVERING, KACANA_SHIP_STATUS_RETURN, KACANA_SHIP_STATUS_FINISH])) {
+        if (in_array($status, [KACANA_SHIP_STATUS_RE_DELIVERING, KACANA_SHIP_STATUS_RETURN, KACANA_SHIP_STATUS_FINISH]) && $shipping->status != $status) {
             $slack = new Slack('shipping_status');
 
             if ($status == KACANA_SHIP_STATUS_RE_DELIVERING) {
