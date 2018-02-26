@@ -22,7 +22,7 @@
         </li>
         <li class="phone">
             <i class="pe-7s-headphones pe-2x"></i>
-            Tư vấn: 0941.130.808
+            Tư vấn: 01695.393.076
         </li>
         <li class="phone">
             <i class="pe-7s-mail pe-2x"></i>

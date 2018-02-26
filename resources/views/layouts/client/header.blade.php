@@ -237,6 +237,12 @@
                             </a>
                         </li>
                         <li >
+                            <a href="#show-search-in-header">
+                                <i class="pe-7s-search"></i>
+                                <p>Tìm kiếm</p>
+                            </a>
+                        </li>
+                        <li >
                             <a class="header-mobile-menu-cart" href="/thanh-toan">
                                 <i class="pe-7s-cart"></i>
                                 @if(Cart::count())
@@ -246,9 +252,9 @@
                             </a>
                         </li>
                         <li >
-                            <a href="#show-search-in-header">
-                                <i class="pe-7s-search"></i>
-                                <p>Tìm kiếm</p>
+                            <a href="/contact/thong-tin-lien-he">
+                                <i class="pe-7s-map-marker"></i>
+                                <p>Cửa hàng</p>
                             </a>
                         </li>
                         <li >

@@ -12,7 +12,7 @@
                     <div class="row">
                         <div class="col-xs-12 col-sm-12" >
                             <div class="row">
-                                <h1>TÚI XÁCH MỚI</h1>
+                                <h1>TÚI XÁCH ĐẸP MỚI</h1>
                             </div>
                             <div class="row">
                                 <h3>Những mẫu túi xách đẹp mới lên kệ tại KACANA</h3>
@@ -53,7 +53,7 @@
                     <div class="row">
                         <div class="col-xs-12 col-sm-8" >
                             <div class="row">
-                                <h2>TÚI XÁCH KHUYẾN MÃI</h2>
+                                <h2>TÚI XÁCH GIẢM GIÁ</h2>
                             </div>
                             <div class="row">
                                 <h3>Túi xách đang khuyến mãi hấp dẫn tại KACANA</h3>
