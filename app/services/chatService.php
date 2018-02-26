@@ -1,27 +1,10 @@
 <?php namespace App\services;
 
-use App\Http\Requests\Request;
 use App\models\chatMessageModel;
 use App\models\chatParticipantModel;
 use App\models\chatThreadModel;
-use App\models\productModel;
-use App\models\productPropertiesModel;
-use App\models\productTagModel;
-use App\models\productViewModel;
-use App\models\tagModel;
-use App\models\User;
-use App\models\userProductLikeModel;
-use App\models\userSocialModel;
 use Kacana\Client\KPusher;
-use Kacana\DataTables;
-use Kacana\Util;
-use Kacana\ViewGenerateHelper;
-use Kacana\HtmlFixer;
-use Cache;
-use App\models\productGalleryModel;
-use \Storage;
-use Carbon\Carbon;
-use Shorten;
+use Kacana\Client\Slack;
 
 class chatService extends baseService {
 
@@ -45,6 +28,14 @@ class chatService extends baseService {
     }
 
     public function createNewMessage($userTrackingHistoryId, $threadId, $userId, $type, $body){
+        if($type == KACANA_CHAT_TYPE_ASK){
+            $userTrackingService = new userTrackingService();
+            $tracking = $userTrackingService->getUserTrackingHistory($userTrackingHistoryId);
+
+            $slack = new Slack('#messages_tool');
+            $slack->notificationNewMessage($threadId, $body, $tracking);
+        }
+
         return $this->_chatMessageModel->createNewMessage($userTrackingHistoryId, $threadId, $userId, $type, $body);
     }
 
@@ -98,7 +89,26 @@ class chatService extends baseService {
         return false;
     }
 
+    public function createMessagesResponseFromSlack($params){
 
+        if($params['token'] == KACANA_SLACK_TOKEN_MESSAGE)
+        {
+            $message = $params['text'];
+            $messageDecode = explode(' ', $message);
+            $threadId = str_replace('#', '', $messageDecode[0]);
+
+            $message = str_replace($messageDecode[0].' ', '', $message);
+            $pusher = new KPusher();
+
+            $userId = 0;
+
+            $chatType = KACANA_CHAT_TYPE_REPLY;
+
+            $pusher->createNewPush($message, KACANA_CHAT_THREAD_PREFIX.$threadId, $chatType);
+            $this->createNewMessage(0, $threadId, $userId, $chatType, $message);
+        }
+
+    }
 }
 
 

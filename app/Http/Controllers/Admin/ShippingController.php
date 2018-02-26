@@ -106,12 +106,18 @@ class ShippingController extends BaseController {
         $orderService = new orderService();
         $addressService = new addressService();
         $shipGhnService = new shipGhnService();
+        $shipGhtKService = new shipGhtkService();
 
         $shippingId =  $request->input('id');
 
         try {
+            $shipping = $shipGhnService->getShippingById($shippingId);
+            if ($shipping->ship_service_type == KACANA_SHIP_TYPE_SERVICE_GHN) {
+                $status = $shipGhnService->GetOrderInfoStatus($shippingId);
+            } elseif ($shipping->ship_service_type == KACANA_SHIP_TYPE_SERVICE_GHTK) {
+                $status = $shipGhtKService->GetOrderInfoStatus($shippingId);
+            }
 
-            $status = $shipGhnService->GetOrderInfoStatus($shippingId);
             $ship =  $shipGhnService->updateShippingStatus($shippingId, $status);
             $ship->statusDesc = ViewGenerateHelper::getStatusDescriptionShip($status, $shippingId);
 

@@ -395,7 +395,7 @@ Route::group(['domain'=>'{nameDomain}', 'middleware' => 'client'], function () {
     });
 
     Route::any('/facebookWebhook',                          array('as'=>'facebookWebhookCallback',          'uses'=>'Client\IndexController@facebookWebhook'));
-
+    Route::any('/message-slack',                            array('as'=>'messageSlackCallback',             'uses'=>'Client\IndexController@messageSlack'));
 });
 
 Route::group(['domain'=>KACANA_AUTH_KCNER_NAME.'.{nameDomain}','middleware' => 'auth'], function () {

@@ -3,6 +3,7 @@
 use Httpful\Request as Client;
 use App\services\orderService;
 use App\models\shippingModel;
+use Kacana\Client\Slack;
 use Kacana\DataTables;
 use Kacana\ViewGenerateHelper;
 use Cache;
@@ -371,10 +372,9 @@ class shipGhnService extends baseService {
             array( 'db' => 'address_receive.name', 'dt' => 1 ),
             array( 'db' => 'shipping.total', 'dt' => 2 ),
             array( 'db' => 'shipping.fee', 'dt' => 3 ),
-            array( 'db' => 'shipping.expected_delivery_time', 'dt' => 4 ),
-            array( 'db' => 'shipping.status', 'dt' => 5 ),
-            array( 'db' => 'shipping.created', 'dt' => 6 ),
-            array( 'db' => 'shipping.updated', 'dt' => 7 )
+            array( 'db' => 'shipping.status', 'dt' => 4 ),
+            array( 'db' => 'shipping.created', 'dt' => 5 ),
+            array( 'db' => 'shipping.updated', 'dt' => 6 )
         );
 
         $return = $shippingModel->generateShippingTable($request, $columns);
@@ -439,12 +439,85 @@ class shipGhnService extends baseService {
     }
 
     public function updateShippingStatus($id, $status){
-
+        $this->notificationSlackShipping($id, $status);
         return $this->_shippingModel->updateShippingStatus($id, $status);
     }
 
     public function getAllShippingProcessing(){
         return $this->_shippingModel->getAllShippingProcessing();
+    }
+
+    public function notificationSlackShipping($shippingId, $status)
+    {
+
+        $shipping = $this->_shippingModel->getById($shippingId);
+        $typeShipping = '';
+        if ($shipping->ship_service_type == KACANA_SHIP_TYPE_SERVICE_GHN) {
+            $typeShipping = 'Giao Hàng Nhanh';
+        } elseif ($shipping->ship_service_type == KACANA_SHIP_TYPE_SERVICE_GHTK) {
+            $typeShipping = 'Giao Hàng Tiết kiệm';
+        }
+
+        if (in_array($status, [KACANA_SHIP_STATUS_RE_DELIVERING, KACANA_SHIP_STATUS_RETURN, KACANA_SHIP_STATUS_FINISH]) && $shipping->status != $status) {
+            $slack = new Slack('shipping_status');
+
+            if ($status == KACANA_SHIP_STATUS_RE_DELIVERING) {
+                $slackText = 'Warning: Giao hàng LẠI với đơn hàng ' . $shippingId . ' của ' . $typeShipping;
+                $color = '#ffc107';
+            } elseif ($status == KACANA_SHIP_STATUS_RETURN) {
+                $slackText = 'Error: Giao hàng THẤT BẠI với đơn hàng ' . $shippingId . ' của ' . $typeShipping;
+                $color = '#dc3545';
+            } elseif ($status == KACANA_SHIP_STATUS_FINISH) {
+                $slackText = 'Success: Giao hàng THÀNH CÔNG với đơn hàng ' . $shippingId . ' của ' . $typeShipping;
+                $color = '#28a745';
+            }
+
+            $attachAddress = [
+                'fallback' => 'Địa chỉ nhận hàng',
+                'text' => 'Địa chỉ nhận hàng',
+                'color' => $color,
+                'fields' => [
+                    [
+                        'title' => 'Người Nhận',
+                        'value' => $shipping->addressReceive->name . ' ' . $shipping->addressReceive->phone,
+                        'short' => true
+                    ],
+                    [
+                        'title' => 'Địa chỉ',
+                        'value' => $shipping->address,
+                        'short' => true
+                    ]
+                ]
+            ];
+
+            $attachProducts = [];
+
+            foreach ($shipping->orderDetail as $orderDetail){
+
+                $imageUrl = "http://image.kacana.vn".str_replace('%2F', '/', urlencode($orderDetail->product->getOriginal('image')));
+                $attachProduct = [
+                    "color" => $color,
+                    "title" => $orderDetail->name,
+                    "title_link" => "http://kacana.vn/san-pham/san-pham--".$orderDetail->product_id.'--387',
+                    "thumb_url" => $imageUrl,
+                    'fields' => [
+                        [
+                            'title' => 'Số lượng',
+                            'value' => $orderDetail->quantity,
+                            'short' => true
+                        ],
+                        [
+                            'title' => 'Tổng',
+                            'value' => formatMoney($orderDetail->price - $orderDetail->discount).'(Giảm: '.formatMoney($orderDetail->discount).')',
+                            'short' => true
+                        ]
+                    ]
+                ];
+                array_push($attachProducts, $attachProduct);
+            }
+
+            $slack->notificationNewOrder($slackText,$attachAddress, $attachProducts);
+        }
     }
 }
 

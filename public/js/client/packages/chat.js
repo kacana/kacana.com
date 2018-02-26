@@ -81,7 +81,7 @@ var chatPackage = {
             });
 
             Kacana.chat.page.on('keyup', '.message_input', function (e) {
-                if (e.which === 13) {
+                if (e.which === 13 && $.trim($(this).val())) {
                     var textMessage = Kacana.chat.getMessageTextClient();
 
                     if(Kacana.chat.isURL(textMessage))

@@ -39,6 +39,13 @@ class userTrackingService extends baseService {
         return $userTracking;
     }
 
+    public function getUserTrackingHistory($trackingHistoryId = 0){
+        $userTracking = $this->_userTrackingHistoryModel->getItem($trackingHistoryId);
+        $userTracking->ip = $this->getIpInformation($userTracking->ip);
+        $userTracking->user_agent = $this->parserUserAgent($userTracking->user_agent);
+        return $userTracking;
+    }
+
     public function getCountTracking($duration = false){
         return $this->_userTrackingModel->countTracking($duration);
     }

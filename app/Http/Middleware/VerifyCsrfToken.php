@@ -5,7 +5,7 @@ use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken as BaseVerifier;
 
 class VerifyCsrfToken extends BaseVerifier {
 
-    private $openRoutes = ['facebookWebhook', 'loadFilter', '/'];
+    private $openRoutes = ['facebookWebhook','message-slack','loadFilter', '/'];
 	/**
 	 * Handle an incoming request.
 	 *
