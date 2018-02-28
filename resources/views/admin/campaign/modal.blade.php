@@ -93,7 +93,7 @@
             </div>
             <div class="modal-footer">
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                <input type="submit" class="btn btn-primary" value="Tạo mới"/>
+                <input type="submit" id="submit-products-add-to-campaign" class="btn btn-primary" value="Tạo mới"/>
                 <button type="button" data-dismiss="modal" class="btn">Cancel</button>
             </div>
         </div>

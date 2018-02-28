@@ -454,8 +454,10 @@ class shipGhnService extends baseService {
         $typeShipping = '';
         if ($shipping->ship_service_type == KACANA_SHIP_TYPE_SERVICE_GHN) {
             $typeShipping = 'Giao Hàng Nhanh';
+            $url = 'https://5sao.ghn.vn/Tracking/ViewTracking/';
         } elseif ($shipping->ship_service_type == KACANA_SHIP_TYPE_SERVICE_GHTK) {
             $typeShipping = 'Giao Hàng Tiết kiệm';
+            $url = 'https://khachhang.giaohangtietkiem.vn/khach-hang/tracking/order?orderId=';
         }
 
         if (in_array($status, [KACANA_SHIP_STATUS_RE_DELIVERING, KACANA_SHIP_STATUS_RETURN, KACANA_SHIP_STATUS_FINISH]) && $shipping->status != $status) {
@@ -487,7 +489,9 @@ class shipGhnService extends baseService {
                         'value' => $shipping->address,
                         'short' => true
                     ]
-                ]
+                ],
+                "title" => $shippingId,
+                "title_link" => $url.$shippingId
             ];
 
             $attachProducts = [];

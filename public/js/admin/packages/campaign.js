@@ -408,11 +408,21 @@ var campaignPackage = {
                     }
                 });
             },
+            addProductCampaignForm: function () {
+                var listProductAdded = [];
+                $('#list-product-add-to-campaign .item').each(function () {
+                    var productId = $(this).data('product-id');
+                    
+                });
+
+                return false;
+            },
             bindEventModal: function () {
                 var modal = $('#modal-add-product-campaign');
                 modal.on('change', '#input-search-add-product-name', Kacana.campaign.editCampaign.searchProduct);
                 modal.on('click', '#list-search-product-campaign a[href="#add-product"]', Kacana.campaign.editCampaign.addProductToCampaign);
                 modal.on('click', '#list-product-add-to-campaign a[href="#add-product"]', Kacana.campaign.editCampaign.removeProductToCampaign);
+                modal.on('click', ' #submit-products-add-to-campaign', Kacana.campaign.editCampaign.addProductCampaignForm);
             },
             searchProduct: function () {
                 var keySearch = $(this).val();
