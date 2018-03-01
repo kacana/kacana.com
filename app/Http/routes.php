@@ -221,14 +221,16 @@ Route::group(['domain'=>KACANA_AUTH_ADMIN_NAME.'.{nameDomain}','middleware' => '
         Route::get('/edit/{campaignId}',                        array('as'=>'Campaign.editCampaign',                 'uses'=>'Admin\CampaignController@edit'));
         Route::post('/edit/{campaignId}',                       array('as'=>'Campaign.postEditCampaign',             'uses'=>'Admin\CampaignController@postEdit'));
         Route::post('/updateCampaignImage',                     array('as'=>'Campaign.updateCampaignImage',          'uses'=>'Admin\CampaignController@updateCampaignImage'));
-        Route::get('/searchProduct',                           array('as'=>'Campaign.searchProduct',                'uses'=>'Admin\CampaignController@searchProduct'));
+        Route::get('/searchProduct',                            array('as'=>'Campaign.searchProduct',                'uses'=>'Admin\CampaignController@searchProduct'));
+        Route::post('/addProductCampaign',                      array('as'=>'Campaign.addProductCampaign',           'uses'=>'Admin\CampaignController@addProductCampaign'));
+        Route::post('/generateCampaignProductTable/{campaignId}',            array('as'=>'Campaign.generateCampaignProductTable', 'uses'=>'Admin\CampaignController@generateCampaignProductTable'));
     });
 
     Route::group(['prefix'=>'orderFrom'], function(){
         Route::any('/',                                         array('as'=>'OrderFrom.list',                        'uses'=>'Admin\OrderFromController@index'));
         Route::any('/generateOrderFromTable',                   array('as'=>'OrderFrom.generate.orderFrom.table',    'uses'=>'Admin\OrderFromController@generateOrderFromTable'));
         Route::any('/createOrderFrom',                          array('as'=>'OrderFrom.create.orderFrom',            'uses'=>'Admin\OrderFromController@createOrderFrom'));
-        Route::any('/editOrderFrom/{id}',              array('as'=>'OrderFrom.edit.orderFrom',              'uses'=>'Admin\OrderFromController@editOrderFrom'));
+        Route::any('/editOrderFrom/{id}',                       array('as'=>'OrderFrom.edit.orderFrom',              'uses'=>'Admin\OrderFromController@editOrderFrom'));
 //        Route::any('/searchTagPost',                            array('as'=>'Blog.search.tag.post',             'uses'=>'Admin\BlogController@searchTagPost'));
 //        Route::any('/updatePostMainImage',                      array('as'=>'Blog.update.post.main.image',      'uses'=>'Admin\BlogController@updatePostMainImage'));
 //        Route::any('/addPostImage',                             array('as'=>'Blog.add.image',                   'uses'=>'Admin\BlogController@addPostImage'));

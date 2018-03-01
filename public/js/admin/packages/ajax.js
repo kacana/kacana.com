@@ -571,7 +571,7 @@ var ajaxPackage = {
                 var dataPost =data;
                 var options = [];
                 Kacana.ajax.init(url, dataType, type, dataPost, callBack, errorCallBack, options);
-            },
+            }
         },
         campaign: {
             validateTimeCampaign: function (data, callBack, errorCallBack){
@@ -594,6 +594,14 @@ var ajaxPackage = {
                 var url = '/campaign/searchProduct';
                 var dataType = 'json';
                 var type = 'get';
+                var dataPost =data;
+                var options = [];
+                Kacana.ajax.init(url, dataType, type, dataPost, callBack, errorCallBack, options);
+            },
+            addProductCampaign: function (data, callBack, errorCallBack) {
+                var url = '/campaign/addProductCampaign';
+                var dataType = 'json';
+                var type = 'post';
                 var dataPost =data;
                 var options = [];
                 Kacana.ajax.init(url, dataType, type, dataPost, callBack, errorCallBack, options);

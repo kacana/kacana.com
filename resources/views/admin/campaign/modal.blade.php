@@ -58,7 +58,7 @@
                     <div class="col-sm-5">
                         <div class="form-group">
                             <label for="productName">Deal Type</label>
-                            <select name="orderType" class="form-control">
+                            <select id="campaign_discount_type" name="campaign-discount-type" class="form-control">
                                 <option value="0">Please choose deal</option>
                                 <option value="{{KACANA_CAMPAIGN_DEAL_TYPE_DISCOUNT_PRICE}}">price discount</option>
                                 <option value="{{KACANA_CAMPAIGN_DEAL_TYPE_DISCOUNT_PERCENT}}">% discount</option>
@@ -82,11 +82,11 @@
                                     <span class="text-bold">same price</span> buy products in list with same price : 180k
                                 </p>
                             </div>
-                            <input required="" name="deal_deference" placeholder="Deal reference" id="deal_reference" class="form-control" type="text">
+                            <input required="" name="deal_deference" placeholder="Deal reference" id="campaign_discount_reference" class="form-control" type="text">
                         </div>
                         <div class="form-group">
                             <label for="productName">Apply</label>
-                            <input required="" name="product_apply_date" placeholder="Apply date" id="product_apply_date" class="form-control" type="text">
+                            <input required="" name="product_apply_date" placeholder="Apply date" id="campaign_product_apply_date" class="form-control" type="text">
                         </div>
                     </div>
                 </div>
@@ -111,8 +111,8 @@
             <div class="col-sm-6 product-current-deal">
                 @{{each this.campaign_product}}
                     <span class="text-danger">${this.start_date} - ${this.end_date}</span>
-                    <span class="type-product-deal text-info">${Kacana.utils.dealType(this.promotion_type)}</span>
-                    <span class="text-maroon">@{{html Kacana.utils.dealRef(this.promotion_type,this.promotion_ref)}}</span>
+                    <span class="type-product-deal text-info">${Kacana.utils.dealType(this.discount_type)}</span>
+                    <span class="text-maroon">@{{html Kacana.utils.dealRef(this.discount_type,this.ref)}}</span>
                 <br><br>
                 @{{/each}}
             </div>

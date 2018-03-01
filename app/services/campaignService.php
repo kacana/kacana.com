@@ -52,6 +52,36 @@ class campaignService extends baseService {
         return $return;
     }
 
+    public function generateCampaignProductTable($request){
+        $datatables = new DataTables();
+        $viewHelper = new ViewGenerateHelper();
+
+        $columns = array(
+            array( 'db' => 'campaign_products.id', 'dt' => 0 ),
+            array( 'db' => 'products.name', 'dt' => 1 ),
+            array( 'db' => 'products.id', 'dt' => 2 ),
+            array( 'db' => 'campaigns.display_start_date', 'dt' => 3 ),
+            array( 'db' => 'campaigns.display_end_date', 'dt' => 4 ),
+            array( 'db' => 'campaigns.start_date', 'dt' => 5 ),
+            array( 'db' => 'campaigns.end_date', 'dt' => 6 ),
+            array( 'db' => 'campaigns.status', 'dt' => 7 ),
+            array( 'db' => 'campaigns.updated_at', 'dt' => 8 )
+        );
+
+        $return = $this->_campaignModel->generateCampaignTable($request, $columns);
+        $optionStatus = [KACANA_CAMPAIGN_STATUS_ACTIVE, KACANA_CAMPAIGN_STATUS_INACTIVE];
+
+        if(count($return['data'])) {
+            foreach ($return['data'] as &$res) {
+                $res->status = $viewHelper->dropdownView('campaigns', $res->id, $res->status, 'status', $optionStatus);
+            }
+        }
+
+        $return['data'] = $datatables::data_output( $columns, $return['data'] );
+
+        return $return;
+    }
+
     public function validateTimeCampaign($campaignId, $dateStart, $dateEnd){
         return $this->_campaignModel->validateTimeCampaign($campaignId, $dateStart, $dateEnd);
     }
@@ -118,6 +148,26 @@ class campaignService extends baseService {
         } else {
             return $this->_campaignGalleryModel->addCampaignImage($id, $newImageName);
         }
+    }
+
+    public function validateProducts($listProduct, $startDate, $endDate){
+        $campaignProductModel = new campaignProductModel();
+        $products = $campaignProductModel->validateProducts($listProduct, $startDate, $endDate);
+
+        if(count($products)) {
+            return ['ok' => false,'product_added' => $products];
+        } else {
+            return ['ok' => true];
+        }
+    }
+
+    public function addProductCampaign($listProduct, $campaignId, $discountType, $ref, $dateStart, $dateEnd){
+        $campaignProductModel = new campaignProductModel();
+        foreach ($listProduct as $productId){
+            $campaignProductModel->createNewItem($productId, $campaignId, $discountType, $ref, $dateStart, $dateEnd);
+        }
+
+        return true;
     }
 }
 

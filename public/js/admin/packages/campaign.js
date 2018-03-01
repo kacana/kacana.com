@@ -185,6 +185,78 @@ var campaignPackage = {
                 Kacana.campaign.editCampaign.page.on('click', ' #add-product-campaign-btn', Kacana.campaign.editCampaign.addProductCampaign);
                 Kacana.campaign.editCampaign.bindEventModal();
 
+
+
+            },
+            setupDatatableForCampaignProduct: function () {
+                var $formInline = $('.form-inline');
+                var element = '#campaignProductTable';
+                $(element).parents('.box').css('overflow', 'auto');
+                var columns = [
+                    {
+                        'title': 'ID',
+                        'width': '5%'
+                    },
+                    {
+                        'title': 'Name'
+                    },
+                    {
+                        'title': 'Image',
+                        'render': function (data, type, full, meta) {
+                            if (data)
+                                return '<img src="http://image.kacana.vn' + data + '" width="100" height="35" />';
+                            else
+                                return '<p class="text-red">no image</p>';
+                        }
+                    },
+                    {
+                        'title': 'Discount Type',
+                        'render': function (data, type, full, meta) {
+                            return Kacana.utils.dealType(data);
+                        }
+                    },
+                    {
+                        'title': 'Discount Ref',
+                        'render': function (data, type, full, meta) {
+                            return Kacana.utils.dealRef(full['3'],data);
+                        }
+                    },
+                    {
+                        'title': 'Apply start',
+                        'render': function (data, type, full, meta) {
+                            return data ? data.slice(0, -8) + '<br><b>' + data.slice(11, 19) + '</b>' : '';
+                        }
+                    },
+                    {
+                        'title': 'Apply end',
+                        'render': function (data, type, full, meta) {
+                            return data ? data.slice(0, -8) + '<br><b>' + data.slice(11, 19) + '</b>' : '';
+                        }
+                    },
+                    {
+                        'title': 'Updated',
+                        'width': '12%',
+                        'render': function (data, type, full, meta) {
+                            return data ? data.slice(0, -8) + '<br><b>' + data.slice(11, 19) + '</b>' : '';
+                        }
+                    },
+                    {
+                        'width': '4%',
+                        'class': 'center',
+                        'sortable': false,
+                        'render': function (data, type, full, meta) {
+                            return '<a href="/campaign/edit/' + full[0] + '" class="btn btn-default btn-xs"><i class="fa fa-pencil"></i></a>';
+                        }
+                    },
+                ];
+
+                var addParamsCallBack = function (oData) {
+                };
+
+                var cacheLoadedCallBack = function (oData) {
+                };
+                var campaignId = $('#campagin_id').val();
+                Kacana.datatable.generateCampaignProductTable(element, columns, campaignId,addParamsCallBack, cacheLoadedCallBack);
             },
             callBackValidateTimeCampaign: function(data){
                 var modalCreateCampaign = $('#modal-create-campaign');
@@ -400,7 +472,7 @@ var campaignPackage = {
             addProductCampaign:function () {
                 var modalAddProduct = $('#modal-add-product-campaign');
                 modalAddProduct.modal();
-                modalAddProduct.find('#product_apply_date').daterangepicker({
+                modalAddProduct.find('#campaign_product_apply_date').daterangepicker({
                     timePicker: true,
                     timePicker24Hour: true,
                     locale: {
@@ -410,10 +482,42 @@ var campaignPackage = {
             },
             addProductCampaignForm: function () {
                 var listProductAdded = [];
+                var modal = $('#modal-add-product-campaign');
                 $('#list-product-add-to-campaign .item').each(function () {
                     var productId = $(this).data('product-id');
-                    
+                    listProductAdded.push(productId);
                 });
+
+                var discountType = modal.find('#campaign_discount_type').val();
+                var discountDate = modal.find('#campaign_product_apply_date').val();
+                var discountRef = modal.find('#campaign_discount_reference').val();
+                var campaignId = $('#campagin_id').val();
+                var callBack = function (data) {
+                    if(data.ok){
+                        window.location.reload();
+                    }
+                    else {
+                        Kacana.utils.showError('Some Product is added the same day, please check red product border!');
+                        $('#list-product-add-to-campaign .item').removeClass('added');
+                        $.each(data['product_added'], function (index, product) {
+                            $('#list-product-add-to-campaign').find('.item[data-product-id="'+product.product_id+'"]').addClass('added');
+                        });
+                    }
+                };
+
+                var errorCallBack = function () {
+
+                };
+
+                var data = {
+                    listProductAdded: listProductAdded,
+                    discountType: discountType,
+                    discountDate: discountDate,
+                    discountRef: discountRef,
+                    campaignId: campaignId
+                };
+
+                Kacana.ajax.campaign.addProductCampaign(data, callBack, errorCallBack);
 
                 return false;
             },

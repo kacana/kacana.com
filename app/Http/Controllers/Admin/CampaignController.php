@@ -33,6 +33,22 @@ class CampaignController extends BaseController
         return response()->json($return);
     }
 
+    public function generateCampaignProductTable($domain, $campaignId, UserRequest $request){
+        $params = $request->all();
+        $campaignService = new campaignService();
+
+        try {
+            $return = $campaignService->generateCampaignProductTable($params, $campaignId);
+
+        } catch (\Exception $e) {
+            // @codeCoverageIgnoreStart
+            $return['error'] = $e->getMessage();
+            $return['errorMsg'] = $e->getMessage();
+            // @codeCoverageIgnoreEnd
+        }
+        return response()->json($return);
+    }
+
     public function createCampaign(Request $request){
         $campaignService = new campaignService();
 
@@ -134,5 +150,38 @@ class CampaignController extends BaseController
             // @codeCoverageIgnoreEnd
         }
         return response()->json($return);
+    }
+
+    public function addProductCampaign(Request $request){
+        $campaignService = new campaignService();
+
+        $listProductAdded =  $request->input('listProductAdded');
+        $discountType =  $request->input('discountType');
+        $discountDate =  $request->input('discountDate');
+        $discountRef =  $request->input('discountRef');
+        $campaignId =  $request->input('campaignId');
+
+        $date = explode(' - ', $discountDate);
+        $dateStart = $date[0];
+        $dateEnd = $date[1];
+
+        $return['ok'] = 0;
+
+        try {
+            $validates =  $campaignService->validateProducts($listProductAdded, $dateStart, $dateEnd);
+            if($validates['ok']){
+                $campaignService->addProductCampaign($listProductAdded, $campaignId,$discountType, $discountRef, $dateStart, $dateEnd);
+                $return['ok'] = 1;
+            } else {
+                $return['product_added'] = $validates['product_added'];
+            }
+        } catch (\Exception $e) {
+            // @codeCoverageIgnoreStart
+            $return['errorMsg'] = $e->getMessage();
+            // @codeCoverageIgnoreEnd
+        }
+
+        return response()->json($return);
+
     }
 }
