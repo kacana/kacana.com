@@ -281,6 +281,10 @@ function urlProductDetail($item)
     }
 }
 
+function calculateDiscountPrice(){
+
+}
+
 function urlTagProduct($item){
     if(!empty($item)){
         return URL::to($item['slug'] . '--' . $item['tag_id']);

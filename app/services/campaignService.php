@@ -168,6 +168,10 @@ class campaignService extends baseService {
 
         return true;
     }
+
+    public function getCurrentCampaignDisplay(){
+        return $this->_campaignModel->getCurrentCampaignDisplay();
+    }
 }
 
 

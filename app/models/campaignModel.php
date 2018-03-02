@@ -1,5 +1,6 @@
 <?php namespace App\models;
 
+use Carbon\Carbon;
 use function foo\func;
 use Illuminate\Database\Eloquent\Model;
 use Kacana\DataTables;
@@ -113,5 +114,11 @@ class campaignModel extends baseModel {
     public function getImageAttribute($value)
     {
         return AWS_CDN_URL.$value;
+    }
+
+    public function getCurrentCampaignDisplay(){
+        $currentDay = Carbon::now();
+        $campaign = $this->where('display_start_date', '<=', $currentDay)->where('display_end_date', '>=', $currentDay);
+        return $campaign->get();
     }
 }

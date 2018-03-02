@@ -1,5 +1,6 @@
 <?php namespace App\Http\Controllers\Client;
 
+use App\services\campaignService;
 use App\services\chatService;
 use App\services\productService;
 use App\services\shipGhnService;
@@ -22,13 +23,13 @@ class IndexController extends BaseController
     /**
      * Show the application welcome screen to the user.
      *
-     * @param Request $request
      * @return \BladeView|bool|\Illuminate\View\View
      */
 
-    public function index(Request $request)
+    public function index()
     {
         $productService = new productService();
+        $campaignService = new campaignService();
         $tagService = new tagService();
 
         $limit = KACANA_HOMEPAGE_ITEM_PER_TAG;
@@ -51,7 +52,8 @@ class IndexController extends BaseController
         }
         $newestProduct = $productService->getNewestProduct($userId);
         $discountProduct = $productService->getDiscountProduct($userId);
-        return view('client.index.index', array('items' => $data, 'newest' => $newestProduct, 'discount' => $discountProduct));
+        $currentCampaignDisplay = $campaignService->getCurrentCampaignDisplay();
+        return view('client.index.index', array('items' => $data, 'newest' => $newestProduct, 'discount' => $discountProduct, 'campaignDisplay' => $currentCampaignDisplay));
     }
 
     public function searchProduct($domain, $searchString, Request $request)

@@ -4,6 +4,13 @@
             <div  class="nivo-slider">
                 <div class="slider-wrapper theme-default">
                     <div id="homepage-main-slider" class="nivoSlider">
+                        @foreach($campaignDisplay as $campaign)
+                            @if($campaign->image)
+                                <a href="/khuyen-mai/{{$campaign->id}}/{{str_slug($campaign->name)}}">
+                                    <img src="{{$campaign->image}}" alt="" />
+                                </a>
+                            @endif
+                        @endforeach
                         <a href="/san-pham/balo-laptop-nam-mixi-thiet-ke-chong-trom-hoan-hao-bm0601-m5510--1891--442">
                             <img src="{{AWS_CDN_URL}}/images/client/balochongtrom.jpg" data-thumb="{{AWS_CDN_URL}}/images/client/balochongtrom.jpg" alt="" />
                         </a>

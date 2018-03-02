@@ -1,5 +1,6 @@
 <?php namespace App\models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Image;
 use DB;
@@ -627,21 +628,27 @@ class productModel extends Model
      */
     public function getDiscountProduct($offset, $limit)
     {
+        $currentDay = Carbon::now();
 
         $products = $this->leftJoin('product_tag', 'products.id', '=', 'product_tag.product_id')
-            ->leftJoin('tag_relations', 'product_tag.tag_id', '=', 'tag_relations.child_id');
+            ->leftJoin('tag_relations', 'product_tag.tag_id', '=', 'tag_relations.child_id')
+            ->join('campaign_products', 'campaign_products.product_id', '=', 'products.id');
 
         $products->skip($offset)
             ->take($limit);
 
         $products->orderBy('products.updated', 'DESC');
-        $products->where('products.discount', '>', 0);
         $products->where('product_tag.type', '=', TAG_RELATION_TYPE_MENU);
         $products->where('tag_relations.tag_type_id', '=', TAG_RELATION_TYPE_MENU);
         $products->where('tag_relations.status', '=', TAG_RELATION_STATUS_ACTIVE);
         $products->whereIn('products.status', [KACANA_PRODUCT_STATUS_ACTIVE, KACANA_PRODUCT_STATUS_SOLD_OUT]);
         $products->groupBy('products.id');
-        $products->select(['products.*', 'product_tag.*']);
+
+        //get current product have discount with current time
+        $products->where('campaign_products.start_date', '<=', $currentDay);
+        $products->where('campaign_products.end_date', '>=', $currentDay);
+
+        $products->select(['products.*', 'product_tag.*', 'campaign_products.*']);
 
         $results = $products->get();
 

@@ -66,7 +66,7 @@ class CampaignController extends BaseController
 
         $campaign = $campaignService->createCampaign($campaignName, $displayDateStart, $displayDateEnd, $dateStart, $dateEnd);
 
-        return redirect('/campaign/edit/?campaignId='.$campaign->id);
+        return redirect('/campaign/edit/'.$campaign->id);
     }
 
     public function validateTimeCampaign(Request $request){
