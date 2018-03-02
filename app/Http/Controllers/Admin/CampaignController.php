@@ -33,7 +33,7 @@ class CampaignController extends BaseController
         return response()->json($return);
     }
 
-    public function generateCampaignProductTable($domain, $campaignId, UserRequest $request){
+    public function generateCampaignProductTable($domain, $campaignId, Request $request){
         $params = $request->all();
         $campaignService = new campaignService();
 
@@ -182,6 +182,23 @@ class CampaignController extends BaseController
         }
 
         return response()->json($return);
+    }
 
+    public function removeCampaignProduct(Request $request){
+        $campaignService = new campaignService();
+        $campaignProductId =  $request->input('campaignProductId');
+
+        $return['ok'] = 0;
+
+        try {
+            $campaignService->removeCampaignProduct($campaignProductId);
+            $return['ok'] = 1;
+        } catch (\Exception $e) {
+            // @codeCoverageIgnoreStart
+            $return['errorMsg'] = $e->getMessage();
+            // @codeCoverageIgnoreEnd
+        }
+
+        return response()->json($return);
     }
 }

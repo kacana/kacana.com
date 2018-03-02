@@ -1,6 +1,9 @@
 <?php namespace App\models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Redis\Database;
+use DB;
+use Kacana\DataTables;
 
 class campaignProductModel extends Model {
 
@@ -44,6 +47,48 @@ class campaignProductModel extends Model {
         $campaignProduct->save();
 
         return $campaignProduct;
+    }
+
+    public function generateCampaignProductTable($request, $columns, $campaignId){
+        $datatables = new DataTables();
+
+        $limit = $datatables::limit($request, $columns);
+        $order = $datatables::order($request, $columns);
+        $where = $datatables::filter($request, $columns);
+
+        // Main query to actually get the data
+        $selectData = DB::table('campaign_products')
+            ->leftJoin('products', 'products.id', '=', 'campaign_products.product_id')
+            ->select($datatables::pluck($columns, 'db'))
+            ->orderBy($order['field'], $order['dir'])
+            ->skip($limit['offset'])
+            ->take($limit['limit'])
+            ->where('campaign_products.campaign_id', $campaignId);
+
+        // Data set length
+        $recordsFiltered = $selectLength = DB::table('campaign_products')
+            ->leftJoin('products', 'products.id', '=', 'campaign_products.product_id')
+            ->select($datatables::pluck($columns, 'db'))
+            ->where('campaign_products.campaign_id', $campaignId);
+
+        if ($where) {
+            $selectData->whereRaw($where);
+            $recordsFiltered->whereRaw($where);
+        }
+
+        /*
+         * Output
+         */
+        return array(
+            "draw" => intval($request['draw']),
+            "recordsTotal" => intval($selectLength->count()),
+            "recordsFiltered" => intval($recordsFiltered->count()),
+            "data" => $selectData->get()
+        );
+    }
+
+    public function deleteItem($id){
+        $this->where('id', $id)->delete();
     }
 
 }

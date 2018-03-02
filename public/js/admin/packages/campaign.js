@@ -184,9 +184,42 @@ var campaignPackage = {
 
                 Kacana.campaign.editCampaign.page.on('click', ' #add-product-campaign-btn', Kacana.campaign.editCampaign.addProductCampaign);
                 Kacana.campaign.editCampaign.bindEventModal();
+                Kacana.campaign.editCampaign.setupDatatableForCampaignProduct();
 
+                Kacana.campaign.editCampaign.page.on('click','a[href="#deleteCampaignProduct"]', Kacana.campaign.editCampaign.removeCampaignProduct)
+            },
+            removeCampaignProduct: function () {
+                var campaignProductId = $(this).data('campaign-product-id');
+                var table = $('#campaignProductTable').DataTable();
+                var row = $(this).parents('tr');
+                swal({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, delete it!'
+                }).then(function() {
+                    var callBack = function (data) {
+                        if(data.ok){
+                            swal({
+                                type: 'success',
+                                title: 'Delete'
+                            });
+                            table.row( row ).remove().draw();
+                        }
+                        else {
+                            Kacana.utils.showError('Have error when delete.');
+                        }
+                    };
 
+                    var errorCallBack = function () {
 
+                    };
+
+                    Kacana.ajax.campaign.removeCampaignProduct(campaignProductId, callBack, errorCallBack);
+                });
             },
             setupDatatableForCampaignProduct: function () {
                 var $formInline = $('.form-inline');
@@ -204,7 +237,7 @@ var campaignPackage = {
                         'title': 'Image',
                         'render': function (data, type, full, meta) {
                             if (data)
-                                return '<img src="http://image.kacana.vn' + data + '" width="100" height="35" />';
+                                return '<img src="http://image.kacana.vn' + data + '" width="50" height="50" />';
                             else
                                 return '<p class="text-red">no image</p>';
                         }
@@ -245,7 +278,7 @@ var campaignPackage = {
                         'class': 'center',
                         'sortable': false,
                         'render': function (data, type, full, meta) {
-                            return '<a href="/campaign/edit/' + full[0] + '" class="btn btn-default btn-xs"><i class="fa fa-pencil"></i></a>';
+                            return '<a href="#deleteCampaignProduct" data-campaign-product-id="' + full[0] + '" class="btn btn-default btn-xs"><i class="fa fa-trash-o"></i></a>';
                         }
                     },
                 ];

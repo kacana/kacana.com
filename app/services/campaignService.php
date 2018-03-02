@@ -52,30 +52,22 @@ class campaignService extends baseService {
         return $return;
     }
 
-    public function generateCampaignProductTable($request){
+    public function generateCampaignProductTable($request, $campaignId){
         $datatables = new DataTables();
         $viewHelper = new ViewGenerateHelper();
 
         $columns = array(
             array( 'db' => 'campaign_products.id', 'dt' => 0 ),
-            array( 'db' => 'products.name', 'dt' => 1 ),
-            array( 'db' => 'products.id', 'dt' => 2 ),
-            array( 'db' => 'campaigns.display_start_date', 'dt' => 3 ),
-            array( 'db' => 'campaigns.display_end_date', 'dt' => 4 ),
-            array( 'db' => 'campaigns.start_date', 'dt' => 5 ),
-            array( 'db' => 'campaigns.end_date', 'dt' => 6 ),
-            array( 'db' => 'campaigns.status', 'dt' => 7 ),
-            array( 'db' => 'campaigns.updated_at', 'dt' => 8 )
+            array( 'db' => 'products.name AS product_name', 'dt' => 1 ),
+            array( 'db' => 'products.image AS product_image', 'dt' => 2 ),
+            array( 'db' => 'campaign_products.discount_type', 'dt' => 3 ),
+            array( 'db' => 'campaign_products.ref', 'dt' => 4 ),
+            array( 'db' => 'campaign_products.start_date', 'dt' => 5 ),
+            array( 'db' => 'campaign_products.end_date', 'dt' => 6 ),
+            array( 'db' => 'campaign_products.created_at', 'dt' => 7 )
         );
 
-        $return = $this->_campaignModel->generateCampaignTable($request, $columns);
-        $optionStatus = [KACANA_CAMPAIGN_STATUS_ACTIVE, KACANA_CAMPAIGN_STATUS_INACTIVE];
-
-        if(count($return['data'])) {
-            foreach ($return['data'] as &$res) {
-                $res->status = $viewHelper->dropdownView('campaigns', $res->id, $res->status, 'status', $optionStatus);
-            }
-        }
+        $return = $this->_campaignProductModel->generateCampaignProductTable($request, $columns, $campaignId);
 
         $return['data'] = $datatables::data_output( $columns, $return['data'] );
 
@@ -166,6 +158,13 @@ class campaignService extends baseService {
         foreach ($listProduct as $productId){
             $campaignProductModel->createNewItem($productId, $campaignId, $discountType, $ref, $dateStart, $dateEnd);
         }
+
+        return true;
+    }
+
+    public function removeCampaignProduct($campaignProductId){
+        $campaignProductModel = new campaignProductModel();
+        $campaignProductModel->deleteItem($campaignProductId);
 
         return true;
     }

@@ -223,7 +223,8 @@ Route::group(['domain'=>KACANA_AUTH_ADMIN_NAME.'.{nameDomain}','middleware' => '
         Route::post('/updateCampaignImage',                     array('as'=>'Campaign.updateCampaignImage',          'uses'=>'Admin\CampaignController@updateCampaignImage'));
         Route::get('/searchProduct',                            array('as'=>'Campaign.searchProduct',                'uses'=>'Admin\CampaignController@searchProduct'));
         Route::post('/addProductCampaign',                      array('as'=>'Campaign.addProductCampaign',           'uses'=>'Admin\CampaignController@addProductCampaign'));
-        Route::post('/generateCampaignProductTable/{campaignId}',            array('as'=>'Campaign.generateCampaignProductTable', 'uses'=>'Admin\CampaignController@generateCampaignProductTable'));
+        Route::get('/generateCampaignProductTable/{campaignId}',            array('as'=>'Campaign.generateCampaignProductTable', 'uses'=>'Admin\CampaignController@generateCampaignProductTable'));
+        Route::post('/removeCampaignProduct',                    array('as'=>'Campaign.removeCampaignProduct',        'uses'=>'Admin\CampaignController@removeCampaignProduct'));
     });
 
     Route::group(['prefix'=>'orderFrom'], function(){

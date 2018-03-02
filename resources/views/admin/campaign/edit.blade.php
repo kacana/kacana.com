@@ -143,11 +143,10 @@
                             </button>
                         </div>
                     </div>
-                </div>
-
-                <div class="box-body no-padding">
-                    <table id="campaignProductTable" class="table table-striped"></table>
-                    <div class="clearfix"></div>
+                    <div class="box-body no-padding">
+                        <table id="campaignProductTable" class="table table-striped"></table>
+                        <div class="clearfix"></div>
+                    </div>
                 </div>
             </div>
         </div>

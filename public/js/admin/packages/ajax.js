@@ -605,6 +605,14 @@ var ajaxPackage = {
                 var dataPost =data;
                 var options = [];
                 Kacana.ajax.init(url, dataType, type, dataPost, callBack, errorCallBack, options);
+            },
+            removeCampaignProduct: function (campaignProductId, callBack, errorCallBack) {
+                var url = '/campaign/removeCampaignProduct';
+                var dataType = 'json';
+                var type = 'post';
+                var dataPost = {'campaignProductId': campaignProductId};
+                var options = [];
+                Kacana.ajax.init(url, dataType, type, dataPost, callBack, errorCallBack, options);
             }
         }
      }
