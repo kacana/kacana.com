@@ -281,8 +281,46 @@ function urlProductDetail($item)
     }
 }
 
-function calculateDiscountPrice(){
+function calculateDiscountPrice($price, $discountType, $ref){
 
+    if($discountType == KACANA_CAMPAIGN_DEAL_TYPE_DISCOUNT_PRICE) {
+        $price = $price - $ref;
+    } elseif ($discountType == KACANA_CAMPAIGN_DEAL_TYPE_DISCOUNT_PERCENT) {
+        $price = $price - ($price*$ref/100);
+    } elseif ($discountType == KACANA_CAMPAIGN_DEAL_TYPE_SAME_PRICE){
+        $price = $ref;
+    }
+    return $price;
+}
+
+function discountTagName($discountType){
+    $name = '';
+    if($discountType == KACANA_CAMPAIGN_DEAL_TYPE_DISCOUNT_PRICE) {
+        $name = 'Giảm giá';
+    } elseif ($discountType == KACANA_CAMPAIGN_DEAL_TYPE_DISCOUNT_PERCENT) {
+        $name = 'Giám giá';
+    } elseif ($discountType == KACANA_CAMPAIGN_DEAL_TYPE_SAME_PRICE){
+        $name = 'Đồng giá';
+    }  elseif ($discountType == KACANA_CAMPAIGN_DEAL_TYPE_FREE_PRODUCT){
+        $name = 'Tặng';
+    }
+    return $name;
+}
+
+function discountTagRef($discountType, $ref){
+    $name = '';
+    if($discountType == KACANA_CAMPAIGN_DEAL_TYPE_DISCOUNT_PRICE) {
+        $name = $ref / 1000;
+        $name = '-'.$name.'k';
+    } elseif ($discountType == KACANA_CAMPAIGN_DEAL_TYPE_DISCOUNT_PERCENT) {
+        $name = '-'.$ref.'%';
+    } elseif ($discountType == KACANA_CAMPAIGN_DEAL_TYPE_SAME_PRICE){
+        $name = $ref / 1000;
+        $name = $name.'k';
+    }  elseif ($discountType == KACANA_CAMPAIGN_DEAL_TYPE_FREE_PRODUCT){
+        $name = '1to1';
+    }
+    return $name;
 }
 
 function urlTagProduct($item){

@@ -70,6 +70,17 @@ class productModel extends Model
     /**
      * Get the galleries associated with product
      */
+    public function currentDiscount()
+    {
+        $currentDay = Carbon::now();
+        return $this->hasOne('App\models\campaignProductModel', 'product_id', 'id')
+            ->where('start_date', '<=', $currentDay)
+            ->where('end_date', '>=', $currentDay);
+    }
+
+    /**
+     * Get the galleries associated with product
+     */
     public function productView()
     {
         return $this->hasMany('App\models\productViewModel', 'product_id', 'id');
@@ -648,7 +659,7 @@ class productModel extends Model
         $products->where('campaign_products.start_date', '<=', $currentDay);
         $products->where('campaign_products.end_date', '>=', $currentDay);
 
-        $products->select(['products.*', 'product_tag.*', 'campaign_products.*']);
+        $products->select(['products.*', 'product_tag.*', 'campaign_products.campaign_id', 'campaign_products.discount_type', 'campaign_products.ref', 'campaign_products.start_date', 'campaign_products.end_date']);
 
         $results = $products->get();
 

@@ -39,8 +39,9 @@
 <div class="product-info">
     <h2 itemprop="name" class="product-title"><a href="{{urlProductDetail($item)}}" title="{{$item->name}}">{{$item->name}}</a></h2>
 </div>
+
 <div class="product-price-wrap">
-    @if($item->discount)
+    @if($item->currentDiscount)
         <div class="product-price discount">
             <div itemprop="offers" itemscope itemtype="http://schema.org/Offer" class="discount-info">
                 <div itemprop="price" class="product-price-original">
@@ -50,11 +51,18 @@
                     Giảm giá: <b>{{formatMoney($item->discount)}}</b>
                 </div>
             </div>
-            {{formatMoney($item->sell_price - $item->discount)}}</div>
+            {{formatMoney(calculateDiscountPrice($item->sell_price, $item->currentDiscount->discount_type, $item->currentDiscount->ref))}}
+        </div>
+        <div class="discount-tag">
+            <img src="{{AWS_CDN_URL}}/images/client/discount_tag_small.png">
+            {{--<div class="discount-tag-name">{{discountTagName($item->currentDiscount->discount_type)}}</div>--}}
+            <div class="discount-tag-ref">{{discountTagRef($item->currentDiscount->discount_type, $item->currentDiscount->ref)}}</div>
+        </div>
     @else
         <div class="product-price">{{formatMoney($item->sell_price)}}</div>
     @endif
 </div>
+
 <div class="product-short-description-like-wrap">
     <div class="product-short-description-wrap text-center" id="product-short-description-wrap-{{$item->id}}">
         <div itemprop="description" class="product-short-description">
