@@ -170,6 +170,23 @@
                   color: @color-green-dark;
                   text-decoration: line-through;
                 }
+                .product-free{
+                  color: @color-green-dark;
+                  img{
+                    width: 50px;
+                    position: absolute;
+                    top: -20px;
+                    left: 35px;
+                  }
+                  @media (max-width: 768px) {
+                    img{
+                      width: 40px;
+                      position: absolute;
+                      top: -7px;
+                      left: 35px;
+                    }
+                  }
+                }
                 .price-discount
                 {
                   font-size: 12px;
@@ -201,6 +218,15 @@
                 right: 9px;
                 font-weight: 700;
                 text-align: right;
+              }
+              .product-free-tag{
+                position: absolute;
+                top: 3px;
+                left: 21px;
+                img{
+                  width: 50px;
+                  border-radius: 25px;
+                }
               }
             }
           }

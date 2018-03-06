@@ -70,12 +70,20 @@ class productModel extends Model
     /**
      * Get the galleries associated with product
      */
+    public function campaignProductRef()
+    {
+        return $this->hasMany('App\models\campaignProductModel', 'ref', 'id')->where('campaign_products.discount_type', KACANA_CAMPAIGN_DEAL_TYPE_FREE_PRODUCT);
+    }
+
+    /**
+     * Get the galleries associated with product
+     */
     public function currentDiscount()
     {
         $currentDay = Carbon::now();
         return $this->hasOne('App\models\campaignProductModel', 'product_id', 'id')
-            ->where('start_date', '<=', $currentDay)
-            ->where('end_date', '>=', $currentDay);
+            ->where('campaign_products.start_date', '<=', $currentDay)
+            ->where('campaign_products.end_date', '>=', $currentDay);
     }
 
     /**

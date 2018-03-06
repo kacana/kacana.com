@@ -287,7 +287,7 @@ function calculateDiscountPrice($price, $discountType, $ref){
         $price = $price - $ref;
     } elseif ($discountType == KACANA_CAMPAIGN_DEAL_TYPE_DISCOUNT_PERCENT) {
         $price = $price - ($price*$ref/100);
-    } elseif ($discountType == KACANA_CAMPAIGN_DEAL_TYPE_SAME_PRICE){
+    } elseif ($discountType == KACANA_CAMPAIGN_DEAL_TYPE_SAME_PRICE) {
         $price = $ref;
     }
     return $price;

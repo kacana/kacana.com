@@ -19,6 +19,10 @@ class campaignProductModel extends Model {
         return $this->belongsTo('App\models\productModel');
     }
 
+    public function productRef(){
+        return $this->belongsTo('App\models\productModel', 'ref');
+    }
+
     public function validateProducts($listProduct, $dateStart, $dateEnd){
 
         $products = $this->whereIn('product_id', $listProduct)
