@@ -801,6 +801,13 @@ class productService extends baseService {
             $item->price_after_discount_show = formatMoney($item->sell_price - $item->discount);
             $item->style = $item->style->toArray();
             $item->is_loggin = \Auth::check()?1:0;
+            $item->current_discount = $item->currentDiscount;
+
+            if($item->currentDiscount && $item->currentDiscount->discount_type == KACANA_CAMPAIGN_DEAL_TYPE_FREE_PRODUCT) {
+                $item->current_discount->product_ref = $item->currentDiscount->productRef;
+                $item->current_discount->product_ref->urlProductDetail = urlProductDetail($item->current_discount->product_ref);
+            }
+
             if(count($item->properties))
                 $item->properties_js = $item->properties;
             else

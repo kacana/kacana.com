@@ -318,7 +318,7 @@ function discountTagRef($discountType, $ref){
         $name = $ref / 1000;
         $name = $name.'k';
     }  elseif ($discountType == KACANA_CAMPAIGN_DEAL_TYPE_FREE_PRODUCT){
-        $name = '1to1';
+        $name = '';
     }
     return $name;
 }

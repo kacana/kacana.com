@@ -58,6 +58,32 @@ var utilsPackage = {
             formatted = output.reverse().join("");
             return(formatted + ((parts) ? "." + parts[1].substr(0, 2) : "") + " đ");
         },
+        calculateDiscountPrice: function (price, discountType, ref) {
+
+            if(discountType == 1) {
+                price = price - ref;
+            } else if (discountType == 2) {
+                price = price - (price*ref/100);
+            } else if (discountType == 4) {
+                price = ref;
+            }
+            return price;
+        },
+        discountTagRef: function (discountType, ref) {
+            var name = '';
+            if(discountType == 1) {
+                name = ref / 1000;
+                name = '-'+name+'k';
+            } else if (discountType == 2) {
+                name = '-'+ref+'%';
+            } else if (discountType == 4){
+                name = ref / 1000;
+                name = name+'k';
+            }  else if (discountType == 3){
+                name = '';
+            }
+            return name;
+        },
         facebook: {
             init:function(){
                 // Facebook async init.

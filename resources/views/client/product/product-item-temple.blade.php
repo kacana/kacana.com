@@ -54,9 +54,6 @@
                     </div>
                 @endif
 
-                <div class="price-discount" >
-                    Giảm giá: <b>{{formatMoney($item->discount)}}</b>
-                </div>
             </div>
             {{formatMoney(calculateDiscountPrice($item->sell_price, $item->currentDiscount->discount_type, $item->currentDiscount->ref))}}
         </div>

@@ -49,19 +49,35 @@
         </div>
 
         <div class="product-price-wrap">
-            @{{if parseInt(this.discount)}}
-            <div itemprop="offers" itemscope itemtype="http://schema.org/Offer" class="product-price discount">
-                <div class="discount-info">
-                    <div itemprop="price" class="product-price-original">
-                        ${this.sell_price_show}
+            @{{if this.current_discount != null}}
+                <div class="product-price discount">
+                    <div itemprop="offers" itemscope itemtype="http://schema.org/Offer" class="discount-info">
+                        @{{if this.current_discount.discount_type == 3}}
+                            <div itemprop="price" class="product-free">
+                                Tặng <a target="_blank" href="${this.current_discount.product_ref.urlProductDetail}"><img src="${this.current_discount.product_ref.image}"></a>
+                            </div>
+                        @{{/if}}
+                        @{{if this.current_discount.discount_type != 3}}
+                            <div itemprop="price" class="product-price-original">
+                                ${this.sell_price_show}
+                            </div>
+                        @{{/if}}
                     </div>
-                    <div class="price-discount" >
-                        Giảm giá: <b>${this.discount_show}</b>
-                    </div>
+                    ${Kacana.utils.formatCurrency(Kacana.utils.calculateDiscountPrice(this.sell_price, this.current_discount.discount_type, this.current_discount.ref))}
                 </div>
-                ${this.price_after_discount_show}</div>
+                <div class="discount-tag">
+                    <img src="{{AWS_CDN_URL}}/images/client/discount_tag_small.png">
+                    @{{if this.current_discount.discount_type == 3}}
+                        <div class="product-free-tag">
+                            <a target="_blank" href="${this.current_discount.product_ref.urlProductDetail}"><img src="${this.current_discount.product_ref.image}"></a>
+                        </div>
+                    @{{/if}}
+                    @{{if this.current_discount.discount_type != 3}}
+                        <div class="discount-tag-ref">${Kacana.utils.discountTagRef(this.current_discount.discount_type, this.current_discount.ref)}</div>
+                    @{{/if}}
+                </div>
             @{{/if}}
-            @{{if !(parseInt(this.discount))}}
+            @{{if this.current_discount == null}}
                 <div class="product-price">${this.sell_price_show}</div>
             @{{/if}}
         </div>
@@ -72,21 +88,20 @@
                 </div>
                 @{{if this.isLiked}}
                 <span class="save-product-wrap hidden-xs active pull-left" >
-                            <a
-                                    data-product-id="${this.id}"
-                                    data-product-url="${this.urlProductDetail}"
-                                    href="#remove-product-like"
-                                    data-offset="-5"
-                                    data-distance-away="-7"
-                                    data-position="bottom left"
-                                    data-title="Bỏ lưu sản phẩm này"
-                                    data-popup-kacana="title"
-                                    class="save-product" >
+                    <a  data-product-id="${this.id}"
+                        data-product-url="${this.urlProductDetail}"
+                        href="#remove-product-like"
+                        data-offset="-5"
+                        data-distance-away="-7"
+                        data-position="bottom left"
+                        data-title="Bỏ lưu sản phẩm này"
+                        data-popup-kacana="title"
+                        class="save-product" >
 
-                                <i class="pe-7s-like" ></i>
-                                <i class="fa fa-heart" ></i>
-                            </a>
-                        </span>
+                        <i class="pe-7s-like" ></i>
+                        <i class="fa fa-heart" ></i>
+                    </a>
+                </span>
                 @{{/if}}
                 @{{if !this.isLiked}}
                 <span class="save-product-wrap hidden-xs pull-left">

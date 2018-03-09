@@ -34,8 +34,8 @@
                 <h1 itemprop="name" class="name-product">{{ucfirst($product->name)}}</h1>
                 <p itemprop="offers" itemscope itemtype="http://schema.org/Offer" class="price">
                     <span itemprop="price" class="amount">
-                        @if($product->discount)
-                            {{formatMoney($product->sell_price - $product->discount)}}
+                        @if($product->currentDiscount)
+                            {{formatMoney(calculateDiscountPrice($product->sell_price, $product->currentDiscount->discount_type, $product->currentDiscount->ref))}}
                         @elseif($product->main_discount)
                             {{formatMoney($product->sell_price - $product->main_discount)}}
                         @else
@@ -57,23 +57,23 @@
             </div>
             <div class="col-xs-12 col-sm-3">
                 <div class="summary entry-summary">
-                    @if($product->discount)
+                    @if($product->currentDiscount)
                         <div class="block-promotions table">
                             <div class="block-promotions-title">ĐANG KHUYẾN MÃI</div>
                             <div class="block-promotions-infos">
                                 <p>
                                     Giảm giá từ {{formatMoney($product->sell_price)}} còn
                                  <span class="text-danger">
-                                        <b>{{formatMoney($product->sell_price - $product->discount)}}</b>
+                                        <b>{{formatMoney(calculateDiscountPrice($product->sell_price, $product->currentDiscount->discount_type, $product->currentDiscount->ref))}}</b>
                                     </span>
                                 </p>
                                 <p class="row">
                                     <span class="col-lg-4 col-md-4 col-sm-6 col-xs-6">Áp dụng từ:</span>
-                                    <span class="col-lg-8 col-md-8 col-sm-6 col-xs-6"> {{date("d/m/Y")}} </span>
+                                    <span class="col-lg-8 col-md-8 col-sm-6 col-xs-6">{{date('H:i - d/m/y', strtotime($product->currentDiscount->start_date))}}</span>
                                 </p>
                                 <p class="row">
                                     <span class="col-lg-4 col-md-4 col-sm-6 col-xs-6">Đến:</span>
-                                    <span class="col-lg-8 col-md-8 col-sm-6 col-xs-6"> Hết hàng </span>
+                                    <span class="col-lg-8 col-md-8 col-sm-6 col-xs-6">{{date('H:i - d/m/y', strtotime($product->currentDiscount->end_date))}}</span>
                                 </p>
                             </div>
                         </div>
