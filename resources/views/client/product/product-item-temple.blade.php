@@ -57,18 +57,18 @@
             </div>
             {{formatMoney(calculateDiscountPrice($item->sell_price, $item->currentDiscount->discount_type, $item->currentDiscount->ref))}}
         </div>
-        <div class="discount-tag">
-            <img src="{{AWS_CDN_URL}}/images/client/discount_tag_small.png">
+        {{--<div class="discount-tag">--}}
+            {{--<img src="{{AWS_CDN_URL}}/images/client/discount_tag_small.png">--}}
             {{--<div class="discount-tag-name">{{discountTagName($item->currentDiscount->discount_type)}}</div>--}}
-            @if($item->currentDiscount->discount_type == KACANA_CAMPAIGN_DEAL_TYPE_FREE_PRODUCT)
-                <div class="product-free-tag">
-                    <a target="_blank" href="{{urlProductDetail($item->currentDiscount->productRef)}}"><img src="{{$item->currentDiscount->productRef->image}}"></a>
-                </div>
-            @else
-                <div class="discount-tag-ref">{{discountTagRef($item->currentDiscount->discount_type, $item->currentDiscount->ref)}}</div>
-            @endif
+            {{--@if($item->currentDiscount->discount_type == KACANA_CAMPAIGN_DEAL_TYPE_FREE_PRODUCT)--}}
+                {{--<div class="product-free-tag">--}}
+                    {{--<a target="_blank" href="{{urlProductDetail($item->currentDiscount->productRef)}}"><img src="{{$item->currentDiscount->productRef->image}}"></a>--}}
+                {{--</div>--}}
+            {{--@else--}}
+                {{--<div class="discount-tag-ref">{{discountTagRef($item->currentDiscount->discount_type, $item->currentDiscount->ref)}}</div>--}}
+            {{--@endif--}}
 
-        </div>
+        {{--</div>--}}
     @else
         <div class="product-price">{{formatMoney($item->sell_price)}}</div>
     @endif

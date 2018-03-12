@@ -41,10 +41,22 @@
                     <div class="cart-item-price" >
                         Giá: ${this.options.origin_price_show}
                     </div>
-                    @{{if parseInt(this.options.discount)}}
+                    @{{if parseInt(this.options.main_discount)}}
                         <div class="cart-item-price" >
-                            Giảm giá: <span class="color-red" >${this.options.discountShow}</span>
+                            Giảm giá: <span class="color-red" >${this.options.main_discount_show}</span>
                         </div>
+                    @{{/if}}
+                    @{{if parseInt(this.options.main_discount) == 0 && this.options.current_discount}}
+                        @{{if this.options.current_discount.discount_type == 3}}
+                            <div class="cart-item-price" >
+                                Tang <a target="_blank" class="color-red" href="${this.options.current_discount.product_ref.url_product_detail}">${this.options.current_discount.product_ref.name} <img style="width: 50px;" src="${this.options.current_discount.product_ref.image}"></a>
+                            </div>
+                        @{{/if}}
+                        @{{if this.options.current_discount.discount_type != 3}}
+                            <div class="cart-item-price" >
+                                Giảm giá: <span class="color-red" >${Kacana.utils.savingDiscount(this.options.current_discount.discount_type, this.options.current_discount.ref,this.options.origin_price)}</span>
+                            </div>
+                        @{{/if}}
                     @{{/if}}
                     <div class="hidden-lg" >
                         <span class="pull-left cart-item-price" >số lượng:</span>

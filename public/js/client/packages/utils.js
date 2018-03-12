@@ -84,6 +84,19 @@ var utilsPackage = {
             }
             return name;
         },
+        savingDiscount: function(discountType, ref, price){
+            var name = '';
+            if(discountType == 1) {
+                name = Kacana.utils.formatCurrency(ref);
+            } else if (discountType == 2) {
+                name = ref+'%';
+            } else if (discountType == 4){
+                name =  Kacana.utils.formatCurrency(price-ref);
+            }  else if (discountType == 3){
+                name = '';
+            }
+            return name;
+        },
         facebook: {
             init:function(){
                 // Facebook async init.

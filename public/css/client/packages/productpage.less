@@ -148,9 +148,24 @@
   }
   .price{
     margin: 10px 0 25px;
-    font-size: 18px;
+    font-size: 23px;
     color: @color-red-dark;
     font-weight: 500;
+    small{
+      display: block;
+      color: @color-grey-light;
+      font-size: 13px;
+      margin-bottom: -5px;
+      img{
+        width: 50px;
+      }
+      span{
+        text-decoration: line-through;
+      }
+      a{
+        color: @color-grey;
+      }
+    }
   }
   .block-promotions {
     color: #fff;
@@ -178,6 +193,9 @@
       }
       .text-danger{
         color: @color-red;
+      }
+      img{
+        width: 50px;
       }
     }
   }

@@ -1,6 +1,7 @@
 <?php namespace App\Commands;
 
 use App\Commands\Command;
+use App\services\baseService;
 use App\services\shipGhtkService;
 use Illuminate\Contracts\Bus\SelfHandling;
 use App\services\shipGhnService;
@@ -27,25 +28,28 @@ class CreateCSVRemarketing extends Command implements SelfHandling {
 	    $shipGhtkService = new shipGhtkService();
 
         $ships = $shipGhnService->getAllShippingProcessing();
+        \Log::info('__CRON__ Update status ship: ');
 
-        foreach ($ships as $ship)
-        {
-            if($ship->ship_service_type == KACANA_SHIP_TYPE_SERVICE_GHN)
-            {
-                sleep(7);
-                $status = $shipGhnService->GetOrderInfoStatus($ship->id);
-                $ship =  $shipGhnService->updateShippingStatus($ship->id, $status);
-            }
-            elseif($ship->ship_service_type == KACANA_SHIP_TYPE_SERVICE_GHTK)
-            {
-                $status = $shipGhtkService->GetOrderInfoStatus($ship->id);
-                if($status)
-                    $ship =  $shipGhnService->updateShippingStatus($ship->id, $status);
-            }
+        $baseService = new baseService();
+        $baseService->fixImageSize();
 
-
-            \Log::info('__CRON__ Update status ship: '. $ship->id);
-        }
+//        foreach ($ships as $ship)
+//        {
+//            if($ship->ship_service_type == KACANA_SHIP_TYPE_SERVICE_GHN)
+//            {
+//                sleep(7);
+//                $status = $shipGhnService->GetOrderInfoStatus($ship->id);
+//                $ship =  $shipGhnService->updateShippingStatus($ship->id, $status);
+//            }
+//            elseif($ship->ship_service_type == KACANA_SHIP_TYPE_SERVICE_GHTK)
+//            {
+//                $status = $shipGhtkService->GetOrderInfoStatus($ship->id);
+//                if($status)
+//                    $ship =  $shipGhnService->updateShippingStatus($ship->id, $status);
+//            }
+//
+//            \Log::info('__CRON__ Update status ship: '. $ship->id);
+//        }
 
 
 	}

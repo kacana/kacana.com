@@ -41,17 +41,34 @@
     <h4 class="product-title"> <a href="{{urlProductDetail($item)}}" title="{{$item->name}}">{{$item->name}}</a></h4>
 </div>
 <div class="product-price-wrap">
-    @if($item->discount)
+    @if($item->currentDiscount)
         <div class="product-price discount">
             <div itemprop="offers" itemscope itemtype="http://schema.org/Offer" class="discount-info">
-                <div itemprop="price" class="product-price-original">
-                    {{formatMoney($item->sell_price)}}
-                </div>
-                <div class="price-discount" >
-                    Giảm giá: <b>{{formatMoney($item->discount)}}</b>
-                </div>
+                @if($item->currentDiscount->discount_type == KACANA_CAMPAIGN_DEAL_TYPE_FREE_PRODUCT)
+                    <div itemprop="price" class="product-free">
+                        Tặng <a target="_blank" href="{{urlProductDetail($item->currentDiscount->productRef)}}"><img src="{{$item->currentDiscount->productRef->image}}"></a>
+                    </div>
+                @else
+                    <div itemprop="price" class="product-price-original">
+                        {{formatMoney($item->sell_price)}}
+                    </div>
+                @endif
+
             </div>
-            {{formatMoney($item->sell_price - $item->discount)}}</div>
+            {{formatMoney(calculateDiscountPrice($item->sell_price, $item->currentDiscount->discount_type, $item->currentDiscount->ref))}}
+        </div>
+        {{--<div class="discount-tag">--}}
+            {{--<img src="{{AWS_CDN_URL}}/images/client/discount_tag_small.png">--}}
+            {{--<div class="discount-tag-name">{{discountTagName($item->currentDiscount->discount_type)}}</div>--}}
+            {{--@if($item->currentDiscount->discount_type == KACANA_CAMPAIGN_DEAL_TYPE_FREE_PRODUCT)--}}
+                {{--<div class="product-free-tag">--}}
+                    {{--<a target="_blank" href="{{urlProductDetail($item->currentDiscount->productRef)}}"><img src="{{$item->currentDiscount->productRef->image}}"></a>--}}
+                {{--</div>--}}
+            {{--@else--}}
+                {{--<div class="discount-tag-ref">{{discountTagRef($item->currentDiscount->discount_type, $item->currentDiscount->ref)}}</div>--}}
+            {{--@endif--}}
+
+        {{--</div>--}}
     @else
         <div class="product-price">{{formatMoney($item->sell_price)}}</div>
     @endif

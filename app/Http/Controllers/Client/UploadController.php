@@ -110,7 +110,7 @@ class UploadController extends BaseController {
                     // Strip the temp .part suffix off
                     rename($partFilePath, $finalFilePath);
                     $imagePath = '/'.$filePath.'.'.$ext;
-                    $this->optimizeImage($imagePath);
+//                    $this->optimizeImage($imagePath);
 
                     $return['name'] = $imagePath;
                     $return['ok'] = 1;

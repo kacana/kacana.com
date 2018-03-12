@@ -31,15 +31,22 @@ class cartService extends baseService {
             throw new \Exception('sản phẩm không tồn tại!');
 
         $productName = $product->name;
-        $productDiscount = 0;
-        if(intval($product->discount))
+        $mainDiscount = 0;
+        $currentDiscount = 0;
+        if($product->currentDiscount)
         {
-            $productDiscount = $product->discount;
-            $productPrice = $product->sell_price - $product->discount;
+            $currentDiscount = $product->currentDiscount;
+
+            if($product->currentDiscount->discount_type == KACANA_CAMPAIGN_DEAL_TYPE_FREE_PRODUCT) {
+                $currentDiscount->product_ref = $product->currentDiscount->productRef;
+                $currentDiscount->product_ref->url_product_detail = urlProductDetail($product->currentDiscount->productRef);
+            }
+
+            $productPrice = calculateDiscountPrice($product->sell_price, $product->currentDiscount->discount_type, $product->currentDiscount->ref);
         }
         else if(intval($product->mainDiscount))
         {
-            $productDiscount = $product->mainDiscount;
+            $mainDiscount = $product->mainDiscount;
             $productPrice = $product->sell_price - $product->mainDiscount;
         }
         else
@@ -111,8 +118,9 @@ class cartService extends baseService {
         }
 
         $options['image'] = $productImage;
-        $options['discount'] = $productDiscount;
-        $options['discountShow'] = formatMoney($productDiscount);
+        $options['main_discount'] = $mainDiscount;
+        $options['current_discount'] = $currentDiscount;
+        $options['main_discount_show'] = formatMoney($mainDiscount);
         $options['origin_price'] = $product->sell_price;
         $options['origin_price_show'] = formatMoney($product->sell_price);
 
@@ -171,14 +179,21 @@ class cartService extends baseService {
                 {
                     $item->options->{$key} = $value;
                 }
-                $discount += intval($item->options->discount) * intval($row->get('qty'));
+
+                if($item->options->main_discount) {
+                    $discount += intval($item->options->main_discount) * intval($row->get('qty'));
+                }
+                else if($item->options->current_discount) {
+
+                    $discount += ($item->options->origin_price - calculateDiscountPrice($item->options->origin_price, $item->options->current_discount->discount_type, $item->options->current_discount->ref)) * intval($row->get('qty'));
+                }
+
                 $originTotal += intval($item->options->origin_price) * intval($row->get('qty'));
                 $item->options->subtotalShow = formatMoney($item->subTotal);
                 $quantity += $row->get('qty');
                 array_push($productIds, $item->options->productId);
                 array_push($cartInformation->items, $item);
             }
-
             $cartInformation->originTotal = $originTotal;
             $cartInformation->originTotalShow = formatMoney($originTotal);
             $cartInformation->quantity = $quantity;
@@ -367,6 +382,7 @@ class cartService extends baseService {
         $order = $orderService->createOrder($addressReceive->user_id, $addressReceive->id, $cart->total, $cart->quantity, $cart->originTotal, $cart->discount, KACANA_ORDER_STATUS_QUICK_ORDER);
 
         $items = $cart->items;
+
         foreach($items as $item)
         {
             $orderService->createOrderDetail($order->id, $item);
@@ -374,15 +390,15 @@ class cartService extends baseService {
 
         // destroy CART
 
-        Cart::destroy();
+//        Cart::destroy();
 
         //send email for user
-        $mailService = new mailService();
+//        $mailService = new mailService();
 
-        if($mailService->sendEmailQuickOrder($order->id))
-            return $order;
-        else
-            throw new \Exception('Bị lỗi trong quá trình gửi mail');
+//        if($mailService->sendEmailQuickOrder($order->id))
+//            return $order;
+//        else
+//            throw new \Exception('Bị lỗi trong quá trình gửi mail');
 
         return $order;
     }

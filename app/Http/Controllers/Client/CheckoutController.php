@@ -152,8 +152,8 @@ class CheckoutController extends BaseController {
         try{
 
             $order = $cartService->quickProcessCart($phone);
-            $contentSMS = str_replace('%order_id%', $order->order_code,KACANA_SPEED_SMS_CONTENT_NEW_QUICK_ORDER);
-            $speedSms->sendSMS([$phone], $contentSMS);
+//            $contentSMS = str_replace('%order_id%', $order->order_code,KACANA_SPEED_SMS_CONTENT_NEW_QUICK_ORDER);
+//            $speedSms->sendSMS([$phone], $contentSMS);
             return view('client.checkout.quick-order-success', ['order' => $order]);
         }
         catch (\Exception $e) {

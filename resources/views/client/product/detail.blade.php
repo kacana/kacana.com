@@ -36,6 +36,12 @@
                     <span itemprop="price" class="amount">
                         @if($product->currentDiscount)
                             {{formatMoney(calculateDiscountPrice($product->sell_price, $product->currentDiscount->discount_type, $product->currentDiscount->ref))}}
+                            @if($product->currentDiscount->discount_type == KACANA_CAMPAIGN_DEAL_TYPE_FREE_PRODUCT)
+                                <small>Tặng: <a target="_blank" href="{{urlProductDetail($product->currentDiscount->productRef)}}">{{$product->currentDiscount->productRef->name}} <img src="{{$product->currentDiscount->productRef->image}}"></a></small>
+                            @else
+                                <small>Giá trước đây: <span>{{formatMoney($product->sell_price)}}</span></small>
+                                <small>Tiêt kiệm: {{savingDiscount($product->currentDiscount->discount_type, $product->currentDiscount->ref, $product->sell_price)}}</small>
+                            @endif
                         @elseif($product->main_discount)
                             {{formatMoney($product->sell_price - $product->main_discount)}}
                         @else
@@ -62,10 +68,15 @@
                             <div class="block-promotions-title">ĐANG KHUYẾN MÃI</div>
                             <div class="block-promotions-infos">
                                 <p>
-                                    Giảm giá từ {{formatMoney($product->sell_price)}} còn
-                                 <span class="text-danger">
+                                    @if($product->currentDiscount->discount_type == KACANA_CAMPAIGN_DEAL_TYPE_FREE_PRODUCT)
+                                        Tặng:  <a class="color-grey" target="_blank" href="{{urlProductDetail($product->currentDiscount->productRef)}}">{{$product->currentDiscount->productRef->name}} <img src="{{$product->currentDiscount->productRef->image}}"></a>
+                                    @else
+                                        Giảm giá từ {{formatMoney($product->sell_price)}} còn
+                                        <span class="text-danger">
                                         <b>{{formatMoney(calculateDiscountPrice($product->sell_price, $product->currentDiscount->discount_type, $product->currentDiscount->ref))}}</b>
                                     </span>
+                                    @endif
+
                                 </p>
                                 <p class="row">
                                     <span class="col-lg-4 col-md-4 col-sm-6 col-xs-6">Áp dụng từ:</span>

@@ -272,13 +272,17 @@ function getProductIds($products){
  */
 function urlProductDetail($item)
 {
+    $url = '';
     if(!empty($item)){
         if(!empty($item->name)){
-            return URL::to('san-pham/' . str_slug($item->name) . '--' . $item->id . '--' . $item->tag_id);
+            $url = 'san-pham/' . str_slug($item->name) . '--' . $item->id;
+            if($item->tag_id) {
+                $url .= '--' . $item->tag_id;
+            }
         }
-    }else{
-        return '';
     }
+
+    return $url?URL::to($url):'';
 }
 
 function calculateDiscountPrice($price, $discountType, $ref){
@@ -317,6 +321,20 @@ function discountTagRef($discountType, $ref){
     } elseif ($discountType == KACANA_CAMPAIGN_DEAL_TYPE_SAME_PRICE){
         $name = $ref / 1000;
         $name = $name.'k';
+    }  elseif ($discountType == KACANA_CAMPAIGN_DEAL_TYPE_FREE_PRODUCT){
+        $name = '';
+    }
+    return $name;
+}
+
+function savingDiscount($discountType, $ref, $price){
+    $name = '';
+    if($discountType == KACANA_CAMPAIGN_DEAL_TYPE_DISCOUNT_PRICE) {
+        $name = formatMoney($ref);
+    } elseif ($discountType == KACANA_CAMPAIGN_DEAL_TYPE_DISCOUNT_PERCENT) {
+        $name = $ref.'%';
+    } elseif ($discountType == KACANA_CAMPAIGN_DEAL_TYPE_SAME_PRICE){
+        $name = formatMoney($price-$ref);
     }  elseif ($discountType == KACANA_CAMPAIGN_DEAL_TYPE_FREE_PRODUCT){
         $name = '';
     }

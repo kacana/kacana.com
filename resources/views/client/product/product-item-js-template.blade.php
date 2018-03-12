@@ -65,17 +65,17 @@
                     </div>
                     ${Kacana.utils.formatCurrency(Kacana.utils.calculateDiscountPrice(this.sell_price, this.current_discount.discount_type, this.current_discount.ref))}
                 </div>
-                <div class="discount-tag">
-                    <img src="{{AWS_CDN_URL}}/images/client/discount_tag_small.png">
-                    @{{if this.current_discount.discount_type == 3}}
-                        <div class="product-free-tag">
-                            <a target="_blank" href="${this.current_discount.product_ref.urlProductDetail}"><img src="${this.current_discount.product_ref.image}"></a>
-                        </div>
-                    @{{/if}}
-                    @{{if this.current_discount.discount_type != 3}}
-                        <div class="discount-tag-ref">${Kacana.utils.discountTagRef(this.current_discount.discount_type, this.current_discount.ref)}</div>
-                    @{{/if}}
-                </div>
+                {{--<div class="discount-tag">--}}
+                    {{--<img src="{{AWS_CDN_URL}}/images/client/discount_tag_small.png">--}}
+                    {{--@{{if this.current_discount.discount_type == 3}}--}}
+                        {{--<div class="product-free-tag">--}}
+                            {{--<a target="_blank" href="${this.current_discount.product_ref.urlProductDetail}"><img src="${this.current_discount.product_ref.image}"></a>--}}
+                        {{--</div>--}}
+                    {{--@{{/if}}--}}
+                    {{--@{{if this.current_discount.discount_type != 3}}--}}
+                        {{--<div class="discount-tag-ref">${Kacana.utils.discountTagRef(this.current_discount.discount_type, this.current_discount.ref)}</div>--}}
+                    {{--@{{/if}}--}}
+                {{--</div>--}}
             @{{/if}}
             @{{if this.current_discount == null}}
                 <div class="product-price">${this.sell_price_show}</div>
