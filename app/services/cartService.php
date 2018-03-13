@@ -355,7 +355,7 @@ class cartService extends baseService {
             return $order;
         else
             throw new \Exception('Bị lỗi trong quá trình gửi mail');
-        echo 'asdsadsda';die;
+
         // send zalo message for user
 
         return $order;
