@@ -135,16 +135,11 @@ class orderService extends baseService {
 
         $currentDiscount = $item->options->current_discount;
         if($currentDiscount) {
-            if($currentDiscount->discount_type == KACANA_CAMPAIGN_DEAL_TYPE_FREE_PRODUCT) {
-
-            } else {
-                $orderDetailData->discount = $item->options->discount;
-            }
             $orderDetailData->discount_type = $currentDiscount->discount_type;
-
+            $orderDetailData->discount_ref = $currentDiscount->ref;
         }
 
-        $orderDetailData->discount = $item->options->discount;
+        $orderDetailData->discount = 0;
 
         $orderDetailData->quantity = $item->quantity;
         $orderDetailData->product_id = $item->options->productId;

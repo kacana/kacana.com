@@ -75,6 +75,11 @@ class productModel extends Model
         return $this->hasMany('App\models\campaignProductModel', 'ref', 'id')->where('campaign_products.discount_type', KACANA_CAMPAIGN_DEAL_TYPE_FREE_PRODUCT);
     }
 
+    public function orderDetailDiscountProductRef()
+    {
+        return $this->hasMany('App\models\orderDetailModel', 'discount_ref', 'id')->where('orderDetailModel.discount_type', KACANA_CAMPAIGN_DEAL_TYPE_FREE_PRODUCT);
+    }
+
     /**
      * Get the galleries associated with product
      */

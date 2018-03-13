@@ -74,6 +74,10 @@ class orderDetailModel extends Model  {
         return $this->hasOne('App\models\partnerPaymentDetailModel', 'order_detail_id', 'id');
     }
 
+    public function discountProductRef(){
+        return $this->belongsTo('App\models\productModel', 'discount_ref');
+    }
+
     /**
      * @param $orderId
      * @param $carts

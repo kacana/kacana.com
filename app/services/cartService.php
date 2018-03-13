@@ -355,7 +355,7 @@ class cartService extends baseService {
             return $order;
         else
             throw new \Exception('Bị lỗi trong quá trình gửi mail');
-
+        echo 'asdsadsda';die;
         // send zalo message for user
 
         return $order;
@@ -390,15 +390,15 @@ class cartService extends baseService {
 
         // destroy CART
 
-//        Cart::destroy();
+        Cart::destroy();
 
         //send email for user
-//        $mailService = new mailService();
-
-//        if($mailService->sendEmailQuickOrder($order->id))
-//            return $order;
-//        else
-//            throw new \Exception('Bị lỗi trong quá trình gửi mail');
+        $mailService = new mailService();
+//
+        if($mailService->sendEmailQuickOrder($order->id))
+            return $order;
+        else
+            throw new \Exception('Bị lỗi trong quá trình gửi mail');
 
         return $order;
     }

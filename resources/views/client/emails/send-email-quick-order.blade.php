@@ -81,7 +81,21 @@
                                                                             <div style="margin-bottom:5px;color:#646464">Số lượng: {{$item->quantity}}</div>
                                                                             <div style="margin-bottom:5px;color:#646464">Giá : {{ formatMoney($item->price)}}</div>
                                                                             @if($item->discount)
-                                                                                <div style="margin-bottom:5px;color:#646464">Giảm giá : <b>{{ formatMoney($item->discount)}}</b></div>
+                                                                                <div class="cart-item-price" >
+                                                                                    Giảm giá: <b>{{formatMoney($item->discount)}}</b>
+                                                                                </div>
+                                                                            @elseif($item->discount_type)
+                                                                                @if($item->discount_type == KACANA_CAMPAIGN_DEAL_TYPE_FREE_PRODUCT)
+                                                                                    <div class="cart-item-price" >
+                                                                                        Tặng <a target="_blank" class="color-red" href="{{urlProductDetail($item->discountProductRef)}}">
+                                                                                            {{$item->discountProductRef->name}}
+                                                                                            <img style="width: 50px;" src="{{$item->discountProductRef->image}}"></a>
+                                                                                    </div>
+                                                                                @else
+                                                                                    <div class="cart-item-price" >
+                                                                                        Giảm giá: <span class="color-red" >{{savingDiscount($item->discount_type, $item->discount_ref,$item->price)}}</span>
+                                                                                    </div>
+                                                                                @endif
                                                                             @endif
                                                                             @if($item->color_id)
                                                                                 <div style="margin-bottom:5px;color:#646464">Màu Sắc : {{ $item->color->name }}</div>
@@ -91,7 +105,7 @@
                                                                             @endif
                                                                         </td>
                                                                         <td valign="top" align="right" style="border-collapse:collapse;padding-top:10px;padding-right:10px">
-                                                                            <strong>{{ formatMoney($item->price - $item->discount)}}</strong>
+                                                                            <strong>{{ formatMoney($item->subtotal)}}</strong>
                                                                         </td>
                                                                     </tr>
                                                                 @endforeach

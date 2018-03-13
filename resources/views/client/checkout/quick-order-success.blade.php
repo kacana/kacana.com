@@ -74,7 +74,20 @@
                                                     <div class="cart-item-price" >
                                                         Giảm giá: <b>{{formatMoney($item->discount)}}</b>
                                                     </div>
+                                                @elseif($item->discount_type)
+                                                    @if($item->discount_type == KACANA_CAMPAIGN_DEAL_TYPE_FREE_PRODUCT)
+                                                        <div class="cart-item-price" >
+                                                            Tặng <a target="_blank" class="color-red" href="{{urlProductDetail($item->discountProductRef)}}">
+                                                                    {{$item->discountProductRef->name}}
+                                                                    <img style="width: 50px;" src="{{$item->discountProductRef->image}}"></a>
+                                                        </div>
+                                                    @else
+                                                        <div class="cart-item-price" >
+                                                            Giảm giá: <span class="color-red" >{{savingDiscount($item->discount_type, $item->discount_ref,$item->price)}}</span>
+                                                        </div>
+                                                    @endif
                                                 @endif
+
                                                 <div class="cart-item-price" >
                                                     Số lượng: {{$item->quantity}}
                                                 </div>

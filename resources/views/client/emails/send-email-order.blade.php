@@ -16,7 +16,7 @@
     <body style="font-family: arial; font-size:13px">
         <div marginwidth="0" marginheight="0" style="margin:0;padding:15px 10px;color:#292929;font-family:Helvetica,Arial,sans-serif">
             <img src="http://kacana.com/images/client/homepage/logo-main-color.png" border="0" width="1" height="1" class="CToWUd">
-            <span style="display:none!important">Kính chào quý khách {{$user->name}}, Kacana vừa nhận được đơn hàng # {{$order->order_code}} của quý khách đặt ngày {{date("d-m-Y", strtotime($order->created))}} với hình thức thanh toán là Cash on Delivery.</span>
+            <span style="display:none!important">Kính chào quý khách {{$user->name}}, Kacana vừa nhận được đơn hàng # {{$order->order_code}} của quý khách đặt ngày {{date("d-m-Y", strtotime($order->created_at))}} với hình thức thanh toán là Cash on Delivery.</span>
             <table border="0" cellpadding="0" cellspacing="0" width="100%" height="100%" style="border-spacing:0;border-collapse:collapse;font-size:14px">
                 <tbody><tr>
                     <td align="center" valign="top" style="border-collapse:collapse">
@@ -50,7 +50,7 @@
                                                 <h1 style="font-size:14px;color:#4c4848"><em style="background:#ff6">(Scroll down for English version)</em></h1>
                                                 <div style="margin-top:20px"><strong style="font-size:16px">Kính chào quý khách {{$user->name}},</strong></div>
                                                 <div style="margin-top:10px;margin-bottom:20px">
-                                                    Kacana vừa nhận được <strong style="color:#4CAF50">đơn hàng # {{$order->order_code}}</strong>  của quý khách đặt ngày <strong>{{date("l F d, Y", strtotime($order->created))}}</strong> với hình thức thanh toán là <strong>Cash on Delivery</strong>.
+                                                    Kacana vừa nhận được <strong style="color:#4CAF50">đơn hàng # {{$order->order_code}}</strong>  của quý khách đặt ngày <strong>{{date("l F d, Y", strtotime($order->created_at))}}</strong> với hình thức thanh toán là <strong>Cash on Delivery</strong>.
                                                     Chúng tôi sẽ gửi thông báo đến quý khách qua một email khác ngay khi sản phẩm được giao cho đơn vị vận chuyển.
                                                 </div>
                                             </td>
@@ -142,7 +142,21 @@
                                                                     <div style="margin-bottom:5px;color:#646464">Số lượng: {{$item->quantity}}</div>
                                                                     <div style="margin-bottom:5px;color:#646464">Giá : {{ formatMoney($item->price)}}</div>
                                                                     @if($item->discount)
-                                                                        <div style="margin-bottom:5px;color:#646464">Giảm giá : <b>{{ formatMoney($item->discount)}}</b></div>
+                                                                        <div class="cart-item-price" >
+                                                                            Giảm giá: <b>{{formatMoney($item->discount)}}</b>
+                                                                        </div>
+                                                                    @elseif($item->discount_type)
+                                                                        @if($item->discount_type == KACANA_CAMPAIGN_DEAL_TYPE_FREE_PRODUCT)
+                                                                            <div class="cart-item-price" >
+                                                                                Tặng <a target="_blank" class="color-red" href="{{urlProductDetail($item->discountProductRef)}}">
+                                                                                    {{$item->discountProductRef->name}}
+                                                                                    <img style="width: 50px;" src="{{$item->discountProductRef->image}}"></a>
+                                                                            </div>
+                                                                        @else
+                                                                            <div class="cart-item-price" >
+                                                                                Giảm giá: <span class="color-red" >{{savingDiscount($item->discount_type, $item->discount_ref,$item->price)}}</span>
+                                                                            </div>
+                                                                        @endif
                                                                     @endif
                                                                     @if($item->color_id)
                                                                         <div style="margin-bottom:5px;color:#646464">Màu Sắc : {{ $item->color->name }}</div>
@@ -152,7 +166,7 @@
                                                                     @endif
                                                                 </td>
                                                                 <td valign="top" align="right" style="border-collapse:collapse;padding-top:10px;padding-right:10px">
-                                                                    <strong>{{ formatMoney($item->price - $item->discount)}}</strong>
+                                                                    <strong>{{ formatMoney($item->subtotal)}}</strong>
                                                                 </td>
                                                             </tr>
                                                         @endforeach
@@ -254,7 +268,7 @@
                                             <td valign="top" style="border-collapse:collapse">
                                                 <div style="margin-top:5px"><strong style="font-size:16px">Dear {{$user->name}},</strong></div>
                                                 <div style="margin-top:10px;margin-bottom:20px">
-                                                    Your <strong style="color:#4CAF50">Order # {{$order->order_code}}</strong> has been placed on <strong>{{date("l F d, Y", strtotime($order->created))}}</strong> via <strong>Cash on Delivery</strong>.
+                                                    Your <strong style="color:#4CAF50">Order # {{$order->order_code}}</strong> has been placed on <strong>{{date("l F d, Y", strtotime($order->created_at))}}</strong> via <strong>Cash on Delivery</strong>.
 
                                                 </div>
                                             </td>
@@ -344,7 +358,21 @@
                                                                     <div style="margin-bottom:5px;color:#646464">Qty: {{$item->quantity}}</div>
                                                                     <div style="margin-bottom:5px;color:#646464">Price : {{ formatMoney($item->price)}}</div>
                                                                     @if($item->discount)
-                                                                        <div style="margin-bottom:5px;color:#646464">Discount : <b>{{ formatMoney($item->discount)}}</b></div>
+                                                                        <div class="cart-item-price" >
+                                                                            Discount: <b>{{formatMoney($item->discount)}}</b>
+                                                                        </div>
+                                                                    @elseif($item->discount_type)
+                                                                        @if($item->discount_type == KACANA_CAMPAIGN_DEAL_TYPE_FREE_PRODUCT)
+                                                                            <div class="cart-item-price" >
+                                                                                Free <a target="_blank" class="color-red" href="{{urlProductDetail($item->discountProductRef)}}">
+                                                                                    {{$item->discountProductRef->name}}
+                                                                                    <img style="width: 50px;" src="{{$item->discountProductRef->image}}"></a>
+                                                                            </div>
+                                                                        @else
+                                                                            <div class="cart-item-price" >
+                                                                                Discount: <span class="color-red" >{{savingDiscount($item->discount_type, $item->discount_ref,$item->price)}}</span>
+                                                                            </div>
+                                                                        @endif
                                                                     @endif
                                                                     @if($item->color_id)
                                                                         <div style="margin-bottom:5px;color:#646464">Color : {{ $item->color->name }}</div>
@@ -354,7 +382,7 @@
                                                                     @endif
                                                                 </td>
                                                                 <td valign="top" align="right" style="border-collapse:collapse;padding-top:10px;padding-right:10px">
-                                                                    <strong>{{ formatMoney($item->price - $item->discount)}}</strong>
+                                                                    <strong>{{ formatMoney($item->subtotal)}}</strong>
                                                                 </td>
                                                             </tr>
                                                         @endforeach

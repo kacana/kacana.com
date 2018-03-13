@@ -49,7 +49,7 @@
                     @{{if parseInt(this.options.main_discount) == 0 && this.options.current_discount}}
                         @{{if this.options.current_discount.discount_type == 3}}
                             <div class="cart-item-price" >
-                                Tang <a target="_blank" class="color-red" href="${this.options.current_discount.product_ref.url_product_detail}">${this.options.current_discount.product_ref.name} <img style="width: 50px;" src="${this.options.current_discount.product_ref.image}"></a>
+                                Tặng <a target="_blank" class="color-red" href="${this.options.current_discount.product_ref.url_product_detail}">${this.options.current_discount.product_ref.name} <img style="width: 50px;" src="${this.options.current_discount.product_ref.image}"></a>
                             </div>
                         @{{/if}}
                         @{{if this.options.current_discount.discount_type != 3}}
