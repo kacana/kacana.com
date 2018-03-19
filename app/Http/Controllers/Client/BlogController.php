@@ -102,7 +102,8 @@ class BlogController extends BaseController {
         $tagService = new tagService();
         try{
             $posts = $blogService->getListPost(10, 0, $tagId);
-            $tag = $tagService->getTagById($tagId);
+            $tag = $tagService->getTagById($tagId, false);
+//            print_r($tag);die;
             return view('client.blog.index', ['posts' => $posts, 'tag' => $tag]);
         } catch (\Exception $e) {
             if($request->ajax())

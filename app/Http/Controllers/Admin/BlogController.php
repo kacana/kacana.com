@@ -108,7 +108,8 @@ class BlogController extends BaseController {
                 $status = $request->input('status', KACANA_BLOG_POST_STATUS_INACTIVE);
                 $postTags = $request->input('post_tags', 0);
                 $body =  $request->input('post_body', '');
-                $blogService->updateBlogPost($id, $title, $titleSeo, $tagId, $status, $body, $postTags);
+                $meta_desc =  $request->input('meta_desc', '');
+                $blogService->updateBlogPost($id, $title, $titleSeo, $tagId, $status, $body, $postTags, $meta_desc);
             }
             $post = $blogService->getPostById($postId, false);
 

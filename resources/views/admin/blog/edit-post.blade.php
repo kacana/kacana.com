@@ -82,6 +82,11 @@
                             </select>
                         </div>
 
+                        <div class="form-group">
+                            {!! Form::label('name', 'Meta Description') !!}  - <span class="text-danger text-bold word-count" >{{strlen(utf8_decode($post->meta_desc))}}</span>
+                            {!! Form::textarea('meta_desc', $post->meta_desc, array('required', 'class' => 'form-control', 'placeholder' => 'Meta description')) !!}
+                        </div>
+
                     </div>
                     <div class="modal-footer">
                         <a class="btn btn-default" href="/product/tag">Huỷ</a>

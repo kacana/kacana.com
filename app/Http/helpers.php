@@ -282,7 +282,7 @@ function urlProductDetail($item)
         }
     }
 
-    return $url?URL::to($url):'';
+    return URL::to($url);
 }
 
 function calculateDiscountPrice($price, $discountType, $ref){
@@ -441,7 +441,7 @@ function trim_text($input, $length, $ellipses = true, $strip_tag = true,$strip_s
         }
 
         //find last space within length
-        $last_space = strrpos(substr($input, 0, $length), ' ');
+        $last_space = strrpos(mb_substr($input, 0, $length, 'UTF-8'), ' ');
         $trimmed_text = substr($input, 0, $last_space);
 
         //add ellipses (...)

@@ -118,7 +118,7 @@ class campaignModel extends baseModel {
 
     public function getCurrentCampaignDisplay(){
         $currentDay = Carbon::now();
-        $campaign = $this->where('display_start_date', '<=', $currentDay)->where('display_end_date', '>=', $currentDay);
+        $campaign = $this->where('display_start_date', '<=', $currentDay)->where('display_end_date', '>=', $currentDay)->where('status', KACANA_CAMPAIGN_STATUS_ACTIVE);
         return $campaign->get();
     }
 }
