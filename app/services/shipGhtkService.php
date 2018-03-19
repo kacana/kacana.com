@@ -148,13 +148,23 @@ class shipGhtkService extends baseService {
         $dataPost['products'] = [];
         foreach($orderDetails as $orderDetail){
             $subtotal += $orderDetail->subtotal;
-            $discount += $orderDetail->discount;
+            $discount += ($orderDetail->price*$orderDetail->quantity) - $orderDetail->subtotal;
 
             $productOrder['name'] = $orderDetail->name;
             $productOrder['quantity'] = $orderDetail->quantity;
             $productOrder['price'] = $orderDetail->subtotal;
             $productOrder['weight'] = number_format((float)($weight/(count($orderDetails))), 2, '.', '');
             array_push($dataPost['products'], $productOrder);
+
+            if($orderDetail->discount_type == KACANA_CAMPAIGN_DEAL_TYPE_FREE_PRODUCT){
+                $freeProductOrder['name'] = $orderDetail->discountProductRef->name;
+                $freeProductOrder['quantity'] = $orderDetail->quantity;
+                $freeProductOrder['price'] = 0;
+                $freeProductOrder['weight'] = number_format((float)($weight/(count($orderDetails))), 2, '.', '');
+                array_push($dataPost['products'], $freeProductOrder);
+            }
+
+
         }
         $CODAmount = $subtotal + $shipFee - $extraDiscount - $paid;
 
@@ -204,7 +214,7 @@ class shipGhtkService extends baseService {
 
         $contentSMS = str_replace('%order_id%', $order->order_code,KACANA_SPEED_SMS_CONTENT_ORDER_PROCESS);
         $contentSMS = str_replace('%user_name%', $orderService->stripVN($order->addressReceive->name),$contentSMS);
-        $speedSms->sendSMS([$order->addressReceive->phone], $contentSMS);
+//        $speedSms->sendSMS([$order->addressReceive->phone], $contentSMS);
 
         return $results->body;
     }

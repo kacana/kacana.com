@@ -163,10 +163,18 @@
                                                     Kích thước: {{$orderDetail->size->name}}
                                                 </div>
                                             @endif
-
                                             <div class="cart-item-price" >
                                                 Giá: {{formatMoney($orderDetail->price)}}
                                             </div>
+                                            @if($orderDetail->discount_type == KACANA_CAMPAIGN_DEAL_TYPE_FREE_PRODUCT)
+                                                <div class="cart-item-price" >
+                                                    Tặng: {{$orderDetail->discountProductRef->name}} <img style="width: 50px" src="{{$orderDetail->discountProductRef->image}}">
+                                                </div>
+                                            @elseif($orderDetail->discount_type > 0)
+                                                <div class="cart-item-price" >
+                                                    Giảm giá: {{savingDiscount($orderDetail->discount_type, $orderDetail->discount_ref, $orderDetail->price)}}
+                                                </div>
+                                            @endif
                                             <div class="cart-item-price" >
                                                 Số lượng: {{$orderDetail->quantity}}
                                             </div>

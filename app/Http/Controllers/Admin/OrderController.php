@@ -237,6 +237,8 @@ class OrderController extends BaseController {
         $orderDetailDiscount = $request->input('product-discount', 0);
         $orderDetailQuantity = $request->input('product-quantity', 0);
         $orderDetailFrom = $request->input('order-from-id', 0);
+        $orderDetailDiscountType = $request->input('discount-type', 0);
+        $orderDetailDiscountRef = $request->input('discount-ref', 0);
 
         $total = 0;
         $discount = 0;
@@ -252,9 +254,10 @@ class OrderController extends BaseController {
                     $dataOrderDetail = [
                         'color_id'=>$orderDetailProperty[0],
                         'size_id'=>isset($orderDetailProperty[1])?$orderDetailProperty[1]:'',
-                        'discount'=> $orderDetailDiscount,
+                        'discount_ref'=> $orderDetailDiscountRef,
+                        'discount_type'=> $orderDetailDiscountType,
                         'quantity' => $orderDetailQuantity,
-                        'subtotal' => $orderDetail->price * $orderDetailQuantity - $orderDetailDiscount,
+                        'subtotal' => calculateDiscountPrice($orderDetail->price, $orderDetailDiscountType, $orderDetailDiscountRef) * $orderDetailQuantity,
                         'order_from_id' => $orderDetailFrom
                     ];
                     $orderService->updateOrderDetail($orderDetailId, $dataOrderDetail);

@@ -30,7 +30,7 @@
                                 <i class="ion-alert-circled"></i> Vui lòng cập nhật địa chỉ khách hàng
                             </a>
                         @endif
-                        @if($order->status == KACANA_ORDER_STATUS_NEW || $order->status == KACANA_ORDER_STATUS_PROCESSING)
+                        @if($order->status == KACANA_ORDER_STATUS_NEW || $order->status == KACANA_ORDER_STATUS_PROCESSING || $order->status == KACANA_ORDER_STATUS_QUICK_ORDER)
                             <a href="#export-product-store" data-toggle="modal" data-order-id="{{$order->id}}" class="btn btn-primary btn-sm">
                                 <i class="ion-android-plane"></i> kiểm tra và xuất sản phẩm
                             </a>
@@ -309,9 +309,35 @@
 
                                             <div class="cart-item-price" >
                                                 <div style="margin-bottom: 5px;" class="form-group">
-                                                    <label class="col-sm-4 text-green control-label" for="inputEmail3">Giảm giá</label>
+                                                    <label class="col-sm-4 text-green control-label" for="inputEmail3">Loại khuyến mãi</label>
                                                     <div class="col-xs-8">
-                                                        <input name="product-discount" disabled="disabled" value="{{formatMoney($orderDetail->discount)}}" data-value="{{$orderDetail->discount}}" class="form-control product-discount" placeholder="Giảm giá" type="text">
+                                                        <select data-value="{{$orderDetail->discount_type}}" disabled="disabled" name="discount-type" class="form-control discount-type">
+                                                            <option value="0">Please choose deal</option>
+                                                            <option @if($orderDetail->discount_type == KACANA_CAMPAIGN_DEAL_TYPE_DISCOUNT_PRICE) selected="selected" @endif value="{{KACANA_CAMPAIGN_DEAL_TYPE_DISCOUNT_PRICE}}">giảm giá tiền</option>
+                                                            <option @if($orderDetail->discount_type == KACANA_CAMPAIGN_DEAL_TYPE_DISCOUNT_PERCENT) selected="selected" @endif value="{{KACANA_CAMPAIGN_DEAL_TYPE_DISCOUNT_PERCENT}}">giảm giá %</option>
+                                                            <option @if($orderDetail->discount_type == KACANA_CAMPAIGN_DEAL_TYPE_FREE_PRODUCT) selected="selected" @endif  value="{{KACANA_CAMPAIGN_DEAL_TYPE_FREE_PRODUCT}}">tặng sản phẩm</option>
+                                                            <option @if($orderDetail->discount_type == KACANA_CAMPAIGN_DEAL_TYPE_SAME_PRICE) selected="selected" @endif  value="{{KACANA_CAMPAIGN_DEAL_TYPE_SAME_PRICE}}">đồng giá</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="cart-item-price" >
+                                                <div style="margin-bottom: 5px;" class="form-group">
+                                                    <label class="col-sm-4 text-green control-label" for="inputEmail3">khuyến mãi
+                                                        @if($orderDetail->discount_type && $orderDetail->discount_type != KACANA_CAMPAIGN_DEAL_TYPE_FREE_PRODUCT)
+                                                            ( {{discountTagRef($orderDetail->discount_type, $orderDetail->discount_ref)}} )
+                                                        @endif
+                                                    </label>
+                                                    <div class="col-xs-8">
+
+                                                        @if($orderDetail->discount_type == KACANA_CAMPAIGN_DEAL_TYPE_FREE_PRODUCT)
+                                                            <input name="discount-ref-product-name" disabled="disabled" value="{{($orderDetail->discountProductRef->name)}}" data-value="{{$orderDetail->discountProductRef->name}}" class="form-control discount-ref-product-name" placeholder="Password" type="text">
+                                                            <input name="discount-ref" disabled="disabled" value="{{($orderDetail->discount_ref)}}" data-value="{{$orderDetail->discount_ref}}" class="form-control discount-ref hidden" type="text">
+                                                        @else
+                                                            <input name="discount-ref-product-name" disabled="disabled" data-value="" class="form-control hidden discount-ref-product-name" placeholder="nhập tên sản phẩm" type="text">
+                                                            <input name="discount-ref" disabled="disabled" value="{{($orderDetail->discount_ref)}}" data-value="{{$orderDetail->discount_ref}}" class="form-control discount-ref" type="text">
+                                                        @endif
                                                     </div>
                                                 </div>
                                             </div>

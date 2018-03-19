@@ -300,10 +300,12 @@ class shipGhnService extends baseService {
 
         $subtotal = 0;
         $discount = 0;
+        $price = 0;
         foreach($orderDetails as $orderDetail){
             $subtotal += $orderDetail->subtotal;
-            $discount += $orderDetail->discount;
+            $price += $orderDetail->price*$orderDetail->quantity;
         }
+        $discount = $price - $subtotal;
         $CODAmount = $subtotal + $shipFee - $extraDiscount - $paid;
 
         $params['RecipientName'] = $order->addressReceive->name;

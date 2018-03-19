@@ -178,7 +178,7 @@ class orderDetailModel extends Model  {
             ->join('orders', 'orders.id', '=', 'order_detail.order_id')
             ->whereNull('shipping_service_code')->get();
 
-        return($results)?$results->toArray():false;
+        return($results)?$results:false;
     }
 
     /*

@@ -33,9 +33,16 @@
                                         <div class="cart-item-price">
                                             Số lượng:  ${this.quantity}
                                         </div>
-                                        <div class="cart-item-price">
-                                            Giảm giá: ${Kacana.utils.formatCurrency(this.discount)}
-                                        </div>
+                                        @{{if this.discount_type == 3}}
+                                            <div class="cart-item-price">
+                                               Tặng: ${this.discount_product_ref.name} <img style="width: 50px" src="${this.discount_product_ref.image}">
+                                            </div>
+                                        @{{/if}}
+                                        @{{if this.discount_type != 3 && this.discount_type > 0}}
+                                            <div class="cart-item-price">
+                                                Giảm giá: ${Kacana.utils.savingDiscount(this.discount_type, this.discount_ref, this.price)}
+                                            </div>
+                                        @{{/if}}
                                         <div class="cart-item-price color-red">
                                             Tổng:  ${Kacana.utils.formatCurrency(this.subtotal)}
                                         </div>

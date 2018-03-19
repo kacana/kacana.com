@@ -351,7 +351,7 @@ class orderService extends baseService {
      * @param $data
      * @return \Illuminate\Support\Collection|null|static
      */
-    public function updateOrderDetail($id, $data){
+    public function  updateOrderDetail($id, $data){
         $orderDetailModel = new orderDetailModel();
 
         if(isset($data['_token'])){
@@ -398,7 +398,17 @@ class orderService extends baseService {
     {
         $orderDetailModel = new orderDetailModel();
 
-        return $orderDetailModel->getOrderDetailisOrdered($orderId, $addressId);
+        $orderDetails = $orderDetailModel->getOrderDetailisOrdered($orderId, $addressId);
+
+        foreach ($orderDetails as &$orderDetail) {
+//            print_r($orderDetail);
+            if($orderDetail->discount_type == KACANA_CAMPAIGN_DEAL_TYPE_FREE_PRODUCT){
+//                echo 'asdasda';die;
+                $orderDetail->discount_product_ref = $orderDetail->discountProductRef;
+            }
+        }
+
+        return $orderDetails;
     }
 
     /**
@@ -522,7 +532,7 @@ class orderService extends baseService {
 
         $order = $this->_orderModel->getById($orderId);
 
-        if(($order->status == KACANA_ORDER_STATUS_NEW || $order->status == KACANA_ORDER_STATUS_PROCESSING) && $order->order_type == KACANA_ORDER_TYPE_STORE_THD)
+        if(($order->status == KACANA_ORDER_STATUS_NEW || $order->status == KACANA_ORDER_STATUS_PROCESSING || $order->status == KACANA_ORDER_STATUS_QUICK_ORDER) && $order->order_type == KACANA_ORDER_TYPE_STORE_THD)
         {
             $order->updateItem($orderId, ['status' => KACANA_ORDER_STATUS_COMPLETE]);
             $contentSMS = str_replace('%order_id%', $order->order_code,KACANA_SPEED_SMS_CONTENT_ORDER_PROCESS);
@@ -573,6 +583,15 @@ class orderService extends baseService {
         foreach ($order->orderDetail as $orderDetail){
 
             $imageUrl = "http://image.kacana.vn".str_replace('%2F', '/', urlencode($orderDetail->product->getOriginal('image')));
+
+            $summaryValue = '';
+
+            if($orderDetail->discount_type == KACANA_CAMPAIGN_DEAL_TYPE_FREE_PRODUCT) {
+                $summaryValue = '(Tặng: '.$orderDetail->discountProductRef->name.')';
+            } elseif($orderDetail->discount_type > 0) {
+                $summaryValue = '(Giảm: '.savingDiscount($orderDetail->discount_type, $orderDetail->discount_ref, $orderDetail->price).')';
+            }
+
             $attachProduct = [
                 "color" => "#333",
                 "title" => $orderDetail->name,
@@ -586,7 +605,7 @@ class orderService extends baseService {
                     ],
                     [
                         'title' => 'Tổng',
-                        'value' => formatMoney($orderDetail->price - $orderDetail->discount).'(Giảm: '.formatMoney($orderDetail->discount).')',
+                        'value' => formatMoney($orderDetail->subtotal).$summaryValue,
                         'short' => true
                     ]
                 ]
@@ -684,7 +703,7 @@ class orderService extends baseService {
             'total' => $total,
             'origin_total' => $originTotal,
             'quantity' => $quantity,
-            'discount' => $discount
+            'discount' => $originTotal - $total
         ];
 
         return $this->updateOrder($orderId, $dataOrder);

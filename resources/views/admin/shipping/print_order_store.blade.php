@@ -181,6 +181,9 @@
             <tr class="item">
                 <td>
                     {{$orderDetail->name}}
+                    @if($orderDetail->discount_type == KACANA_CAMPAIGN_DEAL_TYPE_FREE_PRODUCT)
+                        <br><small style="margin-left: 10px;font-weight: bold">Tặng: {{$orderDetail->discountProductRef->name}}</small>
+                    @endif
                 </td>
 
                 <td style="text-align: center" >
@@ -190,7 +193,11 @@
                     {{formatMoney($orderDetail->price)}}
                 </td>
                 <td style="text-align: right" >
-                    {{formatMoney($orderDetail->discount)}}
+                    @if($orderDetail->discount_type != KACANA_CAMPAIGN_DEAL_TYPE_FREE_PRODUCT && $orderDetail->discount_type > 0)
+                        {{savingDiscount($orderDetail->discount_type, $orderDetail->discount_ref, $orderDetail->price)}}
+                    @else
+                        0
+                    @endif
                 </td>
                 <td style="text-align: right" >
                     {{formatMoney($orderDetail->subtotal)}}

@@ -73,6 +73,19 @@ var utilsPackage = {
             formatted = output.reverse().join("");
             return(formatted + ((parts) ? "." + parts[1].substr(0, 2) : "") + " đ");
         },
+        savingDiscount: function(discountType, ref, price){
+            var name = '';
+            if(discountType == 1) {
+                name = Kacana.utils.formatCurrency(ref);
+            } else if (discountType == 2) {
+                name = ref+'%';
+            } else if (discountType == 4){
+                name =  Kacana.utils.formatCurrency(price-ref);
+            }  else if (discountType == 3){
+                name = '';
+            }
+            return name;
+        },
         dealType: function ($type) {
             var typeName = '';
             switch ($type) {

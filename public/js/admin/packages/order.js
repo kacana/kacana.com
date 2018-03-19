@@ -291,10 +291,15 @@ var orderPackage = {
             bindEvent: function(){
                 Kacana.order.detail.page.on('click', 'a[href="#edit-detail-item"]', function () {
                     var form = $(this).parents('form');
-                    form.find('.product-properties, .product-discount, .product-quantity, .order-from-id').prop('disabled', false);
+                    form.find('.product-properties, .product-discount, .product-quantity, .order-from-id, .discount-type, .discount-ref-product-name, .discount-ref').prop('disabled', false);
                     form.find('a[href="#submit-edit-detail-item"], a[href="#cancel-edit-detail-item"]').removeClass('hidden');
                     form.find('a[href="#edit-detail-item"]').addClass('hidden');
                     form.find('.product-discount').val(form.find('.product-discount').data('value'));
+
+                    if(form.find('.discount-type').val() == 3)
+                    {
+                        Kacana.order.detail.initSearchFreeProductDiscount(form);
+                    }
                 });
 
                 Kacana.order.detail.page.on('click','a[href="#cancel-order"]', function () {
@@ -333,11 +338,34 @@ var orderPackage = {
                 Kacana.order.detail.page.on('click', 'a[href="#cancel-edit-detail-item"]', function () {
                     var form = $(this).parents('form');
                     form.trigger("reset");
-                    form.find('.product-properties, .product-discount, .product-quantity, .order-from-id').prop('disabled', true);
+                    form.find('.product-properties, .product-discount, .product-quantity, .order-from-id, .discount-type, .discount-ref-product-name, .discount-ref').prop('disabled', true);
                     form.find('a[href="#submit-edit-detail-item"], a[href="#cancel-edit-detail-item"]').addClass('hidden');
                     form.find('a[href="#edit-detail-item"]').removeClass('hidden');
 
+                    if(form.find('.discount-type').val() == 3)
+                    {
+                        form.find('.discount-ref-product-name').removeClass('hidden');
+                        form.find('.discount-ref').addClass('hidden');
+                    }
+                    else{
+                        form.find('.discount-ref-product-name').addClass('hidden');
+                        form.find('.discount-ref').removeClass('hidden');
+                    }
                 });
+
+                Kacana.order.detail.page.on('change', '.discount-type', function () {
+                    var form = $(this).parents('form');
+                    if($(this).val() == 3){
+                        form.find('.discount-ref-product-name').removeClass('hidden');
+                        form.find('.discount-ref').addClass('hidden');
+                        Kacana.order.detail.initSearchFreeProductDiscount(form);
+                    }
+                    else {
+                        form.find('.discount-ref-product-name').addClass('hidden');
+                        form.find('.discount-ref').removeClass('hidden');
+                    }
+                });
+
                 Kacana.order.detail.page.on('click', 'a[href="#submit-edit-detail-item"]', function () {
                     var form = $(this).parents('form');
                     form.submit();
@@ -447,6 +475,44 @@ var orderPackage = {
                 $('#modal-shipping-order').on('click', 'input[name="shippingServiceTypeId"]', Kacana.order.detail.checkOriginShipFee);
 
                 Kacana.order.detail.addProductModal();
+            },
+            initSearchFreeProductDiscount: function (form) {
+                form.find('.discount-ref-product-name').autocomplete({
+                    source: function( request, response ) {
+
+                        var callback = function(data){
+                            console.log(data);
+                            if(data.ok)
+                                response( data.data );
+                            else
+                                swal({
+                                    title: 'Error!',
+                                    text: 'Opp!something wrong on processing.',
+                                    type: 'error',
+                                    confirmButtonText: 'Cool'
+                                });
+                        };
+
+                        var errorCallback = function(){
+                            // do something here if error
+                        };
+
+                        var data = {search: request.term};
+                        Kacana.ajax.order.searchProduct(data, callback, errorCallback);
+                    },
+                    minLength: 2,
+                    select: function( event, ui ) {
+                        form.find('.discount-ref-product-name').val(ui.item.name);
+                        form.find('.discount-ref').val(ui.item.id);
+                        return false;
+                    }
+                }).autocomplete( "widget" ).addClass("search-product-add-to-order");
+
+                form.find('.discount-ref-product-name').autocomplete( "instance" )._renderItem = function( ul, item ) {
+                    return $( "<li>" )
+                        .append( '<div><a><img style="height: 50px;" src="'+item.image+'">' + item.name + '</a></div>' )
+                        .appendTo( ul );
+                };
             },
             exportProductAtStore: function () {
                 var orderId = $('#order-id').val();
