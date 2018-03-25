@@ -22,6 +22,10 @@ class campaignService extends baseService {
         $this->_campaignGalleryModel = new campaignGalleryModel();
     }
 
+    public function getCampaigns(){
+        return $this->_campaignModel->getAll();
+    }
+
     public function generateCampaignTable($request){
         $datatables = new DataTables();
         $viewHelper = new ViewGenerateHelper();

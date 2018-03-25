@@ -11,6 +11,57 @@ var utilsPackage = {
                 'error'
             )
         },
+        generateProductCampaignProductTable: function ($campaignProducts, $product_id, $buttonCreate) {
+
+            var tabble = '';
+
+            if($campaignProducts) {
+                tabble = '<table class="product-table-campaign-product" >';
+
+                for(var i = 0; i < $campaignProducts.length; i++){
+                    $campaign = $campaignProducts[i];
+
+                    $campaignStart = $campaign.start_date.split(" ");
+                    $campaignEnd = $campaign.end_date.split(" ");
+                    $discount = '';
+                    if($campaign.discount_type == 3) {
+                        $discount = '<a target="_blank" href="/product/editProduct/'+$campaign.product_ref.id+'"><img style="width: 50px;" src="'+$campaign.product_ref.image+'" ></a>';
+                    } else {
+                        $discount = '(-' + Kacana.utils.savingDiscount($campaign.discount_type, $campaign.ref, $campaign.product.sell_price) + ')<br>';
+                        $discount += '<span class="color-red">' + Kacana.utils.formatCurrency(Kacana.utils.calculateDiscountPrice($campaign.product.sell_price, $campaign.discount_type, $campaign.ref)) + '</span>'
+                    }
+
+                    tabble +='<tr data-campaign-id="'+$campaign.id+'">' +
+                        '<td>'+$campaignStart[0]+'<br>'+$campaignStart[1]+'</td>' +
+                        '<td>'+$campaignEnd[0]+'<br>'+$campaignEnd[1]+'</td>' +
+                        '<td>'+$discount+'</td>' +
+                        '<td>' +
+                        '<a data-id="'+$campaign.id+'" href="#remove-campaign-product"><i class="fa fa-trash-o" ></i></a><br><br>' +
+                        '<a target="_blank" href="/campaign/edit/'+$campaign.campaign_id+'"><i class="fa fa-eye" ></i></a>' +
+                        '</td>' +
+                        '</tr>';
+                }
+
+                tabble +='</table>';
+            }
+
+            if($buttonCreate) {
+                tabble +='<div><a href="#createCampaignProduct" data-product-id="'+$product_id+'" ><i class="fa fa-plus-circle"></i> Create discount</a></div>';
+            }
+
+            return tabble;
+        },
+        calculateDiscountPrice: function (price, discountType, ref) {
+
+            if(discountType == 1) {
+                price = price - ref;
+            } else if (discountType == 2) {
+                price = price - (price*ref/100);
+            } else if (discountType == 4) {
+                price = ref;
+            }
+            return price;
+        },
         changeStatus: function(){
             $('body table').on('click', 'a[href="#change-kacana-dropdown"]', function(){
 

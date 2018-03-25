@@ -260,6 +260,16 @@ var ajaxPackage = {
                 };
                 var options = [];
                 Kacana.ajax.init(url, dataType, type, dataPost, callBack, errorCallBack, options);
+            },
+            getProductAjax: function (id, callBack, errorCallBack) {
+                var url = '/product/getProductAjax';
+                var dataType = 'json';
+                var type = 'get';
+                var dataPost ={
+                    product_id: id
+                };
+                var options = [];
+                Kacana.ajax.init(url, dataType, type, dataPost, callBack, errorCallBack, options);
             }
         },
         /*****************************************************************************

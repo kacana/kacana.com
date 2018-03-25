@@ -221,7 +221,6 @@ class productModel extends Model
      */
     public function getAllProductForListAdmin()
     {
-
         return $this->orderBy('id', 'asc ')->get();
     }
 
@@ -241,6 +240,7 @@ class productModel extends Model
      */
     public function generateProductTable($request, $columns)
     {
+        $currentDay = Carbon::now();
 
         $datatables = new DataTables();
 
@@ -251,12 +251,15 @@ class productModel extends Model
         // Main query to actually get the data
         $selectData = DB::table('products')
             ->select($datatables::pluck($columns, 'db'))
+            ->leftJoin('campaign_products', 'campaign_products.product_id', '=', 'products.id')
             ->orderBy($order['field'], $order['dir'])
             ->skip($limit['offset'])
-            ->take($limit['limit']);
+            ->take($limit['limit'])
+            ->groupBy('products.id');
 
         // Data set length
         $recordsFiltered = $selectLength = DB::table('products')
+            ->leftJoin('campaign_products', 'campaign_products.product_id', '=', 'products.id')
             ->select($datatables::pluck($columns, 'db'));
 
         if ($where) {

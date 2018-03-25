@@ -9,6 +9,9 @@ var productPackage = {
               Kacana.product.listProducts.setupDatatableForProduct();
               Kacana.product.listProducts.page = $('#content-list-product')
               Kacana.product.listProducts.page.on('click', '#create-csv-for-remarketing', Kacana.product.listProducts.createCSVForRemarketing);
+              Kacana.product.listProducts.page.on('click', 'a[href="#remove-campaign-product"]', Kacana.product.listProducts.removeCampaignProduct);
+              Kacana.product.listProducts.page.on('click', 'a[href="#createCampaignProduct"]', Kacana.product.listProducts.openModalCreateCampaignProduct);
+              $('#modal-create-campaign-product').on('click', '#submit-products-add-to-campaign', Kacana.product.listProducts.createProductCampaign)
           },
           createCSVForRemarketing: function () {
               var callBack = function(data){
@@ -27,6 +30,104 @@ var productPackage = {
               Kacana.utils.loading();
               Kacana.ajax.product.createCSVForRemarketing(callBack, errorCallBack);
           },
+          openModalCreateCampaignProduct: function () {
+                var modal = $('#modal-create-campaign-product');
+                var productId = $(this).data('product-id');
+                modal.data('product-id', productId);
+                var callBack = function(data){
+                    var product = data.data;
+
+                    if(data.ok)
+                    {
+                      var productName = product.name+' <img class="thumbnail-product-create-campaign" src="'+product.image+'">';
+                      modal.find('#product-campaign-name-and-image').html(productName);
+                      var campaigns = Kacana.utils.generateProductCampaignProductTable(product.campaign_product, product.sell_price, false);
+                      modal.find('#product-campaign-current-campaign').html(campaigns);
+                        modal.find('#campaign_product_apply_date').daterangepicker({
+                            timePicker: true,
+                            timePicker24Hour: true,
+                            locale: {
+                                format: 'YYYY-MM-DD H:mm'
+                            }
+                        });
+                      modal.modal();
+                    }
+                    Kacana.utils.closeLoading();
+                };
+
+                var errorCallBack = function(){};
+                Kacana.utils.loading();
+                Kacana.ajax.product.getProductAjax(productId, callBack, errorCallBack);
+
+          },
+          createProductCampaign: function () {
+              var modal = $('#modal-create-campaign-product');
+              var productId = modal.data('product-id');
+
+              var listProductAdded = [productId];
+
+              var discountType = modal.find('#campaign_discount_type').val();
+              var discountDate = modal.find('#campaign_product_apply_date').val();
+              var discountRef = modal.find('#campaign_discount_reference').val();
+              var campaignId = modal.find('#campaign_id').val();
+
+              var callBack = function (data) {
+                  if(data.ok){
+                      Kacana.product.listProducts.page.find('.form-inline').submit();
+                      modal.modal('hide');
+                  }
+                  else {
+                      Kacana.utils.showError('Some day, please re-check discount day!');
+                  }
+              };
+
+              var errorCallBack = function () {
+
+              };
+
+              var data = {
+                  listProductAdded: listProductAdded,
+                  discountType: discountType,
+                  discountDate: discountDate,
+                  discountRef: discountRef,
+                  campaignId: campaignId
+              };
+
+              Kacana.ajax.campaign.addProductCampaign(data, callBack, errorCallBack);
+
+              return false;
+          },
+          removeCampaignProduct: function () {
+            var id = $(this).data('id');
+
+              swal({
+                  title: 'Are you sure?',
+                  text: "You won't be able to revert this!",
+                  type: 'warning',
+                  showCancelButton: true,
+                  confirmButtonColor: '#3085d6',
+                  cancelButtonColor: '#d33',
+                  confirmButtonText: 'Yes, delete it!'
+              }).then(function() {
+                  var callBack = function (data) {
+                      if(data.ok){
+                          swal({
+                              type: 'success',
+                              title: 'Delete'
+                          });
+                          Kacana.product.listProducts.page.find('.form-inline').submit();
+                      }
+                      else {
+                          Kacana.utils.showError('Have error when delete.');
+                      }
+                  };
+
+                  var errorCallBack = function () {
+
+                  };
+                  Kacana.ajax.campaign.removeCampaignProduct(id, callBack, errorCallBack);
+              });
+          },
           setupDatatableForProduct: function(){
               var $formInline = $('.form-inline');
               var element = '#productTable';
@@ -37,7 +138,8 @@ var productPackage = {
                       'width':'5%'
                   },
                   {
-                      'title': 'name'
+                      'title': 'name',
+                      'width':'20%',
                   },
                   {
                       'title': 'Image',
@@ -47,20 +149,22 @@ var productPackage = {
                       }
                   },
                   {
-                      'title': 'sell price'
+                      'title': 'sell price',
+                      'render': function ( data, type, full, meta ) {
+                          return '<b>' + Kacana.utils.formatCurrency(data) + '</b>';
+                      }
+                  },
+                  {
+                      'title': 'campaign',
+                      'render': function ( data, type, full, meta ) {
+                          return Kacana.utils.generateProductCampaignProductTable(data, full[0], true);
+                      }
                   },
                   {
                       'title': 'boot priority'
                   },
                   {
-                      'title': 'status',
-                  },
-                  {
-                      'title': 'created',
-                      'width':'12%',
-                      'render': function ( data, type, full, meta ) {
-                          return data ? data.slice(0, -8) +'<br><b>' + data.slice(11, 19)+'</b>' : '';
-                      }
+                      'title': 'status'
                   },
                   {
                       'title': 'Updated',

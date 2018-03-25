@@ -121,4 +121,8 @@ class campaignModel extends baseModel {
         $campaign = $this->where('display_start_date', '<=', $currentDay)->where('display_end_date', '>=', $currentDay)->where('status', KACANA_CAMPAIGN_STATUS_ACTIVE);
         return $campaign->get();
     }
+
+    public function getAll(){
+        return $this->where('status', KACANA_CAMPAIGN_STATUS_ACTIVE)->get();
+    }
 }

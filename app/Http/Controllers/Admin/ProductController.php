@@ -4,6 +4,7 @@ use App\Http\Requests\ProductRequest;
 use App\models\productModel;
 use App\services\addressService;
 use App\services\baseService;
+use App\services\campaignService;
 use App\services\productGalleryService;
 use App\services\productService;
 use App\services\tagService;
@@ -23,7 +24,9 @@ class ProductController extends BaseController {
 	 */
 	public function index()
 	{
-        return view('admin.product.index');
+	    $campaignService = new campaignService();
+	    $campaigns = $campaignService->getCampaigns();
+        return view('admin.product.index', ['campaigns' => $campaigns]);
 	}
 
     /**
@@ -388,6 +391,18 @@ class ProductController extends BaseController {
 
         if ($import)
         {
+            $return['ok'] = 1;
+        }
+        return response()->json($return);
+    }
+
+    public function getProductAjax(Request $request){
+        $productService = new productService();
+        $productId = $request->input('product_id');
+        $return['ok'] = 0;
+
+        if ($productId) {
+            $return['data'] = $productService->getProductAjaxById($productId);
             $return['ok'] = 1;
         }
         return response()->json($return);

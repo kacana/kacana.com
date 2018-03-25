@@ -68,6 +68,7 @@ Route::group(['domain'=>KACANA_AUTH_ADMIN_NAME.'.{nameDomain}','middleware' => '
     Route::any('/product/generateProductTagTable',          array('as'=>'generateProductTagTable',              'uses'=>'Admin\ProductController@generateProductTagTable'));
     Route::any('/product/getProductTreeMenu',               array('as'=>'getProductTreeMenu',                   'uses'=>'Admin\ProductController@getProductTreeMenu'));
     Route::any('/product/getProduct',                       array('as'=>'getProducts',                          'uses'=>'Admin\ProductController@getProduct'));
+    Route::any('/product/getProductAjax',                   array('as'=>'getProductAjax',                       'uses'=>'Admin\ProductController@getProductAjax'));
     Route::any('/product/createProduct',                    array('as'=>'createProduct',                        'uses'=>'Admin\ProductController@createProduct'));
     Route::any('/product/editProduct/{id}',                 array('as'=>'editProduct',                          'uses'=>'Admin\ProductController@editProduct'));
     Route::any('/product/exProduct',                        array('as'=>'exProduct',                            'uses'=>'Admin\ProductController@exProduct'));

@@ -1,6 +1,7 @@
 <?php namespace App\services;
 
 use App\Http\Requests\Request;
+use App\models\campaignProductModel;
 use App\models\productImportModel;
 use App\models\productModel;
 use App\models\productPropertiesModel;
@@ -63,15 +64,16 @@ class productService extends baseService {
         $productModel = new productModel();
         $datatables = new DataTables();
         $viewHelper = new ViewGenerateHelper();
+        $campaignProduct = new campaignProductModel();
 
         $columns = array(
             array( 'db' => 'products.id', 'dt' => 0 ),
             array( 'db' => 'products.name', 'dt' => 1 ),
             array( 'db' => 'products.image', 'dt' => 2 ),
             array( 'db' => 'products.sell_price', 'dt' => 3 ),
-            array( 'db' => 'products.boot_priority', 'dt' => 4 ),
-            array( 'db' => 'products.status', 'dt' => 5 ),
-            array( 'db' => 'products.created', 'dt' => 6 ),
+            array( 'db' => 'campaign_products.id AS campaign_product', 'dt' => 4 ),
+            array( 'db' => 'products.boot_priority', 'dt' => 5 ),
+            array( 'db' => 'products.status', 'dt' => 6 ),
             array( 'db' => 'products.updated', 'dt' => 7 )
         );
 
@@ -88,6 +90,17 @@ class productService extends baseService {
             foreach ($return['data'] as &$res) {
                 $res->status = $viewHelper->dropdownView('products', $res->id, $res->status, 'status', $statusOptions);
                 $res->boot_priority = $viewHelper->dropdownView('products', $res->id, $res->boot_priority, 'boot_priority', $bootPriorityOptions);
+                if($res->campaign_product) {
+                    $campaignProducts = $campaignProduct->getCampaignByProductId($res->id);
+
+                    foreach ($campaignProducts as &$campaignProduct){
+                        $campaignProduct->product_ref = $campaignProduct->productRef;
+                        $campaignProduct->product;
+                    }
+
+                    $res->campaign_product = $campaignProducts;
+
+                }
             }
         }
 
@@ -1038,6 +1051,19 @@ class productService extends baseService {
     public function searchProductCampaign($keyword){
         $productModel = new productModel();
         return $productModel->suggestSearchProductForAdmin($keyword);
+
+    }
+
+    public function getProductAjaxById($productId){
+        $productModel = new productModel();
+        $product = $productModel->getProductById($productId);
+
+        foreach ($product->campaignProduct as &$campaignProduct){
+            $campaignProduct->product_ref = $campaignProduct->productRef;
+            $campaignProduct->product;
+        }
+
+        return $product;
 
     }
 }

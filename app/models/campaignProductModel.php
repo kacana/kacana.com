@@ -95,4 +95,8 @@ class campaignProductModel extends Model {
         $this->where('id', $id)->delete();
     }
 
+    public function getCampaignByProductId($productId){
+        return $this->where('product_id', $productId)->get();
+    }
+
 }
