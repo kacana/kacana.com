@@ -99,4 +99,8 @@ class campaignProductModel extends Model {
         return $this->where('product_id', $productId)->get();
     }
 
+    public function getCampaignProductByCampaignId($id){
+        return $this->where('campaign_id', $id)->get();
+    }
+
 }

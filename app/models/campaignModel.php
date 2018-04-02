@@ -12,7 +12,15 @@ class campaignModel extends baseModel {
 
     public function campaignProduct()
     {
-        return $this->hasMany('App\models\campaignProductModel', 'campaign_id', 'id');
+        return $this->hasMany('App\models\campaignProductModel', 'campaign_id', 'id')->orderby('campaign_products.start_date', 'asc');
+    }
+
+    public function campaignProductAvailable()
+    {
+        $currentDay = Carbon::now();
+
+        return $this->hasMany('App\models\campaignProductModel', 'campaign_id', 'id')->orderby('campaign_products.start_date', 'asc')
+                            ->where('campaign_products.end_date', '>=', $currentDay);
     }
 
     public function campaignRocket()
@@ -116,9 +124,12 @@ class campaignModel extends baseModel {
         return AWS_CDN_URL.$value;
     }
 
-    public function getCurrentCampaignDisplay(){
+    public function getCurrentCampaignDisplay($campaignId = false){
         $currentDay = Carbon::now();
         $campaign = $this->where('display_start_date', '<=', $currentDay)->where('display_end_date', '>=', $currentDay)->where('status', KACANA_CAMPAIGN_STATUS_ACTIVE);
+        if($campaignId)
+            $campaign->where('id', $campaignId);
+
         return $campaign->get();
     }
 

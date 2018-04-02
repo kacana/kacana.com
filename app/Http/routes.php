@@ -317,6 +317,7 @@ Route::group(['domain'=>'{nameDomain}', 'middleware' => 'client'], function () {
     //product
     Route::group(['prefix'=>'san-pham'], function(){
         Route::get('{slug}--{id}--{tagId}',                 array('as'=>'productDetail',                        'uses'=>'Client\ProductController@productDetail'));
+        Route::get('{slug}--{id}',                          array('as'=>'productDetail',                        'uses'=>'Client\ProductController@productDetailWithoutTagId'));
         Route::any('suggestSearchProduct',                  array('as'=>'product-suggest-search-product',       'uses'=>'Client\ProductController@suggestSearchProduct'));
         Route::post('loadMoreProductWithType',              array('as'=>'product-load-more-product-with-type',  'uses'=>'Client\ProductController@loadMoreProductWithType'));
         Route::post('postProductToFacebook',                array('as'=>'product-post-product-to-facebook',     'uses'=>'Client\ProductController@postProductToFacebook'));
@@ -335,7 +336,11 @@ Route::group(['domain'=>'{nameDomain}', 'middleware' => 'client'], function () {
     Route::post('cart/processCart',                         array('as'=>'processCart',                      'uses'=>'Client\CartController@processCart'));
     Route::get('cart/don-dat-hang/{id}',                    array('as'=>'orderDetail',                      'uses'=>'Client\CartController@orderDetail'));
     Route::get('/cart/getWardByDistrictId',                 array('as'=>'cart_getWardByDistrictId',         'uses'=>'Client\CartController@getWardByDistrictId'));
-    Route::post('/cart/quickOrder',                          array('as'=>'cart.quick.order',                 'uses'=>'Client\CartController@quickOrder'));
+    Route::post('/cart/quickOrder',                         array('as'=>'cart.quick.order',                 'uses'=>'Client\CartController@quickOrder'));
+
+    //Campaign
+    Route::get('/khuyen-mai',                               array('as'=>'campaigns',                        'uses'=>'Client\CampaignController@index'));
+    Route::get('/khuyen-mai/{slug}.{id}',                   array('as'=>'campaignsDetail',                  'uses'=>'Client\CampaignController@detail'));
 
     //Contact Controller
     Route::any('/contact/gioi-thieu',                       array('as'=>'CompanyIntroduction',              'uses'=>'Client\ContactController@introduction'));

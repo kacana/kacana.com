@@ -13,7 +13,7 @@ class ProductController extends BaseController {
      * @params: id
      * @return: view
      */
-    public function productDetail($domain, $slug, $id, $tagId, Request $request){
+    public function productDetail($domain, $slug, $id, $tagId = false, Request $request){
         $productService = new productService();
         $tagService = new tagService();
         $productGallery = new productGalleryModel();
@@ -31,6 +31,62 @@ class ProductController extends BaseController {
             {
                 $productRelations = $productService->getProductByTagId($tagIdRelated, 100);
 
+                foreach ($productRelations as $productRelation)
+                {
+                    if(!in_array($productRelation->id, $productRelationIds))
+                    {
+                        array_push($data['productRelated'], $productRelation);
+                        array_push($productRelationIds, $productRelation->id);
+                    }
+
+                    if(count($data['productRelated']) > 12)
+                        break;
+                }
+
+                if(count($data['productRelated']) > 12)
+                    break;
+            }
+
+            $data['product'] = $product;
+            $data['tag'] = $tagService->getTagById($tagId, false);
+            $data['productSlide'] = $productGallery->getImagesProductByProductId($id, PRODUCT_IMAGE_TYPE_SLIDE);
+            return view('client.product.detail', $data);
+        } catch (\Exception $e) {
+            if($request->ajax())
+            {
+                $result['error'] = $e->getMessage();
+                return $result;
+            }
+            else
+                return view('errors.404', ['error_message' => $e->getMessage()]);
+        }
+    }
+
+    public function productDetailWithoutTagId($domain, $slug, $id, Request $request){
+        $productService = new productService();
+        $tagService = new tagService();
+        $productGallery = new productGalleryModel();
+
+        $userId = (\Kacana\Util::isLoggedIn())?$this->_user->id:0;
+
+        try{
+            $product = $productService->getProductById($id, $userId);
+            $tagIdRelateds = [];
+            $product->metaKeyword = $tagService->formatMetaKeyword($product->tag, $tagIdRelateds);
+
+            $data['productRelated'] = [];
+            $productRelationIds = [];
+            $tagId = 0;
+            $numberProductByTag = 0;
+
+            foreach ($tagIdRelateds as $tagIdRelated => $numberProductByTagId)
+            {
+                if($numberProductByTagId > $numberProductByTag) {
+                    $numberProductByTag = $numberProductByTagId;
+                    $tagId = $tagIdRelated;
+                }
+
+                $productRelations = $productService->getProductByTagId($tagIdRelated, 100);
                 foreach ($productRelations as $productRelation)
                 {
                     if(!in_array($productRelation->id, $productRelationIds))

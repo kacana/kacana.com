@@ -173,8 +173,12 @@ class campaignService extends baseService {
         return true;
     }
 
-    public function getCurrentCampaignDisplay(){
-        return $this->_campaignModel->getCurrentCampaignDisplay();
+    public function getCurrentCampaignDisplay($campaignId = false){
+        return $this->_campaignModel->getCurrentCampaignDisplay($campaignId);
+    }
+
+    public function getCampaignProductByCampaignId($id){
+        return $this->_campaignProductModel->getCampaignProductByCampaignId($id);
     }
 }
 

@@ -6,7 +6,7 @@
                     <div id="homepage-main-slider" class="nivoSlider">
                         @foreach($campaignDisplay as $campaign)
                             @if($campaign->image)
-                                <a href="/khuyen-mai/{{$campaign->id}}/{{str_slug($campaign->name)}}">
+                                <a href="/khuyen-mai/{{str_slug($campaign->name)}}.{{$campaign->id}}">
                                     <img src="{{$campaign->image}}" alt="" />
                                 </a>
                             @endif
