@@ -86,6 +86,7 @@ var homepagePackage = {
         loadMoreProductWithType: function () {
             var typeLoadProduct = $(this).data('type');
             var page = $(this).data('page');
+            var tagId = $(this).data('tag-id');
             var that = $(this);
 
             var callBack = function(data){
@@ -93,7 +94,11 @@ var homepagePackage = {
                 {
                     console.log(data.data);
                     var productItemTemplate = $('#template-product-item').html();
-                    var productItemTemplateGenerate = $.tmpl(productItemTemplate, {'products': data.data});
+                    var products = data.data;
+                    if(typeLoadProduct == 'product-tag'){
+                        products = data.data.data;
+                    }
+                    var productItemTemplateGenerate = $.tmpl(productItemTemplate, {'products': products});
                     that.parents('.block-tag').find('.block-tag-body .row').append(productItemTemplateGenerate);
                     Kacana.homepage.applySlideImage();
                     that.data('page', page+1);
@@ -109,7 +114,7 @@ var homepagePackage = {
             };
             var errorCallBack = function(){};
             $(this).find('i').addClass('pe-spin');
-            Kacana.ajax.homepage.loadMoreProductWithType(typeLoadProduct, page, callBack, errorCallBack);
+            Kacana.ajax.homepage.loadMoreProductWithType(typeLoadProduct, page, tagId, callBack, errorCallBack);
         },
         applySlideImage: function(){
 

@@ -715,6 +715,20 @@ class productService extends baseService {
         return $products;
     }
 
+    public function getTagProduct($userId = 0, $offset = 0, $limit = KACANA_HOMEPAGE_ITEM_PER_TAG, $tagId ){
+        $productModel = new productModel();
+        $userProductLike = new userProductLikeModel();
+        $products = $productModel->getProductByTagId([$tagId], $limit, $offset);
+
+        foreach($products as &$product){
+            if($userId)
+                $product->isLiked = ($userProductLike->getItem($userId, $product->id))?true:false;
+            $this->formatProductProperties($product);
+        }
+
+        return $products;
+    }
+
     /**
      * @param $searchString
      * @return array|bool
@@ -773,10 +787,11 @@ class productService extends baseService {
     /**
      * @param $page
      * @param $type
+     * @param $tagId
      * @param $userId
      * @return bool|mixed
      */
-    public function loadMoreProductWithType($page, $type, $userId){
+    public function loadMoreProductWithType($page, $type, $tagId, $userId){
         $limit = KACANA_HOMEPAGE_ITEM_PER_TAG;
         $offset = ($page-1)*$limit;
         $results = false;
@@ -788,6 +803,9 @@ class productService extends baseService {
         elseif($type == PRODUCT_HOMEPAGE_TYPE_DISCOUNT)
         {
             $results = $this->getDiscountProduct($userId, $offset, $limit);
+        }
+        elseif ($type == PRODUCT_HOMEPAGE_TYPE_TAG) {
+            $results = $this->getProductByTagId($tagId, $limit, $userId, $page, ['product_tag_type_id' => TAG_RELATION_TYPE_MENU]);
         }
 
         if(count($results->toArray()))

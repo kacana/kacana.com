@@ -96,13 +96,14 @@ var ajaxPackage = {
 
                 Kacana.ajax.init(url, dataType, type, dataPost, callBack, errorCallBack, options);
             },
-            loadMoreProductWithType: function (typeLoadProduct, page, callBack, errorCallBack) {
+            loadMoreProductWithType: function (typeLoadProduct, page, tagId, callBack, errorCallBack) {
                 var url = '/san-pham/loadMoreProductWithType';
                 var dataType = 'json';
                 var type = 'post';
                 var dataPost = {
                     'type': typeLoadProduct,
-                    'page': page
+                    'page': page,
+                    'tagId': tagId
                 };
                 var options = [];
 
