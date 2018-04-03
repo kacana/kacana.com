@@ -11,7 +11,8 @@ var productPackage = {
               Kacana.product.listProducts.page.on('click', '#create-csv-for-remarketing', Kacana.product.listProducts.createCSVForRemarketing);
               Kacana.product.listProducts.page.on('click', 'a[href="#remove-campaign-product"]', Kacana.product.listProducts.removeCampaignProduct);
               Kacana.product.listProducts.page.on('click', 'a[href="#createCampaignProduct"]', Kacana.product.listProducts.openModalCreateCampaignProduct);
-              $('#modal-create-campaign-product').on('click', '#submit-products-add-to-campaign', Kacana.product.listProducts.createProductCampaign)
+              $('#modal-create-campaign-product').on('click', '#submit-products-add-to-campaign', Kacana.product.listProducts.createProductCampaign);
+              $('#modal-create-campaign-product').on('change','#campaign_id', Kacana.product.listProducts.changeCampaign)
           },
           createCSVForRemarketing: function () {
               var callBack = function(data){
@@ -59,6 +60,13 @@ var productPackage = {
                 Kacana.utils.loading();
                 Kacana.ajax.product.getProductAjax(productId, callBack, errorCallBack);
 
+          },
+          changeCampaign: function () {
+            var campaignId = $(this).val();
+            var modal = $('#modal-create-campaign-product');
+            var option = modal.find('#campaign_id option[value="'+campaignId+'"]');
+            modal.find('#campaign_product_apply_date').data('daterangepicker').setStartDate(option.data('start'));
+            modal.find('#campaign_product_apply_date').data('daterangepicker').setEndDate(option.data('end'));
           },
           createProductCampaign: function () {
               var modal = $('#modal-create-campaign-product');
