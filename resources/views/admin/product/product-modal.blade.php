@@ -77,7 +77,7 @@
                             <option value="0">Please choose campaign</option>
                             @if(count($campaigns))
                                 @foreach($campaigns as $campaign)
-                                    <option value="{{$campaign->id}}">{{$campaign->name}}</option>
+                                    <option data-start="{{$campaign->start_date}}" data-end="{{$campaign->end_date}}" value="{{$campaign->id}}">{{$campaign->name}}</option>
                                 @endforeach
                             @endif
                         </select>

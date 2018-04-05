@@ -510,7 +510,9 @@ var campaignPackage = {
                     timePicker24Hour: true,
                     locale: {
                         format: 'YYYY-MM-DD H:mm'
-                    }
+                    },
+                    startDate: $('#form-edit-product #apply_date').data('start'),
+                    endDate: $('#form-edit-product #apply_date').data('end')
                 });
             },
             addProductCampaignForm: function () {
