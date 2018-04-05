@@ -92,12 +92,11 @@ var homepagePackage = {
             var callBack = function(data){
                 if(data.ok)
                 {
-                    console.log(data.data);
                     var productItemTemplate = $('#template-product-item').html();
                     var products = data.data;
-                    if(typeLoadProduct == 'product-tag'){
-                        products = data.data.data;
-                    }
+                    // if(typeLoadProduct == 'product-tag'){
+                    //     products = data.data.data;
+                    // }
                     var productItemTemplateGenerate = $.tmpl(productItemTemplate, {'products': products});
                     that.parents('.block-tag').find('.block-tag-body .row').append(productItemTemplateGenerate);
                     Kacana.homepage.applySlideImage();

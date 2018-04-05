@@ -227,6 +227,11 @@ class ProductController extends BaseController {
             $userId = (\Kacana\Util::isLoggedIn())?$this->_user->id:0;
             $data = $productService->loadMoreProductWithType($page, $type, $tagId, $userId);
 
+            if($type == PRODUCT_HOMEPAGE_TYPE_TAG)
+            {
+                $data = $data['data'];
+            }
+
             if($data)
             {
                 $result['ok'] = 1;
