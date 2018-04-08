@@ -152,7 +152,7 @@
                     <div class="modal-body">
                         <div class="form-group">
                             {!! Form::label('name', 'nội dung post  ') !!}
-                            <div data-table="blog_posts" data-field="body" data-id="{{$post->id}}" class="kacana-editor-content" contenteditable="true" name="post_body" id="property">{!! $post->body !!}</div>
+                            <div data-table="blog_posts" data-field="body" data-id="{{$post->id}}" class="kacana-editor-content set-view-client" data-view="col-xs-12 col-sm-9" contenteditable="true" name="post_body" id="property">{!! $post->body !!}</div>
                         </div>
                         <button id="btn-upload-image-desc" class="" ></button>
                         <div id="image-upload-container"></div>

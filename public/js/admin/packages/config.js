@@ -78,6 +78,14 @@ var configPackage = {
                         });
                         uploaderTextImage.start();
                     },
+                    onInit: function() {
+                        $areaEditorImageUpload = $(this);
+                        $containerEditor = $(this).next();
+                        if($areaEditorImageUpload.hasClass('set-view-client')) {
+                            $containerEditor.find('.note-editing-area').addClass('container');
+                            $containerEditor.find('.note-editable.panel-body').addClass($areaEditorImageUpload.data('view'));
+                        }
+                    },
                     onMediaDelete : function($target, editor, $editable) {
                         console.log($target.attr('src'));
                     },
@@ -100,7 +108,7 @@ var configPackage = {
 
                         changeCount++;
                     }
-                },
+                }
             });
 
             uploaderTextImage.bind('FileUploaded', function(up, file, info) {
