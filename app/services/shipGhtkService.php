@@ -210,7 +210,6 @@ class shipGhtkService extends baseService {
             $params['email'] = 'admin@kacana.com';
         $dataPost['order'] = $params;
 
-        print_r($dataPost);die;
         $results = $this->makeRequest('services/shipment/order', $dataPost, 'post');
 
         $this->createShippingRow($results->body, $originShipFee, $orderDetailIds, $order, $subtotal,$shipFee, $extraDiscount, $extraDiscountDesc, $paid);
