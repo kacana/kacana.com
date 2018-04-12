@@ -189,6 +189,7 @@ class shipGhtkService extends baseService {
             $params['pick_address'] = 'số nhà 60/36';
             $params['pick_province'] = 'Hồ Chí Minh';
             $params['pick_district'] = 'Quận 5';
+            $params['pick_ward'] = 'Phường 7';
             $params['pick_street'] = 'Trần Hưng Đạo';
         }
 
@@ -208,13 +209,15 @@ class shipGhtkService extends baseService {
         else
             $params['email'] = 'admin@kacana.com';
         $dataPost['order'] = $params;
+
+        print_r($dataPost);die;
         $results = $this->makeRequest('services/shipment/order', $dataPost, 'post');
 
         $this->createShippingRow($results->body, $originShipFee, $orderDetailIds, $order, $subtotal,$shipFee, $extraDiscount, $extraDiscountDesc, $paid);
 
         $contentSMS = str_replace('%order_id%', $order->order_code,KACANA_SPEED_SMS_CONTENT_ORDER_PROCESS);
         $contentSMS = str_replace('%user_name%', $orderService->stripVN($order->addressReceive->name),$contentSMS);
-//        $speedSms->sendSMS([$order->addressReceive->phone], $contentSMS);
+        $speedSms->sendSMS([$order->addressReceive->phone], $contentSMS);
 
         return $results->body;
     }
