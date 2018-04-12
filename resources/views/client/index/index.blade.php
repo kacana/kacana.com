@@ -122,21 +122,23 @@
                     </div>
                 </div>
             </div>
-            <div class="container background-white" >
-                <div class="row">
-                    <div class="col-xs-6 text-center" >
-                        <a class="btn-see-more-product" href="{{urlTagProduct($block)}}" >
-                            <span data-type="" >Tất cả <i class="pe-7s-angle-right-circle pe-2x pe-va"></i></span>
-                        </a>
-                    </div>
-                    <div class="col-xs-6 text-center" >
-                        <a class="btn-see-more-product" href="#load-more-product-with-type" data-page="2" data-tag-id="{{$block['tag_id']}}" data-type="{{PRODUCT_HOMEPAGE_TYPE_TAG}}" >
-                            <span data-type="" >Xem tiếp <i class="pe-7s-plus pe-2x pe-va"></i>
-                            </span>
-                        </a>
+            @if(count($block['products'])>=KACANA_HOMEPAGE_ITEM_PER_TAG)
+                <div class="container background-white" >
+                    <div class="row">
+                        <div class="col-xs-6 text-center" >
+                            <a class="btn-see-more-product" href="{{urlTagProduct($block)}}" >
+                                <span data-type="" >Tất cả <i class="pe-7s-angle-right-circle pe-2x pe-va"></i></span>
+                            </a>
+                        </div>
+                        <div class="col-xs-6 text-center" >
+                            <a class="btn-see-more-product" href="#load-more-product-with-type" data-page="2" data-tag-id="{{$block['tag_id']}}" data-type="{{PRODUCT_HOMEPAGE_TYPE_TAG}}" >
+                                <span data-type="" >Xem tiếp <i class="pe-7s-plus pe-2x pe-va"></i>
+                                </span>
+                            </a>
+                        </div>
                     </div>
                 </div>
-            </div>
+            @endif
         </div>
         @endforeach
     @endif

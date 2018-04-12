@@ -399,7 +399,7 @@
                         <!-- description -->
                         <div class="form-group">
                             {!! Form::label('description', 'Mô tả chi tiết sản phẩm') !!}
-                            <div class="kacana-editor-content" data-table="products" data-field="description" data-id="{{$product->id}}" contenteditable="true" name="description" id="description">
+                            <div class="kacana-editor-content set-view-client" data-view="col-xs-12 col-sm-9" data-table="products" data-field="description" data-id="{{$product->id}}" contenteditable="true" name="description" id="description">
                                 @if($product->description)
                                     {!! $product->getOriginal('description') !!}
                                 @endif

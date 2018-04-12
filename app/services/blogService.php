@@ -119,7 +119,7 @@ class blogService extends baseService
     {
         $this->updateTagPost($postTags, $id);
         $this->trimImageDesc($body, $id);
-        return $this->_blogPost->updateItem($id, $title, $titleSeo, $tagId, $status, $this->trimElementDesc($body), $meta_desc, $userId);
+        return $this->_blogPost->updateItem($id, $title, $titleSeo, $tagId, $status, $body, $meta_desc, $userId);
     }
 
     /**

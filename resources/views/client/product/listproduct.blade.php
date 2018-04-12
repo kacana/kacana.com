@@ -43,17 +43,38 @@
                             </div>
                         </div>
                     </div>
-                    <div class="block-tag-body as-accessories-results">
+                    <div class="block-tag-body">
                         {{--@include('client.product.sidebar')--}}
                         <div class="container taglist as-search-results-tiles background-white" id="content">
-                            @forelse($itemTag['products'] as $item)
-                                <div itemprop="itemListElement" itemscope itemtype="http://schema.org/Product" class="col-xxs-12 col-xs-6 col-sm-4 col-md-4 product-item" >
-                                    @include('client.product.product-item-temple')
-                                </div>
-                            @empty
-                            @endforelse
+                            <div class="row">
+                                @forelse($itemTag['products'] as $item)
+                                    <div itemprop="itemListElement" itemscope itemtype="http://schema.org/Product" class="col-xxs-12 col-xs-6 col-sm-4 col-md-4 product-item" >
+                                        @include('client.product.product-item-temple')
+                                    </div>
+                                @empty
+                                @endforelse
+                            </div>
                         </div>
                     </div>
+                    @if(count($items) > 1)
+                        @if(count($itemTag['products'])>=KACANA_HOMEPAGE_ITEM_PER_TAG)
+                            <div class="container background-white" >
+                                <div class="row">
+                                    <div class="col-xs-6 text-center" >
+                                        <a class="btn-see-more-product" href="{{urlTagProduct($item)}}" >
+                                            <span data-type="" >Tất cả <i class="pe-7s-angle-right-circle pe-2x pe-va"></i></span>
+                                        </a>
+                                    </div>
+                                    <div class="col-xs-6 text-center" >
+                                        <a class="btn-see-more-product" href="#load-more-product-with-type" data-page="2" data-tag-id="{{$item['tag_id']}}" data-type="{{PRODUCT_HOMEPAGE_TYPE_TAG}}" >
+                                <span data-type="" >Xem tiếp <i class="pe-7s-plus pe-2x pe-va"></i>
+                                </span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
+                    @endif
                 </div>
             @endif
         @endforeach
