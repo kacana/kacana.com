@@ -321,24 +321,28 @@ class OrderController extends BaseController {
                 $product = $propertyProduct->product;
             }
 
-            $productDiscount = 0;
-
-            if($product->mainDiscount)
-                $productDiscount = $product->mainDiscount;
-            elseif ($product->discount)
-                $productDiscount = $product->discount;
+            $currentDiscount = $product->currentDiscount;
 
             $orderDetailData = new \stdClass();
 
             $orderDetailData->order_id =  $orderId;
             $orderDetailData->name = $product->name;
             $orderDetailData->price = $product->sell_price;
-            $orderDetailData->discount = $productDiscount;
+
+            if($currentDiscount)
+            {
+                $orderDetailData->discount_type = $currentDiscount->discount_type;
+                $orderDetailData->discount_ref = $currentDiscount->ref;
+                $orderDetailData->subtotal = calculateDiscountPrice($product->sell_price, $currentDiscount->discount_type, $currentDiscount->ref);
+            } else {
+                $orderDetailData->subtotal = $product->sell_price;
+            }
+
             $orderDetailData->quantity = 1;
             $orderDetailData->product_id = $product->id;;
             $orderDetailData->product_url = urlProductDetail($product);
 
-            $orderDetailData->subtotal = $product->sell_price - $productDiscount;
+
             $orderDetailData->image = $product->image;
 
             if(isset($propertyProduct)){
