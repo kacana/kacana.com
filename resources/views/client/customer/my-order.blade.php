@@ -56,7 +56,7 @@
                                                                         ĐƠN HÀNG # <span class="color-green" >{{$order->id}}</span>
                                                                     </div>
                                                                     <p>
-                                                                        Đặt ngày {{date('d/m/Y', strtotime($order->created))}}
+                                                                        Đặt ngày {{date('d/m/Y', strtotime($order->created_at))}}
                                                                     </p>
                                                                 </div>
                                                                 <div class="hidden-xs col-sm-4  col-md-3 col-lg-3 column-field-order">

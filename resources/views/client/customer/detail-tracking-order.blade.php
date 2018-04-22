@@ -33,7 +33,7 @@
                                 MÃ ĐƠN HÀNG  #<b>{{$order->order_code}}</b>
                             </div>
                             <div class="col-xs-12 col-sm-4 col-md-3">
-                                Đặt ngày {{date('H:i d/m/Y', strtotime($order->created))}}
+                                Đặt ngày {{date('H:i d/m/Y', strtotime($order->created_at))}}
                             </div>
                         </div>
                         @foreach($order->orderDetail as $orderDetail)
@@ -56,7 +56,7 @@
                                                             @if($orderDetail->shipping_service_code !== NULL)
                                                               Dự kiến Giao hàng từ {{date('d/m', strtotime($orderDetail->shipping->expected_delivery_time))}} - {{date('d/m/Y', strtotime("+1 day", strtotime($orderDetail->shipping->expected_delivery_time)))}}
                                                             @else
-                                                              Dự kiến Giao hàng từ {{date('d/m', strtotime("+5 day", strtotime($order->created)))}} - {{date('d/m/Y', strtotime("+10 day", strtotime($order->created)))}}
+                                                              Dự kiến Giao hàng từ {{date('d/m', strtotime("+5 day", strtotime($order->created_at)))}} - {{date('d/m/Y', strtotime("+10 day", strtotime($order->created_at)))}}
                                                             @endif
                                                         </div>
                                                         <div class="hidden-xs col-sm-3  col-md-3 col-lg-2 column-4">
@@ -168,11 +168,11 @@
                                                         <h4 class="color-grey vpadding-10" style="margin-bottom: 0" >Chi tiết</h4>
                                                         <div class="row" >
                                                             <div class="col-sm-12" >
-                                                                {{date('H:i d/m/Y', strtotime($order->created))}} : đã đặt hàng
+                                                                {{date('H:i d/m/Y', strtotime($order->created_at))}} : đã đặt hàng
                                                             </div>
                                                             @if($orderDetail->shipping_service_code !== NULL)
                                                                 <div class="col-sm-12" >
-                                                                    {{date('H:i d/m/Y', strtotime($orderDetail->shipping->created))}} : đã gửi đi - bằng GHN <a target="_blank" href="https://5sao.ghn.vn/Tracking/ViewTracking/{{$orderDetail->shipping->id}}/?">kiểm tra chi tiết</a>
+                                                                    {{date('H:i d/m/Y', strtotime($orderDetail->shipping->created_at))}} : đã gửi đi - bằng GHN <a target="_blank" href="https://5sao.ghn.vn/Tracking/ViewTracking/{{$orderDetail->shipping->id}}/?">kiểm tra chi tiết</a>
                                                                 </div>
                                                             @endif
                                                             <div class="col-sm-12" >
