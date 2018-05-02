@@ -61,14 +61,13 @@
                             <div class="container background-white" >
                                 <div class="row">
                                     <div class="col-xs-6 text-center" >
-                                        <a class="btn-see-more-product" href="{{urlTagProduct($item)}}" >
+                                        <a class="btn-see-more-product" href="{{urlTagProduct($itemTag)}}" >
                                             <span data-type="" >Tất cả <i class="pe-7s-angle-right-circle pe-2x pe-va"></i></span>
                                         </a>
                                     </div>
                                     <div class="col-xs-6 text-center" >
                                         <a class="btn-see-more-product" href="#load-more-product-with-type" data-page="2" data-tag-id="{{$item['tag_id']}}" data-type="{{PRODUCT_HOMEPAGE_TYPE_TAG}}" >
-                                <span data-type="" >Xem tiếp <i class="pe-7s-plus pe-2x pe-va"></i>
-                                </span>
+                                            <span data-type="" >Xem tiếp <i class="pe-7s-plus pe-2x pe-va"></i></span>
                                         </a>
                                     </div>
                                 </div>
