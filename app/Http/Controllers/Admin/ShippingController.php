@@ -40,7 +40,7 @@ class ShippingController extends BaseController {
             {
                 $ship = $shipGhtkService->createShippingOrder($orderDetailIds,
                     $orderId,
-                    $pickHubId,
+                    0,
                     $weight,
                     $originShipFee,
                     $shipFee,

@@ -172,7 +172,6 @@ class shipGhtkService extends baseService {
         $params['pick_name'] = 'Kacana';
         $params['pick_money'] = $CODAmount;
         $params['pick_tel'] = '0906054206';
-        $params['pick_address_id'] = '1087185';
 
         $pickHub = false;
         if($pickHubId)
