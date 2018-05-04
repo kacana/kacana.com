@@ -212,9 +212,10 @@ class shipGhtkService extends baseService {
 
         $results = $this->makeRequest('services/shipment/order', $dataPost, 'post');
 
-        $this->createShippingRow($results->body, $originShipFee, $orderDetailIds, $order, $subtotal,$shipFee, $extraDiscount, $extraDiscountDesc, $paid);
+        $this->createShippingRow($results->body, $originShipFee, $orderDetailIds, $order, $subtotal,$shipFee, $extraDiscount, $extraDiscountDesc, $paid, $results->body->order->estimated_deliver_time);
 
         $contentSMS = str_replace('%order_id%', $order->order_code,KACANA_SPEED_SMS_CONTENT_ORDER_PROCESS);
+        $contentSMS = str_replace('%estimated_deliver_time%', $orderService->stripVN($results->body->order->estimated_deliver_time),$contentSMS);
         $contentSMS = str_replace('%user_name%', $orderService->stripVN($order->addressReceive->name),$contentSMS);
         $speedSms->sendSMS([$order->addressReceive->phone], $contentSMS);
 
@@ -231,13 +232,13 @@ class shipGhtkService extends baseService {
      * @param $extraDiscountDesc
      * @return bool
      */
-    public function createShippingRow($shipping, $originShipFee, $orderDetailIds, $order, $subtotal,  $shipFee, $extraDiscount, $extraDiscountDesc, $paid){
+    public function createShippingRow($shipping, $originShipFee, $orderDetailIds, $order, $subtotal,  $shipFee, $extraDiscount, $extraDiscountDesc, $paid, $expecteDeliveryTime){
         $orderService = new orderService();
         $shippingModel = new shippingModel();
 
 
         $address = $order->addressReceive->name.' - '.$order->address;
-        $shippingModel->createShippingRow($shipping->order->label, $originShipFee, KACANA_SHIP_TYPE_SERVICE_GHTK, $address, $subtotal, $order->addressReceive->id, $shipFee, $extraDiscount, $extraDiscountDesc, $paid);
+        $shippingModel->createShippingRow($shipping->order->label, $originShipFee, KACANA_SHIP_TYPE_SERVICE_GHTK, $address, $subtotal, $order->addressReceive->id, $shipFee, $extraDiscount, $extraDiscountDesc, $paid, $expecteDeliveryTime);
 
         $orderDetails = $orderService->getOrderDetailByIds($orderDetailIds);
         foreach($orderDetails as $orderDetail){

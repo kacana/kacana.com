@@ -67,6 +67,10 @@
                                         <th class="text-purple">Đã thanh toán</th>
                                         <td>{{formatMoney($ship->paid)}}</td>
                                     </tr>
+                                    <tr>
+                                        <th class="text-primary">Thời gian dự kiến giao hàng</th>
+                                        <td>{{$ship->expected_delivery_time}}</td>
+                                    </tr>
                                     </tbody></table>
                             </div>
                         </div>
