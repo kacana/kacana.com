@@ -30,7 +30,7 @@ services:
     build: ./docker/app
     env_file:
       - .env
-    dns: 8.8.8.8
+    dns: 192.168.0.9
     volumes:
       - ./:/app
       - ./docker/data/logs/supervisor:/var/log/supervisor
