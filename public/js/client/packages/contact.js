@@ -12,11 +12,11 @@ var contactPackage = {
              - http://www.findlatitudeandlongitude.com/find-address-from-latitude-and-longitude/
 
              */
-            console.log('aaaaa');
+
             // Map Markers
             var mapMarkers = [{
-                address: "60/36 Trần Hưng Đạo phường 7 quận 5 hồ chí minh việt nam",
-                html: "<strong>Cửa Hàng</strong><br>60/36 Trần Hưng Đạo, phường 7, quận 5, Hồ Chí Mính",
+                address: "354/47/10/7 Quốc Lộ 1, Khu Phố 3, Bình Hưng Hoà B, Bình Tân, việt nam",
+                html: "<strong>Cửa Hàng</strong><br>354/47/10/7 Quốc Lộ 1, Khu Phố 3, Bình Hưng Hoà B, Bình Tân",
                 icon: {
                     image: "/../../img/pin.png",
                     iconsize: [26, 46],

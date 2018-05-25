@@ -32,7 +32,7 @@
             <div class="vpadding-10" >Với mong muốn được phục vụ Quý khách hàng ngày càng chu đáo hơn, chúng tôi luôn sẵn sàng tiếp nhận và biết ơn mọi sự góp ý của Quý khách hàng.</div>
             <div >Mọi chi tiết góp ý Quý khách xin liên hệ về:</div>
             <div class="vpadding-10" ><b>Kacana.com</b></div>
-            <div >Trụ sở : 60/36 Trần Hưng Đạo, phường 7, Quận 5, Hồ Chí Minh</div>
+            <div >Trụ sở : {{KACANA_HEAD_ADDRESS_STREET}}, {{KACANA_HEAD_ADDRESS_WARD}}, {{KACANA_HEAD_ADDRESS_DISTRICT}}, {{KACANA_HEAD_ADDRESS_CITY}}</div>
             <div class="vpadding-10" >- Điện thoại: 0906.054.206 - 01695.393.076</div>
             <div >- Email: hotro@kacana.com</div>
             <div class="vpadding-10" >- Website: http://kacana.com</div>

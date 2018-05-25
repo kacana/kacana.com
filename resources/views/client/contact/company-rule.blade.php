@@ -37,7 +37,7 @@
             <div class="margin-bottom-5px" >3.1. Quy Chế này có hiệu lực áp dụng ngay khi được đăng tải trên KACANA. KACANA có quyền sửa đổi Quy Chế này bằng cách thông báo công khai trên KACANA. Quy Chế sửa đổi có hiệu lực sau 05 (năm) ngày kể từ khi thông báo về việc sửa đổi Quy Chế được đăng tải trên KACANA. </div>
             <div class="margin-bottom-5px" >3.2. Trong trường hợp nội dung quy định tại Quy Chế, Hợp Đồng, Điều Khoản và Điều Kiện Giao Dịch có sự khác biệt thì áp dụng theo thứ tự ưu tiên như sau: (i) Quy Chế; (ii) Hợp Đồng; và (iii) Điều Khoản và Điều Kiện Giao Dịch.</div>
             <div class="margin-bottom-5px" >3.3. KACANA và Khách Hàng cam kết tuân thủ Quy Chế này.</div>
-            <div class="margin-bottom-5px" >3.4. Địa chỉ liên lạc chính thức của KACANA là: 60/36 Trần Hưng Đạo, Phường 7, Quận 5 ( Gần ngã tư Trần Hưng Đạo - Nguyễn Tri Phương)</div>
+            <div class="margin-bottom-5px" >3.4. Địa chỉ liên lạc chính thức của KACANA là: {{KACANA_HEAD_ADDRESS_STREET}}, {{KACANA_HEAD_ADDRESS_WARD}}, {{KACANA_HEAD_ADDRESS_DISTRICT}}, {{KACANA_HEAD_ADDRESS_CITY}}</div>
         </div>
 
         <div class="vpadding-20" >

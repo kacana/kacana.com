@@ -78,7 +78,7 @@
                             </div>
                             <div style="display:inline-block">
                                 <p style="color:#3d3d66;font-family:'Helvetica Neue',Helvetica,Arial,'Liberation Sans',FreeSans,sans-serif;font-size:12px;line-height:16px;margin:0px;vertical-align:middle">
-                                    60/36 Trần Hưng Đạo, phường 7, Quận 5, Hồ Chí Minh ·
+                                    {{KACANA_HEAD_ADDRESS_STREET}}, {{KACANA_HEAD_ADDRESS_WARD}}, {{KACANA_HEAD_ADDRESS_DISTRICT}}, {{KACANA_HEAD_ADDRESS_CITY}} ·
                                 </p>
                             </div>
                             <div style="display:inline-block">

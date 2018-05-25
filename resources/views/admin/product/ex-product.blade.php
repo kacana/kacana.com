@@ -1,7 +1,7 @@
 `@extends('layouts.admin.master')
 
 @section('title', 'Quản lý nhập hàng sản phẩm')
-
+http://dev.template-editor.com/download?site_url=tpl-editor-test-01-usa.stg-cms.zinio.com&template_type=1&template_id=2&site_id=1&site_name=AudienceMedia+Magazine&user_email=cuong.nguyen@zinio.com
 @section('content')
     <section>
         <div class="custom-box">
@@ -31,7 +31,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">Cửa hàng</label>
-                                        <input class="form-control" disabled="disabled" type="text" value="60/36 Trần Hưng Đạo">
+                                        <input class="form-control" disabled="disabled" type="text" value="{{KACANA_HEAD_ADDRESS_STREET}}">
                                     </div>
                                 </div>
                                 <div class="col-xs-6">

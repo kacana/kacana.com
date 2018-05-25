@@ -17,7 +17,7 @@
         <div class="margin-bottom-5px"> - Quý khách có thể đến trực tiếp cửa hàng KACANA để được xem, tham khảo các loại hàng và test hàng dễ dàng nhất. Hoặc quý khách có thể liên hệ với kacana qua các số điện thoại của từng cửa hàng (gần mình nhất) để đặt hàng và được giao hàng tận nơi trong nội thành, thời gian và địa điểm giao tùy theo khách hàng yêu cầu.</div>
         <div class="margin-bottom-5px"> -  Khu vực giao hàng miễn phí toàn quốc. Áp dụng cho đơn hàng bằng hoặc cao hơn <b>500.000 vnđ</b> (nếu quý khách yêu cầu giao hàng với đơn hàng trên <b>500.000 vnđ</b> thì ngoài tiền hàng KACANA đã báo trước thì quý khách không phải trả thêm bất kỳ khoản nào khác). với những đơn hàng ít hơn <b>500.000 vnđ</b> kacana  sẽ tính thêm chi phí giao hàng xa vào hoá đơn tùy khoảng cách và thời điểm giao.</div>
         <div class="margin-top-10px margin-bottom-5px color-green" style="font-weight: 500">CỬA HÀNG KACANA TẠI TP.HCM</div><br>
-        <div class="margin-bottom-5px" ><b>Địa chỉ:</b> 60/36 Trần Hưng Đạo, Phường 7, Quận 5 ( Gần ngã tư Trần Hưng Đạo - Nguyễn Tri Phương)</div>
+        <div class="margin-bottom-5px" ><b>Địa chỉ:</b> {{KACANA_HEAD_ADDRESS_STREET}}, {{KACANA_HEAD_ADDRESS_WARD}}, {{KACANA_HEAD_ADDRESS_DISTRICT}}, {{KACANA_HEAD_ADDRESS_CITY}}</div>
         <div class="margin-bottom-5px" >
             <div id="googlemaps" class="google-map"></div>
         </div>

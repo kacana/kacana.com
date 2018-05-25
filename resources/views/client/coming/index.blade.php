@@ -200,7 +200,7 @@
 
                     <div class="col-md-4 single-contact-info">
                         <i class="fa fa-map-marker"></i>
-                        <h5> <a href="">60/36 Trần Hưng Đạo, phường 7, quận 5, Hồ Chí Minh</a> </h5>
+                        <h5> <a href="">{{KACANA_HEAD_ADDRESS_STREET}}, {{KACANA_HEAD_ADDRESS_WARD}}, {{KACANA_HEAD_ADDRESS_DISTRICT}}, {{KACANA_HEAD_ADDRESS_CITY}}</a> </h5>
                     </div>                        
 
                     <div class="col-md-4 single-contact-info">

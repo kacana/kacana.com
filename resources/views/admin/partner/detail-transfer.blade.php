@@ -30,8 +30,8 @@
                 Từ
                 <address>
                     <strong>KACANA VN, Inc.</strong><br>
-                    60/36 Trần Hưng Đạo, phường 7, quận 5<br>
-                    Hồ Chí Minh, VN<br>
+                    {{KACANA_HEAD_ADDRESS_STREET}}, {{KACANA_HEAD_ADDRESS_WARD}}, {{KACANA_HEAD_ADDRESS_DISTRICT}}<br>
+                    {{KACANA_HEAD_ADDRESS_CITY}}, VN<br>
                     Điện thoại: (84) 906-054206<br>
                     Email: admin@kacana.com
                 </address>

@@ -55,7 +55,7 @@
         <div class="color-green " style="font-weight: 500">4. ĐỊA CHỈ CỦA ĐƠN VỊ THU THẬP VÀ QUẢN LÝ THÔNG TIN CÁ NHÂN</div>
         <div class="hmargin-10 margin-top-10px">
             <div class="margin-bottom-5px" >Túi xách KACANA</div>
-            <div class="margin-bottom-5px" >Địa chỉ: 60/36 Trần Hưng Đạo, phường 7, Quận 5, Hồ Chí Minh</div>
+            <div class="margin-bottom-5px" >Địa chỉ: {{KACANA_HEAD_ADDRESS_STREET}}, {{KACANA_HEAD_ADDRESS_WARD}}, {{KACANA_HEAD_ADDRESS_DISTRICT}}, {{KACANA_HEAD_ADDRESS_CITY}}</div>
             <div class="margin-bottom-5px" >Điện thoại: 0906.054.206</div>
         </div>
     </div>

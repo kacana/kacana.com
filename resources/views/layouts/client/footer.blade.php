@@ -31,7 +31,7 @@
                             Cơ quan cấp: Uỷ ban nhân dân quận 5, Hồ Chí Minh
                         </li>
                         <li>
-                            Địa chỉ đăng ký kinh doanh: Số 60/36 Trần Hưng Đạo, Phường 7, Quận 5, Hồ Chí Minh
+                            Địa chỉ đăng ký kinh doanh: {{KACANA_HEAD_ADDRESS_STREET}}, {{KACANA_HEAD_ADDRESS_WARD}}, {{KACANA_HEAD_ADDRESS_DISTRICT}}, {{KACANA_HEAD_ADDRESS_CITY}}
                         </li>
                     </ul>
                 </div>
@@ -41,7 +41,7 @@
                 <div class="contact-details">
                     <span class="text-head">Liên Hệ</span>
                     <ul class="contact">
-                        <li><p><i class="fa fa-map-marker"></i> <strong>Địa Chỉ:</strong> 60/36 Trần Hưng Đạo, phường 7, Quận 5, Hồ Chí Minh</p></li>
+                        <li><p><i class="fa fa-map-marker"></i> <strong>Địa Chỉ:</strong> {{KACANA_HEAD_ADDRESS_STREET}}, {{KACANA_HEAD_ADDRESS_WARD}}, {{KACANA_HEAD_ADDRESS_DISTRICT}}, {{KACANA_HEAD_ADDRESS_CITY}}</p></li>
                         <li><p><i class="fa fa-phone"></i> <strong>Điện Thoại :</strong> 0906.054.206 - 01695.393.076</p></li>
                         <li><p><i class="fa fa-envelope"></i> <strong>Email:</strong> <a href="mailto:info@gmail.com">info@kacana.com</a></p></li>
                         <li><p><i class="fa fa-facebook"></i> <strong>Facebook:</strong> <a target="_blank" href="https://www.facebook.com/TuiXachKacana">facebook.com/TuiXachKacana</a></p></li>
