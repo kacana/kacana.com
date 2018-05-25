@@ -14,7 +14,7 @@
             <div >KACANA là cửa hàng túi xách, ba lô, ví nam & nữ lớn nhất, giá tốt nhất, chất lượng nhất!</div>
             <br>
             <div>
-                <b>KACANA quận 5:</b> {{KACANA_HEAD_ADDRESS_STREET}}, {{KACANA_HEAD_ADDRESS_WARD}}, {{KACANA_HEAD_ADDRESS_DISTRICT}}, {{KACANA_HEAD_ADDRESS_CITY}}
+                <b>KACANA quận Bình Tân:</b> {{KACANA_HEAD_ADDRESS_STREET}}, {{KACANA_HEAD_ADDRESS_WARD}}, {{KACANA_HEAD_ADDRESS_DISTRICT}}, {{KACANA_HEAD_ADDRESS_CITY}}
             </div>
 
             <div id="googlemaps" class="google-map"></div>
