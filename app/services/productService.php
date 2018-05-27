@@ -927,8 +927,6 @@ class productService extends baseService {
 
         foreach ($products as $product)
         {
-            if ($i > 5)
-                break;
             $link = 'http://kacana.vn/san-pham/' . str_slug($product->name) . '--' . $product->id . '--' . $product->tag_id;
             $image = 'http:'.AWS_CDN_URL.str_replace(' ', '%20',$product->getOriginal('image'));
 
