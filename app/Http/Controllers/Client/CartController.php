@@ -160,7 +160,8 @@ class CartController extends BaseController {
      */
     public function showCart()
     {
-        return view('client.cart.index');
+        $cartService = new cartService();
+        return view('client.cart.index', ['cart' => $cartService->cartInformation()]);
     }
 
     /**
@@ -231,7 +232,7 @@ class CartController extends BaseController {
                 return response()->json($result);
             }
             else
-                return view('client.cart.index', ['phoneQuickOrderNumber' => $phoneQuickOrderNumber]);
+                return view('client.cart.index', ['phoneQuickOrderNumber' => $phoneQuickOrderNumber, 'cart' => $cartService->cartInformation()]);
         }
         catch (\Exception $e) {
             if($request->ajax())
