@@ -121,7 +121,7 @@
 
 @section('javascript')
     Kacana.cart.init();
-    Kacana.facebookPixel.addToCart({{$cart->total}},{{isset($cart->productIds)?implode(", ", $cart->productIds):0}});
+    Kacana.facebookPixel.addToCart({{isset($cart->total)?$cart->total:0}},{{isset($cart->productIds)?implode(", ", $cart->productIds):0}});
 @stop
 
 @section('section-modal')
