@@ -148,6 +148,7 @@
 
 @section('javascript')
     Kacana.homepage.init();
+    Kacana.facebookPixel.viewProductContent(1000000, "{{implode(", ",getProductIds($newest))}}");
 @stop
 
 @section('section-modal')

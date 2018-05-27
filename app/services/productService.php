@@ -914,6 +914,32 @@ class productService extends baseService {
         return true;
     }
 
+    public function createCsvFB(){
+        $productModel = new productModel();
+        $products = $productModel->getProductToCreateCsv();
+
+        $path = '/doc/file_fb.csv';
+        if(Storage::disk('local')->exists($path))
+            Storage::disk('local')->delete($path);
+
+        $fp = fopen(PATH_PUBLIC.$path, 'w');
+        fputcsv($fp, ['id', 'title', 'description', 'availability', 'condition', 'price', 'link', 'image_link', 'brand', 'google_product_category']);
+        $i = 0;
+        foreach ($products as $product)
+        {$i++;
+            if ($i > 5)
+                break;
+            $link = 'http://kacana.vn/san-pham/' . str_slug($product->name) . '--' . $product->id . '--' . $product->tag_id;
+            $image = 'http:'.AWS_CDN_URL.str_replace(' ', '%20',$product->getOriginal('image'));
+
+            fputcsv($fp, [$product->id, $product->name, $product->short_description, 'in stock', 'new', formatMoney($product->sell_price, ' VND'), $link, $image, 'Kacana', 'Apparel & Accessories > Handbags, Wallets & Cases > Handbags']);
+        }
+
+        fclose($fp);
+
+        return true;
+    }
+
     /**
      * @param $name
      * @return bool

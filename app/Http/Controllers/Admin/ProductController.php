@@ -281,6 +281,7 @@ class ProductController extends BaseController {
 
         try {
             $return['data'] = $productService->createCsvBD();
+            $productService->createCsvFB();
             $return['ok'] = 1;
         } catch (\Exception $e) {
             // @codeCoverageIgnoreStart

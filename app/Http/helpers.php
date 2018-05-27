@@ -266,6 +266,16 @@ function getProductIds($products){
     return $productIds;
 }
 
+function getProductIdsFromOrder($orders){
+    $productIds = array();
+
+    foreach ($orders as $order){
+        array_push($productIds, $order->product_id);
+    }
+
+    return $productIds;
+}
+
 /*
  * urlProductDetail
  * @params: product item

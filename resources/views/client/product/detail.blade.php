@@ -326,6 +326,7 @@
 
 @section('javascript')
     Kacana.productdetail.init();
+    Kacana.facebookPixel.viewProductContent({{$product->sell_price}}, {{$product->id}});
 @stop
 
 

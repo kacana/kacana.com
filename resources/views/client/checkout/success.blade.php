@@ -142,6 +142,10 @@
     </div>
 @stop
 
+@section('javascript')
+    Kacana.facebookPixel.purchase({{$order->total}}, "{{implode(", ",getProductIdsFromOrder($orderDetail))}}");
+@stop
+
 @section('section-modal')
     @include('client.product.modal')
 @stop

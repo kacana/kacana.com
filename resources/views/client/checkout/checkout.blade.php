@@ -134,6 +134,7 @@
 
 @section('javascript')
     Kacana.checkout.init();
+    Kacana.facebookPixel.checkout({{$cart->total}});
 @stop
 @section('section-modal')
     @include('client.product.modal')

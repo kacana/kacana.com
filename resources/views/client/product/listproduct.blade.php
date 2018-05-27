@@ -122,6 +122,7 @@
 @section('javascript')
     Kacana.homepage.init();
     Kacana.tagpage.init();
+    Kacana.facebookPixel.viewProductContent(1000000, "{{implode(", ",getProductIds($items[0]['products']))}}");
 @stop
 @section('section-modal')
     @include('client.product.modal')
