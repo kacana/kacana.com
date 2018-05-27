@@ -924,9 +924,9 @@ class productService extends baseService {
 
         $fp = fopen(PATH_PUBLIC.$path, 'w');
         fputcsv($fp, ['id', 'title', 'description', 'availability', 'condition', 'price', 'link', 'image_link', 'brand', 'google_product_category']);
-        $i = 0;
+
         foreach ($products as $product)
-        {$i++;
+        {
             if ($i > 5)
                 break;
             $link = 'http://kacana.vn/san-pham/' . str_slug($product->name) . '--' . $product->id . '--' . $product->tag_id;
