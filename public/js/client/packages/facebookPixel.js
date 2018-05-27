@@ -32,6 +32,15 @@ var facebookPixelPackage = {
                 content_ids: content_ids,
                 content_type: Kacana.facebookPixel.content_type
             });
+        },
+        addToCart: function (value, content_id) {
+            fbq('track', 'AddToCart', {
+                value: value,
+                currency: 'VND',
+                content_ids: content_id,
+                content_type: 'product'
+            });
+
         }
     }
 };
