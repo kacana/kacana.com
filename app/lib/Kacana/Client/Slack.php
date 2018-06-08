@@ -47,6 +47,9 @@ Class Slack {
     }
 
     public function notificationNewUserFacebookComing($userTrackingId, $url){
+
+        $url = str_replace('?comefrom=facebook', '', $url);
+
         $attachData = [
             'color' => '#FA5858',
             "title"=> "New facebook user coming",
