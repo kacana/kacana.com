@@ -5,6 +5,7 @@ use App\models\userTrackingHistory;
 use Closure;
 use Illuminate\Contracts\Auth\Guard;
 use App\services\userTrackingService;
+use Kacana\Client\Slack;
 
 class Client {
 
@@ -66,6 +67,7 @@ class Client {
 
 	public function trackingUser($request){
         $userTrackingService = new userTrackingService();
+        $slack = new Slack('#tracking-user-coming');
 
 	    $userTrackingSessionId = \Session::get(KACANA_USER_TRACKING_SESSION);
 
@@ -95,7 +97,15 @@ class Client {
             $dataTracking['session_id'] = $userTrackingSessionId;
             $userTrackingHistory = $userTrackingService->createUserTrackingHistory($dataTracking);
             \Session::set(KACANA_USER_TRACKING_HISTORY_ID, $userTrackingHistory->id);
+
+            $comefrom = $request->input('comefrom', false);
+            if($comefrom) {
+                $slack->notificationNewUserFacebookComing($userTrackingSessionId, $url);
+            }
         }
     }
 
 }
+
+
+
