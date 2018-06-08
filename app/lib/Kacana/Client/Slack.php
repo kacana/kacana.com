@@ -67,4 +67,24 @@ Class Slack {
 
         $querySend->send('User Tracking ID: '.$userTrackingId.' `'.$url.'`');
     }
+
+    public function notificationNewUserComing($userTrackingId, $url){
+
+        $attachData = [
+            'color' => '#FA5858',
+            "title"=> "New user coming",
+            "title_link"=> $url,
+        ];
+        $querySend = $this->_client->attach($attachData);
+
+        $attachData = [
+            'color' => '#36a64f',
+            "title"=> "User tracking history",
+            "title_link"=> 'https://admin.kacana.vn/user/detailUserTracking/?idTracking='.$userTrackingId
+        ];
+
+        $querySend->attach($attachData);
+
+        $querySend->send('User Tracking ID: '.$userTrackingId.' `'.$url.'`');
+    }
 }

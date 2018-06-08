@@ -73,6 +73,8 @@ class Client {
 
         $referer = $request->headers->get('referer');
         $userAgent = $request->headers->get('user-agent');
+        $comefrom = $request->input('comefrom', false);
+
         $url = \Request::fullUrl();
         $ip = \Request::ip();
         $dataTracking = ['ip'=>$ip, 'url'=>$url, 'referer'=>$referer, 'user_agent'=>$userAgent];
@@ -87,6 +89,9 @@ class Client {
                 $userTracking = $userTrackingService->createUserTracking($dataTracking);
                 \Session::set(KACANA_USER_TRACKING_SESSION, $userTracking->id);
                 $userTrackingSessionId = $userTracking->id;
+
+                if(!$comefrom)
+                    $slack->notificationNewUserComing($userTrackingSessionId, $url);
             }
             unset($dataTracking['code']);
             $dataTracking['type_call'] = 'normal';
@@ -98,7 +103,7 @@ class Client {
             $userTrackingHistory = $userTrackingService->createUserTrackingHistory($dataTracking);
             \Session::set(KACANA_USER_TRACKING_HISTORY_ID, $userTrackingHistory->id);
 
-            $comefrom = $request->input('comefrom', false);
+
             if($comefrom) {
                 $slack->notificationNewUserFacebookComing($userTrackingSessionId, $url);
             }
