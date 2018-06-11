@@ -186,11 +186,11 @@ class shipGhtkService extends baseService {
         }
         else
         {
-            $params['pick_address'] ='số nhà 354/47/10/7';
+            $params['pick_address'] ='số nhà 129 ( đối diện )';
             $params['pick_province'] = KACANA_HEAD_ADDRESS_CITY;
             $params['pick_district'] = KACANA_HEAD_ADDRESS_DISTRICT;
             $params['pick_ward'] = KACANA_HEAD_ADDRESS_WARD;
-            $params['pick_street'] = 'Quốc Lộ 1, Khu Phố 3';
+            $params['pick_street'] = 'Đường số 1';
         }
 
         $params['name'] = $order->addressReceive->name;
