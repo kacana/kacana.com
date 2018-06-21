@@ -139,7 +139,7 @@
     <link rel="stylesheet" href="/lib/codrops/text-input/css/set2.css">
 
     <script src="http://maps.google.com/maps/api/js?key={{GOOGLE_API_KEY}}"></script>
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-82621615-2"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-938027284"></script>
 
     <!-- Facebook Pixel Code -->
     <script>
@@ -191,7 +191,7 @@
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
-
+        gtag('config', 'AW-938027284');
     </script>
 </head>
 <body class="cbp-spmenu-push">
@@ -297,10 +297,12 @@
 </script>
 <script type="text/javascript">
     var google_tag_params = {
-        ecomm_prodid: [@yield('google-param-prodid', 0)],
-        ecomm_totalvalue: @yield('google-param-totalvalue', 0),
-        ecomm_pagetype: "@yield('google-param-pagetype', 'home')",
-        ecomm_category: "Apparel & Accessories > Handbags, Wallets & Cases"
+        'send_to': 'AW-938027284',
+        'dynx_itemid': [@yield('google-param-prodid', 0)],
+        'dynx_itemid2': '1',
+        'dynx_pagetype': '@yield("google-param-pagetype", "home")',
+        'ecomm_pagetype': '@yield("google-param-pagetype", "home")',
+        'ecomm_prodid': [@yield('google-param-prodid', 0)]
     };
 
     gtag('event', 'page_view', google_tag_params);
