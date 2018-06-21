@@ -89,9 +89,6 @@ class Client {
                 $userTracking = $userTrackingService->createUserTracking($dataTracking);
                 \Session::set(KACANA_USER_TRACKING_SESSION, $userTracking->id);
                 $userTrackingSessionId = $userTracking->id;
-
-                if(!$comefrom)
-                    $slack->notificationNewUserComing($userTrackingSessionId, $url);
             }
             unset($dataTracking['code']);
             $dataTracking['type_call'] = 'normal';
