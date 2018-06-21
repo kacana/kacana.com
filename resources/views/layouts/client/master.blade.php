@@ -182,8 +182,6 @@
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
 
-        gtag('config', 'UA-82621615-2');
-
     </script>
 </head>
 <body class="cbp-spmenu-push">
