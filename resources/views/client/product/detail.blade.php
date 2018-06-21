@@ -331,5 +331,5 @@
 
 
 @section('google-param-prodid', $product->id)
-@section('google-param-pagetype', 'offerdetail')
+@section('google-param-pagetype', 'product')
 @section('google-param-totalvalue', $product->sell_price)

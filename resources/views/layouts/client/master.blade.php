@@ -139,6 +139,7 @@
     <link rel="stylesheet" href="/lib/codrops/text-input/css/set2.css">
 
     <script src="http://maps.google.com/maps/api/js?key={{GOOGLE_API_KEY}}"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-82621615-2"></script>
 
     <!-- Facebook Pixel Code -->
     <script>
@@ -177,15 +178,11 @@
             fjs.parentNode.insertBefore(js, fjs);
         }(document, 'script', 'facebook-jssdk'));
 
-        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-        })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
 
-        ga('create', 'UA-82621615-2', 'auto');
-        ga('require', 'displayfeatures');
-        ga('require', 'linkid', 'linkid.js');
-        ga('send', 'pageview');
+        gtag('config', 'UA-82621615-2');
 
     </script>
 </head>
@@ -292,10 +289,10 @@
 </script>
 <script type="text/javascript">
     var google_tag_params = {
-        dynx_itemid: [@yield('google-param-prodid', 0)],
-        dynx_itemid2: "1",
-        dynx_totalvalue: @yield('google-param-totalvalue', 0),
-        dynx_pagetype: "@yield('google-param-pagetype', 'home')",
+        ecomm_prodid: [@yield('google-param-prodid', 0)],
+        ecomm_totalvalue: @yield('google-param-totalvalue', 0),
+        ecomm_pagetype: "@yield('google-param-pagetype', 'home')",
+        ecomm_category: "Apparel & Accessories > Handbags, Wallets & Cases"
     };
 </script>
 <script type="text/javascript">

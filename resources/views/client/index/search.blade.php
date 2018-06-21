@@ -67,3 +67,8 @@
 @section('section-modal')
     @include('client.product.modal')
 @stop
+
+@section('google-param-prodid', implode(", ",getProductIds($products)))
+@section('google-param-pagetype', 'searchresults')
+@section('google-param-totalvalue', 1000000)
+

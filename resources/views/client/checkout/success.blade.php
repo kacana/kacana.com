@@ -149,3 +149,7 @@
 @section('section-modal')
     @include('client.product.modal')
 @stop
+
+@section('google-param-prodid', implode(", ",getProductIdsFromOrder($orderDetail)))
+@section('google-param-pagetype', 'purchase')
+@section('google-param-totalvalue', $order->total)

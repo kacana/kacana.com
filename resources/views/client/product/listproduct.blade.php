@@ -129,4 +129,4 @@
 @stop
 
 @section('google-param-prodid', implode(", ",getProductIds($items[0]['products'])))
-@section('google-param-pagetype', 'offerdetail')
+@section('google-param-pagetype', 'category')
