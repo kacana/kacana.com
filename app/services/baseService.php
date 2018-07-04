@@ -43,7 +43,7 @@ class baseService
 
     public function getIpInformation($ip)
     {
-        return json_decode(file_get_contents('http://freegeoip.net/json/' . $ip));;
+        return json_decode(file_get_contents('http://api.ipstack.com/' . $ip . '?access_key=cbe25dd908cf924be6e32a77b19f63af'));
     }
 
     public function parserUserAgent($userAgent)
