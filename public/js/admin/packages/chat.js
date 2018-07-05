@@ -259,7 +259,7 @@ var chatPackage = {
                     $('#list-chat-right-side-new').html('');
                     for(var i = 0; i< items.length; i++){
                         var item = items[i];
-                        var date = item.updated_at;
+                        var date = item.created_at;
                         date = date.split(' ');
                         Kacana.chat.createRowNewMessageZone(item.id, date[0], date[1]);
                     }
@@ -286,7 +286,7 @@ var chatPackage = {
                     $('#list-chat-right-side-old').html('');
                     for(var i = 0; i< items.length; i++){
                         var item = items[i];
-                        var date = item.updated_at;
+                        var date = item.created_at;
                         date = date.split(' ');
                         Kacana.chat.createRowOldMessageZone(item.id, date[0], date[1]);
                     }
