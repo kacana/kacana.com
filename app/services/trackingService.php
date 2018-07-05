@@ -72,7 +72,7 @@ class trackingService extends baseService {
 
         $return['data'] = $datatables::data_output( $columns, $return['data'] );
         foreach ($return['data'] as &$item){
-            $location =  json_decode(file_get_contents('http://freegeoip.net/json/'.$item[3]));
+            $location =  json_decode(file_get_contents('http://api.ipstack.com/' . $item[3] . '?access_key=cbe25dd908cf924be6e32a77b19f63af'));
             $item[3] = $item[3].'<br><b>'.$location->region_name.', '.$location->city;
         }
         return $return;
