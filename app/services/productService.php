@@ -777,6 +777,8 @@ class productService extends baseService {
         foreach ($products as &$product)
         {
             $this->formatProductPropertiesWhenSearch($product);
+            $productTemp = $productModel->getProductById($product->id);
+            $product->currentDiscount = $productTemp->currentDiscount;
             $product->isLiked = ($userProductLike->getItem($userId, $product->id))?true:false;
         }
 
