@@ -22,6 +22,7 @@ class BaseController extends Controller {
         $Util = new Util();
 		$this->_user = $Util->getCurrentUser();
 		View::share('user', $Util::getCurrentUser());
+        View::share('kacanaStores', $Util->getStores());
 	}
 
 	/**

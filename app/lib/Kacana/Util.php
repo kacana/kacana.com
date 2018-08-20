@@ -1,5 +1,6 @@
 <?php namespace Kacana;
 
+use App\models\storeModel;
 use App\services\userService;
 use Auth;
 use Kacana\Client\Facebook;
@@ -28,6 +29,11 @@ class Util {
     public function initGoogle(){
         $googleClient = new Google();
         return $googleClient;
+    }
+
+    public function getStores(){
+        $storeModel = new storeModel();
+        return $storeModel->getAll();
     }
 
     public static function hasSocial($type = KACANA_SOCIAL_TYPE_FACEBOOK)

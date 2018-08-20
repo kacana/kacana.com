@@ -8,7 +8,6 @@ use App\models\productPropertiesModel;
 use App\models\productTagModel;
 use App\models\productViewModel;
 use App\models\tagModel;
-use App\models\User;
 use App\models\userProductLikeModel;
 use App\models\userSocialModel;
 use Kacana\DataTables;
@@ -78,6 +77,7 @@ class productService extends baseService {
         );
 
         $return = $productModel->generateProductTable($request, $columns);
+
         $statusOptions = [KACANA_PRODUCT_STATUS_ACTIVE, KACANA_PRODUCT_STATUS_INACTIVE, KACANA_PRODUCT_STATUS_SOLD_OUT];
         $bootPriorityOptions = [KACANA_PRODUCT_BOOT_PRIORITY_LEVEL_0,
                                 KACANA_PRODUCT_BOOT_PRIORITY_LEVEL_1,

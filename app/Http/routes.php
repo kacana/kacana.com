@@ -233,9 +233,13 @@ Route::group(['domain'=>KACANA_AUTH_ADMIN_NAME.'.{nameDomain}','middleware' => '
         Route::any('/generateOrderFromTable',                   array('as'=>'OrderFrom.generate.orderFrom.table',    'uses'=>'Admin\OrderFromController@generateOrderFromTable'));
         Route::any('/createOrderFrom',                          array('as'=>'OrderFrom.create.orderFrom',            'uses'=>'Admin\OrderFromController@createOrderFrom'));
         Route::any('/editOrderFrom/{id}',                       array('as'=>'OrderFrom.edit.orderFrom',              'uses'=>'Admin\OrderFromController@editOrderFrom'));
-//        Route::any('/searchTagPost',                            array('as'=>'Blog.search.tag.post',             'uses'=>'Admin\BlogController@searchTagPost'));
-//        Route::any('/updatePostMainImage',                      array('as'=>'Blog.update.post.main.image',      'uses'=>'Admin\BlogController@updatePostMainImage'));
-//        Route::any('/addPostImage',                             array('as'=>'Blog.add.image',                   'uses'=>'Admin\BlogController@addPostImage'));
+    });
+
+    Route::group(['prefix'=>'store'], function(){
+        Route::any('/index/{id}',                                         array('as'=>'store.index',                        'uses'=>'Admin\StoreController@index'));
+        Route::any('/generateStoreProductTable/{storeId}',                array('as'=>'store.generateStoreProductTable',    'uses'=>'Admin\StoreController@generateStoreProductTable'));
+        Route::any('/{id}/import',                                        array('as'=>'store.import',                       'uses'=>'Admin\StoreController@import'));
+        Route::any('/{id}/history',                                       array('as'=>'store.history',                      'uses'=>'Admin\StoreController@history'));
     });
 });
 

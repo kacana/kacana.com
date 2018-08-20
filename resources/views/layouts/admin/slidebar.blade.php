@@ -14,7 +14,7 @@ $action = getActionName(class_basename(Route::currentRouteAction()));
         <li class="header">Quản lý kho</li>
         <li class="{{in_array($controller, array('BranchController', 'ProductController')) ? 'active' : ''}} treeview">
             <a href="#">
-                <i class="fa fa-pie-chart"></i>
+                <i class="fa fa-product-hunt"></i>
                 <span>Quản lý sản phẩm</span>
                 <i class="fa fa-angle-left pull-right"></i>
             </a>
@@ -44,6 +44,20 @@ $action = getActionName(class_basename(Route::currentRouteAction()));
                 <li class="{{($controller == 'TagController' && $action == 'relation') ? 'active':''}}"><a href="{{URL::to('/tag/relation/'.TAG_RELATION_TYPE_MENU)}}"><i class="fa fa-circle-o"></i> Tag Sản Phẩm</a></li>
             </ul>
         </li>
+
+        <li class="{{in_array($controller, array('TagController')) ? 'active' : ''}} treeview">
+            <a href="#">
+                <i class="fa fa-map-o"></i>
+                <span>Hệ thống cửa hàng</span>
+                <i class="fa fa-angle-left pull-right"></i>
+            </a>
+            <ul class="treeview-menu">
+                @foreach($kacanaStores as $store)
+                    <li><a href="{{URL::to('/store/index/'.$store->id)}}"><i class="fa fa-map-marker"></i> {{$store->name}}</a></li>
+                @endforeach
+             </ul>
+        </li>
+
         <li class="header">Quản lý marketing</li>
         <li class="treeview {{($controller == 'PromotionController')?'active':''}}"><a href="{{URL::to('/campaign')}}"><i class="fa fa-rocket"></i><span>Chiến dịch khuyến mãi</span></a>
 

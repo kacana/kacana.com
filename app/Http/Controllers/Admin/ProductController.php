@@ -139,16 +139,6 @@ class ProductController extends BaseController {
         return view('admin.product.ex-product', ['user'=> $this->_user]);
     }
 
-    public function imProduct(Request $request)
-    {
-        $productService = new productService();
-        $addressService = new addressService();
-        $productGalleryModel = new productGalleryModel();
-        $tagService = new tagService();
-
-        return view('admin.product.im-product');
-    }
-
     public function addProductImage(Request $request){
         $productGalleryService = new productGalleryService();
 
