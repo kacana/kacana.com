@@ -16,12 +16,15 @@ services:
 
   kacana-mysql:
     container_name: kacana-mysql
-    image: mysql
+    image: mysql:5.6
     volumes:
       - ./docker/data/mysql:/var/lib/mysql
       - ./docker/mysql/my.cnf:/etc/mysql/my.cnf
-    env_file:
-      - .env
+    environment:
+      MYSQL_ROOT_PASSWORD: 2ud1tt001nHA65aG
+      MYSQL_DATABASE: kacana
+      MYSQL_USER: root
+      MYSQL_PASSWORD: 2ud1tt001nHA65aG
     ports:
       - "3306:3306"
 
