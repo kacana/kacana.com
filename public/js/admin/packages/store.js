@@ -6,6 +6,7 @@ var storePackage = {
                 Kacana.store.indexPage.page = $('#store-index');
                 Kacana.store.indexPage.bindEvent();
                 Kacana.store.indexPage.generateStoreProductTable();
+                Kacana.store.indexPage.searchProductForQuickImport();
             },
             bindEvent: function () {
 
@@ -100,6 +101,44 @@ var storePackage = {
 
                         api.draw();
                 });
+            },
+            searchProductForQuickImport: function () {
+                var modal = $('#modal-quick-import-product');
+                modal.find('#productName').autocomplete({
+                    source: function( request, response ) {
+
+                        var callback = function(data){
+                            console.log(data);
+                            if(data.ok)
+                                response( data.data );
+                            else
+                                swal({
+                                    title: 'Error!',
+                                    text: 'Opp!something wrong on processing.',
+                                    type: 'error',
+                                    confirmButtonText: 'Cool'
+                                });
+                        };
+
+                        var errorCallback = function(){
+                            // do something here if error
+                        };
+
+                        var data = {search: request.term};
+                        Kacana.ajax.order.searchProduct(data, callback, errorCallback);
+                    },
+                    minLength: 2,
+                    select: function( event, ui ) {
+                        Kacana.order.chooseAddressDelivery(ui.item);
+                        return false;
+                    }
+                }).autocomplete( "widget" ).addClass("search-product-add-to-order");
+
+                modal.find('#order_search_product_to_add').autocomplete( "instance" )._renderItem = function( ul, item ) {
+                    return $( "<li>" )
+                        .append( '<div><a href="/order/addProductToOrder/?orderId='+$("#order_id").val()+'&productId='+item.id+'" ><img style="height: 50px;" src="'+item.image+'">' + item.name + '</a></div>' )
+                        .appendTo( ul );
+                };
             }
         }
     }

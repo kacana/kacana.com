@@ -21,14 +21,7 @@ $action = getActionName(class_basename(Route::currentRouteAction()));
             <ul class="treeview-menu">
                 <li class="{{($controller == 'ProductController' && ($action == 'index' || $action == 'editProduct' )) ? 'active':''}}"><a href="{{URL::to('/product')}}"><i class="fa fa-circle-o"></i> Sản Phẩm</a></li>
             </ul>
-            <ul class="treeview-menu">
-                <li class="{{($controller == 'ProductController' && $action == 'imProduct') ? 'active':''}}"><a href="{{URL::to('/product/imProduct')}}"><i class="fa fa-download"></i> Nhập hàng</a></li>
-            </ul>
-            <ul class="treeview-menu">
-                <li class="{{($controller == 'ProductController' && $action == 'exProduct') ? 'active':''}}"><a href="{{URL::to('/product/exProduct')}}"><i class="fa fa-upload"></i> Bán hàng</a></li>
-            </ul>
         </li>
-
         <li class="{{in_array($controller, array('TagController')) ? 'active' : ''}} treeview">
             <a href="#">
                 <i class="fa fa-pie-chart"></i>
