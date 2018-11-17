@@ -170,7 +170,7 @@
                         @endif
                     </div>
                     <div id="list-shipping-ghtk-fee">
-                        @if(isset($feeGhtk) && $feeGhtk->fee->delivery == 1)
+                        @if(isset($feeGhtk) && $feeGhtk->fee->fee)
                             <div class="radio margin-bottom">
                                 <label class="col-xs-12" >
                                     <span class="col-xs-1 col-xs-offset-1" ><input data-value="{{$feeGhtk->fee->fee}}" type="radio" checked="" value="{{KACANA_SHIP_TYPE_ID_GHTK}}" name="shippingServiceTypeId"></span>
@@ -211,7 +211,7 @@
 </script>
 
 <script id="template-shipping-ghtk-fee" type="template">
-    @{{if ghtkFee.fee.delivery }}
+    @{{if ghtkFee.fee.fee }}
         <div class="radio">
             <label class="col-xs-12" >
                 <span class="col-xs-1 col-xs-offset-1" ><input data-value="${ghtkFee.fee.fee}" type="radio" checked="" value="{{KACANA_SHIP_TYPE_ID_GHTK}}" name="shippingServiceTypeId"></span>
