@@ -16,10 +16,9 @@ services:
 
   kacana-mysql:
     container_name: kacana-mysql
-    image: mysql:5.6
+    image: cytopia/mysql-5.6
     volumes:
       - ./docker/data/mysql:/var/lib/mysql
-      - ./docker/mysql/my.cnf:/etc/mysql/my.cnf
     environment:
       MYSQL_ROOT_PASSWORD: 2ud1tt001nHA65aG
       MYSQL_DATABASE: kacana

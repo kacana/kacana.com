@@ -38,7 +38,7 @@
     {{--</div>--}}
 {{--@endif--}}
 <div class="product-info">
-    <h4 class="product-title"> <a href="{{urlProductDetail($item)}}" title="{{$item->name}}">{{$item->name}}</a></h4>
+    <div class="product-title"> <a href="{{urlProductDetail($item)}}" title="{{$item->name}}">{{$item->name}}</a></div>
 </div>
 <div class="product-price-wrap">
     @if($item->currentDiscount)

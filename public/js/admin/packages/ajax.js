@@ -628,4 +628,4 @@ var ajaxPackage = {
      }
 };
 
-$.extend(true, Kacana, ajaxPackage);
+$.extend(true, Kaccana, ajaxPackage);

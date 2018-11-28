@@ -704,9 +704,7 @@ class productModel extends Model
 
     public function suggestSearchProductForAdmin($searchString)
     {
-
-
-        $query = $this->where('products.name', 'LIKE', "%" . $searchString . "%")
+        $query = $this::with('properties')->where('products.name', 'LIKE', "%" . $searchString . "%")
             ->select(['products.*'])
             ->groupBy('products.id')
             ->orderBy('products.updated', 'DESC')

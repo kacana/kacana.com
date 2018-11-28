@@ -24,6 +24,7 @@
         <link href="/lib/colorpicker/bootstrap-colorpicker.min.css" rel="stylesheet">
         <link href="/lib/morris/morris.css" rel="stylesheet">
         <link href="/lib/daterangepicker/daterangepicker.css" rel="stylesheet">
+        <link href="/lib/AmaranJS-0.5.4/css/amaran.min.css" rel="stylesheet">
 
         <script src="/lib/jquery/jquery-2.1.3.js" charset="utf-8" type="text/javascript"></script>
         <script src="/lib/raphael/raphael.js" charset="utf-8" type="text/javascript"></script>
@@ -59,6 +60,7 @@
         <script src="/lib/pusher/pusher.min.js"></script>
         <script src="/lib/scannerdetection/scannerdetection.js"></script>
         <script src="/lib/ua-parser/ua-parser.js"></script>
+        <script src="/lib/AmaranJS-0.5.4/js/jquery.amaran.min.js"></script>
 
         <!--[if lt IE 9]>
         <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>

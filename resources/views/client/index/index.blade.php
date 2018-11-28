@@ -25,7 +25,7 @@
                 <div class="container taglist background-white" >
                     <div class="row">
                         @foreach($newest as $item)
-                            <div itemprop="itemListElement" itemscope itemtype="http://schema.org/Product" class="col-xxs-12 col-xs-6 col-sm-4 col-md-4 product-item" >
+                            <div itemprop="itemListElement" itemscope itemtype="http://schema.org/Product" class="col-xxs-12 col-xs-6 col-sm-3 col-md-3 product-item" >
                                 @include('client.product.product-item-temple')
                             </div>
                         @endforeach
@@ -63,7 +63,7 @@
                 <div class="container taglist background-white" >
                     <div class="row">
                         @foreach($discount as $item)
-                            <div itemprop="itemListElement" itemscope itemtype="http://schema.org/Product" class="col-xxs-12 col-xs-6 col-sm-4 col-md-4 product-item" >
+                            <div itemprop="itemListElement" itemscope itemtype="http://schema.org/Product" class="col-xxs-12 col-xs-6 col-sm-3 col-md-3 product-item" >
                                 @include('client.product.product-item-temple')
                             </div>
                         @endforeach
@@ -114,7 +114,7 @@
                     <div class="row">
                         @if(count($block['products'])>0)
                             @foreach($block['products'] as $item)
-                                <div itemprop="itemListElement" itemscope itemtype="http://schema.org/Product" class="col-xxs-12 col-xs-6 col-sm-4 col-md-4 product-item" >
+                                <div itemprop="itemListElement" itemscope itemtype="http://schema.org/Product" class="col-xxs-12 col-xs-6 col-sm-3 col-md-3 product-item" >
                                     @include('client.product.product-item-temple')
                                 </div>
                             @endforeach

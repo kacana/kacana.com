@@ -36,7 +36,7 @@
                 {{--@include('client.product.sidebar')--}}
                 <div class="container taglist as-search-results-tiles background-white" id="content">
                     @forelse($products as $item)
-                        <div class="col-xxs-12 col-xs-6 col-sm-4 col-md-4 product-item" >
+                        <div class="col-xxs-12 col-xs-6 col-sm-3 col-md-3 product-item" >
                             @include('client.product.product-item-temple')
                         </div>
                     @empty

@@ -321,6 +321,7 @@
       #product-description{
         background: #fff;
         border-bottom: 15px solid #f0f0f0;
+        border-top: 5px solid #4caf50;
       }
     }
     .product-description-detail{
@@ -358,28 +359,20 @@
       >label
       {
         border: none;
-        padding: 0 0 0 10px;
         background: none;
         border-radius: 0;
         color: #cccccc;
         margin: 0;
         position: relative;
-        .description-detail-title{
-          color: @color-green;
-          span{
-            padding: 0 20px;
-            background: #ffffff;
-          }
-        }
         &:before, &:after{
           border: none;
         }
         .description-detail-title{
           font-size: 1.3em;
-          font-weight: 400;
           margin-bottom: 0;
           text-transform: none;
           padding: 8px 0;
+          color: @color-grey;
         }
         i{
           color: @color-border;
@@ -400,8 +393,7 @@
         display: block;
         height: 10px;
         width: 100%;
-        margin-top: -28px;
-        margin-bottom: 29px;
+        margin-top: -9px;
       }
       &.active{
         >label{
@@ -418,11 +410,13 @@
     }
     #list-tag-related-product-wrap {
       background: #fff;
+      border-top: 5px solid @color-green;
       #list-tag-related-product{
         .toggle-content{
           max-height: 170px;
           overflow: auto;
           display: block;
+          margin-top: 10px;
         }
       }
     }
@@ -436,14 +430,22 @@
   }
   #list-product-related-wrap{
     position: unset;
-    background: #fff;
-    padding: 0;
-    border-left: 15px solid #f0f0f0;
+    background: #ffffff;
     border-bottom: 15px solid #f0f0f0;
+    border-top: 5px solid @color-green;
+    margin-left: 15px;
+    @media (min-width: 768px) {
+      width: ~'calc(25% - 15px)';
+    }
     @media (max-width: 768px) {
-      border-left: none;
+      margin-left: 0;
     }
     #list-product-related{
+      #listProductPage{
+        max-height: 1200px;
+        overflow-x: hidden;
+        overflow-y: scroll;
+      }
       .product-title a{
         font-size: 12px;
       }

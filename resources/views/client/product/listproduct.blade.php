@@ -48,7 +48,7 @@
                         <div class="container taglist as-search-results-tiles background-white" id="content">
                             <div class="row">
                                 @forelse($itemTag['products'] as $item)
-                                    <div itemprop="itemListElement" itemscope itemtype="http://schema.org/Product" class="col-xxs-12 col-xs-6 col-sm-4 col-md-4 product-item" >
+                                    <div itemprop="itemListElement" itemscope itemtype="http://schema.org/Product" class="col-xxs-12 col-xs-6 col-sm-3 col-md-3 product-item" >
                                         @include('client.product.product-item-temple')
                                     </div>
                                 @empty

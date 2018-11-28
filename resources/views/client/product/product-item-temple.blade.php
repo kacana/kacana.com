@@ -15,29 +15,29 @@
     </div>
 </div>
 
-@if($item->properties && count($item->properties)>0)
-    <div class="list-color-product multiple-items nav hidden-xs" >
-        @foreach($item->properties as $property)
-            @if($property->product_gallery)
-                <div>
-                    <a data-id="{{$property->color_id}}" href="#choose-product-color">
-                        <img title="{{$item->name}}" alt="{{$item->name}}" data-src="{{$property->product_gallery->thumb}}">
-                    </a>
-                </div>
-            @endif
-        @endforeach
-    </div>
-@else
-    <div class="list-color-product multiple-items nav hidden-xs" >
-        <div>
-            <a >
-                <img title="{{$item->name}}" alt="{{$item->name}}" data-src="{{$item->image}}">
-            </a>
-        </div>
-    </div>
-@endif
+{{--@if($item->properties && count($item->properties)>0)--}}
+    {{--<div class="list-color-product multiple-items nav hidden-xs" >--}}
+        {{--@foreach($item->properties as $property)--}}
+            {{--@if($property->product_gallery)--}}
+                {{--<div>--}}
+                    {{--<a data-id="{{$property->color_id}}" href="#choose-product-color">--}}
+                        {{--<img title="{{$item->name}}" alt="{{$item->name}}" data-src="{{$property->product_gallery->thumb}}">--}}
+                    {{--</a>--}}
+                {{--</div>--}}
+            {{--@endif--}}
+        {{--@endforeach--}}
+    {{--</div>--}}
+{{--@else--}}
+    {{--<div class="list-color-product multiple-items nav hidden-xs" >--}}
+        {{--<div>--}}
+            {{--<a >--}}
+                {{--<img title="{{$item->name}}" alt="{{$item->name}}" data-src="{{$item->image}}">--}}
+            {{--</a>--}}
+        {{--</div>--}}
+    {{--</div>--}}
+{{--@endif--}}
 <div class="product-info">
-    <h2 itemprop="name" class="product-title"><a href="{{urlProductDetail($item)}}" title="{{$item->name}}">{{$item->name}}</a></h2>
+    <div itemprop="name" class="product-title"><a href="{{urlProductDetail($item)}}" title="{{$item->name}}">{{$item->name}}</a></div>
 </div>
 
 <div class="product-price-wrap">

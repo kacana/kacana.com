@@ -211,6 +211,44 @@ body{
   }
 }
 
+.search-product-auto-complete{
+  z-index: 9999;
+  max-height: 300px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  .ui-menu-item{
+    font-weight: 500;
+    padding: 5px 10px;
+    border-bottom: 1px solid @color-border;
+    border-top: none;
+    color: @color-grey-light;
+    font-family: Roboto;
+    height: 60px;
+    font-size: 13px;
+    &:hover, &.ui-state-focus{
+      padding: 5px 10px;
+      background: none;
+      font-weight: 600!important;
+      border-top: none;
+      border-bottom: 1px solid @color-border !important;
+      color: @color-green-light !important;
+      border-left: none;
+      border-right: none;
+      margin: 0;
+      background: none !important;
+      font-family: Roboto;
+    }
+    img{
+      height: 50px;
+      float: left;
+      margin-right: 10px;
+    }
+    span:first-child{
+      display: block;
+    }
+  }
+}
+
 #slidebar-right-side{
   overflow: auto;
   position: fixed;

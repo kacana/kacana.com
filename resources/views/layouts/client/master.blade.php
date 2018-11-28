@@ -48,7 +48,7 @@
     <meta property="og:description" content="@yield('meta-description', 'Shop online tphcm mua bán túi xách đeo chéo, ví cầm tay, balo nam, ba lô nữ và cặp cho trẻ em✅Hàng hiệu chính hãng✅Chất tốt, da bò thật cao cấp✅Thời trang cá tính hàn quốc giá rẻ✅Mẫu hot, độc đẹp, dễ thương và cute✅Size to lớn đến mini nhỏ xinh✅Phù hợp công sở, đi chơi, du lịch✅Có giá sỉ cho đại lý') - Kacana.vn">
     <meta property="og:site_name" content="Kacana" />
 
-    <link rel="alternate" href="http://www.kacana.vn/" hreflang="vi-vn" />
+    <link rel="alternate" href="https://www.kacana.vn/" hreflang="vi-vn" />
 
     <meta name="author" content="Kacana.vn">
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -59,14 +59,9 @@
     <!-- Vendor CSS -->
     <!-- Bootstrap 3.3.4 -->
     <link rel="stylesheet" href="/lib/bootstrap/css/bootstrap.min.css">
-    {{--<link rel="stylesheet" href="/lib/bootstrap/css/bootstrap-theme.min.css">--}}
 
     <!-- Font Awesome Icons -->
-    <link rel="stylesheet" href="/lib/fontawesome/css/font-awesome.css">
-
-    <link rel="stylesheet" href="/lib/owlcarousel/owl.carousel.min.css" media="screen">
-    <link rel="stylesheet" href="/lib/owlcarousel/owl.theme.default.min.css" media="screen">
-    <link rel="stylesheet" href="/lib/magnific-popup/magnific-popup.css" media="screen">
+    <link rel="stylesheet" href="/lib/fontawesome/css/font-awesome.min.css">
 
     <!-- semantic -->
     <link rel="stylesheet" href="/lib/semantic-popup/popup.min.css" media="screen">
@@ -76,31 +71,16 @@
     <link rel="stylesheet" href="/lib/form-validation/css/formValidator.min.css" media="screen">
 
     <link rel="stylesheet" href="/lib/pe-icon-7-stroke/css/pe-icon-7-stroke.css" media="screen">
-    <link rel="stylesheet" href="/lib/pe-icon-7-stroke/css/helper.css" media="screen">
+    <link rel="stylesheet" href="/lib/pe-icon-7-stroke/css/helper.min.css" media="screen">
 
     <!-- Theme CSS -->
-    <link rel="stylesheet" href="/lib/theme/css/theme.css">
-    <link rel="stylesheet" href="/lib/theme/css/theme-elements.css">
-    <link rel="stylesheet" href="/lib/theme/css/theme-blog.css">
-    <link rel="stylesheet" href="/lib/theme/css/theme-shop.css">
-    <link rel="stylesheet" href="/lib/theme/css/theme-animate.css">
-
-    <!-- Current Page CSS -->
-    <link rel="stylesheet" href="/lib/rs-plugin/css/settings.css" media="screen">
-    <link rel="stylesheet" href="/lib/circle-flip-slideshow/css/component.css" media="screen">
+    <link rel="stylesheet" href="/lib/theme/css/theme.min.css">
 
     <!-- wait me CSS -->
     <link href="/lib/waitMe/waitMe.min.css" rel="stylesheet">
 
     <!-- sweet alert CSS -->
     <link href="/lib/sweetalert2/sweetalert2.min.css" rel="stylesheet">
-
-    <!-- Skin CSS -->
-    <link rel="stylesheet" href="/lib/theme/css/default.css">
-
-    <!-- Theme Custom CSS -->
-    <link rel="stylesheet" href="/lib/theme/css/custom.css">
-    <link rel="stylesheet" href="/lib/ml-menu/ml-menu.css">
 
     <!-- basic stylesheet -->
     <link rel="stylesheet" href="/lib/royalslider/royalslider.css">
@@ -121,16 +101,8 @@
     <!-- Head Libs -->
     <script src="/lib/ml-menu/ml-menu-modernizr.js"></script>
 
-    <!--[if IE]>
-    <link rel="stylesheet" href="/lib/theme/css/ie.css">
-    <![endif]-->
-
     <!-- css owner -->
-    <link rel="stylesheet" href="/css/client/client.css">
-
-    <!--[if lte IE 8]>
-    <script src="/lib/respond/respond.js"></script>
-    <script src="/lib/excanvas/excanvas.js"></script>
+    <link rel="stylesheet" href="/css/client/client.min.css">
     <![endif]-->
 
     <!-- codrops library-->

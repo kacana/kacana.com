@@ -1,6 +1,6 @@
 <script id="template-product-item" type="template">
     @{{each products}}
-    <div class="col-xxs-12 col-xs-6 col-sm-4 col-md-4 product-item" >
+    <div class="col-xxs-12 col-xs-6 col-sm-3 col-md-3 product-item" >
         <div class="product-image" >
             <div class="product-image-inside royalSlider rsDefault" data-first-image="${this.image}"  >
                 <a data-rsbigimg="${this.image}" href="{{AWS_CDN_URL.PRODUCT_IMAGE_PLACE_HOLDER}}" class="rsImg" title="${this.name}">
@@ -20,32 +20,32 @@
             </div>
         </div>
 
-        @{{if this.properties_js}}
-            <div class="list-color-product multiple-items nav hidden-xs" >
-                @{{each this.properties_js}}
-                    @{{if this.product_gallery}}
-                        <div>
-                            <a data-id="${this.color_id}" href="#choose-product-color">
-                                <img  data-src="${this.product_gallery.image}">
-                            </a>
-                        </div>
-                    @{{/if}}
-                @{{/each}}
-            </div>
-        @{{/if}}
+        {{--@{{if this.properties_js}}--}}
+            {{--<div class="list-color-product multiple-items nav hidden-xs" >--}}
+                {{--@{{each this.properties_js}}--}}
+                    {{--@{{if this.product_gallery}}--}}
+                        {{--<div>--}}
+                            {{--<a data-id="${this.color_id}" href="#choose-product-color">--}}
+                                {{--<img  data-src="${this.product_gallery.image}">--}}
+                            {{--</a>--}}
+                        {{--</div>--}}
+                    {{--@{{/if}}--}}
+                {{--@{{/each}}--}}
+            {{--</div>--}}
+        {{--@{{/if}}--}}
 
-        @{{if !this.properties_js}}
-            <div class="list-color-product multiple-items nav hidden-xs" >
-                <div>
-                    <a >
-                        <img  data-src="${this.image}">
-                    </a>
-                </div>
-            </div>
-        @{{/if}}
+        {{--@{{if !this.properties_js}}--}}
+            {{--<div class="list-color-product multiple-items nav hidden-xs" >--}}
+                {{--<div>--}}
+                    {{--<a >--}}
+                        {{--<img  data-src="${this.image}">--}}
+                    {{--</a>--}}
+                {{--</div>--}}
+            {{--</div>--}}
+        {{--@{{/if}}--}}
 
         <div class="product-info">
-            <h2 itemprop="name" class="product-title"> <a href="${this.urlProductDetail}" title="${this.name}">${this.name}</a></h2>
+            <div itemprop="name" class="product-title"> <a href="${this.urlProductDetail}" title="${this.name}">${this.name}</a></div>
         </div>
 
         <div class="product-price-wrap">
