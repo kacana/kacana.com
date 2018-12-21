@@ -15,7 +15,7 @@ class productPropertiesModel extends Model  {
      */
     protected $table = 'product_properties';
 
-    public $timestamps = false;
+    public $timestamps = true;
 
     //Make it available in the json response
     protected $appends = ['nameProperty'];
@@ -96,6 +96,20 @@ class productPropertiesModel extends Model  {
         if(isset($this->size))
             return ($this->color->name . ' ' . $this->size);
         return ($this->color->name);
+    }
+
+    public function getNewestProduct($offset, $limit){
+        $products = $this->with(['product', 'color', 'gallery'])->leftJoin('products', 'products.id', '=', 'product_properties.product_id');
+        $products->skip($offset)
+            ->take($limit);
+
+        $products->orderBy('product_properties.created_at', 'DESC');
+        $products->whereIn('products.status', [KACANA_PRODUCT_STATUS_ACTIVE, KACANA_PRODUCT_STATUS_SOLD_OUT]);
+        $products->groupBy('products.id');
+        $products->select(['product_properties.*']);
+        $results = $products->get();
+
+        return $results ? $results : false;
     }
 
 }

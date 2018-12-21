@@ -684,6 +684,23 @@ class productService extends baseService {
      * @return bool
      */
     public function getNewestProduct($userId = 0, $offset = 0, $limit = KACANA_HOMEPAGE_ITEM_PER_TAG ){
+        $productPropertiesModel = new productPropertiesModel();
+        $products = $productPropertiesModel->getNewestProduct($offset, $limit);
+
+        $results = array();
+        foreach ($products as $product){
+            $items = array();
+            $items['id'] = $product->id;
+            $items['name'] = $product->name;
+            $items['property_name'] = $product->color->name;
+            $items['price'] = $product->price;
+            $items['image'] = $product->gallery->image;
+
+        }
+
+        print_r($products);die;
+
+
         $productModel = new productModel();
         $userProductLike = new userProductLikeModel();
         $products = $productModel->getNewestProduct($offset, $limit);

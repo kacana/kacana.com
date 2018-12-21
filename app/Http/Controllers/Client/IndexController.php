@@ -39,8 +39,7 @@ class IndexController extends BaseController
             $result['tag_url'] = '';
             $userId = (\Kacana\Util::isLoggedIn()) ? $this->_user->id : 0;
             $result['products'] = $productService->getProductByTagId($tag->id, $limit, $userId, 1, ['product_tag_type_id' => TAG_RELATION_TYPE_MENU], $excludeProductIds);
-            foreach ($result['products'] as $product)
-            {
+            foreach ($result['products'] as $product) {
                 array_push($excludeProductIds, $product->id);
             }
             $data[] = $result;
