@@ -345,7 +345,9 @@
             "image": "https:{{AWS_CDN_URL}}/images/client/logo.png"
           },
           "color": "{{$property->color_name}}",
-          "productID": "{{$product->id}}"
+          "productID": "{{$product->id}}",
+          "availability": "in stock",
+          "url": "{{urlProductDetail($product)}}"
         }
     </script>
 @stop
