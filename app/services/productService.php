@@ -893,6 +893,29 @@ class productService extends baseService {
     /**
      * @return bool
      */
+    public function createCsvShopping(){
+        $productModel = new productModel();
+        $products = $productModel->getProductToCreateCsv();
+
+        $path = '/doc/file_shopping.csv';
+        if(Storage::disk('local')->exists($path))
+            Storage::disk('local')->delete($path);
+
+        $fp = fopen(PATH_PUBLIC.$path, 'w');
+        fputcsv($fp, ['id', 'title', 'description', 'brand', 'link', 'image_​​link', 'availability', 'price', 'condition', 'google_product_category']);
+        foreach ($products as $product)
+        {
+            $link = 'http://kacana.vn/san-pham/' . str_slug($product->name) . '--' . $product->id . '--' . $product->tag_id;
+            $image = 'http:'.AWS_CDN_URL.str_replace(' ', '%20',$product->getOriginal('image'));
+            $description = strip_tags($product->description);
+            fputcsv($fp, [$product->id, $product->name, $description, 'kacana', $link, $image, 'in stock', formatMoney($product->sell_price, ' VND'), 'new', '3032']);
+        }
+
+        fclose($fp);
+
+        return true;
+    }
+
     public function createCsvBD(){
         $productModel = new productModel();
         $products = $productModel->getProductToCreateCsv();
