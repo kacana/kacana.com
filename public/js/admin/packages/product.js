@@ -141,6 +141,57 @@ var productPackage = {
               var element = '#productTable';
               $(element).parents('.box').css('overflow', 'auto');
 
+              var columns = [
+                  {
+                      'title': 'ID',
+                      'width':'5%'
+                  },
+                  {
+                      'title': 'name',
+                      'width':'20%',
+                  },
+                  {
+                      'title': 'Image',
+                      'sortable':false,
+                      'render': function ( data, type, full, meta ) {
+                          return '<img style="width: 50px" class="img-responsive" src="//image.kacana.vn'+data+'" />';
+                      }
+                  },
+                  {
+                      'title': 'sell price',
+                      'render': function ( data, type, full, meta ) {
+                          return '<b>' + Kacana.utils.formatCurrency(data) + '</b>';
+                      }
+                  },
+                  {
+                      'title': 'campaign',
+                      'render': function ( data, type, full, meta ) {
+                          return Kacana.utils.generateProductCampaignProductTable(data, full[0], true);
+                      }
+                  },
+                  {
+                      'title': 'boot priority'
+                  },
+                  {
+                      'title': 'status'
+                  },
+                  {
+                      'title': 'Updated',
+                      'width':'12%',
+                      'render': function ( data, type, full, meta ) {
+                          return data ? data.slice(0, -8) +'<br><b>' + data.slice(11, 19)+'</b>' : '';
+                      }
+                  },
+                  {
+                      'width':'4%',
+                      'class':'center',
+                      'sortable':false,
+                      'render': function ( data, type, full, meta ) {
+                          return '<a href="/product/editProduct/'+full[0]+'" class="btn btn-default btn-xs"><i class="fa fa-pencil"></i></a>';
+                      }
+                  }
+              ];
+
               var addParamsCallBack = function(oData){
                   //search name or email
                   //oData.columns[2].search.orWhere = true;
