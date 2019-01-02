@@ -140,7 +140,6 @@ var productPackage = {
               var $formInline = $('.form-inline');
               var element = '#productTable';
               $(element).parents('.box').css('overflow', 'auto');
-              generateStoreProductTable
 
               var addParamsCallBack = function(oData){
                   //search name or email
