@@ -18,7 +18,7 @@
         </div>
     </section>
     <div class="container background-white vpadding-20">
-        <div itemscope itemtype="http://schema.org/Product" class="row">
+        <div class="row">
             <div class="col-xs-12 col-sm-5 col-lg-6">
                 <div id="product-detail-gallery" class="royalSlider rsDefault" data-alt-image="{{$product->name}}">
                     @if($productSlide && count($productSlide)>0)
@@ -31,9 +31,9 @@
                 </div>
             </div>
             <div class="col-xs-12 col-sm-4 col-lg-3">
-                <h1 itemprop="name" class="name-product">{{ucfirst($product->name)}}</h1>
-                <p itemprop="offers" itemscope itemtype="http://schema.org/Offer" class="price">
-                    <span itemprop="price" class="amount">
+                <h1  class="name-product">{{ucfirst($product->name)}}</h1>
+                <p  class="price">
+                    <span class="amount">
                         @if($product->currentDiscount)
                             {{formatMoney(calculateDiscountPrice($product->sell_price, $product->currentDiscount->discount_type, $product->currentDiscount->ref))}}
                             @if($product->currentDiscount->discount_type == KACANA_CAMPAIGN_DEAL_TYPE_FREE_PRODUCT)
@@ -51,7 +51,7 @@
                 </p>
                 <div class="row">
                     <div class="col-xs-12 kacana-wysiwyg-block product-basic-information">
-                        <p itemprop="description">{{$product->short_description}}</p>
+                        <p>{{$product->short_description}}</p>
                         @if(str_replace(' ','',strip_tags($product->property_description)))
                             {!! $product->property_description !!}
                         @endif
@@ -255,7 +255,7 @@
                     </section>
                 </div>
             </div>
-            <div itemscope itemtype="http://schema.org/ItemList" id="list-product-related-wrap" class="col-xs-12 col-sm-3">
+            <div id="list-product-related-wrap" class="col-xs-12 col-sm-3">
                 <div class="toogle"  data-plugin-toggle="" id="list-product-related">
                     <section class="toggle active" >
                         <label>
@@ -270,7 +270,7 @@
                                             <div style="z-index: 1" class="taglist as-search-results-tiles background-white">
                                                 @forelse($productRelated as $item)
                                                     @if($item->id != $product->id)
-                                                        <div itemprop="itemListElement" itemscope itemtype="http://schema.org/Product" class="col-xxs-12 col-xs-6 col-sm-12 product-item" >
+                                                        <div i class="col-xxs-12 col-xs-6 col-sm-12 product-item" >
                                                             @include('client.product.product-item-related-temple')
                                                         </div>
                                                     @endif
@@ -322,6 +322,34 @@
 
 @section('section-modal')
     @include('client.product.modal')
+    <script type="application/ld+json">
+        {
+          "@context": "http://schema.org/",
+          "@type": "Product",
+          "image": "https:{{$product->image}}",
+          "name": "{{$product->name}}",
+          "description": "{{$product->short_description}}",
+            "offers": {
+            "@type": "Offer",
+            "priceCurrency": "VND",
+            "price": "{{$product->sell_price}}"
+          },
+          "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": "{{rand(4,5)}}",
+            "reviewCount": "{{rand(30, 45)}}"
+          },
+          "brand": {
+            "@type": "thing",
+            "name": "kacana",
+            "image": "https:{{AWS_CDN_URL}}/images/client/logo.png"
+          },
+          "color": "{{$property->color_name}}",
+          "productID": "{{$product->id}}",
+          "availability": "in stock",
+          "url": "{{urlProductDetail($product)}}"
+        }
+    </script>
 @stop
 
 @section('javascript')

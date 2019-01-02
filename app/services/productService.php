@@ -684,23 +684,6 @@ class productService extends baseService {
      * @return bool
      */
     public function getNewestProduct($userId = 0, $offset = 0, $limit = KACANA_HOMEPAGE_ITEM_PER_TAG ){
-        $productPropertiesModel = new productPropertiesModel();
-        $products = $productPropertiesModel->getNewestProduct($offset, $limit);
-
-        $results = array();
-        foreach ($products as $product){
-            $item = array();
-            $item['id'] = $product->id;
-            $item['name'] = $product->name;
-            $item['property_name'] = $product->color->name;
-            $item['price'] = $product->price;
-            $item['image'] = $product->gallery->image;
-            array_push($results, $item);
-        }
-
-        print_r($results);die;
-
-
         $productModel = new productModel();
         $userProductLike = new userProductLikeModel();
         $products = $productModel->getNewestProduct($offset, $limit);
@@ -919,13 +902,13 @@ class productService extends baseService {
             Storage::disk('local')->delete($path);
 
         $fp = fopen(PATH_PUBLIC.$path, 'w');
-        fputcsv($fp, ['id', 'title', 'description', 'link', 'image_​​link', 'availability', 'price', 'condition', 'google_product_category']);
+        fputcsv($fp, ['id', 'title', 'description', 'brand', 'link', 'image_​​link', 'availability', 'price', 'condition', 'google_product_category']);
         foreach ($products as $product)
         {
             $link = 'http://kacana.vn/san-pham/' . str_slug($product->name) . '--' . $product->id . '--' . $product->tag_id;
             $image = 'http:'.AWS_CDN_URL.str_replace(' ', '%20',$product->getOriginal('image'));
-
-            fputcsv($fp, [$product->id, $product->name, $product->description, $link, $image, 'in stock', formatMoney($product->sell_price, ' VND'), 'new', '3032']);
+            $description = strip_tags($product->description);
+            fputcsv($fp, [$product->id, $product->name, $description, 'kacana', $link, $image, 'in stock', formatMoney($product->sell_price, ' VND'), 'new', '3032']);
         }
 
         fclose($fp);
