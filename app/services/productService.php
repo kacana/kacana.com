@@ -905,8 +905,8 @@ class productService extends baseService {
         fputcsv($fp, ['id', 'title', 'description', 'brand', 'link', 'image_​​link', 'availability', 'price', 'condition', 'google_product_category']);
         foreach ($products as $product)
         {
-            $link = 'http://kacana.vn/san-pham/' . str_slug($product->name) . '--' . $product->id . '--' . $product->tag_id;
-            $image = 'http:'.AWS_CDN_URL.str_replace(' ', '%20',$product->getOriginal('image'));
+            $link = 'https://kacana.vn/san-pham/' . str_slug($product->name) . '--' . $product->id . '--' . $product->tag_id;
+            $image = 'https:'.AWS_CDN_URL.str_replace(' ', '%20',$product->getOriginal('image'));
             $description = strip_tags($product->description);
             fputcsv($fp, [$product->id, $product->name, $description, 'kacana', $link, $image, 'in stock', formatMoney($product->sell_price, ' VND'), 'new', '3032']);
         }
