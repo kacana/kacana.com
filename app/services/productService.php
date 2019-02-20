@@ -902,7 +902,7 @@ class productService extends baseService {
             Storage::disk('local')->delete($path);
 
         $fp = fopen(PATH_PUBLIC.$path, 'w');
-        fputcsv($fp, ['id', 'title', 'description', 'brand', 'link', 'image_​​link', 'availability', 'price', 'condition', 'google_product_category']);
+        fputcsv($fp, ['id', 'title', 'description', 'brand', 'link', 'image_link', 'availability', 'price', 'condition', 'google_product_category']);
         foreach ($products as $product)
         {
             $link = 'https://kacana.vn/san-pham/' . str_slug($product->name) . '--' . $product->id . '--' . $product->tag_id;
