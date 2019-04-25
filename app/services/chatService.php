@@ -34,7 +34,7 @@ class chatService extends baseService {
             $userTrackingService = new userTrackingService();
             $tracking = $userTrackingService->getUserTrackingHistory($userTrackingHistoryId);
 
-            $slack = new Slack('#test_channel');
+            $slack = new Slack('#messages_tool');
             $slack->notificationNewMessage($threadId, $body, $tracking);
         }
         if($autoReply) {
