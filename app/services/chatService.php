@@ -34,7 +34,7 @@ class chatService extends baseService {
             $userTrackingService = new userTrackingService();
             $tracking = $userTrackingService->getUserTrackingHistory($userTrackingHistoryId);
 
-            $slack = new Slack('#messages_tool');
+            $slack = new Slack('#test_channel');
             $slack->notificationNewMessage($threadId, $body, $tracking);
         }
         if($autoReply) {
@@ -108,10 +108,9 @@ class chatService extends baseService {
     }
 
     public function createMessagesResponseFromSlack($params){
-        if($params['token'] == KACANA_SLACK_TOKEN_MESSAGE)
+        if($params['token'] == KACANA_SLACK_TOKEN_MESSAGE && $params['user_name'] != 'slackbot')
         {
             $lastMessage = $this->_chatMessageModel->getLastMessage();
-
             $message = $params['text'];
             $messageDecode = explode(' ', $message);
             $threadId = str_replace('#', '', $messageDecode[0]);
