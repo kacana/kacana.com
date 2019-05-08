@@ -27,7 +27,7 @@
                             @if(count($campaign->campaignProductAvailable)>0)
                                 @foreach($campaign->campaignProductAvailable as $campaignProduct)
                                     <?php $item = $campaignProduct->product ?>
-                                    <div itemprop="itemListElement" itemscope itemtype="http://schema.org/Product" class="col-xxs-12 col-xs-6 col-sm-4 col-md-4 product-item" >
+                                    <div itemprop="itemListElement" itemscope itemtype="http://schema.org/Product" class="col-xxs-12 col-xs-6 col-sm-4 col-md-3 product-item" >
                                         @include('client.product.product-campaign-item-temple')
                                     </div>
                                 @endforeach
