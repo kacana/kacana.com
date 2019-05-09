@@ -491,8 +491,7 @@ class productModel extends Model
             ->whereIn('products.status', [KACANA_PRODUCT_STATUS_ACTIVE, KACANA_PRODUCT_STATUS_SOLD_OUT]);
 
         if (!$page) {
-            $select->skip($offset)
-                ->take($limit);
+            $select->take($limit);
         }
 
         if (isset($options['sort']) && $options['sort']) {
@@ -626,15 +625,15 @@ class productModel extends Model
     /**
      * @param $offset
      * @param $limit
+     * @param array $productIdLoaded
      * @return bool
      */
-    public function getNewestProduct($offset, $limit)
+    public function getNewestProduct($offset, $limit, $productIdLoaded = array())
     {
 
         $products = $this->leftJoin('product_tag', 'products.id', '=', 'product_tag.product_id')
             ->leftJoin('tag_relations', 'product_tag.tag_id', '=', 'tag_relations.child_id');
-        $products->skip($offset)
-            ->take($limit);
+        $products->take($limit);
 
         $products->orderBy('products.created', 'DESC');
         $products->where('product_tag.type', '=', TAG_RELATION_TYPE_MENU);
@@ -643,6 +642,7 @@ class productModel extends Model
         $products->whereIn('products.status', [KACANA_PRODUCT_STATUS_ACTIVE, KACANA_PRODUCT_STATUS_SOLD_OUT]);
         $products->groupBy('products.id');
         $products->select(['products.*', 'product_tag.*']);
+        $products->whereNotIn('products.id', $productIdLoaded);
         $results = $products->get();
 
         return $results ? $results : false;

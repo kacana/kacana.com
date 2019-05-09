@@ -681,12 +681,13 @@ class productService extends baseService {
      * @param int $userId
      * @param int $offset
      * @param int $limit
+     * @param array $productIdLoaded
      * @return bool
      */
-    public function getNewestProduct($userId = 0, $offset = 0, $limit = KACANA_HOMEPAGE_ITEM_PER_TAG ){
+    public function getNewestProduct($userId = 0, $offset = 0, $limit = KACANA_HOMEPAGE_ITEM_PER_TAG, $productIdLoaded = array()){
         $productModel = new productModel();
         $userProductLike = new userProductLikeModel();
-        $products = $productModel->getNewestProduct($offset, $limit);
+        $products = $productModel->getNewestProduct($offset, $limit, $productIdLoaded);
         foreach($products as &$product){
             if($userId)
                 $product->isLiked = ($userProductLike->getItem($userId, $product->id))?true:false;
@@ -790,29 +791,31 @@ class productService extends baseService {
      * @param $page
      * @param $type
      * @param $tagId
+     * @param $productIdLoaded
      * @param $userId
      * @return bool|mixed
+     * @throws \Exception
      */
-    public function loadMoreProductWithType($page, $type, $tagId, $userId){
+    public function loadMoreProductWithType($page, $type, $tagId, &$productIdLoaded, $userId){
         $limit = KACANA_HOMEPAGE_ITEM_PER_TAG;
         $offset = ($page-1)*$limit;
         $results = false;
 
         if($type == PRODUCT_HOMEPAGE_TYPE_NEWEST)
         {
-            $results = $this->getNewestProduct($userId, $offset, $limit);
+            $results = $this->getNewestProduct($userId, $offset, $limit, $productIdLoaded);
         }
         elseif($type == PRODUCT_HOMEPAGE_TYPE_DISCOUNT)
         {
             $results = $this->getDiscountProduct($userId, $offset, $limit);
         }
         elseif ($type == PRODUCT_HOMEPAGE_TYPE_TAG) {
-            $results = $this->getProductByTagId($tagId, $limit, $userId, $page, ['product_tag_type_id' => TAG_RELATION_TYPE_MENU]);
+            $results = $this->getProductByTagId($tagId, $limit, $userId, $page, ['product_tag_type_id' => TAG_RELATION_TYPE_MENU], $productIdLoaded);
         }
 
         if(count($results->toArray()))
         {
-            return $this->formatProductDataForAjax($results);
+            return $this->formatProductDataForAjax($results, $productIdLoaded);
         }
         else
             return false;
@@ -824,10 +827,11 @@ class productService extends baseService {
      * @param $results
      * @return mixed
      */
-    public function formatProductDataForAjax($results){
+    public function formatProductDataForAjax($results, &$productIdLoaded){
 
         foreach ($results as &$item)
         {
+            array_push($productIdLoaded, $item->id);
             $item->urlProductDetail = urlProductDetail($item);
             $item->sell_price_show = formatMoney($item->sell_price);
             $item->discount_show = formatMoney($item->discount);

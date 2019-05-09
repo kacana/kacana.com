@@ -142,6 +142,38 @@
         </div>
         @endforeach
     @endif
+
+    <div class="block-tag" id="auto-load-more-block" data-tag-id="0" data-page="2" data-type="{{PRODUCT_HOMEPAGE_TYPE_NEWEST}}" >
+        <div class="block-tag-header homepage" >
+            <div class="container">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12" >
+                        <div class="row">
+                            <h2>TÚI XÁCH BẠN SẼ THÍCH</h2>
+                        </div>
+                        <div class="row">
+                            <h3>Những mẫu túi xách bạn sẽ thích tại KACANA</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="block-tag-body" >
+            <div class="container taglist background-white" >
+                <div class="row">
+
+                </div>
+            </div>
+        </div>
+        <div class="container background-white" >
+            <div class="row">
+                <div class="col-xs-12 text-center" >
+                    <span class="auto-loading-icon-processing" ></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>
 
 @stop

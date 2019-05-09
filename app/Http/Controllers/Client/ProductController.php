@@ -222,10 +222,11 @@ class ProductController extends BaseController {
         $type = $request->input('type');
         $page = $request->input('page', 1);
         $tagId = $request->input('tagId', 0);
+        $productIdLoaded = explode(',', $request->input('productIdLoaded', 0));
 
         try{
             $userId = (\Kacana\Util::isLoggedIn())?$this->_user->id:0;
-            $data = $productService->loadMoreProductWithType($page, $type, $tagId, $userId);
+            $data = $productService->loadMoreProductWithType($page, $type, $tagId, $productIdLoaded, $userId);
 
             if($type == PRODUCT_HOMEPAGE_TYPE_TAG)
             {
@@ -236,6 +237,7 @@ class ProductController extends BaseController {
             {
                 $result['ok'] = 1;
                 $result['data'] = $data;
+                $result['productIdLoaded'] = implode(',', $productIdLoaded);
                 if(count($data) < KACANA_HOMEPAGE_ITEM_PER_TAG || ($type == PRODUCT_HOMEPAGE_TYPE_NEWEST && $page == 10))
                     $result['stop_load'] = 1;
             }

@@ -29,25 +29,38 @@ class IndexController extends BaseController
 
         $limit = KACANA_HOMEPAGE_ITEM_PER_TAG;
         $mainTags = $tagService->getRootTag();
+        $userId = (\Kacana\Util::isLoggedIn()) ? $this->_user->id : 0;
         $data = array();
+
         $excludeProductIds= array();
+        $newestProduct = $productService->getNewestProduct($userId);
+        foreach ($newestProduct as $product) {
+            array_push($excludeProductIds, $product->id);
+        }
+
+        $discountProduct = $productService->getDiscountProduct($userId);
+
         foreach ($mainTags as $tag) {
             $result['tag'] = $tag->name;
             $result['short_desc'] = $tag->short_desc;
             $result['slug'] = str_slug($tag->name . '-');
             $result['tag_id'] = $tag->child_id;
             $result['tag_url'] = '';
-            $userId = (\Kacana\Util::isLoggedIn()) ? $this->_user->id : 0;
             $result['products'] = $productService->getProductByTagId($tag->id, $limit, $userId, 1, ['product_tag_type_id' => TAG_RELATION_TYPE_MENU], $excludeProductIds);
             foreach ($result['products'] as $product) {
                 array_push($excludeProductIds, $product->id);
             }
             $data[] = $result;
         }
-        $newestProduct = $productService->getNewestProduct($userId);
-        $discountProduct = $productService->getDiscountProduct($userId);
+
         $currentCampaignDisplay = $campaignService->getCurrentCampaignDisplay();
-        return view('client.index.index', array('items' => $data, 'newest' => $newestProduct, 'discount' => $discountProduct, 'campaignDisplay' => $currentCampaignDisplay));
+        $data = array(
+            'items' => $data,
+            'newest' => $newestProduct,
+            'discount' => $discountProduct,
+            'campaignDisplay' => $currentCampaignDisplay,
+            'productIdsLoaded' => implode(',',$excludeProductIds));
+        return view('client.index.index', $data);
     }
 
     public function searchProduct($domain, $searchString, Request $request)

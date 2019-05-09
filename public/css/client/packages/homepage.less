@@ -109,7 +109,7 @@
             text-align: center;
             position: relative;
             @media (max-width: 767px) {
-              padding: 5px;
+              padding: 5px 0px;
             }
             .popover{
               width:350px!important;
@@ -128,7 +128,9 @@
               @media (max-width: 767px){
                 width: 100%;
                 margin-left: 0;
-                color: @color-grey;
+                color: @color-red-light;
+                font-size: 16px;
+                font-weight: 500;
               }
               &.discount{
                 text-align: left;
@@ -299,6 +301,10 @@
           right: -3px;
         }
       }
+    }
+    .auto-loading-icon-processing{
+      height: 100px;
+      display: block;
     }
     &:first-child
     {

@@ -210,6 +210,7 @@
     </div>
 
     @include('layouts.client.footer')
+    <input id="product-id-loaded" value="{{isset($productIdsLoaded)?$productIdsLoaded:''}}" class="hidden" >
 </div>
 @include('client.index.general-modal')
 @yield('section-modal')
