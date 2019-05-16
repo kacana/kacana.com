@@ -174,7 +174,7 @@ var productdetailPackage = {
             if ($('#list-product-related-wrap #listProductPage').css('max-height') == 'none') {
                 var $win = $(window);
                 $win.scroll(function () {
-                    var scroll = $win.height() + $win.scrollTop() + 500;
+                    var scroll = $win.height() + $win.scrollTop() + 800;
                     var docummentHeight = $(document).height();
                     if (scroll >= docummentHeight && !Kacana.homepage.loadingContent) {
                         Kacana.homepage.loadingContent = true;
