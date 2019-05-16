@@ -169,6 +169,11 @@ class ProductController extends BaseController {
                 $data[] = $result;
             }
 
+            $excludeProductIds= array();
+            foreach ($result['products'] as $product) {
+                array_push($excludeProductIds, $product->id);
+            }
+
             $tags->allChilds = $tagService->getAllChildTagHaveProduct($tagId);
             $tagIdRelated = [];
             $tags->tagKeyword = $tagService->formatMetaKeyword($tags->allChilds, $tagIdRelated);
@@ -183,7 +188,12 @@ class ProductController extends BaseController {
                 return view('errors.404', ['error_message' => $e->getMessage()]);
         }
 
-        return view('client.product.listproduct', array('items' => $data, 'tag' => $tags));
+        $dataReturn = array(
+            'items' => $data,
+            'tag' => $tags,
+            'productIdsLoaded' => implode(',',$excludeProductIds));
+
+        return view('client.product.listproduct', $dataReturn);
     }
 
     public function suggestSearchProduct(Request $request){
@@ -235,12 +245,13 @@ class ProductController extends BaseController {
 
             if($data)
             {
-                $result['ok'] = 1;
                 $result['data'] = $data;
                 $result['productIdLoaded'] = implode(',', $productIdLoaded);
-                if(count($data) < KACANA_HOMEPAGE_ITEM_PER_TAG || ($type == PRODUCT_HOMEPAGE_TYPE_NEWEST && $page == 10))
-                    $result['stop_load'] = 1;
             }
+            $result['ok'] = 1;
+            if(count($data) < KACANA_HOMEPAGE_ITEM_PER_TAG || ($type == PRODUCT_HOMEPAGE_TYPE_NEWEST && $page == 20))
+                $result['stop_load'] = 1;
+
         } catch (\Exception $e) {
             if($request->ajax())
             {

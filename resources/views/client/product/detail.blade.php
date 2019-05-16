@@ -250,12 +250,12 @@
                         </label>
                         <div class="description-detail-title-footer"></div>
                         <div class="toggle-content">
-                            {!! $product->descriptionLazyLoad  !!}
+                            {!! $product->description  !!}
                         </div>
                     </section>
                 </div>
             </div>
-            <div id="list-product-related-wrap" class="col-xs-12 col-sm-3">
+            <div id="list-product-related-wrap" class="col-xs-12 col-sm-3" data-tag-id="{{$tag->id}}" data-page="2" data-type="{{PRODUCT_HOMEPAGE_TYPE_NEWEST}}">
                 <div class="toogle"  data-plugin-toggle="" id="list-product-related">
                     <section class="toggle active" >
                         <label>
@@ -275,6 +275,13 @@
                                                         </div>
                                                     @endif
                                                 @endforeach
+                                            </div>
+                                        </div>
+                                        <div class="container background-white" >
+                                            <div class="row">
+                                                <div class="col-xs-12 text-center" >
+                                                    <span class="auto-loading-icon-processing" ></span>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>

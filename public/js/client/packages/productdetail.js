@@ -9,14 +9,6 @@ var productdetailPackage = {
             Kacana.productdetail.showPopupRequest();
             Kacana.productdetail.closeAdvisePopup();
             Kacana.productdetail.bindEvent();
-            // $('body .list-color-product').on('init', function (slick) {
-            //     if(!$('.list-color-product').not('.slick-initialized').length)
-            //     {
-            //         $('#product-detail-gallery').removeClass('hidden');
-            //         $('.list-color-product').removeClass('hidden');
-            //     }
-            // });
-
             Kacana.homepage.applySlideImage();
 
             $.extend($.rsProto, {
@@ -80,43 +72,6 @@ var productdetailPackage = {
                     $('.product-colors').find('a[href="#choose-product-color"]').eq(colorIndex).click();
                 }
             }
-
-            // $('#list-product-related #listProductPage .taglist').slick({
-            //     dots: false,
-            //     infinite: true,
-            //     speed: 500,
-            //     slidesToShow: 4,
-            //     slidesToScroll: 2,
-            //     arrows: true,
-            //     lazyLoad: 'progressive',
-            //     autoplay: true,
-            //     autoplaySpeed: 3000,
-            //     responsive: [
-            //         {
-            //             breakpoint: 992,
-            //             settings: {
-            //                 slidesToShow: 3,
-            //                 slidesToScroll: 1,
-            //                 autoplaySpeed: 2000
-            //             }
-            //         },
-            //         {
-            //             breakpoint: 768,
-            //             settings: {
-            //                 slidesToShow: 2,
-            //                 slidesToScroll: 1,
-            //                 autoplaySpeed: 2000
-            //             }
-            //         },
-            //         {
-            //             breakpoint: 385,
-            //             settings: {
-            //                 slidesToShow: 1,
-            //                 slidesToScroll: 1,
-            //                 autoplaySpeed: 2000
-            //             }
-            //         }]
-            // });
         },
         bindEvent: function(){
             var slideImageProduct = $('#slide-product-image-mobile, #slide-product-image');
@@ -204,58 +159,65 @@ var productdetailPackage = {
                 var productId = Kacana.productdetail.page.data('id');
                 var data = {productId: productId};
                 Kacana.ajax.product.trackUserProductView(data, callBack, errorCallBack);
+
             }, 3000);
 
-            // $(window).scroll(function () {
-            //     var listProductRelated = $('#list-product-related');
-            //
-            //     if($(window).width() < 768)
-            //     {
-            //         listProductRelated.removeClass('fix-list-product-right');
-            //         listProductRelated.removeClass('absolute-list-product-right');
-            //         listProductRelated.removeAttr('style');
-            //         return true;
-            //     }
-            //
-            //
-            //     if(!Kacana.productdetail.offset)
-            //     {
-            //         Kacana.productdetail.offset = $('#list-product-related').offset();
-            //     }
-            //
-            //     Kacana.productdetail.heightMainInfo = $('#product-main-information').height();
-            //
-            //     var scrollTop = $(window).scrollTop();
-            //
-            //     var offsetTop = Kacana.productdetail.offset.top;
-            //     var heightElement = listProductRelated.height();
-            //     var widthElement = listProductRelated.width();
-            //     var heightScreen = $(window).height();
-            //
-            //     if(scrollTop >= (heightElement + offsetTop - heightScreen))
-            //     {
-            //         if(scrollTop > Kacana.productdetail.heightMainInfo)
-            //         {
-            //             listProductRelated.removeClass('fix-list-product-right');
-            //             listProductRelated.addClass('absolute-list-product-right');
-            //             // console.log('absolute');
-            //         }
-            //         else{
-            //             listProductRelated.addClass('fix-list-product-right');
-            //             listProductRelated.removeClass('absolute-list-product-right');
-            //             listProductRelated.css('width', widthElement);
-            //             // console.log('fixed');
-            //         }
-            //     }
-            //     else
-            //     {
-            //         listProductRelated.removeClass('fix-list-product-right');
-            //         listProductRelated.removeClass('absolute-list-product-right');
-            //         // console.log('release');
-            //     }
-            //
-            //
-            // });
+            setTimeout(function () {
+                console.log($('#list-product-related-wrap #listProductPage').css('max-height'));
+                if ($('#list-product-related-wrap #listProductPage').css('max-height') != 'none') {
+                    // set height related product
+                    $blockRelatedProductHeight = $('#product-description').innerHeight();
+                    $('#list-product-related-wrap #listProductPage').css('max-height', ($blockRelatedProductHeight - 105) + 'px');
+                }
+            }, 2000);
+
+            if ($('#list-product-related-wrap #listProductPage').css('max-height') == 'none') {
+                var $win = $(window);
+                $win.scroll(function () {
+                    var scroll = $win.height() + $win.scrollTop() + 500;
+                    var docummentHeight = $(document).height();
+                    if (scroll >= docummentHeight && !Kacana.homepage.loadingContent) {
+                        Kacana.homepage.loadingContent = true;
+                        Kacana.productdetail.autoLoadMoreProductWithType();
+                    }
+                });
+            }
+        },
+        autoLoadMoreProductWithType: function(){
+            var block = $('#list-product-related-wrap');
+            var typeLoadProduct = block.data('type');
+            var page = block.data('page');
+            var tagId = block.data('tag-id');
+            var productIdLoaded = $('#product-id-loaded').val();
+
+            var callBack = function(data){
+                if(data.ok)
+                {
+                    var productItemTemplate = $('#template-product-item').html();
+                    var products = data.data;
+                    // if(typeLoadProduct == 'product-tag'){
+                    //     products = data.data.data;
+                    // }
+                    var productItemTemplateGenerate = $.tmpl(productItemTemplate, {'products': products});
+                    block.find('.block-tag-body .taglist').append(productItemTemplateGenerate);
+                    block.data('page', page+1);
+                    $('#product-id-loaded').val(data.productIdLoaded);
+                    Kacana.homepage.loadingContent = false;
+                }
+                else{
+                    Kacana.homepage.loadingContent = true;
+                    Kacana.utils.loading.closeLoading();
+                }
+
+                if(data.stop_load == 1){
+                    Kacana.homepage.loadingContent = true;
+                }
+                Kacana.utils.loading.closeLoading();
+            };
+
+            var errorCallBack = function(){};
+            Kacana.utils.loading.loading(block.find('.auto-loading-icon-processing'), 'white');
+            Kacana.ajax.homepage.loadMoreProductWithType(typeLoadProduct, page, tagId, productIdLoaded, callBack, errorCallBack);
         },
         validateQuickOrder: function () {
             var form = $('#quick_order_form');

@@ -153,7 +153,13 @@ var homepagePackage = {
                 }
 
                 if(data.stop_load == 1){
-                    Kacana.homepage.loadingContent = true;
+                    console.log($('#auto-load-more-block').data('type'));
+                    if($('#auto-load-more-block').data('type') == 'product-tag') {
+                        $('#auto-load-more-block').data('type', 'product-newest');
+                        Kacana.homepage.loadingContent = false;
+                    } else {
+                        Kacana.homepage.loadingContent = true;
+                    }
                 }
                 Kacana.utils.loading.closeLoading();
             };
