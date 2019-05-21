@@ -1,5 +1,7 @@
 <?php namespace App\Providers;
 
+use Carbon\Carbon;
+use Cache;
 use Illuminate\Support\ServiceProvider;
 use App\models\tagModel;
 use App\services\tagService;
@@ -24,15 +26,34 @@ class AppServiceProvider extends ServiceProvider {
             if(Route::current())
                 $params = Route::current()->parameters();
 
-            $view->with('menu_items', $tagService->getTagForClientMenu())->with('id_active', isset($params['id']) ? $params['id'] : 0);
+            $expiresAt = Carbon::now()->addMinutes(300);
+            $paramId = isset($params['id']) ? $params['id'] : 0;
+            $key = '__main_menu_item__';
+            $menuItem = Cache::get($key);
+            if(!$menuItem) {
+                $menuItem = $tagService->getTagForClientMenu();
+                Cache::put($key, $menuItem, $expiresAt);
+            }
+
+            $view->with('menu_items', $menuItem)->with('id_active', $paramId);
         });
 
         //menu on footer
         View::composer('layouts.client.footer', function($view){
             $tagService = new tagService();
-            $view->with('menu_items', $tagService->getTagForClientMenu());
+            $expiresAt = Carbon::now()->addMinutes(300);
+            $key = '__main_menu_item__';
+            $menuItem = Cache::get($key);
+            if(!$menuItem) {
+                $menuItem = $tagService->getTagForClientMenu();
+                Cache::put($key, $menuItem, $expiresAt);
+            }
+
+            $view->with('menu_items', $menuItem);
         });
     }
+
+
 
     /**
      * Register any application services.
