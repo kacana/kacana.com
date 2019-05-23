@@ -10,8 +10,8 @@
     <meta charset="utf-8">
 
     <!-- GOOGLE META AND SEO -->
-    <title>@yield('meta-title', 'Chuyên bán túi xách, ví, balo thời trang')</title>
-    <meta name="description" content="@yield('meta-description', 'Shop online tphcm mua bán túi xách đeo chéo, ví cầm tay, balo nam, ba lô nữ và cặp cho trẻ em✅Hàng hiệu chính hãng✅Chất tốt, da bò thật cao cấp✅Thời trang cá tính hàn quốc giá rẻ✅Mẫu hot, độc đẹp, dễ thương và cute✅Size to lớn đến mini nhỏ xinh✅Phù hợp công sở, đi chơi, du lịch✅Có giá sỉ cho đại lý')" />
+    <title>@yield('meta-title', 'Kacana | Shop bán túi đeo chéo, giỏ xách, bóp ví cầm tay, balo đẹp')</title>
+    <meta name="description" content="@yield('meta-description', 'Shop online tphcm mua bán túi đeo chéo, giỏ xách, bóp ví cầm tay, balo đẹp cho cả nam nữ và trẻ em. Mẫu mới, thời trang hàng hiệu cao cấp, chất da tốt. Đủ size, kích thước từ to lớn đến mini nhỏ xinh. Phù hợp công sở, dự tiệc, đi chơi, du lịch. Ship CoD toàn quốc. Có giá sỉ cho đại lý.')" />
     <meta name="keywords" content="@yield('meta-keyword', 'túi xách đẹp, túi xách nữ, túi xách du lịch, túi xách đeo chéo, túi đeo chéo nữ, túi xách nữ giá rẻ, túi xách giá rẻ, túi xách hàng hiệu, túi xách nữ hàng hiệu, túi đẹp, túi xách nữ đẹp, balo mini, balo đẹp, balo thời trang, balo hàng hiệu, balo hàn quốc, ví nam, ví nữ, ví cầm tay, ví đẹp, túi xinh')" />
 
     <link rel="alternate" href="http://kacana.vn" hreflang="vn" />
