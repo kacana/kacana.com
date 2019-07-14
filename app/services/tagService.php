@@ -372,6 +372,11 @@ class tagService extends baseService {
         return $tagModel->getSubTags($parentId, $typeId, TAG_RELATION_STATUS_ACTIVE);
     }
 
+    public function getSubTags($tagId, $typeId = TAG_RELATION_TYPE_MENU){
+        $tagModel = new tagModel();
+        return $tagModel->getSubTags($tagId, $typeId, TAG_RELATION_STATUS_ACTIVE);
+    }
+
     /**
      * @param $tagId
      * @param $typeRelation

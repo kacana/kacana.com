@@ -47,6 +47,7 @@ class IndexController extends BaseController
             $result['tag_id'] = $tag->child_id;
             $result['tag_url'] = '';
             $result['products'] = $productService->getProductByTagId($tag->id, $limit, $userId, 1, ['product_tag_type_id' => TAG_RELATION_TYPE_MENU], $excludeProductIds);
+            $result['sub_tag'] = $tagService->getSubTags($tag->child_id);
             foreach ($result['products'] as $product) {
                 array_push($excludeProductIds, $product->id);
             }
