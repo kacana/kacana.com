@@ -25,7 +25,11 @@
                             <div class="row">
                                 <div class="col-xs-12 col-sm-8" >
                                     <div class="row">
-                                        <h2>{{ $itemTag['tag']->name}}</h2>
+                                        @if(count($items) == 1)
+                                            <h2>{{ mb_strtoupper($itemTag['tag']->name)}}</h2>
+                                        @else
+                                            <h2><a href="{{urlTagProduct($itemTag)}}">{{ mb_strtoupper($itemTag['tag']->name)}}</a></h2>
+                                        @endif
                                     </div>
                                     <div class="row">
                                         <h3>@if($itemTag['tag']->short_desc){{ $itemTag['tag']->short_desc}}@else Danh sách {{ $itemTag['tag']->name}} của KACANA! @endif</h3>
