@@ -204,6 +204,8 @@
     <div role="main" class="main">
         @yield('top-infomation')
 
+        @yield('breadcrumb')
+
         @yield('content')
 
         @include('layouts.client.chat')

@@ -24,6 +24,13 @@ class ProductController extends BaseController {
             $tagIdRelateds = [];
             $product->metaKeyword = $tagService->formatMetaKeyword($product->tag, $tagIdRelateds);
 
+            $childTagMenu = $tagService->getChildTagProductByProductId($id);
+            if($childTagMenu) {
+                $breadcrumb = $tagService->getBreadCrumbByTagId($childTagMenu->id);
+            } else {
+                $breadcrumb = false;
+            }
+
             $data['productRelated'] = [];
             $productRelationIds = [];
 
@@ -48,6 +55,7 @@ class ProductController extends BaseController {
             }
 
             $data['product'] = $product;
+            $data['breadcrumb'] = $breadcrumb;
             $data['tag'] = $tagService->getTagById($tagId, false);
             $data['productSlide'] = $productGallery->getImagesProductByProductId($id, PRODUCT_IMAGE_TYPE_SLIDE);
             return view('client.product.detail', $data);
@@ -71,6 +79,15 @@ class ProductController extends BaseController {
 
         try{
             $product = $productService->getProductById($id, $userId);
+
+            $childTagMenu = $tagService->getChildTagProductByProductId($id);
+            if($childTagMenu) {
+                $breadcrumb = $tagService->getBreadCrumbByTagId($childTagMenu->id);
+            } else {
+                $breadcrumb = false;
+            }
+
+
             $tagIdRelateds = [];
             $product->metaKeyword = $tagService->formatMetaKeyword($product->tag, $tagIdRelateds);
 
@@ -104,6 +121,7 @@ class ProductController extends BaseController {
             }
 
             $data['product'] = $product;
+            $data['breadcrumb'] = $breadcrumb;
             $data['tag'] = $tagService->getTagById($tagId, false);
             $data['productSlide'] = $productGallery->getImagesProductByProductId($id, PRODUCT_IMAGE_TYPE_SLIDE);
             return view('client.product.detail', $data);
@@ -136,7 +154,7 @@ class ProductController extends BaseController {
             $options = ['tagId' => $tag, 'sort'=>$sort, 'product_tag_type_id' => TAG_RELATION_TYPE_MENU];
 
             $tags = $tagService->getTagById($tagId, TAG_RELATION_TYPE_MENU);
-
+            $breadcrumb = $tagService->getBreadCrumbByTagId($tagId);
 
             if(isset($tags->childs))
             {
@@ -191,6 +209,7 @@ class ProductController extends BaseController {
         $dataReturn = array(
             'items' => $data,
             'tag' => $tags,
+            'breadcrumb' => $breadcrumb,
             'productIdsLoaded' => implode(',',$excludeProductIds));
 
         return view('client.product.listproduct', $dataReturn);

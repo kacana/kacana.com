@@ -12,26 +12,33 @@
     </section>
 @stop
 
+@section('breadcrumb')
+    <div data-spm="breadcrumb" class="breadcrumb_list breadcrumb_custom_cls" data-spm-max-idx="2">
+        <div class="container">
+            <div class="row">
+                <ul class="breadcrumb">
+                    <li class="breadcrumb_item">
+                        <span class="breadcrumb_item_text">
+                            <a title="Trang chủ" href="/" class="breadcrumb_item_anchor">
+                               <span>Trang chủ</span>
+                            </a>
+                            <div class="breadcrumb_right_arrow"><i class="fa fa-angle-right"></i></div>
+                        </span>
+                    </li>
+                    <li class="breadcrumb_item">
+                        <span class="breadcrumb_item_text">
+                            <span class="breadcrumb_item_anchor breadcrumb_item_anchor_last">{{$search}}</span>
+                        </span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+@stop
+
 @section('content')
     <div id="listProductPage">
         <div class="block-tag">
-            <div class="block-tag-header homepage" >
-                <div class="container">
-                    <div class="row">
-                        <div class="col-xs-12 col-sm-8" >
-                            <div class="row">
-                                <h4>Sản phẩm với từ khoá <span class="color-green">{{ $search}}</span></h4>
-                            </div>
-                            <div class="row">
-                                <h5>Kết quả tìm kiếm với từ khoá {{ $search}}</h5>
-                            </div>
-                        </div>
-                        <div class="col-sm-4 pull-right">
-
-                        </div>
-                    </div>
-                </div>
-            </div>
             <div class="block-tag-body as-accessories-results">
                 {{--@include('client.product.sidebar')--}}
                 <div class="container taglist as-search-results-tiles background-white" id="content">

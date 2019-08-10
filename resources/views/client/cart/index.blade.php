@@ -15,9 +15,29 @@
                 </div>
             </div>
         </section>
+        <div data-spm="breadcrumb" class="breadcrumb_list breadcrumb_custom_cls" data-spm-max-idx="2">
+            <div class="container">
+                <div class="row">
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb_item">
+                        <span class="breadcrumb_item_text">
+                            <a title="Trang chủ" href="/" class="breadcrumb_item_anchor">
+                               <span>Trang chủ</span>
+                            </a>
+                            <div class="breadcrumb_right_arrow"><i class="fa fa-angle-right"></i></div>
+                        </span>
+                        </li>
+                        <li class="breadcrumb_item">
+                        <span class="breadcrumb_item_text">
+                            <span class="breadcrumb_item_anchor breadcrumb_item_anchor_last">Giỏ hàng</span>
+                        </span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
         <div class="container vpadding-20 background-white">
             <div class="border-bottom margin-bottom" >
-                <h4 class="color-grey bold">Giỏ hàng của tôi</h4>
                 <div class="row" >
                     <div id="cart-empty-error" class="col-xs-12 col-sm-12 text-center" >
                         <div class="color-grey-light" >Oop..!</div>

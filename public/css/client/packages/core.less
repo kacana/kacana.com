@@ -148,3 +148,25 @@ figure, figcaption{
   }
 }
 
+.breadcrumb {
+  background: #fff;
+  margin-bottom: 0;
+  padding: 8px 15px 8px 0;
+  .breadcrumb_item {
+    &:before{
+      padding: 0;
+      content: '';
+    }
+    .breadcrumb_item_text{
+      a{
+        color: @color-grey-dark;
+        font-weight: 600;
+      }
+      .breadcrumb_right_arrow {
+        padding: 0 8px;
+        display: inline-block;
+      }
+    }
+  }
+}
+

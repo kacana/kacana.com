@@ -466,6 +466,19 @@ class tagModel extends Model  {
 
         $results = $query->get();
         return $results ? $results : false;
+    }
 
+    public function getChildTagProductByProductId($productId) {
+        $query = $this->join('product_tag', 'tags.id', '=', 'product_tag.tag_id')
+            ->join('tag_relations', 'product_tag.tag_id', '=', 'tag_relations.child_id')
+            ->where('tag_relations.status', '=', TAG_RELATION_STATUS_ACTIVE)
+            ->where('product_tag.product_id', '=', $productId)
+            ->where('product_tag.type', '=', KACANA_PRODUCT_TAG_TYPE_MENU)
+            ->where('tag_relations.parent_id', '<>', 0)
+            ->select(['tags.*'])
+            ->limit(1);
+
+        $results = $query->get();
+        return $results ? $results[0] : false;
     }
 }

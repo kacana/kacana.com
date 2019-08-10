@@ -8,15 +8,39 @@
 
 @section('content')
 <div role="main" id="product-detail" data-id="{{$product->id}}" data-tag-id="{{$tag->id}}" class="main shop">
-    <section class="header-page-title">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <p class="product-tag-title"><a href="{{urlTag($tag)}}" >{{$tag->name}}</a></p>
+    @if(isset($breadcrumb) && count($breadcrumb))
+        <div data-spm="breadcrumb" class="breadcrumb_list breadcrumb_custom_cls" data-spm-max-idx="2">
+            <div class="container">
+                <div class="row">
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb_item">
+                            <span class="breadcrumb_item_text">
+                                <a title="Trang chủ" href="/" class="breadcrumb_item_anchor">
+                                   <span>Trang chủ</span>
+                                </a>
+                                <div class="breadcrumb_right_arrow"><i class="fa fa-angle-right"></i></div>
+                            </span>
+                        </li>
+                        @for($i=0; $i<count($breadcrumb);$i++)
+                            <li class="breadcrumb_item">
+                                <span class="breadcrumb_item_text">
+                                    <a title="{{$breadcrumb[$i]->name}}" href="{{urlTag($breadcrumb[$i])}}" class="breadcrumb_item_anchor">
+                                        <span>{{$breadcrumb[$i]->name}}</span>
+                                    </a>
+                                <div class="breadcrumb_right_arrow"><i class="fa fa-angle-right"></i></div>
+                                </span>
+                            </li>
+                        @endfor
+                        <li class="breadcrumb_item">
+                            <span class="breadcrumb_item_text">
+                                <span class="breadcrumb_item_anchor breadcrumb_item_anchor_last">{{$product->name}}</span>
+                            </span>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </div>
-    </section>
+    @endif
     <div class="container background-white vpadding-20">
         <div class="row">
             <div class="col-xs-12 col-sm-5 col-lg-6">

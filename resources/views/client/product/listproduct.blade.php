@@ -15,6 +15,42 @@
     </section>
 @stop
 
+@section('breadcrumb')
+    @if(isset($breadcrumb) && count($breadcrumb))
+        <div data-spm="breadcrumb" class="breadcrumb_list breadcrumb_custom_cls" data-spm-max-idx="2">
+            <div class="container">
+                <div class="row">
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb_item">
+                            <span class="breadcrumb_item_text">
+                                <a title="Trang chủ" href="/" class="breadcrumb_item_anchor">
+                                   <span>Trang chủ</span>
+                                </a>
+                                <div class="breadcrumb_right_arrow"><i class="fa fa-angle-right"></i></div>
+                            </span>
+                        </li>
+                        @for($i=0; $i<count($breadcrumb)-1;$i++)
+                            <li class="breadcrumb_item">
+                                <span class="breadcrumb_item_text">
+                                    <a title="{{$breadcrumb[$i]->name}}" href="{{urlTag($breadcrumb[$i])}}" class="breadcrumb_item_anchor">
+                                        <span>{{$breadcrumb[$i]->name}}</span>
+                                    </a>
+                                <div class="breadcrumb_right_arrow"><i class="fa fa-angle-right"></i></div>
+                                </span>
+                            </li>
+                        @endfor
+                        <li class="breadcrumb_item">
+                            <span class="breadcrumb_item_text">
+                                <span class="breadcrumb_item_anchor breadcrumb_item_anchor_last">{{$breadcrumb[count($breadcrumb)-1]->name}}</span>
+                            </span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    @endif
+@stop
+
 @section('content')
     <div itemscope itemtype="http://schema.org/ItemList" id="listProductPage">
         @foreach($items as $itemTag)
