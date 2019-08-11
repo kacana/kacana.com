@@ -47,7 +47,7 @@
                             <a href="/khach-hang/kiem-tra-don-hang">Kiểm tra đơn hàng</a>
                         </li>
                         <li class="color-white auth-menu-block">
-                            <a href="#login-header-popup">Đăng nhập</a> | <a href="#signup-header-popup">Đăng ký</a>
+                            <a href="/auth/login">Đăng nhập</a> | <a href="/auth/signup">Đăng ký</a>
                         </li>
                     @endif
                 </ul>

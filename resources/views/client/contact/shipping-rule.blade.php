@@ -1,13 +1,5 @@
-<h3 class="text-center color-grey">Chính sách vận chuyển/giao nhận/cài đặt</h3>
+<h2 class="color-grey">Chính sách vận chuyển/giao nhận/cài đặt</h2>
 @section('meta-title', 'Chính sách vận chuyển/giao nhận/cài đặt')
-<div class="row">
-    <div class="col-md-12 text-center">
-        <img class="img-responsive" style="display: unset;" src="/images/client/homepage/logo.png">
-    </div>
-</div>
-
-<hr class="tall">
-
 <div class="row">
     <div class="col-md-12">
         <div class="color-green " style="font-weight: 500">1. ĐƠN HÀNG LỚN HƠN HOẶC BẰNG 500.000 VNĐ - MIỄN PHÍ</div>

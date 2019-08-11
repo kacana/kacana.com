@@ -14,13 +14,31 @@
 
 @section('content')
     <div id="auth-page" >
-        <div class="page-header-simple" >
+        <div data-spm="breadcrumb" class="breadcrumb_list breadcrumb_custom_cls" data-spm-max-idx="2">
             <div class="container">
-                <div class="row" >
-                    <div class="col-xs-12">
-                        Người dùng
-                    </div>
-                </div>
+                <ul class="breadcrumb">
+                    <li class="breadcrumb_item">
+                    <span class="breadcrumb_item_text">
+                        <a title="Trang chủ" href="/" class="breadcrumb_item_anchor">
+                            <span>Trang chủ</span>
+                        </a>
+                        <div class="breadcrumb_right_arrow"><i class="fa fa-angle-right"></i></div>
+                    </span>
+                    </li>
+                    <li class="breadcrumb_item">
+                        <span class="breadcrumb_item_text">
+                            <a title="Trang chủ" href="#" class="breadcrumb_item_anchor">
+                               <span>Tài khoản</span>
+                            </a>
+                            <div class="breadcrumb_right_arrow"><i class="fa fa-angle-right"></i></div>
+                        </span>
+                    </li>
+                    <li class="breadcrumb_item">
+                        <span class="breadcrumb_item_text">
+                            <span class="breadcrumb_item_anchor breadcrumb_item_anchor_last">Đăng nhập</span>
+                        </span>
+                    </li>
+                </ul>
             </div>
         </div>
         <div class="container login-form-wrap background-white" >

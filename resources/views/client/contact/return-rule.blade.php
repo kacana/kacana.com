@@ -1,13 +1,5 @@
-<h3 class="text-center color-grey">Chính sách đổi/trả hàng và hoàn tiền</h3>
+<h2 class="color-grey">Chính sách đổi/trả hàng và hoàn tiền</h2>
 @section('meta-title', 'Chế độ bảo hành')
-<div class="row">
-    <div class="col-md-12 text-center">
-        <img class="img-responsive" style="display: unset;" src="/images/client/homepage/logo.png">
-    </div>
-</div>
-
-<hr class="tall">
-
 <div class="row">
     <div class="col-md-12">
         <div>
