@@ -377,15 +377,21 @@ class tagService extends baseService {
         return $tagModel->getSubTags($tagId, $typeId, TAG_RELATION_STATUS_ACTIVE);
     }
 
-    public function getBreadCrumbByTagId($tagId, $typeId = TAG_RELATION_TYPE_MENU, &$breadcrumb = array()) {
+    public function getBreadCrumbByTagId($tagId, $typeId = TAG_RELATION_TYPE_MENU, &$breadcrumb = array())
+    {
         $tagModel = new tagModel();
         $tag = $tagModel->getTagById($tagId, $typeId);
 
-        if($tag->parent_id) {
+        if ($tag && $tag->parent_id) {
             $this->getBreadCrumbByTagId($tag->parent_id, $typeId, $breadcrumb);
         }
 
-        array_push($breadcrumb, $tag);
+        if ($tag) {
+            array_push($breadcrumb, $tag);
+        } else {
+            $tag = $tagModel->getTagById($tagId, false);
+            array_push($breadcrumb, $tag);
+        }
 
         return $breadcrumb;
     }
