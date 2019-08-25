@@ -12,7 +12,7 @@
                             @endif
                         @endforeach
                             <a href="/contact/chinh-sach-van-chuyen">
-                                <img src="{{AWS_CDN_URL}}/images/client/kacana-fast-banner.png" data-thumb="{{AWS_CDN_URL}}/images/client/kacana-fast-banner.png" alt="" />
+                                <img src="{{AWS_CDN_URL}}/images/client/kacana-fast-banner.png" data-thumb="{{AWS_CDN_URL}}/images/client/kacana-fast-banner.jpg" alt="" />
                             </a>
                         <a href="/san-pham/balo-laptop-nam-mixi-thiet-ke-chong-trom-hoan-hao-bm0601-m5510--1891--442">
                             <img src="{{AWS_CDN_URL}}/images/client/balochongtrom.jpg" data-thumb="{{AWS_CDN_URL}}/images/client/balochongtrom.jpg" alt="" />
