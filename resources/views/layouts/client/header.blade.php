@@ -175,7 +175,7 @@
     <div class="container">
         <div class="logo">
             <a href="/">
-                <img alt="KACANA.VN" width="134" height="30" data-sticky-width="134" data-sticky-height="30" src="{{AWS_CDN_URL}}/images/client/logo.png">
+                <img alt="KACANA.VN" width="170" data-sticky-width="120" src="{{AWS_CDN_URL}}/images/client/logo.png">
             </a>
         </div>
     </div>
