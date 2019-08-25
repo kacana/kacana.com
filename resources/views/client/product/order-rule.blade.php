@@ -2,15 +2,14 @@
     <ul class="nav" >
         <li class="phone">
             <i class="pe-7s-plane pe-2x"></i>
-            Giao hàng toàn quốc
+            Miễn phí giao hàng toàn quốc với
+            <a target="_blank" href="/contact/chinh-sach-van-chuyen" style="display: inline-block;">
+                <img style="width: 40px;position: absolute;top: -4px;left: 0px;" src="//image.kacana.vn/images/client/kacana-fast-small.png">
+            </a>
         </li>
         <li class="phone">
             <i class="pe-7s-cash pe-2x"></i>
             Thanh toán khi nhận hàng
-        </li>
-        <li class="phone">
-            <i class="pe-7s-car pe-2x"></i>
-            Miễn phí ship với đơn hàng <b> > 500k </b>
         </li>
     </ul>
 </div>
