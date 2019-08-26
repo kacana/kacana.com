@@ -15,7 +15,7 @@ var homepagePackage = {
                     boxCols: 8,
                     boxRows: 4,
                     animSpeed: 300,
-                    pauseTime: 5000,
+                    pauseTime: 15000,
                     startSlide: 0,
                     directionNav: true,
                     controlNav: true,
