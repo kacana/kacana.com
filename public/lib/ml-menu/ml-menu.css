@@ -62,12 +62,13 @@
 .menu__item {
 	display: block;
 	width: calc(100% - 35px);
+	border-bottom: 1px solid;
 }
 .menu__item.border-top{
 	border-top: 1px solid #ddd;
 }
 .menu__item.border-bottom{
-	border-bottom: 1px solid #ddd;
+	border-bottom: 1px solid #999;
 }
 .menu__link {
 	color: #ddd;
@@ -91,7 +92,6 @@
 	text-decoration: none;
 	transition: color 0.1s ease 0s;
 	width: 170px;
-	text-transform: uppercase;
 }
 .menu__link[data-submenu]::after {
 	font-family: "Pe-icon-7-stroke";

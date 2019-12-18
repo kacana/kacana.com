@@ -1,6 +1,7 @@
 <?php namespace App\models;
 
 use App\services\chatService;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -65,6 +66,10 @@ class chatMessageModel extends Model {
             ->select(['chat_messages.*', 'isRead' => 'chat_participants.is_read']);
 
         return $messages->get();
+    }
+
+    public function getLastMessage(){
+        return Model::orderBy('id', 'desc')->first();
     }
 
 }

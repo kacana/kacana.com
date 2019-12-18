@@ -24,6 +24,13 @@ class ProductController extends BaseController {
             $tagIdRelateds = [];
             $product->metaKeyword = $tagService->formatMetaKeyword($product->tag, $tagIdRelateds);
 
+            $childTagMenu = $tagService->getChildTagProductByProductId($id);
+            if($childTagMenu) {
+                $breadcrumb = $tagService->getBreadCrumbByTagId($childTagMenu->id);
+            } else {
+                $breadcrumb = false;
+            }
+
             $data['productRelated'] = [];
             $productRelationIds = [];
 
@@ -48,6 +55,7 @@ class ProductController extends BaseController {
             }
 
             $data['product'] = $product;
+            $data['breadcrumb'] = $breadcrumb;
             $data['tag'] = $tagService->getTagById($tagId, false);
             $data['productSlide'] = $productGallery->getImagesProductByProductId($id, PRODUCT_IMAGE_TYPE_SLIDE);
             return view('client.product.detail', $data);
@@ -71,6 +79,15 @@ class ProductController extends BaseController {
 
         try{
             $product = $productService->getProductById($id, $userId);
+
+            $childTagMenu = $tagService->getChildTagProductByProductId($id);
+            if($childTagMenu) {
+                $breadcrumb = $tagService->getBreadCrumbByTagId($childTagMenu->id);
+            } else {
+                $breadcrumb = false;
+            }
+
+
             $tagIdRelateds = [];
             $product->metaKeyword = $tagService->formatMetaKeyword($product->tag, $tagIdRelateds);
 
@@ -104,6 +121,7 @@ class ProductController extends BaseController {
             }
 
             $data['product'] = $product;
+            $data['breadcrumb'] = $breadcrumb;
             $data['tag'] = $tagService->getTagById($tagId, false);
             $data['productSlide'] = $productGallery->getImagesProductByProductId($id, PRODUCT_IMAGE_TYPE_SLIDE);
             return view('client.product.detail', $data);
@@ -136,7 +154,7 @@ class ProductController extends BaseController {
             $options = ['tagId' => $tag, 'sort'=>$sort, 'product_tag_type_id' => TAG_RELATION_TYPE_MENU];
 
             $tags = $tagService->getTagById($tagId, TAG_RELATION_TYPE_MENU);
-
+            $breadcrumb = $tagService->getBreadCrumbByTagId($tagId);
 
             if(isset($tags->childs))
             {
@@ -169,6 +187,11 @@ class ProductController extends BaseController {
                 $data[] = $result;
             }
 
+            $excludeProductIds= array();
+            foreach ($result['products'] as $product) {
+                array_push($excludeProductIds, $product->id);
+            }
+
             $tags->allChilds = $tagService->getAllChildTagHaveProduct($tagId);
             $tagIdRelated = [];
             $tags->tagKeyword = $tagService->formatMetaKeyword($tags->allChilds, $tagIdRelated);
@@ -183,7 +206,13 @@ class ProductController extends BaseController {
                 return view('errors.404', ['error_message' => $e->getMessage()]);
         }
 
-        return view('client.product.listproduct', array('items' => $data, 'tag' => $tags));
+        $dataReturn = array(
+            'items' => $data,
+            'tag' => $tags,
+            'breadcrumb' => $breadcrumb,
+            'productIdsLoaded' => implode(',',$excludeProductIds));
+
+        return view('client.product.listproduct', $dataReturn);
     }
 
     public function suggestSearchProduct(Request $request){
@@ -222,10 +251,11 @@ class ProductController extends BaseController {
         $type = $request->input('type');
         $page = $request->input('page', 1);
         $tagId = $request->input('tagId', 0);
+        $productIdLoaded = explode(',', $request->input('productIdLoaded', 0));
 
         try{
             $userId = (\Kacana\Util::isLoggedIn())?$this->_user->id:0;
-            $data = $productService->loadMoreProductWithType($page, $type, $tagId, $userId);
+            $data = $productService->loadMoreProductWithType($page, $type, $tagId, $productIdLoaded, $userId);
 
             if($type == PRODUCT_HOMEPAGE_TYPE_TAG)
             {
@@ -234,11 +264,13 @@ class ProductController extends BaseController {
 
             if($data)
             {
-                $result['ok'] = 1;
                 $result['data'] = $data;
-                if(count($data) < KACANA_HOMEPAGE_ITEM_PER_TAG || ($type == PRODUCT_HOMEPAGE_TYPE_NEWEST && $page == 10))
-                    $result['stop_load'] = 1;
+                $result['productIdLoaded'] = implode(',', $productIdLoaded);
             }
+            $result['ok'] = 1;
+            if(count($data) < KACANA_HOMEPAGE_ITEM_PER_TAG || ($type == PRODUCT_HOMEPAGE_TYPE_NEWEST && $page == 20))
+                $result['stop_load'] = 1;
+
         } catch (\Exception $e) {
             if($request->ajax())
             {

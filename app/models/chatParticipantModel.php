@@ -1,5 +1,6 @@
 <?php namespace App\models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -38,7 +39,6 @@ class chatParticipantModel extends Model {
 
     public function updateLastRead($threadId, $userId, $isRead = 1){
         $participant = $this->where('thread_id', $threadId)->get();
-
         if(count($participant)){
             if($isRead)
                 return $this->where('thread_id', $threadId)
@@ -58,11 +58,22 @@ class chatParticipantModel extends Model {
                 $participant->user_id = $userId;
 
             }
-
             $participant->save();
         }
 
         return $participant;
+    }
+
+    public function getParticipantByThreadId($threadId)
+    {
+        $participant = $this->where('thread_id', $threadId);
+
+        return $participant->first();
+    }
+
+    public function updateAutoReplyAt($threadId){
+        $this->where('thread_id', $threadId)
+            ->update(['auto_reply_at' => Carbon::now()]);
     }
 
 }

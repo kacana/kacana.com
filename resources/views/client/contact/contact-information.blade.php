@@ -1,12 +1,5 @@
-<h3 class="text-center color-grey">Thông tin liên hệ</h3>
+<h2 class="color-grey">Thông tin liên hệ</h2>
 @section('meta-title', 'Thông tin liên hệ')
-<div class="row">
-    <div class="col-md-12 text-center">
-        <img class="img-responsive" style="display: unset;" src="/images/client/homepage/logo.png">
-    </div>
-</div>
-
-<hr class="tall">
 
 <div class="row">
     <div class="col-md-12">

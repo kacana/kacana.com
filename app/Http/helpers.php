@@ -286,9 +286,6 @@ function urlProductDetail($item)
     if(!empty($item)){
         if(!empty($item->name)){
             $url = 'san-pham/' . str_slug($item->name) . '--' . $item->id;
-            if($item->tag_id) {
-                $url .= '--' . $item->tag_id;
-            }
         }
     }
 

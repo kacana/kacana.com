@@ -1,12 +1,5 @@
-<h3 class="text-center color-grey">Hướng dẫn mua hàng</h3>
+<h2 class="color-grey">Hướng dẫn mua hàng</h2>
 @section('meta-title', 'Hướng dẫn mua hàng')
-<div class="row">
-    <div class="col-md-12 text-center">
-        <img class="img-responsive" style="display: unset;" src="/images/client/homepage/logo.png">
-    </div>
-</div>
-
-<hr class="tall">
 
 <div class="row">
     <div class="col-md-12">

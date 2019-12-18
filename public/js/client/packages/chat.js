@@ -105,7 +105,7 @@ var chatPackage = {
             var callBack = function(data){
                 if(data.ok){
                     Kacana.chat.threadId = data.threadId;
-                    Kacana.chat.setUpSocketChat(Kacana.chat.threadId);
+
                     data.time = $.now();
                     data.is_close = 0;
                     Lockr.set(Kacana.chat.keyStorge, data);
@@ -115,6 +115,8 @@ var chatPackage = {
                         Kacana.chat.page.find('.messages').html('');
                         Kacana.chat.sendMessage('Xin chào - Muốn hỗ trợ gì nè! :)', 'left');
                         Kacana.chat.checkHistoryMessage();
+                    } else {
+                        Kacana.chat.setUpSocketChat(Kacana.chat.threadId);
                     }
 
                 }

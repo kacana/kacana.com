@@ -8,6 +8,14 @@ tagpagePackage = {
             Kacana.tagpage.sort();
             Kacana.tagpage.showLoading();
             Kacana.tagpage.removeLoading();
+            Kacana.tagpage.bindEvent();
+        },
+        bindEvent: function(){
+            $('#listProductPage .tag-description').hover(function () {
+                $(this).addClass('expand');
+            }, function () {
+                $(this).removeClass('expand');
+            });
         },
         showLoading: function(){
             $("#as-search-results").addClass('as-search-fade');

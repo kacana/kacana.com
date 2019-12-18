@@ -57,7 +57,7 @@ class cartService extends baseService {
         $properties = $product->properties;
         $options = [];
 
-        $options['url'] = urlProductDetail($product).$tagId;
+        $options['url'] = urlProductDetail($product);
         $options['priceShow'] = formatMoney($productPrice);
         $options['productId'] = $productId;
 

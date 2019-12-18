@@ -47,7 +47,7 @@
                             <a href="/khach-hang/kiem-tra-don-hang">Kiểm tra đơn hàng</a>
                         </li>
                         <li class="color-white auth-menu-block">
-                            <a href="#login-header-popup">Đăng nhập</a> | <a href="#signup-header-popup">Đăng ký</a>
+                            <a href="/auth/login">Đăng nhập</a> | <a href="/auth/signup">Đăng ký</a>
                         </li>
                     @endif
                 </ul>
@@ -175,7 +175,7 @@
     <div class="container">
         <div class="logo">
             <a href="/">
-                <img alt="KACANA.VN" width="134" height="30" data-sticky-width="134" data-sticky-height="30" src="{{AWS_CDN_URL}}/images/client/logo.png">
+                <img alt="KACANA.VN" width="170" data-sticky-width="120" src="{{AWS_CDN_URL}}/images/client/logo.png">
             </a>
         </div>
     </div>

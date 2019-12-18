@@ -445,6 +445,10 @@
         max-height: 1200px;
         overflow-x: hidden;
         overflow-y: scroll;
+        @media (max-width: 768px) {
+          max-height: unset;
+          overflow-y: hidden;
+        }
       }
       .product-title a{
         font-size: 12px;
@@ -529,11 +533,18 @@
 
 .tag-description{
   color: @color-grey-light;
+  max-height: 150px;
+  overflow: hidden;
+  background-image: linear-gradient(#fff, #fff,#8a8a7d);
   h1,h2,h3,h4,h5{
     text-transform: none;
     color: @color-grey-light;
     font-weight: 400;
     margin: 20px 0 5px;
     font-weight: 500;
+  }
+  &.expand{
+    max-height: unset;
+    background: #fff;
   }
 }

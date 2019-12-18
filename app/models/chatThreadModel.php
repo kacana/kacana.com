@@ -67,5 +67,7 @@ class chatThreadModel extends Model {
         return $threads->get();
     }
 
-
+    public function getThreadById($id){
+        return $this->find($id);
+    }
 }

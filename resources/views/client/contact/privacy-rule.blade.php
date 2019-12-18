@@ -1,12 +1,5 @@
-<h3 class="text-center color-grey">Chính sách bảo mật thông tin</h3>
+<h2 class="color-grey">Chính sách bảo mật thông tin</h2>
 @section('meta-title', 'Chính sách bảo mật')
-<div class="row">
-    <div class="col-md-12 text-center">
-        <img class="img-responsive" style="display: unset;" src="/images/client/homepage/logo.png">
-    </div>
-</div>
-
-<hr class="tall">
 
 <div class="row">
     <div class="col-md-12">

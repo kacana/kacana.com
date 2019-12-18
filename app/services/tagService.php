@@ -372,6 +372,37 @@ class tagService extends baseService {
         return $tagModel->getSubTags($parentId, $typeId, TAG_RELATION_STATUS_ACTIVE);
     }
 
+    public function getSubTags($tagId, $typeId = TAG_RELATION_TYPE_MENU){
+        $tagModel = new tagModel();
+        return $tagModel->getSubTags($tagId, $typeId, TAG_RELATION_STATUS_ACTIVE);
+    }
+
+    public function getBreadCrumbByTagId($tagId, $typeId = TAG_RELATION_TYPE_MENU, &$breadcrumb = array())
+    {
+        $tagModel = new tagModel();
+        $tag = $tagModel->getTagById($tagId, $typeId);
+
+        if ($tag && $tag->parent_id) {
+            $this->getBreadCrumbByTagId($tag->parent_id, $typeId, $breadcrumb);
+        }
+
+        if ($tag) {
+            array_push($breadcrumb, $tag);
+        } else {
+            $tag = $tagModel->getTagById($tagId, false);
+            array_push($breadcrumb, $tag);
+        }
+
+        return $breadcrumb;
+    }
+
+    public function getBreadCrumbByProductId($productId, $typeId = TAG_RELATION_TYPE_MENU, &$breadcrumb = array()) {
+        $tagModel = new tagModel();
+
+        $tag = $tagModel->getTagById($productId, TAG_RELATION_TYPE_MENU);
+
+    }
+
     /**
      * @param $tagId
      * @param $typeRelation
@@ -565,6 +596,11 @@ class tagService extends baseService {
         }
 
         return true;
+    }
+
+    public function getChildTagProductByProductId($productId) {
+        $tagModel = new tagModel();
+        return $tagModel->getChildTagProductByProductId($productId);
     }
 
 }

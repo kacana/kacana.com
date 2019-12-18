@@ -1,7 +1,6 @@
 body{
   color: @color-grey-light;
   font-family: "Roboto";
-  background: @color-background;
 }
 h1,h2,h3,h4,h5
 {
@@ -135,5 +134,40 @@ figure, figcaption{
 .vpadding-30{
   padding-top: 30px;
   padding-bottom: 30px;
+}
+
+@media (min-width: 1441px){
+  .container {
+    width: ~'calc(100% - 90px)';
+  }
+}
+
+@media (min-width: 1820px){
+  .container {
+    width: 1790px;
+  }
+}
+
+.breadcrumb {
+  background: #fff;
+  margin-bottom: 0;
+  padding: 8px 15px 8px 0;
+  .breadcrumb_item {
+    white-space: nowrap;
+    &:before{
+      padding: 0;
+      content: '';
+    }
+    .breadcrumb_item_text{
+      a{
+        color: @color-grey-dark;
+        font-weight: 600;
+      }
+      .breadcrumb_right_arrow {
+        padding: 0 8px;
+        display: inline-block;
+      }
+    }
+  }
 }
 

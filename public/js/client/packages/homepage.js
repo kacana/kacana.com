@@ -3,8 +3,8 @@ var homepagePackage = {
         homePageId: $('#homepage, #listProductPage'),
         adviseBtn: $(".btn-advise"),
         actionSendBtn: $("#btn-create"),
+        loadingContent: false,
         init: function(){
-            Kacana.homepage.applySlideImage();
             Kacana.homepage.showPopupRequest();
             Kacana.homepage.closeAdvisePopup();
             Kacana.homepage.bindEvent();
@@ -15,7 +15,7 @@ var homepagePackage = {
                     boxCols: 8,
                     boxRows: 4,
                     animSpeed: 300,
-                    pauseTime: 5000,
+                    pauseTime: 15000,
                     startSlide: 0,
                     directionNav: true,
                     controlNav: true,
@@ -48,6 +48,16 @@ var homepagePackage = {
             });
 
             Kacana.homepage.homePageId.on('click','.quick-order-btn', Kacana.homepage.quickOrder);
+
+            var $win = $(window);
+            $win.scroll(function () {
+                var scroll = $win.height() + $win.scrollTop() + 500;
+                var docummentHeight = $(document).height();
+               if (scroll >= docummentHeight && !Kacana.homepage.loadingContent) {
+                   Kacana.homepage.loadingContent = true;
+                   Kacana.homepage.autoLoadMoreProductWithType();
+                }
+            });
         },
         quickOrder: function () {
             var productId = $(this).data('id');
@@ -87,6 +97,7 @@ var homepagePackage = {
             var typeLoadProduct = $(this).data('type');
             var page = $(this).data('page');
             var tagId = $(this).data('tag-id');
+            var productIdLoaded = $('#product-id-loaded').val();
             var that = $(this);
 
             var callBack = function(data){
@@ -99,8 +110,8 @@ var homepagePackage = {
                     // }
                     var productItemTemplateGenerate = $.tmpl(productItemTemplate, {'products': products});
                     that.parents('.block-tag').find('.block-tag-body .row').append(productItemTemplateGenerate);
-                    Kacana.homepage.applySlideImage();
                     that.data('page', page+1);
+                    $('#product-id-loaded').val(data.productIdLoaded);
                 }
                 else{
                     that.remove();
@@ -113,7 +124,50 @@ var homepagePackage = {
             };
             var errorCallBack = function(){};
             $(this).find('i').addClass('pe-spin');
-            Kacana.ajax.homepage.loadMoreProductWithType(typeLoadProduct, page, tagId, callBack, errorCallBack);
+            Kacana.ajax.homepage.loadMoreProductWithType(typeLoadProduct, page, tagId, productIdLoaded, callBack, errorCallBack);
+        },
+        autoLoadMoreProductWithType: function(){
+            var block = $('#auto-load-more-block');
+            var typeLoadProduct = block.data('type');
+            var page = block.data('page');
+            var tagId = block.data('tag-id');
+            var productIdLoaded = $('#product-id-loaded').val();
+
+            var callBack = function(data){
+                if(data.ok)
+                {
+                    var productItemTemplate = $('#template-product-item').html();
+                    var products = data.data;
+                    // if(typeLoadProduct == 'product-tag'){
+                    //     products = data.data.data;
+                    // }
+                    var productItemTemplateGenerate = $.tmpl(productItemTemplate, {'products': products});
+                    block.find('.block-tag-body .row').append(productItemTemplateGenerate);
+                    block.data('page', page+1);
+                    $('#product-id-loaded').val(data.productIdLoaded);
+                    Kacana.homepage.loadingContent = false;
+                }
+                else{
+                    Kacana.homepage.loadingContent = true;
+                    Kacana.utils.loading.closeLoading();
+                }
+
+                if(data.stop_load == 1){
+                    console.log($('#auto-load-more-block').data('type'));
+                    if($('#auto-load-more-block').data('type') == 'product-tag') {
+                        $('#auto-load-more-block').data('type', 'product-newest');
+                        Kacana.homepage.loadingContent = false;
+                    } else {
+                        Kacana.homepage.loadingContent = true;
+                    }
+                }
+                Kacana.utils.loading.closeLoading();
+            };
+
+            var errorCallBack = function(){};
+            Kacana.utils.loading.loading(block.find('.auto-loading-icon-processing'), 'white');
+            Kacana.ajax.homepage.loadMoreProductWithType(typeLoadProduct, page, tagId, productIdLoaded, callBack, errorCallBack);
+
         },
         applySlideImage: function(){
 

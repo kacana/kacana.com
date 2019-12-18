@@ -50,7 +50,7 @@
                     <div class="row">
                         <div class="col-xs-12 col-sm-8" >
                             <div class="row">
-                                <h2>TÚI XÁCH GIẢM GIÁ</h2>
+                                <h2>Túi xách giảm giá</h2>
                             </div>
                             <div class="row">
                                 <h3>Túi xách đang khuyến mãi hấp dẫn tại KACANA</h3>
@@ -95,16 +95,16 @@
             <div class="block-tag-header homepage" >
                 <div class="container">
                     <div class="row">
-                        <div class="col-xs-12 col-sm-8" >
+                        <div class="col-xs-12" >
                             <div class="row">
-                                <h2>{{$block['tag']}}</h2>
+                                <h2><a href="{{urlTagProduct($block)}}" >{{mb_strtoupper($block['tag'])}}</a></h2>
+                                @foreach($block['sub_tag'] as $subTag)
+                                    <a class="sub-tab-header" href="{{urlTag($subTag)}}" >{{mb_strtoupper($subTag->name)}}</a>
+                                @endforeach
                             </div>
                             <div class="row">
                                 <h3>@if($block['short_desc']){{$block['short_desc']}}@else Danh sách {{ $block['tag']}} của KACANA! @endif</h3>
                             </div>
-                        </div>
-                        <div class="show-all col-xs-12 col-sm-4" >
-                            <a href="{{urlTagProduct($block)}}">Xem tất cả <i class="fa fa-angle-right"></i></a>
                         </div>
                     </div>
                 </div>
@@ -142,6 +142,38 @@
         </div>
         @endforeach
     @endif
+
+    <div class="block-tag" id="auto-load-more-block" data-tag-id="0" data-page="2" data-type="{{PRODUCT_HOMEPAGE_TYPE_NEWEST}}" >
+        <div class="block-tag-header homepage" >
+            <div class="container">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12" >
+                        <div class="row">
+                            <h2>TÚI XÁCH BẠN SẼ THÍCH</h2>
+                        </div>
+                        <div class="row">
+                            <h3>Những mẫu túi xách bạn sẽ thích tại KACANA</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="block-tag-body" >
+            <div class="container taglist background-white" >
+                <div class="row">
+
+                </div>
+            </div>
+        </div>
+        <div class="container background-white" >
+            <div class="row">
+                <div class="col-xs-12 text-center" >
+                    <span class="auto-loading-icon-processing" ></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>
 
 @stop

@@ -15,6 +15,42 @@
     </section>
 @stop
 
+@section('breadcrumb')
+    @if(isset($breadcrumb) && count($breadcrumb))
+        <div data-spm="breadcrumb" class="breadcrumb_list breadcrumb_custom_cls" data-spm-max-idx="2">
+            <div class="container">
+                <div class="row">
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb_item">
+                            <span class="breadcrumb_item_text">
+                                <a title="Trang chủ" href="/" class="breadcrumb_item_anchor">
+                                   <span>Trang chủ</span>
+                                </a>
+                                <div class="breadcrumb_right_arrow"><i class="fa fa-angle-right"></i></div>
+                            </span>
+                        </li>
+                        @for($i=0; $i<count($breadcrumb)-1;$i++)
+                            <li class="breadcrumb_item">
+                                <span class="breadcrumb_item_text">
+                                    <a title="{{$breadcrumb[$i]->name}}" href="{{urlTag($breadcrumb[$i])}}" class="breadcrumb_item_anchor">
+                                        <span>{{$breadcrumb[$i]->name}}</span>
+                                    </a>
+                                <div class="breadcrumb_right_arrow"><i class="fa fa-angle-right"></i></div>
+                                </span>
+                            </li>
+                        @endfor
+                        <li class="breadcrumb_item">
+                            <span class="breadcrumb_item_text">
+                                <span class="breadcrumb_item_anchor breadcrumb_item_anchor_last">{{$breadcrumb[count($breadcrumb)-1]->name}}</span>
+                            </span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    @endif
+@stop
+
 @section('content')
     <div itemscope itemtype="http://schema.org/ItemList" id="listProductPage">
         @foreach($items as $itemTag)
@@ -25,7 +61,11 @@
                             <div class="row">
                                 <div class="col-xs-12 col-sm-8" >
                                     <div class="row">
-                                        <h2>{{ $itemTag['tag']->name}}</h2>
+                                        @if(count($items) == 1)
+                                            <h2>{{ mb_strtoupper($itemTag['tag']->name)}}</h2>
+                                        @else
+                                            <h2><a href="{{urlTagProduct($itemTag)}}">{{ mb_strtoupper($itemTag['tag']->name)}}</a></h2>
+                                        @endif
                                     </div>
                                     <div class="row">
                                         <h3>@if($itemTag['tag']->short_desc){{ $itemTag['tag']->short_desc}}@else Danh sách {{ $itemTag['tag']->name}} của KACANA! @endif</h3>
@@ -78,18 +118,39 @@
             @endif
         @endforeach
 
-        @if(count($items) == 1)
-            <div style="margin-top: -7px" class="container background-white">
-                <div class="row">
-                    <div class="col-md-12 text-center">
-                        {!! $items[0]['products']->appends(['sort' => (isset($options['sort']))?$options['sort']:''])->render() !!}
+        <div class="block-tag" id="auto-load-more-block" data-tag-id="{{$tag->id}}" data-page="2" data-type="{{PRODUCT_HOMEPAGE_TYPE_TAG}}" >
+            <div class="block-tag-header homepage" >
+                <div class="container">
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12" >
+                            <div class="row">
+                                <h2>TÚI XÁCH BẠN SẼ THÍCH</h2>
+                            </div>
+                            <div class="row">
+                                <h3>Những mẫu túi xách bạn sẽ thích tại KACANA</h3>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-        @endif
+            <div class="block-tag-body" >
+                <div class="container taglist background-white" >
+                    <div class="row">
+
+                    </div>
+                </div>
+            </div>
+            <div class="container background-white" >
+                <div class="row">
+                    <div class="col-xs-12 text-center" >
+                        <span class="auto-loading-icon-processing" ></span>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         @if($tag->description)
-            <div class="container tag-description background-white vpadding-10 margin-top-10px">
+            <div class="container tag-description vpadding-10 margin-top-10px">
                 <div class="row">
                     <div class="col-md-12">
                         {!! fixHtml($tag->description) !!}

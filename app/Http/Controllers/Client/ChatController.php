@@ -37,7 +37,7 @@ class ChatController extends BaseController {
             $chatService->createNewMessage($userTrackingHistoryId, $threadId, $userId, $chatType, $message);
             $chatService->updateLastRead($threadId, $userId, 0);
             $pusher->createNewThread($threadId, 'message');
-            $chatService->checkTimeAutoReply($threadId);
+            $chatService->autoReply($threadId);
             $result['ok'] = 1;
             $result['thread'] = $threadId;
         }
@@ -80,7 +80,7 @@ class ChatController extends BaseController {
             $mailService->sendEmailNewThread($chatThread->id, $message);
 
             $result['reload'] = 0;
-            if($chatService->checkTimeAutoReply($chatThread->id))
+            if($chatService->autoReply($chatThread->id))
                 $result['reload'] = 1;
 
             $result['ok'] = 1;
