@@ -22,15 +22,6 @@
 
                     <ul class="contact margin-top-10px">
                         <li>
-                            Hộ Kinh Doanh: TÚI XÁCH KACANA
-                        </li>
-                        <li>
-                            Giấy CNĐKDN: 41E8 033230 - Ngày cấp: 05/04/2017 - Cấp lần đầu
-                        </li>
-                        <li>
-                            Cơ quan cấp: Uỷ ban nhân dân quận 5, Hồ Chí Minh
-                        </li>
-                        <li>
                             Địa chỉ đăng ký kinh doanh: {{KACANA_HEAD_ADDRESS_STREET}}, {{KACANA_HEAD_ADDRESS_WARD}}, {{KACANA_HEAD_ADDRESS_DISTRICT}}, {{KACANA_HEAD_ADDRESS_CITY}}
                         </li>
                     </ul>
