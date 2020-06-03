@@ -29,9 +29,9 @@ class CreateCSVRemarketing extends Command implements SelfHandling {
 
         $ships = $shipGhnService->getAllShippingProcessing();
         \Log::info('__CRON__ Update status ship: ');
-
-        $baseService = new baseService();
-        $baseService->fixImageSize();
+//
+//        $baseService = new baseService();
+//        $baseService->fixImageSize();
 
 //        foreach ($ships as $ship)
 //        {
