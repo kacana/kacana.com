@@ -6370,8 +6370,9 @@
       }
 
       $video.addClass('note-video-clip');
-
-      return $video[0];
+      var wrapper = $('<div>').addClass("embed-video");
+      wrapper.append($video);
+      return wrapper[0];
     };
 
     this.show = function () {
