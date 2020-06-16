@@ -11,11 +11,11 @@
                 <h3 class="box-title">Đơn Hàng: #{{$order->order_code}} Của [{{$order->user->name}}] Tổng {{formatMoney($order->total)}}</h3>
                 <div class="box-tools pull-left ">
                     @if($order->order_type == KACANA_ORDER_TYPE_ONLINE)
-                        @if(isset($shippingServiceInfos) && count($order->orderDetail))
+                        @if(isset($feeGhtk) && $feeGhtk && count($order->orderDetail))
                             <button data-toggle="modal" data-target="#modal-shipping-order" class="btn btn-primary btn-sm">
                                 <i class="fa fa-plane"></i> Ship cho khách
                             </button>
-                        @elseif(isset($shippingServiceInfos) && !count($order->orderDetail))
+                        @elseif(isset($feeGhtk) && $feeGhtk && !count($order->orderDetail))
                                 <button class="btn btn-danger btn-sm">
                                     <i class="fa fa-ban"></i> Vui lòng thêm sản phẩm
                                 </button>
@@ -25,7 +25,7 @@
                             </button>
                         @endif
                     @else
-                        @if(!isset($shippingServiceInfos))
+                        @if(!isset($feeGhtk) && $feeGhtk)
                             <a href="#cus-address-info-block" class="btn btn-warning btn-sm">
                                 <i class="ion-alert-circled"></i> Vui lòng cập nhật địa chỉ khách hàng
                             </a>
