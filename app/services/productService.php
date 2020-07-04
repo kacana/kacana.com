@@ -509,6 +509,11 @@ class productService extends baseService {
         preg_match_all('/src="(.*?)"/', $description, $items);
         $images = $items[1];
         $productImageDesc = $productGallery->getImagesProductByProductId($id, PRODUCT_IMAGE_TYPE_DESC);
+
+        foreach ( $images as &$image) {
+            $image = str_replace("http://dd4km0msp8gof.cloudfront.net", AWS_CDN_URL, $image);
+        }
+
         foreach ($productImageDesc as $image)
         {
             if(!in_array($image->image, $images))

@@ -29,27 +29,24 @@ class CreateCSVRemarketing extends Command implements SelfHandling {
 
         $ships = $shipGhnService->getAllShippingProcessing();
         \Log::info('__CRON__ Update status ship: ');
-//
-//        $baseService = new baseService();
-//        $baseService->fixImageSize();
 
-//        foreach ($ships as $ship)
-//        {
-//            if($ship->ship_service_type == KACANA_SHIP_TYPE_SERVICE_GHN)
-//            {
-//                sleep(7);
-//                $status = $shipGhnService->GetOrderInfoStatus($ship->id);
-//                $ship =  $shipGhnService->updateShippingStatus($ship->id, $status);
-//            }
-//            elseif($ship->ship_service_type == KACANA_SHIP_TYPE_SERVICE_GHTK)
-//            {
-//                $status = $shipGhtkService->GetOrderInfoStatus($ship->id);
-//                if($status)
-//                    $ship =  $shipGhnService->updateShippingStatus($ship->id, $status);
-//            }
-//
-//            \Log::info('__CRON__ Update status ship: '. $ship->id);
-//        }
+        foreach ($ships as $ship)
+        {
+            if($ship->ship_service_type == KACANA_SHIP_TYPE_SERVICE_GHN)
+            {
+                sleep(7);
+                $status = $shipGhnService->GetOrderInfoStatus($ship->id);
+                $ship =  $shipGhnService->updateShippingStatus($ship->id, $status);
+            }
+            elseif($ship->ship_service_type == KACANA_SHIP_TYPE_SERVICE_GHTK)
+            {
+                $status = $shipGhtkService->GetOrderInfoStatus($ship->id);
+                if($status)
+                    $ship =  $shipGhnService->updateShippingStatus($ship->id, $status);
+            }
+
+            \Log::info('__CRON__ Update status ship: '. $ship->id);
+        }
 
 
 	}

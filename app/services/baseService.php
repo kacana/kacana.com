@@ -225,33 +225,33 @@ class baseService
         return $keyAvailable;
     }
 
-    public function fixImageSize(){
-        $basicService = new baseService();
-        $productService = new productService();
-
-        $products = $productService->getAllProductAvailable();
-        \Log::debug('-----PRODUCT NAME: '.' ------');
-        foreach ($products as $product){
-            if($product->id >= 2137)
-            {
-                \Log::debug('-----PRODUCT ID: '.$product->id.' ------');
-
-                \Log::debug('-----PRODUCT NAME: '.$product->name.' ------');
-                foreach ($product->galleries as $gallery){
-                    $image = $gallery->getOriginal('image');
-                    $basicService->optimizeImage($image);
-
-                    if($gallery->getOriginal('thumb'))
-                    {
-                        $image = $gallery->getOriginal('thumb');
-                        $basicService->optimizeImage($image);
-                    }
-                }
-                $basicService->optimizeImage($product->getOriginal('image'));
-            }
-        }
-        \Log::info('--- DONE ROI ---');
-    }
+//    public function fixImageSize(){
+//        $basicService = new baseService();
+//        $productService = new productService();
+//
+//        $products = $productService->getAllProductAvailable();
+//        \Log::debug('-----PRODUCT NAME: '.' ------');
+//        foreach ($products as $product){
+//            if($product->id >= 2137)
+//            {
+//                \Log::debug('-----PRODUCT ID: '.$product->id.' ------');
+//
+//                \Log::debug('-----PRODUCT NAME: '.$product->name.' ------');
+//                foreach ($product->galleries as $gallery){
+//                    $image = $gallery->getOriginal('image');
+//                    $basicService->optimizeImage($image);
+//
+//                    if($gallery->getOriginal('thumb'))
+//                    {
+//                        $image = $gallery->getOriginal('thumb');
+//                        $basicService->optimizeImage($image);
+//                    }
+//                }
+//                $basicService->optimizeImage($product->getOriginal('image'));
+//            }
+//        }
+//        \Log::info('--- DONE ROI ---');
+//    }
 
 
 }
