@@ -169,6 +169,12 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
+                                    {!! Form::label('hamlet', 'thôn/ấp/xóm/tổ', array('class'=>'col-sm-3 control-label'))!!}
+                                    <div class="col-sm-9">
+                                        {!! Form::text('hamlet', $user_address->hamlet, array('required', 'class'=>'form-control', 'placeholder'=>'thôn/ấp/xóm/tổ')) !!}
+                                    </div>
+                                </div>
+                                <div class="form-group">
                                     {!! Form::label('city_id', 'Thành phố', array('class'=>'col-sm-3 control-label'))!!}
                                     <div class="col-sm-9">
                                     {!! Form::select('city_id', $cities, ($user_address)?$user_address->city_id:'', array('required', 'class'=>'form-control')) !!}
@@ -195,7 +201,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    {!! Form::label('district_id', 'Quận', array('class'=>'col-sm-3 control-label'))!!}
+                                    {!! Form::label('district_id', 'Phường/Xã', array('class'=>'col-sm-3 control-label'))!!}
                                     <div class="col-sm-9">
                                         @if($user_address->district_id)
                                             <select required id="wardId" class="form-control" name="ward_id">

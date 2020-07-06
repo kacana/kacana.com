@@ -589,6 +589,8 @@ var orderPackage = {
                 var length = $('#form-shipping-order').find('#Length').val();
                 var width = $('#form-shipping-order').find('#Width').val();
                 var height = $('#form-shipping-order').find('#Height').val();
+                var cod = $('#form-shipping-order').find('#total_cod').val();
+
                 var orderId = $('#order_id').val();
                 var pickDistrictCode = $('#pickHubId').find('option:selected').data('district-code');
                 var modal = $('#modal-shipping-order');
@@ -602,6 +604,11 @@ var orderPackage = {
                         var listShippingFeeTemplate = $('#template-shipping-ghtk-fee');
                         var listShippingFeeGenerate = $.tmpl(listShippingFeeTemplate, {'ghtkFee': data.data.serviceGhtk});
                         modal.find('#list-shipping-ghtk-fee').empty().append(listShippingFeeGenerate);
+                        Kacana.order.detail.checkOriginShipFee();
+
+                        var listShippingFeeTemplate = $('#template-shipping-super-ship-fee');
+                        var listShippingFeeGenerate = $.tmpl(listShippingFeeTemplate, {'superShipFee': data.data.serviceSuperShip});
+                        modal.find('#template-shipping-super-ship-fee').empty().append(listShippingFeeGenerate);
                         Kacana.order.detail.checkOriginShipFee();
                     }
                     Kacana.utils.closeLoading();
@@ -618,7 +625,8 @@ var orderPackage = {
                     width : width,
                     height : height,
                     pickDistrictCode: pickDistrictCode,
-                    orderId: orderId
+                    orderId: orderId,
+                    cod: cod
                 };
                 Kacana.utils.loading($('#list-shipping-fee'));
                 Kacana.ajax.order.checkFeeShipping(dataPost, callback, errorCallback);

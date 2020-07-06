@@ -162,7 +162,7 @@
                                 <div class="radio margin-bottom">
                                     <label class="col-xs-12" >
                                         <span class="col-xs-1 col-xs-offset-1" ><input data-value="{{$shippingServiceInfo->ServiceFee}}" id="shippingServiceTypeId" type="radio" checked="" value="{{$shippingServiceInfo->ServiceID}}" name="shippingServiceTypeId"></span>
-                                        <span class="col-xs-5" >{{$shippingServiceInfo->ServiceName}}</span>
+                                        <span class="col-xs-5" ><span style="color: #ff8329" class="text-bold">Giao hàng nhanh - <small>{{$shippingServiceInfo->ServiceName}}</small></span></span>
                                         <span class="col-xs-5" >Giá: <strong>{{formatMoney($shippingServiceInfo->ServiceFee)}}</strong></span>
                                     </label>
                                 </div>
@@ -170,11 +170,11 @@
                         @endif
                     </div>
                     <div id="list-shipping-ghtk-fee">
-                        @if(isset($feeGhtk) && $feeGhtk->fee->fee)
+                        @if(isset($feeGhtk) && $feeGhtk->fee->delivery)
                             <div class="radio margin-bottom">
                                 <label class="col-xs-12" >
                                     <span class="col-xs-1 col-xs-offset-1" ><input data-value="{{$feeGhtk->fee->fee}}" type="radio" checked="" value="{{KACANA_SHIP_TYPE_ID_GHTK}}" name="shippingServiceTypeId"></span>
-                                    <span class="col-xs-5 text-danger text-bold" >Giao Hàng Tiết Kiệm</span>
+                                    <span class="col-xs-5 text-bold" style="color: #01904a;">Giao Hàng Tiết Kiệm</span>
                                     <span class="col-xs-5" >Giá: <strong>{{formatMoney($feeGhtk->fee->fee)}}</strong></span>
                                 </label>
                             </div>
@@ -182,7 +182,26 @@
                             <div class="radio margin-bottom">
                                 <label class="col-xs-12" >
                                     <span class="col-xs-1 col-xs-offset-1" ><input disabled data-value="" type="radio" value="{{KACANA_SHIP_TYPE_ID_GHTK}}"></span>
-                                    <span class="col-xs-5 text-danger text-bold" >Giao Hàng Tiết Kiệm</span>
+                                    <span class="col-xs-5" style="color: #01904a;" >Giao Hàng Tiết Kiệm</span>
+                                    <span class="col-xs-5" > Chưa hỗ trợ </span>
+                                </label>
+                            </div>
+                        @endif
+                    </div>
+                    <div id="list-shipping-super-ship-fee">
+                        @if(isset($feeSuperShip) && $feeSuperShip->status)
+                            <div class="radio margin-bottom">
+                                <label class="col-xs-12" >
+                                    <span class="col-xs-1 col-xs-offset-1" ><input data-value="{{$feeSuperShip->results->fee}}" type="radio" checked="" value="{{KACANA_SHIP_TYPE_ID_SUPER_SHIP}}" name="shippingServiceTypeId"></span>
+                                    <span class="col-xs-5 text-danger text-bold" style="color: #e1293d">Super Ship - <small>{{$feeSuperShip->results->delivery->name}}</small></span>
+                                    <span class="col-xs-5" >Giá: <strong>{{formatMoney($feeSuperShip->results->fee)}}</strong></span>
+                                </label>
+                            </div>
+                        @else
+                            <div class="radio margin-bottom">
+                                <label class="col-xs-12" >
+                                    <span class="col-xs-1 col-xs-offset-1" ><input disabled data-value="" type="radio" value="{{KACANA_SHIP_TYPE_ID_SUPER_SHIP}}"></span>
+                                    <span class="col-xs-5 text-bold" style="color: #e1293d">Super Ship</span>
                                     <span class="col-xs-5" > Chưa hỗ trợ </span>
                                 </label>
                             </div>
@@ -203,7 +222,7 @@
         <div class="radio">
             <label class="col-xs-12" >
                 <span class="col-xs-1 col-xs-offset-1" ><input data-value="${this.ServiceFee}" id="shippingServiceTypeId" type="radio" checked="" value="${this.ServiceID}" name="shippingServiceTypeId"></span>
-                <span class="col-xs-5" >${this.ServiceName}</span>
+                <span class="col-xs-5" ><span style="color: #ff8329" class="text-bold">Giao hàng nhanh - <small>${this.ServiceName}</small></span></span>
                 <span class="col-xs-5" >Giá: <strong>${Kacana.utils.formatCurrency(this.ServiceFee)}</strong></span>
             </label>
         </div>
@@ -215,7 +234,7 @@
         <div class="radio">
             <label class="col-xs-12" >
                 <span class="col-xs-1 col-xs-offset-1" ><input data-value="${ghtkFee.fee.fee}" type="radio" checked="" value="{{KACANA_SHIP_TYPE_ID_GHTK}}" name="shippingServiceTypeId"></span>
-                <span class="col-xs-5 text-danger text-bold" >Giao Hàng Tiết Kiệm</span>
+                <span class="col-xs-5 text-bold" style="color: #01904a;">Giao Hàng Tiết Kiệm</span>
                 <span class="col-xs-5" >Giá: <strong>${Kacana.utils.formatCurrency(ghtkFee.fee.fee)}</strong></span>
             </label>
         </div>
@@ -223,10 +242,30 @@
         <div class="radio margin-bottom">
             <label class="col-xs-12" >
                 <span class="col-xs-1 col-xs-offset-1" ><input disabled data-value="" type="radio" value="{{KACANA_SHIP_TYPE_ID_GHTK}}"></span>
-                <span class="col-xs-5 text-danger text-bold" >Giao Hàng Tiết Kiệm</span>
+                <span class="col-xs-5 text-bold" style="color: #01904a;">Giao Hàng Tiết Kiệm</span>
                 <span class="col-xs-5" > Chưa hỗ trợ </span>
             </label>
         </div>
+    @{{/if}}
+</script>
+
+<script id="template-shipping-super-ship-fee" type="template">
+    @{{if superShipFee.status }}
+    <div class="radio">
+        <label class="col-xs-12" >
+            <span class="col-xs-1 col-xs-offset-1" ><input data-value="${superShipFee.results.fee}" type="radio" checked="" value="{{KACANA_SHIP_TYPE_ID_SUPER_SHIP}}" name="shippingServiceTypeId"></span>
+            <span class="col-xs-5 text-bold" style="color: #e1293d">Super Ship - <small>${superShipFee.results.delivery.name}</small></span>
+            <span class="col-xs-5" >Giá: <strong>${Kacana.utils.formatCurrency(superShipFee.results.fee)}</strong></span>
+        </label>
+    </div>
+    @{{else}}
+    <div class="radio margin-bottom">
+        <label class="col-xs-12" >
+            <span class="col-xs-1 col-xs-offset-1" ><input disabled data-value="" type="radio" value="{{KACANA_SHIP_TYPE_ID_SUPER_SHIP}}"></span>
+            <span class="col-xs-5 text-bold" style="color: #e1293d">Super Ship</span>
+            <span class="col-xs-5" > Chưa hỗ trợ </span>
+        </label>
+    </div>
     @{{/if}}
 </script>
 

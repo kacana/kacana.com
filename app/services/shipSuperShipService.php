@@ -9,7 +9,7 @@ use Kacana\ViewGenerateHelper;
 use Cache;
 
 
-class shipGhtkService extends baseService {
+class shipSuperShipService extends baseService {
     /**
      * @var Client
      */
@@ -26,12 +26,12 @@ class shipGhtkService extends baseService {
     protected $_token;
 
     /**
-     * shipGhnService constructor.
+     * shipSuperShipService constructor.
      */
     public function __construct(){
 
-        $this->_token = KACANA_SHIP_GHTK_API_TOKEN;
-        $this->_baseApiUrl = KACANA_SHIP_GHTK_API_URL;
+        $this->_token = KACANA_SHIP_SUPERSHIP_API_TOKEN;
+        $this->_baseApiUrl = KACANA_SHIP_SUPERSHIP_API_URL;
         $this->_shippingModel = new shippingModel();
     }
 
@@ -114,17 +114,18 @@ class shipGhtkService extends baseService {
         $province = $userAddress->city->name;
         $district = $userAddress->district->name;
 
+
         $params =
-            ["pick_province" => $pick_province,
-              "pick_district" => $pick_district,
-              "province" => $province,
-              "district" => $district,
+            ["sender_province" => $pick_province,
+              "sender_district" => $pick_district,
+              "receiver_province" => $province,
+              "receiver_district" => $district,
               "address" => $address,
               "weight" => $weight,
-              "value" => $value,
-              "transport" => "fly"];
+              "value" => $value ];
 
-        $results = $this->makeRequest('services/shipment/fee', $params);
+
+        $results = $this->makeRequest('v1/partner/orders/fee', $params);
         return $results->body;
     }
 
@@ -165,12 +166,13 @@ class shipGhtkService extends baseService {
 
 
         }
+
         $CODAmount = $subtotal + $shipFee - $extraDiscount - $paid;
 
         $params['id'] = $orderId.'_'.time();
-        $params['pick_name'] = 'Kacana';
-        $params['pick_money'] = $CODAmount;
-        $params['pick_tel'] = '0906054206';
+        $params['pickup_commune'] = 'Kacana';
+        $params['amount'] = $CODAmount;
+        $params['pickup_phone'] = '0906054206';
 
         $pickHub = false;
         if($pickHubId)
@@ -179,17 +181,15 @@ class shipGhtkService extends baseService {
         if($pickHub)
         {
             $pickDistrictObject = $districtModel->getDistrictByCode($pickHub->DistrictCode, KACANA_SHIP_TYPE_SERVICE_GHN);
-            $params['pick_address'] = $pickHub->Address;
-            $params['pick_province'] = $pickDistrictObject->city->name;
-            $params['pick_district'] = $pickDistrictObject->name;
+            $params['pickup_address'] = $pickHub->Address;
+            $params['pickup_province'] = $pickDistrictObject->city->name;
+            $params['pickup_district'] = $pickDistrictObject->name;
         }
         else
         {
-            $params['pick_address'] ='số nhà 129 ( đối diện )';
-            $params['pick_province'] = KACANA_HEAD_ADDRESS_CITY;
-            $params['pick_district'] = KACANA_HEAD_ADDRESS_DISTRICT;
-            $params['pick_ward'] = KACANA_HEAD_ADDRESS_WARD;
-            $params['pick_street'] = 'Đường số 1';
+            $params['pickup_address'] ='số nhà 129 ( đối diện ), Đường số 1, '.KACANA_HEAD_ADDRESS_WARD;
+            $params['pickup_province'] = KACANA_HEAD_ADDRESS_CITY;
+            $params['pickup_district'] = KACANA_HEAD_ADDRESS_DISTRICT;
         }
 
         $params['name'] = $order->addressReceive->name;
@@ -207,10 +207,6 @@ class shipGhtkService extends baseService {
             $params['email'] = $order->addressReceive->email;
         else
             $params['email'] = 'admin@kacana.com';
-
-        $params['transport'] = "fly";
-        $params['hamlet'] = $order->addressReceive->hamlet;
-
         $dataPost['order'] = $params;
 
         $results = $this->makeRequest('services/shipment/order', $dataPost, 'post');

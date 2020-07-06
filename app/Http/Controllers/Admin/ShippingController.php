@@ -3,6 +3,7 @@
 use App\services\addressService;
 use App\services\shipGhnService;
 use App\services\shipGhtkService;
+use App\services\shipSuperShipService;
 use Illuminate\Http\Request;
 use App\services\orderService;
 use Kacana\ViewGenerateHelper;
@@ -16,7 +17,10 @@ class ShippingController extends BaseController {
     public function createShipping(Request $request){
         $shipGhnService = new shipGhnService();
         $shipGhtkService = new shipGhtkService();
+        $shipSuperShipService = new shipSuperShipService();
         $orderService = new orderService();
+        $a = [];
+
         $orderId = $request->input('orderId');
         $orderDetailIds = $request->input('orderDetailId');
         $pickHubId = $request->input('pickHubId', 0);
@@ -39,6 +43,21 @@ class ShippingController extends BaseController {
             if($shippingServiceTypeId == KACANA_SHIP_TYPE_ID_GHTK)
             {
                 $ship = $shipGhtkService->createShippingOrder($orderDetailIds,
+                    $orderId,
+                    0,
+                    $weight,
+                    $originShipFee,
+                    $shipFee,
+                    $extraDiscount,
+                    $extraDiscountDesc,
+                    $paid);
+
+                $orderService->notificationSlackOrder($orderId);
+                return redirect('/shipping/detail?id='.$ship->order->label.'&type='.KACANA_SHIP_TYPE_SERVICE_GHTK);
+            }
+            elseif($shippingServiceTypeId == KACANA_SHIP_TYPE_ID_SUPER_SHIP)
+            {
+                $ship = $shipSuperShipService->createShippingOrder($orderDetailIds,
                     $orderId,
                     0,
                     $weight,
