@@ -507,16 +507,16 @@ class productService extends baseService {
         $dom = new \DOMDocument('1.0', 'UTF-8');
         $dom->strictErrorChecking = false;
         preg_match_all('/src="(.*?)"/', $description, $items);
-        $images = $items[1];
+        $currentImages = $items[1];
         $productImageDesc = $productGallery->getImagesProductByProductId($id, PRODUCT_IMAGE_TYPE_DESC);
 
-        foreach ( $images as &$image) {
-            $image = str_replace("http://dd4km0msp8gof.cloudfront.net", AWS_CDN_URL, $image);
+        foreach ( $currentImages as &$currentImage) {
+            $currentImage = str_replace("http://dd4km0msp8gof.cloudfront.net", AWS_CDN_URL, $currentImage);
         }
 
         foreach ($productImageDesc as $image)
         {
-            if(!in_array($image->image, $images))
+            if(!in_array($image->image, $currentImages))
             {
                 $productGalleryService->deleteImage($image->id);
             }
