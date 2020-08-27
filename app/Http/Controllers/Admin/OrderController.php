@@ -81,7 +81,9 @@ class OrderController extends BaseController {
                 $wards = $addressService->getListWardByDistrictId($user_address->district_id);
                 $feeGhtk = $shipGhtkService->calculateFee($pickDistrictCode, $user_address, $order->total);
                 $feeSuperShip = $superShipService->calculateFee($pickDistrictCode, $user_address, $order->total);
-                $feeSuperShip->results = $feeSuperShip->results[0];
+                if($feeSuperShip->status != "Error") {
+                    $feeSuperShip->results = $feeSuperShip->results[0];
+                }
             }
             $orderFroms = $orderFromService->getListOrderFrom();
             $cities = $addressService->getListCity()->lists('name', 'id');

@@ -189,7 +189,7 @@
                         @endif
                     </div>
                     <div id="list-shipping-super-ship-fee">
-                        @if(isset($feeSuperShip) && $feeSuperShip->status)
+                        @if(isset($feeSuperShip) && $feeSuperShip->status != "Error")
                             <div class="radio margin-bottom">
                                 <label class="col-xs-12" >
                                     <span class="col-xs-1 col-xs-offset-1" ><input data-value="{{$feeSuperShip->results->fee}}" type="radio" checked="" value="{{KACANA_SHIP_TYPE_ID_SUPER_SHIP}}" name="shippingServiceTypeId"></span>
