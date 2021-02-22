@@ -136,11 +136,11 @@
                 <div class="form-group">
                     <label class="col-sm-2 control-label" for="phone">kho hàng</label>
                     <div class="col-sm-10">
-                        <select class="form-control" id="pickHubId" name="pickHubId" >
-                            @foreach($hubInfos as $hubInfo)
-                                <option data-district-code="{{$hubInfo->DistrictCode}}" value="{{$hubInfo->PickHubID}}" >{{$hubInfo->Address.', '.$hubInfo->DistrictName}}</option>
-                            @endforeach
-                        </select>
+{{--                        <select class="form-control" id="pickHubId" name="pickHubId" >--}}
+{{--                            @foreach($hubInfos as $hubInfo)--}}
+{{--                                <option data-district-code="{{$hubInfo->DistrictCode}}" value="{{$hubInfo->PickHubID}}" >{{$hubInfo->Address.', '.$hubInfo->DistrictName}}</option>--}}
+{{--                            @endforeach--}}
+{{--                        </select>--}}
                     </div>
                 </div>
                 <div class="form-group">

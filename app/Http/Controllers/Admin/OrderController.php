@@ -65,9 +65,9 @@ class OrderController extends BaseController {
             $buyer = $order->user;
             $user_address = $order->addressReceive;
 
-            $hubInfos = $shipGhnService->getPickHubs();
+            //$hubInfos = $shipGhnService->getPickHubs();
 
-            $mainHub = $shipGhnService->getPickHubMain($hubInfos);
+            //$mainHub = $shipGhnService->getPickHubMain($hubInfos);
             if($user_address->district_id )
             {
                 $pickDistrictCode = 0;
