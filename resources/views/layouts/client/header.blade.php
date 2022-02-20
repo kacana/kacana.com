@@ -4,7 +4,7 @@
             <nav class="pull-right">
                 <ul class="nav nav-pills nav-top">
                     <li>
-                        <a href="tel:0906054206"><i class="fa fa-phone"></i> 0906.054.206</a>
+                        <a href="tel:0399761768"><i class="fa fa-phone"></i> 0399.761.768</a>
                     </li>
                     <li>
                         <a target="_blank" href="/contact/thong-tin-lien-he"><i class="fa fa-map-marker"></i> Cửa hàng</a>

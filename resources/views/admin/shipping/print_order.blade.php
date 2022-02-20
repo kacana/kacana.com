@@ -106,7 +106,7 @@
 
                         <td style="text-align: left;padding-left: 20px;font-size: 15px">
                             <b>Hệ thống thương mại điện tử - Mua hàng trực tuyến</b><br><br>
-                            Hỗ trợ khách hàng 7 ngày/tuần: <b>0906.054.206</b><br>
+                            Hỗ trợ khách hàng 7 ngày/tuần: <b>0399.761.768</b><br>
                             Truy cập: http://hotro.kacana.vn
                         </td>
                     </tr>

@@ -22,7 +22,7 @@
                 <div >• Sản phẩm còn đủ bao hộp như ban đầu cùng các phụ kiện đi kèm (nếu có)</div>
                 <div >• Giày dép, quần áo hoặc phụ kiện thời trang chưa bị sử dụng, chưa qua giặt tẩy, không có mùi lạ.</div>
                 <div >Nếu sản phẩm bạn mua từ <b>Kacana.com</b> và khi nhận được bạn thấy nó bị hư hỏng, lỗi, vẫn còn hạn đổi, bạn có thể làm theo Hướng dẫn đổi để được thay thế bằng sản phẩm mới.</div>
-                <div >Trường hợp bạn cảm thấy sản phẩm bạn nhận được bị hư hỏng do bao bì đóng gói không đạt tiêu chuẩn, hãy phản hồi lại cho <b>Kacana.com</b> theo đường dây nóng. 0906.054.206</div>
+                <div >Trường hợp bạn cảm thấy sản phẩm bạn nhận được bị hư hỏng do bao bì đóng gói không đạt tiêu chuẩn, hãy phản hồi lại cho <b>Kacana.com</b> theo đường dây nóng. 0399.761.768</div>
                 <div >Trường hợp bạn nhận được sản phẩm mình không đặt mua, hãy liên hệ với <b>Kacana.com</b> ngay để được trợ giúp.</div>
                 <div ><br></div>
                 <div >Các sản phẩm như sau sẽ không được đổi:</div>
@@ -52,7 +52,7 @@
                 <div >• Khi thời hạn đổi cho đơn hàng kết thúc, bạn sẽ không thể yêu cầu nhân viên giao nhận của <b>Kacana.com</b> đến nhận đơn hàng đổi của bạn.</div>
                 <div ><br></div>
                 <div >Mọi chi tiết xin liên hệ:</div>
-                <div >Điện thoại: 0906.054.206</div>
+                <div >Điện thoại: 0399.761.768</div>
                 <div ><br></div>
             </div>
             <br>

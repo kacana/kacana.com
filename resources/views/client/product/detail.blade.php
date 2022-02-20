@@ -199,7 +199,7 @@
                                 <button type="submit" class="btn btn_kacana_main margin-top-10px">
                                    sản phẩm tạm hết hàng
                                 </button>
-                                <label class="margin-top-10px text-red">Gọi 0906.054.206 để liên hệ với chúng tôi nếu bạn muốn mua sản phẩm này!</label>
+                                <label class="margin-top-10px text-red">Gọi 0399.761.768 để liên hệ với chúng tôi nếu bạn muốn mua sản phẩm này!</label>
                             </span>
                         </div>
                     @endif

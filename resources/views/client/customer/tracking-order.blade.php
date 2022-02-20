@@ -51,7 +51,7 @@
                         Các bạn vui lòng nhập địa chỉ email và mã số đơn hàng để kiểm tra tình trạng đơn hàng của mình. Các bạn có thể kiểm tra email xác nhận đơn hàng từ Kacana để tìm mã số đơn hàng.
                     </p>
                     <p>
-                        Nếu quý khách có bất kỳ thắc mắc nào, xin vui lòng liên hệ: 0906.054.206
+                        Nếu quý khách có bất kỳ thắc mắc nào, xin vui lòng liên hệ: 0399.761.768
                     </p>
                 </div>
             </div>

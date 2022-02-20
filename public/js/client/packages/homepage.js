@@ -72,7 +72,7 @@ var homepagePackage = {
                 if(data.ok)
                     window.location.href = '/thanh-toan';
                 else
-                    Kacana.utils.showError('có cái gì sai sai ở đây! vui lòng gọi: 0906.054.206!');
+                    Kacana.utils.showError('có cái gì sai sai ở đây! vui lòng gọi: 0399.761.768!');
             });
         },
         goToDetailPage: function (obj, typeClick) {

@@ -18,35 +18,35 @@
             <div class="hmargin-10 margin-top-10px vpadding-10">
                 <div class="col-md-12" >
                     <div class="col-md-4">
+                        <img style="width: 150px;" class="img-responsive" src="https://iconape.com/wp-content/png_logo_vector/vib-logo.png">
+                    </div>
+                    <div class="col-md-6 col-md-offset-1">
+                        <div>Ngân Hàng Quốc Tế VIB</div>
+                        <div>Thành phố Hồ Chí Minh</div>
+                        <div>601704060550286</div>
+                        <div>Chủ TK: Lê Thị Tuyết</div>
+                    </div>
+                </div>
+                <div class="col-md-12" >
+                    <div class="col-md-4">
                         <img style="width: 150px;" class="img-responsive" src="http://www.vietcombank.com.vn/images/logo30.png">
                     </div>
                     <div class="col-md-6 col-md-offset-1">
-                        <div>VietcomBank chi nhánh Bình Tây</div>
+                        <div>VietcomBank</div>
                         <div>Thành phố Hồ Chí Minh</div>
-                        <div>0251002717365</div>
-                        <div>Chủ TK: Phạm Thị An Na</div>
+                        <div>0251002675027</div>
+                        <div>Chủ TK: Lê Thị Tuyết</div>
                     </div>
                 </div>
                 <div class="col-md-12 border-top vpadding-10" >
                     <div class="col-md-4">
-                        <img style="width: 150px;" class="img-responsive" src="https://online.acb.com.vn/acbib/img/logo.jpg">
+                        <img style="width: 150px;" class="img-responsive" src="https://vpf.vn/wp-content/uploads/2018/10/1346991138.jpg">
                     </div>
                     <div class="col-md-6 col-md-offset-1">
-                        <div>ACB chi nhánh Lê Văn Sỹ</div>
+                        <div>Việt Nam Thịnh Vượng VPbank</div>
                         <div>Thành phố Hồ Chí Minh</div>
-                        <div>170197459</div>
-                        <div>Chủ TK: Nguyễn Chí Cường</div>
-                    </div>
-                </div>
-                <div class="col-md-12 border-top vpadding-10" >
-                    <div class="col-md-4">
-                        <img style="width: 150px;" class="img-responsive" src="https://blog.sharemoney.com/wp-content/uploads/2016/04/How-to-Transfer-Money-to-Vietnam-with-Agribank.jpg">
-                    </div>
-                    <div class="col-md-6 col-md-offset-1">
-                        <div>Agribank chi nhánh Chợ lớn</div>
-                        <div>Thành phố Hồ Chí Minh</div>
-                        <div>6220205301423</div>
-                        <div>Chủ TK: Nguyễn Chí Cường</div>
+                        <div>173889526</div>
+                        <div>Chủ TK: Lê Thị Tuyết</div>
                     </div>
                 </div>
             </div>

@@ -16,15 +16,15 @@
         </div>
         <div class="margin-top-10px margin-bottom-5px color-green" style="font-weight: 500">ĐỐI VỚI KHÁCH HÀNG Ở CÁC TỈNH - THÀNH KHÁC</div><br>
         <div class="margin-bottom-5px" > - Phương pháp đơn giản và thuận tiện nhất cho khách hàng ở xa là đặt hàng qua Website: www.kacana.vn. Quý khách sử dụng tính năng "THÊM VÀO GIỎ HÀNG" trên Website của www.kacana.vn và thực hiện thao tác đặt hàng trong giỏ hàng và điền các thông tin cần thiết (Tên, Số điện thoại liên lạc). Nhân viên bán hàng của KACANA  sẽ liên hệ với quý khách để xác thực đơn hàng đồng thời thông báo tình trạng hàng hoá cho quý khách và hướng dẫn các bước tiếp theo.</div>
-        <div class="margin-bottom-5px" > - Hoặc nếu quý khách không muốn phải đợi điện thoại của chúng tôi thì cũng có thể chủ động liên lạc với KACANA qua các số điện thoại của cửa hàng hoặc Hotline: 0906.054.206 hoặc Email: info@kacana.com để đặt hàng và chúng tôi sẽ phản hồi</div>
+        <div class="margin-bottom-5px" > - Hoặc nếu quý khách không muốn phải đợi điện thoại của chúng tôi thì cũng có thể chủ động liên lạc với KACANA qua các số điện thoại của cửa hàng hoặc Hotline: 0399.761.768 hoặc Email: info@kacana.com để đặt hàng và chúng tôi sẽ phản hồi</div>
         <div class="margin-bottom-5px" > - Sau khi đặt hàng thành công chúng tôi có các hình thức thanh toán: Chuyển khoản hoặc COD( nhận hàng và trả tiền tại nhà quý khách)</div>
         <div class="margin-bottom-5px" > - Sau đó chúng tôi sẽ đóng gói và gửi hàng cho quý khách trong vòng 12h.</div>
         <div class="margin-bottom-5px text-center" > Rất cảm ơn quý khách đã tin tưởng kacana.vn</div>
 
         <div class="vpadding-20" >
             <ul class="list-unstyled">
-                <li><strong>Hỗ trợ mua hàng online:</strong> 0906.054.206</li>
-                <li><strong>Tư vấn thời trang:</strong> 01695.393.076</li>
+                <li><strong>Hỗ trợ mua hàng online:</strong> 0399.761.768</li>
+                <li><strong>Tư vấn thời trang:</strong> 0765.929.778</li>
                 <li><strong>Đổi trả hàng:</strong> <a class="color-green" href="mailto:hotro@kacana.com">hotro@kacana.com</a></li>
                 <li><strong>Email:</strong> <a class="color-green" href="mailto:admin@kacana.com">admin@kacana.com</a></li>
                 <li><strong>Facebook:</strong> <a class="color-green" target="_blank" href="https://www.facebook.com/kacanafashion">kacana.com</a></li>

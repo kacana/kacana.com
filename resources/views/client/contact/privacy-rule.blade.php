@@ -36,7 +36,7 @@
             </div>
             <div class="margin-bottom-5px" ><b>2.5. Liên hệ, giải đáp thắc mắc</b></div>
             <div class="hmargin-10 margin-top-10px">
-                <div class="margin-bottom-5px" >Bất kỳ khi nào Khách Hàng cần hỗ trợ, hãy gọi đến số hotline của KACANA  0906.054.206 hoặc gửi email đến địa chỉ: <a href="mailto:info@kacana.com">info@kacana.com</a>.</div>
+                <div class="margin-bottom-5px" >Bất kỳ khi nào Khách Hàng cần hỗ trợ, hãy gọi đến số hotline của KACANA  0399.761.768 hoặc gửi email đến địa chỉ: <a href="mailto:info@kacana.com">info@kacana.com</a>.</div>
             </div>
         </div>
 
@@ -49,7 +49,7 @@
         <div class="hmargin-10 margin-top-10px">
             <div class="margin-bottom-5px" >Túi xách KACANA</div>
             <div class="margin-bottom-5px" >Địa chỉ: {{KACANA_HEAD_ADDRESS_STREET}}, {{KACANA_HEAD_ADDRESS_WARD}}, {{KACANA_HEAD_ADDRESS_DISTRICT}}, {{KACANA_HEAD_ADDRESS_CITY}}</div>
-            <div class="margin-bottom-5px" >Điện thoại: 0906.054.206</div>
+            <div class="margin-bottom-5px" >Điện thoại: 0399.761.768</div>
         </div>
     </div>
 </div>

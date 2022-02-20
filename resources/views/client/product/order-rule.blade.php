@@ -17,11 +17,11 @@
     <ul class="nav" >
         <li class="phone">
             <i class="pe-7s-phone pe-2x"></i>
-            Mua hàng:<span class="phone-buy-online"> 0906.054.206</span>
+            Mua hàng:<span class="phone-buy-online"> 0399.761.768</span>
         </li>
         <li class="phone">
             <i class="pe-7s-headphones pe-2x"></i>
-            Tư vấn: 01695.393.076
+            Tư vấn: 0765.929.768
         </li>
         <li class="phone">
             <i class="pe-7s-mail pe-2x"></i>

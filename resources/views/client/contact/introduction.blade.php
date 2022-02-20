@@ -25,7 +25,7 @@
             <div >Mọi chi tiết góp ý Quý khách xin liên hệ về:</div>
             <div class="vpadding-10" ><b>Kacana.com</b></div>
             <div >Trụ sở : {{KACANA_HEAD_ADDRESS_STREET}}, {{KACANA_HEAD_ADDRESS_WARD}}, {{KACANA_HEAD_ADDRESS_DISTRICT}}, {{KACANA_HEAD_ADDRESS_CITY}}</div>
-            <div class="vpadding-10" >- Điện thoại: 0906.054.206 - 01695.393.076</div>
+            <div class="vpadding-10" >- Điện thoại: 0399.761.768 - 0765.929.778</div>
             <div >- Email: hotro@kacana.com</div>
             <div class="vpadding-10" >- Website: http://kacana.com</div>
             <div >- Skype : kacana.com</div>

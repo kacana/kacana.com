@@ -33,7 +33,7 @@ class AuthController extends Controller
         else
         {
             if($errorCode == KACANA_AUTH_LOGIN_ERROR_NOT_PERMISSION)
-                $error_message = 'Tài khoản này bị từ chối truy cập vào hệ thống, vui lòng liên hệ  admin@kacana.com hoặc <a href="tel:0906054206">0906.054.206</a>';
+                $error_message = 'Tài khoản này bị từ chối truy cập vào hệ thống, vui lòng liên hệ  admin@kacana.com hoặc <a href="tel:0906054206">0399.761.768</a>';
 
             return view('auth.login', ['error_code' => $errorCode, 'error_message' => $error_message]);
         }

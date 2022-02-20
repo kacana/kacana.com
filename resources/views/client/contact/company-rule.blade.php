@@ -35,8 +35,8 @@
 
         <div class="vpadding-20" >
             <ul class="list-unstyled">
-                <li><strong>Hỗ trợ mua hàng online:</strong> 0906.054.206</li>
-                <li><strong>Tư vấn thời trang:</strong> 01695.393.076</li>
+                <li><strong>Hỗ trợ mua hàng online:</strong> 0399.761.768</li>
+                <li><strong>Tư vấn thời trang:</strong> 0765.929.778</li>
                 <li><strong>Đổi trả hàng:</strong> <a class="color-green" href="mailto:hotro@kacana.com">hotro@kacana.com</a></li>
                 <li><strong>Email:</strong> <a class="color-green" href="mailto:admin@kacana.com">admin@kacana.com</a></li>
                 <li><strong>Facebook:</strong> <a class="color-green" target="_blank" href="https://www.facebook.com/kacanafashion">kacana.com</a></li>

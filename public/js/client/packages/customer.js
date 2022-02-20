@@ -429,10 +429,10 @@ var customerPackage = {
                             wardSelect.removeAttr('disabled').show();
                         }
                         else
-                            Kacana.utils.showError('có cái gì sai sai ở đây! vui lòng gọi: 0906.054.206');
+                            Kacana.utils.showError('có cái gì sai sai ở đây! vui lòng gọi: 0399.761.768');
                     };
                     var errorCallBack = function(data){
-                        Kacana.utils.showError('có cái gì sai sai ở đây! vui lòng gọi: 0906.054.206');
+                        Kacana.utils.showError('có cái gì sai sai ở đây! vui lòng gọi: 0399.761.768');
                         Kacana.utils.loading.closeLoading();
                     };
 

@@ -102,10 +102,10 @@ var cartPackage = {
                     Kacana.utils.loading.closeLoading();
                 }
                 else
-                    Kacana.utils.showError('có cái gì sai sai ở đây! vui lòng gọi: 0906.054.206');
+                    Kacana.utils.showError('có cái gì sai sai ở đây! vui lòng gọi: 0399.761.768');
             };
             var errorCallBack = function(data){
-                Kacana.utils.showError('có cái gì sai sai ở đây! vui lòng gọi: 0906.054.206');
+                Kacana.utils.showError('có cái gì sai sai ở đây! vui lòng gọi: 0399.761.768');
                 Kacana.utils.loading.closeLoading();
             };
             Kacana.ajax.cart.removeCart(id, callBack, errorCallBack);
@@ -118,11 +118,11 @@ var cartPackage = {
                         Kacana.utils.loading.closeLoading();
                     }
                     else
-                        Kacana.utils.showError('có cái gì sai sai ở đây! vui lòng gọi: 0906.054.206');
+                        Kacana.utils.showError('có cái gì sai sai ở đây! vui lòng gọi: 0399.761.768');
                 };
 
                 var errorCallBack = function(data){
-                    Kacana.utils.showError('có cái gì sai sai ở đây! vui lòng gọi: 0906.054.206');
+                    Kacana.utils.showError('có cái gì sai sai ở đây! vui lòng gọi: 0399.761.768');
                     Kacana.utils.loading.closeLoading();
                 };
                 Kacana.utils.loading.loading();
@@ -184,10 +184,10 @@ var cartPackage = {
                     Kacana.utils.loading.closeLoading();
                 }
                 else
-                    Kacana.utils.showError('có cái gì sai sai ở đây! vui lòng gọi: 0906.054.206');
+                    Kacana.utils.showError('có cái gì sai sai ở đây! vui lòng gọi: 0399.761.768');
             };
             var errorCallBack = function(data){
-                Kacana.utils.showError('có cái gì sai sai ở đây! vui lòng gọi: 0906.054.206');
+                Kacana.utils.showError('có cái gì sai sai ở đây! vui lòng gọi: 0399.761.768');
             };
             Kacana.utils.loading.loading();
             Kacana.ajax.cart.loadCart(callBack, errorCallBack);

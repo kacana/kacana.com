@@ -128,7 +128,7 @@
                     <p>2. Thời gian giao hàng dự kiến sẽ được cập nhật liên tục qua email và tin nhắn điện thoại. Quý khách hoàn toàn kiểm tra được tình trạng đơn hàng tại  <a style="color: #2dc8d9;" href="{{url()}}/khach-hang/kiem-tra-don-hang" target="_blank">{{url()}}/khach-hang/kiem-tra-don-hang</a></p>
                     {{--<p>3. Khi có nhu cầu thay đổi quyết định mua sắm, quý khách có thể hủy đơn hàng trực tuyến với hướng dẫn đơn giản tại  <a style="color: #2dc8d9;" href="https://www.kacana.com/huong-dan-huy-don-hang-truc-tuyen/" target="_blank"> www.kacana.com/huong-dan-huy-don-hang-truc-tuyen/</a> </p>--}}
                     <p>3. Quý khách cũng có thể tham khảo một số câu hỏi thường gặp tại  <a style="color: #2dc8d9;" href="https://www.kacana.com/FAQ/" target="_blank">www.kacana.com/FAQ/</a></p>
-                    <p>4. Nếu quý khách có nhu cầu xuất hóa đơn, quý khách vui lòng liên hệ hotline <b>0906.054.206</b> hoặc gửi thông tin chi tiết (tên công ty, địa chỉ công ty, mã số thuế) tới <a style="color: #2dc8d9;" href="https://www.kacana.com/contact/" target="_blank">www.kacana.com/contact/</a> trong vòng 24 giờ kể từ khi đặt hàng thành công.</p>
+                    <p>4. Nếu quý khách có nhu cầu xuất hóa đơn, quý khách vui lòng liên hệ hotline <b>0399.761.768</b> hoặc gửi thông tin chi tiết (tên công ty, địa chỉ công ty, mã số thuế) tới <a style="color: #2dc8d9;" href="https://www.kacana.com/contact/" target="_blank">www.kacana.com/contact/</a> trong vòng 24 giờ kể từ khi đặt hàng thành công.</p>
                     <p><b>Lưu ý:</b> Đơn hàng của quý khách có thể sẽ được giao thành nhiều kiện nếu các sản phẩm được nhập về trong các kiện hàng khác nhau. </p>
                 </div>
             </div>

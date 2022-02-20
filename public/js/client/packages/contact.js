@@ -15,8 +15,8 @@ var contactPackage = {
 
             // Map Markers
             var mapMarkers = [{
-                address: "354/47/10/7 Quốc Lộ 1, Khu Phố 3, Bình Hưng Hoà B, Bình Tân, việt nam",
-                html: "<strong>Cửa Hàng</strong><br>354/47/10/7 Quốc Lộ 1, Khu Phố 3, Bình Hưng Hoà B, Bình Tân",
+                address: "12/7/12 đường số 44 phường 14.Gò vấp, việt nam",
+                html: "<strong>Cửa Hàng</strong><br>12/7/12 đường số 44 phường 14.Gò vấp",
                 icon: {
                     image: "/../../img/pin.png",
                     iconsize: [26, 46],

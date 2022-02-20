@@ -104,11 +104,11 @@ var chatPackage = {
                     modal.modal();
                 }
                 else
-                    Kacana.utils.showError('có cái gì sai sai ở đây! vui lòng gọi: 0906.054.206');
+                    Kacana.utils.showError('có cái gì sai sai ở đây! vui lòng gọi: 0399.761.768');
             };
 
             var errorCallBack = function(data){
-                Kacana.utils.showError('có cái gì sai sai ở đây! vui lòng gọi: 0906.054.206');
+                Kacana.utils.showError('có cái gì sai sai ở đây! vui lòng gọi: 0399.761.768');
                 Kacana.utils.loading.closeLoading();
             };
 
@@ -179,11 +179,11 @@ var chatPackage = {
                     }
                 }
                 else
-                    Kacana.utils.showError('có cái gì sai sai ở đây! vui lòng gọi: 0906.054.206');
+                    Kacana.utils.showError('có cái gì sai sai ở đây! vui lòng gọi: 0399.761.768');
             };
 
             var errorCallBack = function(data){
-                Kacana.utils.showError('có cái gì sai sai ở đây! vui lòng gọi: 0906.054.206');
+                Kacana.utils.showError('có cái gì sai sai ở đây! vui lòng gọi: 0399.761.768');
                 Kacana.utils.loading.closeLoading();
             };
 
@@ -201,11 +201,11 @@ var chatPackage = {
                     console.log('pushed message');
                 }
                 else
-                    Kacana.utils.showError('có cái gì sai sai ở đây! vui lòng gọi: 0906.054.206');
+                    Kacana.utils.showError('có cái gì sai sai ở đây! vui lòng gọi: 0399.761.768');
             };
 
             var errorCallBack = function(data){
-                Kacana.utils.showError('có cái gì sai sai ở đây! vui lòng gọi: 0906.054.206');
+                Kacana.utils.showError('có cái gì sai sai ở đây! vui lòng gọi: 0399.761.768');
                 Kacana.utils.loading.closeLoading();
             };
 
@@ -265,13 +265,13 @@ var chatPackage = {
                     }
                 }
                 else
-                    Kacana.utils.showError('có cái gì sai sai ở đây! vui lòng gọi: 0906.054.206');
+                    Kacana.utils.showError('có cái gì sai sai ở đây! vui lòng gọi: 0399.761.768');
 
                 Kacana.chat.getOldMessage();
             };
 
             var errorCallBack = function(data){
-                Kacana.utils.showError('có cái gì sai sai ở đây! vui lòng gọi: 0906.054.206');
+                Kacana.utils.showError('có cái gì sai sai ở đây! vui lòng gọi: 0399.761.768');
                 Kacana.utils.loading.closeLoading();
             };
 
@@ -292,11 +292,11 @@ var chatPackage = {
                     }
                 }
                 else
-                    Kacana.utils.showError('có cái gì sai sai ở đây! vui lòng gọi: 0906.054.206');
+                    Kacana.utils.showError('có cái gì sai sai ở đây! vui lòng gọi: 0399.761.768');
             };
 
             var errorCallBack = function(data){
-                Kacana.utils.showError('có cái gì sai sai ở đây! vui lòng gọi: 0906.054.206');
+                Kacana.utils.showError('có cái gì sai sai ở đây! vui lòng gọi: 0399.761.768');
                 Kacana.utils.loading.closeLoading();
             };
 
@@ -310,11 +310,11 @@ var chatPackage = {
                    console.log('update Last read')
                 }
                 else
-                    Kacana.utils.showError('có cái gì sai sai ở đây! vui lòng gọi: 0906.054.206');
+                    Kacana.utils.showError('có cái gì sai sai ở đây! vui lòng gọi: 0399.761.768');
             };
 
             var errorCallBack = function(data){
-                Kacana.utils.showError('có cái gì sai sai ở đây! vui lòng gọi: 0906.054.206');
+                Kacana.utils.showError('có cái gì sai sai ở đây! vui lòng gọi: 0399.761.768');
                 Kacana.utils.loading.closeLoading();
             };
 

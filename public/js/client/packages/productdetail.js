@@ -306,7 +306,7 @@ var productdetailPackage = {
                     }
                     else
                     {
-                        Kacana.utils.showError('có cái gì sai sai ở đây! vui lòng gọi: 0906.054.206');
+                        Kacana.utils.showError('có cái gì sai sai ở đây! vui lòng gọi: 0399.761.768');
                     }
                     Kacana.utils.loading.closeLoading();
                 };
@@ -366,7 +366,7 @@ var productdetailPackage = {
                 }
                 else
                 {
-                    Kacana.utils.showError('có cái gì sai sai ở đây! vui lòng gọi: 0906.054.206');
+                    Kacana.utils.showError('có cái gì sai sai ở đây! vui lòng gọi: 0399.761.768');
                 }
                 Kacana.utils.loading.closeLoading();
             };
@@ -417,14 +417,14 @@ var productdetailPackage = {
                         }
                         else
                             return $listSize.popup({
-                                html: '<div class="header">vui lòng chọn size</div><div class="content">hoặc<br><span class="btn btn-xs btn-success"><i class="fa fa-headphones"></i> tư vấn: 01695.393.076</span></div>',
+                                html: '<div class="header">vui lòng chọn size</div><div class="content">hoặc<br><span class="btn btn-xs btn-success"><i class="fa fa-headphones"></i> tư vấn: 0765.929.778</span></div>',
                                 position: 'top left'
                             }).popup('toggle');
                     }
                 }
                 else{
                     return $listColor.popup({
-                        html: '<div class="header">vui lòng chọn màu</div><div class="content">hoặc<br><span class="btn btn-xs btn-success"><i class="fa fa-headphones"></i> tư vấn: 01695.393.076</span></div>',
+                        html: '<div class="header">vui lòng chọn màu</div><div class="content">hoặc<br><span class="btn btn-xs btn-success"><i class="fa fa-headphones"></i> tư vấn: 0765.929.778</span></div>',
                         position: 'top left'
                     }).popup('toggle');
                 }
@@ -468,10 +468,10 @@ var productdetailPackage = {
                 }
                 else{
                     Kacana.utils.loading.closeLoading();
-                    Kacana.utils.showError('có cái gì sai sai ở đây! vui lòng gọi: 0906.054.206');
+                    Kacana.utils.showError('có cái gì sai sai ở đây! vui lòng gọi: 0399.761.768');
                 }
             };
-            var errorCallBack = function(){Kacana.utils.showError('có cái gì sai sai ở đây! vui lòng gọi: 0906.054.206');};
+            var errorCallBack = function(){Kacana.utils.showError('có cái gì sai sai ở đây! vui lòng gọi: 0399.761.768');};
             Kacana.utils.loading.loading();
             Kacana.ajax.cart.addToCart(dataPost, callBack, errorCallBack);
             return false;

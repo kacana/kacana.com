@@ -691,7 +691,7 @@ class userService extends baseService {
                 ))
             {
                 $result['error_code'] = KACANA_AUTH_LIMIT_BUSINESS_ACCOUNT;
-                $result['error_message'] = 'Bạn chỉ có thể thêm '.KACANA_USER_BUSINESS_ACCOUNT_LIMIT.' tài khoản facebook! Vui lòng xoá một tài khoản để thêm vào hoặc liên hệ với admin 0906.054.206';
+                $result['error_message'] = 'Bạn chỉ có thể thêm '.KACANA_USER_BUSINESS_ACCOUNT_LIMIT.' tài khoản facebook! Vui lòng xoá một tài khoản để thêm vào hoặc liên hệ với admin 0399.761.768';
                 return $result;
             }
             elseif ($userSocial->user_id == $userId && count($userSocials) <= KACANA_USER_BUSINESS_ACCOUNT_LIMIT)
@@ -707,7 +707,7 @@ class userService extends baseService {
         if(count($userSocials) >= KACANA_USER_BUSINESS_ACCOUNT_LIMIT)
         {
             $result['error_code'] = KACANA_AUTH_LIMIT_BUSINESS_ACCOUNT;
-            $result['error_message'] = 'Bạn chỉ có thể thêm '.KACANA_USER_BUSINESS_ACCOUNT_LIMIT.' tài khoản facebook! Vui lòng xoá một tài khoản để thêm vào hoặc liên hệ với admin 0906.054.206';
+            $result['error_message'] = 'Bạn chỉ có thể thêm '.KACANA_USER_BUSINESS_ACCOUNT_LIMIT.' tài khoản facebook! Vui lòng xoá một tài khoản để thêm vào hoặc liên hệ với admin 0399.761.768';
             return $result;
         }
         else
