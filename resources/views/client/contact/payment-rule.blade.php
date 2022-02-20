@@ -27,7 +27,7 @@
                         <div>Chủ TK: Lê Thị Tuyết</div>
                     </div>
                 </div>
-                <div class="col-md-12" >
+                <div class="col-md-12 border-top vpadding-10" >
                     <div class="col-md-4">
                         <img style="width: 150px;" class="img-responsive" src="http://www.vietcombank.com.vn/images/logo30.png">
                     </div>
