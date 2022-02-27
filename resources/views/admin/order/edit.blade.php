@@ -232,9 +232,7 @@
                     <div class="box-header with-border">
                         <h3 class="box-title">Chi tiết đơn hàng</h3>
                         <div class="box-tools pull-right">
-                            @if(!(!isset($shippingServiceInfos) && $order->order_type == KACANA_ORDER_TYPE_ONLINE))
-                                <button data-toggle="modal" data-target="#modal-add-product-order" class="btn btn-box-tool"><i class="fa fa-plus"></i> Thêm sản phẩm</button>
-                            @endif
+                            <button data-toggle="modal" data-target="#modal-add-product-order" class="btn btn-box-tool"><i class="fa fa-plus"></i> Thêm sản phẩm</button>
                         </div>
                     </div><!-- /.box-header -->
 
