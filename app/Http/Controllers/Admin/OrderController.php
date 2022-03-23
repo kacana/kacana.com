@@ -54,7 +54,7 @@ class OrderController extends BaseController {
         $shipGhnService = new shipGhnService();
         $shipGhtkService = new shipGhtkService();
         $superShipService = new shipSuperShipService();
-
+        $error_message = $request->input('message');
         try {
             if($request->isMethod('PUT')){
                 $addressService->updateAddressReceive($request->all());
@@ -88,7 +88,7 @@ class OrderController extends BaseController {
             $orderFroms = $orderFromService->getListOrderFrom();
             $cities = $addressService->getListCity()->lists('name', 'id');
             $districts = $addressService->getListDistrict();
-            return view('admin.order.edit', compact('order', 'buyer', 'user_address', 'cities', 'districts', 'wards', 'shippingServiceInfos', 'hubInfos', 'feeGhtk', 'feeSuperShip', 'orderFroms'));
+            return view('admin.order.edit', compact('error_message','order', 'buyer', 'user_address', 'cities', 'districts', 'wards', 'shippingServiceInfos', 'hubInfos', 'feeGhtk', 'feeSuperShip', 'orderFroms'));
         } catch (\Exception $e) {
             if($request->ajax())
             {

@@ -61,6 +61,17 @@
     </section>
 
     <section class="content">
+        @if($error_message)
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="alert alert-danger alert-dismissible">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                        <h4><i class="icon fa fa-ban"></i> Tạo Đơn Hàng Thất Bại!</h4>
+                        {{$error_message}}
+                    </div>
+                </div>
+            </div>
+        @endif
         <div class="row">
             <div class="col-xs-4">
                 <div class="box">
