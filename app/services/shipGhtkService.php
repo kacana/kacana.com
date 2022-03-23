@@ -210,7 +210,6 @@ class shipGhtkService extends baseService {
         else
             $params['email'] = 'admin@kacana.com';
 
-        $params['transport'] = "fly";
         $params['hamlet'] = $order->addressReceive->hamlet;
 
         $dataPost['order'] = $params;
