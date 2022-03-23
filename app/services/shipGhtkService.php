@@ -216,6 +216,10 @@ class shipGhtkService extends baseService {
 
         $results = $this->makeRequest('services/shipment/order', $dataPost, 'post');
 
+        if (!isset($results->body->success)) {
+            $results->body = json_decode($results->body);
+        }
+
         if(isset($results->body->success) && $results->body->success) {
             $this->createShippingRow($results->body, $originShipFee, $orderDetailIds, $order, $subtotal,$shipFee, $extraDiscount, $extraDiscountDesc, $paid, $results->body->order->estimated_deliver_time);
 
