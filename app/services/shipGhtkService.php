@@ -128,7 +128,7 @@ class shipGhtkService extends baseService {
         return $results->body;
     }
 
-    public function createShippingOrder($orderDetailIds, $orderId, $pickHubId, $weight, $originShipFee, $shipFee, $extraDiscount, $extraDiscountDesc, $paid){
+    public function createShippingOrder($orderDetailIds, $orderId, $pickHubId, $weight, $originShipFee, $shipFee, $extraDiscount, $extraDiscountDesc, $paid, $transport = 'fly'){
 
         $orderService = new orderService();
         $shipGhnService = new shipGhnService();
@@ -171,6 +171,7 @@ class shipGhtkService extends baseService {
         $params['pick_name'] = 'Kacana';
         $params['pick_money'] = $CODAmount;
         $params['pick_tel'] = '0906054206';
+        $params['transport'] = $transport;
 
         $pickHub = false;
         if($pickHubId)

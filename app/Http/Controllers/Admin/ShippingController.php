@@ -33,6 +33,7 @@ class ShippingController extends BaseController {
         $extraDiscountDesc = $request->input('extraDiscountDesc', '');
         $OrderClientNote = $request->input('OrderClientNote', '');
         $OrderContentNote = $request->input('OrderContentNote', '');
+        $transport = $request->input('transport', 'fly');
 
         $weight = $request->input('Weight', KACANA_SHIP_DEFAULT_WEIGHT);
         $length = $request->input('Length', KACANA_SHIP_DEFAULT_LENGTH);
@@ -50,7 +51,8 @@ class ShippingController extends BaseController {
                     $shipFee,
                     $extraDiscount,
                     $extraDiscountDesc,
-                    $paid);
+                    $paid,
+                    $transport);
 
                 if (isset($ship->success) && $ship->success) {
                     $orderService->notificationSlackOrder($orderId);
