@@ -52,8 +52,13 @@ class ShippingController extends BaseController {
                     $extraDiscountDesc,
                     $paid);
 
-                $orderService->notificationSlackOrder($orderId);
-                return redirect('/shipping/detail?id='.$ship->order->label.'&type='.KACANA_SHIP_TYPE_SERVICE_GHTK);
+                if (isset($ship->success) && $ship->success) {
+                    $orderService->notificationSlackOrder($orderId);
+                    return redirect('/shipping/detail?id=' . $ship->order->label . '&type=' . KACANA_SHIP_TYPE_SERVICE_GHTK);
+                } else {
+                    return redirect('/order/edit/'.$orderId.'?message='.$ship->message);
+                }
+
             }
             elseif($shippingServiceTypeId == KACANA_SHIP_TYPE_ID_SUPER_SHIP)
             {
@@ -96,6 +101,7 @@ class ShippingController extends BaseController {
                     return redirect('/order/edit/'.$orderId);
             }
         } catch (\Exception $e) {
+            echo $e->getTraceAsString();
             // @codeCoverageIgnoreStart
             $return['error'] = $e->getMessage();
             $return['errorMsg'] = $e->getMessage();

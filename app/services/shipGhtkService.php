@@ -196,6 +196,7 @@ class shipGhtkService extends baseService {
         $params['address'] = $order->address;
         $params['province'] = $order->addressReceive->city->name;
         $params['district'] = $order->addressReceive->district->name;
+        $params['value'] = $order->total;
 
         if($order->addressReceive->ward_id)
             $params['ward'] = $order->addressReceive->ward->name;
@@ -215,12 +216,14 @@ class shipGhtkService extends baseService {
 
         $results = $this->makeRequest('services/shipment/order', $dataPost, 'post');
 
-        $this->createShippingRow($results->body, $originShipFee, $orderDetailIds, $order, $subtotal,$shipFee, $extraDiscount, $extraDiscountDesc, $paid, $results->body->order->estimated_deliver_time);
+        if(isset($results->body->success) && $results->body->success) {
+            $this->createShippingRow($results->body, $originShipFee, $orderDetailIds, $order, $subtotal,$shipFee, $extraDiscount, $extraDiscountDesc, $paid, $results->body->order->estimated_deliver_time);
 
-        $contentSMS = str_replace('%order_id%', $order->order_code,KACANA_SPEED_SMS_CONTENT_ORDER_PROCESS);
-        $contentSMS = str_replace('%estimated_deliver_time%', $orderService->stripVN($results->body->order->estimated_deliver_time),$contentSMS);
-        $contentSMS = str_replace('%user_name%', $orderService->stripVN($order->addressReceive->name),$contentSMS);
-        $speedSms->sendSMS([$order->addressReceive->phone], $contentSMS);
+            $contentSMS = str_replace('%order_id%', $order->order_code,KACANA_SPEED_SMS_CONTENT_ORDER_PROCESS);
+            $contentSMS = str_replace('%estimated_deliver_time%', $orderService->stripVN($results->body->order->estimated_deliver_time),$contentSMS);
+            $contentSMS = str_replace('%user_name%', $orderService->stripVN($order->addressReceive->name),$contentSMS);
+            $speedSms->sendSMS([$order->addressReceive->phone], $contentSMS);
+        }
 
         return $results->body;
     }
