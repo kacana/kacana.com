@@ -260,7 +260,7 @@ class shipGhtkService extends baseService {
 
     public function GetOrderInfoStatus($id){
 
-        $results = $this->makeRequest('/services/shipment/'.$id);
+        $results = $this->makeRequest('/services/shipment/v2/'.$id);
 
         if(isset($results->body->order))
         {
